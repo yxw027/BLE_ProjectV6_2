@@ -1,3 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?><project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/E:/BLE_Project10-01-2019/BLE_Project/BLE_Project/web/WEB-INF/web.xml</file>
+            <file>file:/E:/BLE_Project10-01-2019/BLE_Project/BLE_Project/src/java/com/ble/dataEntry/model/ServiceModel.java</file>
+            <file>file:/E:/BLE_Project10-01-2019/BLE_Project/BLE_Project/src/java/com/ble/dataEntry/bean/CharachtristicsBean.java</file>
+            <file>file:/E:/BLE_Project10-01-2019/BLE_Project/BLE_Project/src/java/com/ble/dataEntry/controller/ServiceController.java</file>
+            <file>file:/E:/BLE_Project10-01-2019/BLE_Project/BLE_Project/src/java/com/ble/dataEntry/bean/ServiceBean.java</file>
+            <file>file:/E:/BLE_Project10-01-2019/BLE_Project/BLE_Project/web/view/dataEntry/serviceView.jsp</file>
+            <file>file:/E:/BLE_Project10-01-2019/BLE_Project/BLE_Project/web/view/dataEntry/charateristics.jsp</file>
+            <file>file:/E:/BLE_Project10-01-2019/BLE_Project/BLE_Project/src/java/com/ble/dataEntry/controller/CharachtristicsController.java</file>
+            <file>file:/E:/BLE_Project10-01-2019/BLE_Project/BLE_Project/src/java/com/ble/dataEntry/model/CharachtristicsModel.java</file>
+        </group>
+    </open-files>
 </project-private>

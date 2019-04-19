@@ -96,7 +96,7 @@ public class BLEWebServicesModel {
         {
         JSONArray rowData = new JSONArray();
         String query = null;
-        query = "select id,device_name,device_no,warranty_period,remark,model_type_id "
+        query = "select id,device_name,device_no,warranty_period,remark,model_type_id,device_address "
                 +" from model m "
                 +" where m.active='Y'";
         try {
@@ -110,6 +110,7 @@ public class BLEWebServicesModel {
                  obj.put("warranty_period",rset.getString("warranty_period"));
                  obj.put("remark",rset.getString("remark"));
                  obj.put("model_type_id",rset.getInt("model_type_id"));
+                 obj.put("device_address",rset.getString("device_address"));
 
                  rowData.add(obj);
            }
