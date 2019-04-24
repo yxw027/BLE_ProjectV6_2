@@ -37,7 +37,7 @@
             <param-value>com.ble.webService.controller</param-value>
         </init-param>
     </servlet>
-   
+    
     <servlet-mapping>
         <servlet-name>servlet Dispatcher</servlet-name>
         <url-pattern>/resources/*</url-pattern>
@@ -261,6 +261,22 @@
         <servlet-name>DeviceMap</servlet-name>
         <url-pattern>/device_map</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ServiceController</servlet-name>
+        <servlet-class>com.ble.dataEntry.controller.ServiceController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServiceController</servlet-name>
+        <url-pattern>/ServiceCont.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ServiceView</servlet-name>
+        <jsp-file>/view/dataEntry/serviceView.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServiceView</servlet-name>
+        <url-pattern>/serviceview</url-pattern>
+    </servlet-mapping>
      <servlet>
         <servlet-name>WelcomeController</servlet-name>
         <servlet-class>com.ble.device.controller.WelcomeController</servlet-class>
@@ -277,5 +293,22 @@
         <servlet-name>Welcome</servlet-name>
         <url-pattern>/welcome</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>CharachtristicsController</servlet-name>
+        <servlet-class>com.ble.dataEntry.controller.CharachtristicsController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CharachtristicsController</servlet-name>
+        <url-pattern>/CharachtristicsCont.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>charachteristicView</servlet-name>
+        <jsp-file>/view/dataEntry/charateristics.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>charachteristicView</servlet-name>
+        <url-pattern>/charachteristic</url-pattern>
+    </servlet-mapping>
+    
     <!--<DataEntry mapping end>-->
 </web-app>

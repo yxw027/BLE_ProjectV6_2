@@ -75,6 +75,8 @@
                         <li><a href="DeviceTypeCont.do">Device Type</a></li>
                         <li><a href="ModelTypeCont.do">Model Type</a></li>
                         <li><a href="ModelCont.do">Model</a></li>
+                        <li><a href="ServiceCont.do">Services</a></li>
+                        <li><a href="CharachtristicsCont.do">Characteristic</a></li>
                         </ul>
                         </li>
                         <li><a href="DeviceCont.do">Device</a></li>
