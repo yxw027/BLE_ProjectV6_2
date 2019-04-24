@@ -79,6 +79,7 @@
                         </li>
                         <li><a href="DeviceCont.do">Device</a></li>
                         <li><a href="DeviceRegistrationCont.do">Device Registration</a></li>
+                        <li><a href="DeviceMapCont.do">Device Map</a></li>
                     </ul>
                 </li>
 

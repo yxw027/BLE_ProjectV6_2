@@ -189,6 +189,18 @@
             <tr>
                 <td><%@include file="/layout/menu.jsp" %> </td>
             </tr>
+             <tr>
+                <td style="padding-top: 12px; padding-left: 28px;">
+                    <nav>
+                        <a href="DeviceMapCont.do">Device Map</a> ->
+                        <a href="DeviceCont.do">Device</a> ->
+                        <a href="ManufacturerCont.do">Manufacturer</a> ->
+                        <a href="DeviceTypeCont.do">Device Type</a> ->
+                        <a href="ModelCont.do">Model</a> ->
+                        <a href="ModelTypeCont.do">Model Type</a>
+                    </nav>
+                </td>
+            </tr>
             <td>
                 <DIV id="body" class="maindiv" align="center" >
                     <table width="100%" align="center">

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    
     <session-config>
         <session-timeout>
             30
@@ -18,14 +19,14 @@
     </context-param>
     <context-param>
         <param-name>db_username</param-name>
-      <param-value>root</param-value>
-<!--   <param-value>jpss_2</param-value>-->
+        <param-value>root</param-value>
+        <!--   <param-value>jpss_2</param-value>-->
     </context-param>
     <context-param>
         <description>	</description>
         <param-name>db_password</param-name>
-       <param-value>root</param-value>
-<!--         <param-value>jpss_1277</param-value>-->
+        <param-value>root</param-value>
+        <!--         <param-value>jpss_1277</param-value>-->
     </context-param>
     <!--<ServletContainer mapping start>-->
     <servlet>
@@ -36,6 +37,7 @@
             <param-value>com.ble.webService.controller</param-value>
         </init-param>
     </servlet>
+   
     <servlet-mapping>
         <servlet-name>servlet Dispatcher</servlet-name>
         <url-pattern>/resources/*</url-pattern>
@@ -195,7 +197,6 @@
         <servlet-name>Device</servlet-name>
         <url-pattern>/device</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>DeviceRegistrationController</servlet-name>
         <servlet-class>com.ble.device.controller.DeviceRegistrationController</servlet-class>
@@ -212,9 +213,6 @@
         <servlet-name>DeviceRegistration</servlet-name>
         <url-pattern>/deviceregistration</url-pattern>
     </servlet-mapping>
-
-
-
     <servlet>
         <servlet-name>DeviceOprtnChartstcMapController</servlet-name>
         <servlet-class>com.ble.dataEntry.controller.DeviceOprtnChartstcMapController</servlet-class>
@@ -231,7 +229,6 @@
         <servlet-name>device_oprtn_chartstc_map</servlet-name>
         <url-pattern>/device_oprtn_chartstc_map</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>BleOperationNameController</servlet-name>
         <servlet-class>com.ble.dataEntry.controller.BleOperationNameController</servlet-class>
@@ -248,8 +245,37 @@
         <servlet-name>ble_operation_name</servlet-name>
         <url-pattern>/ble_operation_name</url-pattern>
     </servlet-mapping>
-
-
-
+    <servlet>
+        <servlet-name>DeviceMapController</servlet-name>
+        <servlet-class>com.ble.device.controller.DeviceMapController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeviceMapController</servlet-name>
+        <url-pattern>/DeviceMapCont.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>DeviceMap</servlet-name>
+        <jsp-file>/view/dataEntry/device_map.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeviceMap</servlet-name>
+        <url-pattern>/device_map</url-pattern>
+    </servlet-mapping>
+     <servlet>
+        <servlet-name>WelcomeController</servlet-name>
+        <servlet-class>com.ble.device.controller.WelcomeController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>WelcomeController</servlet-name>
+        <url-pattern>/WelcomeCont.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Welcome</servlet-name>
+        <jsp-file>/view/welcome.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Welcome</servlet-name>
+        <url-pattern>/welcome</url-pattern>
+    </servlet-mapping>
     <!--<DataEntry mapping end>-->
 </web-app>

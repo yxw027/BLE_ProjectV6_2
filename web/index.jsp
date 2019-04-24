@@ -14,6 +14,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <script>
+            function goToDeviceMap() {
+                window.location = "DeviceMapCont.do";
+            }
+        </script>
     </head>
     <body>
         <table align="center" class="main" cellpadding="0" cellspacing="0" border="1" width="1000px">
@@ -30,6 +35,11 @@
                             <tr>
                                 <td align="center">
                                     <h3>  Welcome</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <input type="button" value="Create Finished Device" name="create_finished_device" onclick="goToDeviceMap()" />
                                 </td>
                             </tr>
                         </table>

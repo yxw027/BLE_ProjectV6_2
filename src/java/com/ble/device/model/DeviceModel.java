@@ -71,7 +71,7 @@ public class DeviceModel {
         return device_type_id;
     }
 
-    public int getModelId(String device_name,String device_no) {
+    public int getModelId(String device_name,int device_no) {
       String query1="select id from model m "
                     +" where m.device_name=? and m.device_no=? "
                     +" and m.active='Y' ";
@@ -79,9 +79,9 @@ public class DeviceModel {
         try {
             PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
             stmt.setString(1,device_name);
-            stmt.setString(2,device_no);
+            stmt.setInt(2,device_no);
             ResultSet rs = stmt.executeQuery();
-            rs.next();
+            rs.next();//jieji
             model_id = rs.getInt("id");
         } catch (Exception e) {
             System.out.println("Error inside getNoOfRows CommandModel" + e);
@@ -237,7 +237,7 @@ public boolean reviseRecords(DeviceBean deviceBean){
                 deviceBean.setManufacture_name(rset.getString("manufacturer_name"));
                 deviceBean.setDevice_type_name(rset.getString("device_type"));
                 deviceBean.setDevice_name(rset.getString("device_name"));
-                deviceBean.setDevice_no(rset.getString("device_no"));
+                deviceBean.setDevice_no(rset.getInt("device_no"));
                 deviceBean.setRemark(rset.getString("remark"));
                 list.add(deviceBean);
             }
@@ -269,7 +269,7 @@ public boolean reviseRecords(DeviceBean deviceBean){
   public List<String> getManufactureName(String q) {
         List<String> list = new ArrayList<String>();
         String query = "select name from manufacturer where active='Y' "
-                       +" group by name order by id desc ";
+                       +" group by name order by name desc ";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -294,7 +294,7 @@ public boolean reviseRecords(DeviceBean deviceBean){
   public List<String> getDeviceTypeName(String q) {
         List<String> list = new ArrayList<String>();
         String query = "select type from device_type where active='Y' "
-                       +" group by type order by id desc ";
+                       +" group by type order by type desc ";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -319,7 +319,7 @@ public boolean reviseRecords(DeviceBean deviceBean){
   public List<String> getDeviceName(String q) {
         List<String> list = new ArrayList<String>();
         String query = "select device_name from model where active='Y' "
-                       +" group by device_name order by id desc ";
+                       +" group by device_name order by device_name desc ";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -345,7 +345,7 @@ public boolean reviseRecords(DeviceBean deviceBean){
         List<String> list = new ArrayList<String>();
         String query = "select device_no from model where device_name=? "
                        +" and active='Y' "
-                       +" group by device_no order by id desc ";
+                       +" group by device_no order by device_no desc ";
         try {
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query);
             pstmt.setString(1, device_name);

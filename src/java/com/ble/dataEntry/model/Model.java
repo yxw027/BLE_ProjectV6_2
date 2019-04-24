@@ -235,7 +235,7 @@ public boolean reviseRecords(ModelBean modelBean){
 
   public List<String> getDeviceName(String q) {
         List<String> list = new ArrayList<String>();
-        String query = "select device_name from model where active='Y' group by device_name order by id desc";
+        String query = "select device_name from model where active='Y' group by device_name order by device_name desc";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -259,7 +259,7 @@ public boolean reviseRecords(ModelBean modelBean){
     }
     public List<String> getModelType(String q) {
         List<String> list = new ArrayList<String>();
-        String query = "select type from modal_type where active='Y' group by type order by id desc";
+        String query = "select type from modal_type where active='Y' group by type order by type desc";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;

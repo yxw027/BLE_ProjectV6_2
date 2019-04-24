@@ -206,6 +206,18 @@
 
         return window.open(url, window_name, window_features);
     }
+    
+    function goTo(type) {
+        if(type === "manufacturer") {
+            window.location.href = "ManufacturerCont.do";
+        }
+        if(type === "device_type") {
+            window.location.href = "DeviceTypeCont.do";
+        }
+        if(type === "device_name") {
+            window.location.href = "ModelCont.do";
+        }
+    }
 
 </script>
 
@@ -221,6 +233,19 @@
             <tr><td><%@include file="/layout/header.jsp" %></td></tr>
             <tr>
                 <td><%@include file="/layout/menu.jsp" %> </td>
+            </tr>
+             <tr>
+                <td style="padding-top: 12px; padding-left: 28px;">
+                    <nav>
+                        <a href="WelcomeCont.do">Welcome</a> ->
+                        <a href="DeviceMapCont.do">Device Map</a> ->
+                        <a href="DeviceCont.do">Device</a> ->
+                        Manufacturer ->
+                        Device Type ->
+                        Model ->
+                        Model Type
+                    </nav>
+                </td>
             </tr>
             <td>
                 <DIV id="body" class="maindiv" align="center" >
@@ -340,16 +365,19 @@
                                                 <th class="heading1">Manufacturer Name </th>
 
                                                 <td><input class="input" type="text" id="manufacturer_name" name="manufacturer_name" value="" size="40" disabled>
+                                                    <input  type="button"  name="create_new_manufacturer" value="Add" onclick="goTo('manufacturer')">
                                                 <input class="input" type="hidden" id="device_id" name="device_id" value="" ></td>
                                             </tr>
 
                                             <tr>
                                                 <th class="heading1">Device Type</th>
-                                                <td><input class="input" type="text" id="device_type_name" name="device_type_name" value="" size="40" disabled></td>
+                                                <td><input class="input" type="text" id="device_type_name" name="device_type_name" value="" size="40" disabled>
+                                                <input  type="button"  name="create_new_device_type" value="Add" onclick="goTo('device_type')"></td>
                                             </tr>
                                             <tr>
                                                 <th class="heading1">Model Name</th>
-                                                <td><input class="input" type="text" id="device_name" name="device_name" value="" size="40" disabled></td>
+                                                <td><input class="input" type="text" id="device_name" name="device_name" value="" size="40" disabled>
+                                                <input  type="button"  name="create_new_device_name" value="Add" onclick="goTo('device_name')"></td>
                                             </tr>
                                             <tr>
                                                 <th class="heading1">Model No.</th>

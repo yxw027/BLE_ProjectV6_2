@@ -111,7 +111,7 @@ public class DeviceController extends HttpServlet {
             deviceBean.setManufacture_name(request.getParameter("manufacturer_name"));
             deviceBean.setDevice_type_name(request.getParameter("device_type_name"));
             deviceBean.setDevice_name(request.getParameter("device_name"));
-            deviceBean.setDevice_no(request.getParameter("device_no"));
+            deviceBean.setDevice_no(Integer.parseInt(request.getParameter("device_no")));
 
             deviceBean.setRemark(request.getParameter("remark"));
 

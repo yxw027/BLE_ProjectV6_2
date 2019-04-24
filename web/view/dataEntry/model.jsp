@@ -187,6 +187,12 @@
 
         return window.open(url, window_name, window_features);
     }
+    
+    function goTo(type) {
+        if(type === "model_type") {
+            window.location.href = "ModelTypeCont.do";
+        }
+    }
 
 </script>
 
@@ -202,6 +208,18 @@
             <tr><td><%@include file="/layout/header.jsp" %></td></tr>
             <tr>
                 <td><%@include file="/layout/menu.jsp" %> </td>
+            </tr>
+            <tr>
+                <td style="padding-top: 12px; padding-left: 28px;">
+                    <nav>
+                        <a href="DeviceMapCont.do">Device Map</a> ->
+                        <a href="DeviceCont.do">Device</a> ->
+                        <a href="ManufacturerCont.do">Manufacturer</a> ->
+                        <a href="DeviceTypeCont.do">Device Type</a> ->
+                        <a href="ModelCont.do">Model</a> ->
+                        Model Type
+                    </nav>
+                </td>
             </tr>
             <td>
                 <DIV id="body" class="maindiv" align="center" >
@@ -319,7 +337,8 @@
                                             </tr>
                                             <tr>
                                                 <th class="heading1">Model Type</th>
-                                                <td><input class="input" type="text" id="model_type" name="model_type" value="" size="40" disabled></td>
+                                                <td><input class="input" type="text" id="model_type" name="model_type" value="" size="40" disabled>
+                                                <input  type="button"  name="create_new_model_type" value="Add" onclick="goTo('model_type')"></td>
                                             </tr>
                                             <tr>
                                                 <th class="heading1">Device Name </th>
