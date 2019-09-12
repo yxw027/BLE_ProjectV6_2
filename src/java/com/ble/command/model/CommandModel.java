@@ -152,8 +152,8 @@ public class CommandModel {
         int operation_id = getOperationId(commandBean.getOperation_name());
         int command_type_id = getCommandTypeId(commandBean.getCommand_type());
 
-        String query = " insert into command(device_id,command,order_no,delay,operation_id,starting_del,end_del,remark,command_type_id) "
-                       +" values(?,?,?,?,?,?,?,?,?) ";
+        String query = " insert into command(device_id,command,order_no,delay,operation_id,starting_del,end_del,remark,command_type_id,format,input,selection) "
+                       +" values(?,?,?,?,?,?,?,?,?,?,?,?) ";
         int rowsAffected = 0;
         try {
             java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
@@ -167,6 +167,9 @@ public class CommandModel {
              pstmt.setString(7, commandBean.getEnd_del());
              pstmt.setString(8, commandBean.getRemark());
              pstmt.setInt(9, command_type_id);
+             pstmt.setString(10, commandBean.getFormat());
+             pstmt.setInt(11, commandBean.getInput_no());
+             pstmt.setInt(12, commandBean.getSelection_no());
 
             rowsAffected = pstmt.executeUpdate();
         } catch (Exception e) {
@@ -199,7 +202,7 @@ public boolean reviseRecords(CommandBean bean){
 
       String query1 = " SELECT max(revision_no) revision_no FROM command c WHERE c.id = "+bean.getCommand_id()+" && active='Y' ORDER BY revision_no DESC";
       String query2 = " UPDATE command SET active=? WHERE id = ? && revision_no = ? ";
-      String query3 = " INSERT INTO command (id,device_id,command,order_no,delay,operation_id,starting_del,end_del,remark,command_type_id,revision_no,active) VALUES (?,?,?,?,?,?,?,?,?,?,?,?) ";
+      String query3 = " INSERT INTO command (id,device_id,command,order_no,delay,operation_id,starting_del,end_del,remark,command_type_id,revision_no,active,format) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 
       int updateRowsAffected = 0;
       try {
@@ -226,6 +229,7 @@ public boolean reviseRecords(CommandBean bean){
              psmt.setInt(10,command_type_id);
              psmt.setInt(11,rev);
              psmt.setString(12,"Y");
+             psmt.setString(13, bean.getFormat());
 
              int a = psmt.executeUpdate();
               if(a > 0)
@@ -303,7 +307,7 @@ public boolean reviseRecords(CommandBean bean){
 //                     +addQuery;
        String query2="select c.id as command_id,m.name as manufacture_name,dt.type as device_type,"
         +" md.device_name,md.device_no,c.command,c.order_no,c.delay, "
-        +" op_n.operation_name,c.starting_del,c.end_del,c.remark,ct.name as command_type "
+        +" op_n.operation_name,c.starting_del,c.end_del,c.remark,ct.name as command_type,c.format as format, c.input, c.selection "
         +" from manufacturer m,device_type dt,model md,operation_name op_n,command c,command_type ct,device d "
         +" where c.device_id=d.id and d.manufacture_id = m.id "
         +" and d.device_type_id = dt.id and d.model_id = md.id "
@@ -331,14 +335,25 @@ public boolean reviseRecords(CommandBean bean){
                 commandBean.setDevice_type(rset.getString("device_type"));
                 commandBean.setDevice_name(rset.getString("device_name"));
                 commandBean.setDevice_no(rset.getString("device_no"));
-                commandBean.setCommand(rset.getString("command"));
+                String command = rset.getString("command");
+                String commandReq = command.substring(1, command.length()-1);
+                String[] commandByte = commandReq.split(", ");
+                Byte[] b = new Byte[commandByte.length];
+                for (int i = 0; i < commandByte.length; i++) {
+                    b[i] = Byte.parseByte(commandByte[i]);                   
+                }
+                String hex = bytesToHex(b);
+                commandBean.setCommand(hex.toUpperCase());
                 commandBean.setOrder_no(rset.getString("order_no"));
                 commandBean.setDelay(rset.getString("delay"));
                 commandBean.setOperation_name(rset.getString("operation_name"));
                 commandBean.setStarting_del(rset.getString("starting_del"));
                 commandBean.setEnd_del(rset.getString("end_del"));
                 commandBean.setRemark(rset.getString("remark"));
-                commandBean.setCommand_type(rset.getString("operation_name"));
+                commandBean.setCommand_type(rset.getString("command_type"));
+                commandBean.setFormat(rset.getString("format"));
+                commandBean.setSelection_no(rset.getInt("selection"));
+                commandBean.setInput_no(rset.getInt("input"));
 
                 list.add(commandBean);
             }
@@ -347,6 +362,14 @@ public boolean reviseRecords(CommandBean bean){
         }
         return list;
     }
+  
+  public static String bytesToHex(Byte[] in) {
+    final StringBuilder builder = new StringBuilder();
+    for(byte b : in) {
+        builder.append(String.format("%02x", b));
+    }
+    return builder.toString();
+  } 
 
 
   public int deleteRecord(int command_id) {
@@ -377,7 +400,7 @@ public boolean reviseRecords(CommandBean bean){
 
    public List<String> getDeviceType(String q) {
         List<String> list = new ArrayList<String>();
-        String query = "select type from device_type group by type order by id desc;";
+        String query = "select type from device_type group by type order by type desc;";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -401,7 +424,7 @@ public boolean reviseRecords(CommandBean bean){
     }
    public List<String> getManufacturer(String q) {
         List<String> list = new ArrayList<String>();
-        String query = "select name from manufacturer where active='y' group by name order by id desc";
+        String query = "select name from manufacturer where active='y' order by name desc";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -425,7 +448,7 @@ public boolean reviseRecords(CommandBean bean){
     }
    public List<String> getDeviceName(String q) {
         List<String> list = new ArrayList<String>();
-        String query = "select device_name from model m where m.active='Y' group by device_name order by id desc";
+        String query = "select device_name from model m where m.active='Y' group by device_name order by device_name desc";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -450,7 +473,7 @@ public boolean reviseRecords(CommandBean bean){
 
    public List<String> getDeviceNo(String q) {
         List<String> list = new ArrayList<String>();
-        String query = "select device_no from model m where m.active='Y' group by device_no order by id desc";
+        String query = "select device_no from model m where m.active='Y' group by device_no order by device_no desc";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -475,7 +498,7 @@ public boolean reviseRecords(CommandBean bean){
 
    public List<String> getOperationName(String q) {
         List<String> list = new ArrayList<String>();
-        String query = "select operation_name from operation_name group by operation_name order by id desc;";
+        String query = "select operation_name from operation_name group by operation_name order by operation_name desc;";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -500,7 +523,7 @@ public boolean reviseRecords(CommandBean bean){
 
    public List<String> getCommandType(String q) {
         List<String> list = new ArrayList<String>();
-        String query = "select name from command_type ct group by name order by id desc ";
+        String query = "select name from command_type ct group by name order by name desc ";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -526,7 +549,7 @@ public boolean reviseRecords(CommandBean bean){
    public List<String> getSearchCommandName(String q) {
         List<String> list = new ArrayList<String>();
         String query = " select command from command "
-                       +" where active='Y' group by command order by id desc ";
+                       +" where active='Y' group by command order by command desc ";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;

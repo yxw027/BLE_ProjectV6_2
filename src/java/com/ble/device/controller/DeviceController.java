@@ -117,7 +117,13 @@ public class DeviceController extends HttpServlet {
 
             if (device_id == 0) {
                 System.out.println("Inserting values by model......");
-                deviceModel.insertRecord(deviceBean);
+                int noOfRowsAffected = deviceModel.insertRecord(deviceBean);
+                if(noOfRowsAffected > 0){
+                    request.setAttribute("confirmation", "confirmation");
+                } else {
+                    request.setAttribute("confirmation", "");
+                }
+                
             } else {
                 System.out.println("Update values by model........");
                 deviceModel.reviseRecords(deviceBean);

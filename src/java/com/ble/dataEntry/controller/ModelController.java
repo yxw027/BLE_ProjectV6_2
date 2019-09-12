@@ -109,7 +109,10 @@ public class ModelController extends HttpServlet {
 
             if (model_id == 0) {
                 System.out.println("Inserting values by model......");
-                model.insertRecord(modelBean);
+                int numberOfRowsAffected = model.insertRecord(modelBean);
+                if(numberOfRowsAffected > 0) {
+                    request.getRequestDispatcher("/DeviceTypeCont.do?task=''").forward(request, response);
+                }
             } else {
                 System.out.println("Update values by model........");
                 model.reviseRecords(modelBean);

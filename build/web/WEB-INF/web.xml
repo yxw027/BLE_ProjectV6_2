@@ -19,14 +19,14 @@
     </context-param>
     <context-param>
         <param-name>db_username</param-name>
+        <!--<param-value>root</param-value>-->
         <param-value>root</param-value>
-        <!--   <param-value>jpss_2</param-value>-->
     </context-param>
     <context-param>
         <description>	</description>
         <param-name>db_password</param-name>
+        <!--<param-value>root</param-value>-->
         <param-value>root</param-value>
-        <!--         <param-value>jpss_1277</param-value>-->
     </context-param>
     <!--<ServletContainer mapping start>-->
     <servlet>
@@ -37,7 +37,8 @@
             <param-value>com.ble.webService.controller</param-value>
         </init-param>
     </servlet>
-   
+    
+    
     <servlet-mapping>
         <servlet-name>servlet Dispatcher</servlet-name>
         <url-pattern>/resources/*</url-pattern>
@@ -213,9 +214,6 @@
         <servlet-name>DeviceRegistration</servlet-name>
         <url-pattern>/deviceregistration</url-pattern>
     </servlet-mapping>
-
-
-
     <servlet>
         <servlet-name>DeviceOprtnChartstcMapController</servlet-name>
         <servlet-class>com.ble.dataEntry.controller.DeviceOprtnChartstcMapController</servlet-class>
@@ -232,7 +230,6 @@
         <servlet-name>device_oprtn_chartstc_map</servlet-name>
         <url-pattern>/device_oprtn_chartstc_map</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>BleOperationNameController</servlet-name>
         <servlet-class>com.ble.dataEntry.controller.BleOperationNameController</servlet-class>
@@ -253,35 +250,35 @@
         <servlet-name>DeviceMapController</servlet-name>
         <servlet-class>com.ble.device.controller.DeviceMapController</servlet-class>
     </servlet>
- <servlet>
-        <servlet-name>ServiceController</servlet-name>
-        <servlet-class>com.ble.dataEntry.controller.ServiceController</servlet-class>
-    </servlet>    
     <servlet-mapping>
         <servlet-name>DeviceMapController</servlet-name>
         <url-pattern>/DeviceMapCont.do</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServiceController</servlet-name>
-        <url-pattern>/ServiceCont.do</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>DeviceMap</servlet-name>
         <jsp-file>/view/dataEntry/device_map.jsp</jsp-file>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>DeviceMap</servlet-name>
+        <url-pattern>/device_map</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ServiceController</servlet-name>
+        <servlet-class>com.ble.dataEntry.controller.ServiceController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServiceController</servlet-name>
+        <url-pattern>/ServiceCont.do</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>ServiceView</servlet-name>
         <jsp-file>/view/dataEntry/serviceView.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>DeviceMap</servlet-name>
-        <url-pattern>/device_map</url-pattern>
-    </servlet-mapping>
-     <servlet-mapping>
         <servlet-name>ServiceView</servlet-name>
         <url-pattern>/serviceview</url-pattern>
     </servlet-mapping>
-     <servlet>
+    <servlet>
         <servlet-name>WelcomeController</servlet-name>
         <servlet-class>com.ble.device.controller.WelcomeController</servlet-class>
     </servlet>
@@ -297,8 +294,6 @@
         <servlet-name>Welcome</servlet-name>
         <url-pattern>/welcome</url-pattern>
     </servlet-mapping>
-
-
     <servlet>
         <servlet-name>CharachtristicsController</servlet-name>
         <servlet-class>com.ble.dataEntry.controller.CharachtristicsController</servlet-class>
@@ -314,6 +309,55 @@
     <servlet-mapping>
         <servlet-name>charachteristicView</servlet-name>
         <url-pattern>/charachteristic</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SelectionController</servlet-name>
+        <servlet-class>com.ble.command.controller.SelectionController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SelectionController</servlet-name>
+        <url-pattern>/SelectionCont.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Selection</servlet-name>
+        <jsp-file>/view/dataEntry/selection.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Selection</servlet-name>
+        <url-pattern>/selection</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>InputController</servlet-name>
+        <servlet-class>com.ble.command.controller.InputController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InputController</servlet-name>
+        <url-pattern>/InputCont.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Input</servlet-name>
+        <jsp-file>/view/dataEntry/input.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Input</servlet-name>
+        <url-pattern>/input</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ParameterController</servlet-name>
+        <servlet-class>com.ble.command.controller.ParameterController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ParameterController</servlet-name>
+        <url-pattern>/ParameterCont.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Parameter</servlet-name>
+        <jsp-file>/view/dataEntry/parameter.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Parameter</servlet-name>
+        <url-pattern>/parameter</url-pattern>
     </servlet-mapping>
     <!--<DataEntry mapping end>-->
 </web-app>

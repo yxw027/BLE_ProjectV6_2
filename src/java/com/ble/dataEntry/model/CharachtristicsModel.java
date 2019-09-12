@@ -276,7 +276,7 @@ public boolean reviseRecords(CharachtristicsBean charachtristicsBean){
                        "from servicies s\n" +
                        "where s.service_name='"+service_name+"'\n"+
                        "and s.active='Y'\n" +
-                       "group by service_name order by service_name";
+                       "group by service_uuid order by service_uuid";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;

@@ -41,7 +41,13 @@
                        action4: function() { return  $("#model").val();}
                    }
                });
-        $("#characteristics").autocomplete("DeviceOprtnChartstcMapCont.do", {
+        $("#read_characteristics").autocomplete("DeviceOprtnChartstcMapCont.do", {
+                   extraParams: {
+                       action1: function() { return "getCharacteristics" },
+                       action2: function() { return  $("#service_name").val();}                   
+                   }
+               });
+        $("#write_characteristics").autocomplete("DeviceOprtnChartstcMapCont.do", {
                    extraParams: {
                        action1: function() { return "getCharacteristics" },
                        action2: function() { return  $("#service_name").val();}                   
@@ -83,7 +89,8 @@
         document.getElementById("device_type").disabled = false;
         document.getElementById("model").disabled = false;
         document.getElementById("service_name").disabled = false;
-        document.getElementById("characteristics").disabled = false;
+        document.getElementById("read_characteristics").disabled = false;
+        document.getElementById("write_characteristics").disabled = false;
         document.getElementById("ble_operation_name").disabled = false;
         document.getElementById("order_no").disabled = false;
         document.getElementById("remark").disabled = false;
@@ -162,8 +169,9 @@
         return result;
     }
     function fillColumns(id) {
+        debugger;
         var noOfRowsTraversed = document.getElementById("noOfRowsTraversed").value;
-        var noOfColumns =10;
+        var noOfColumns =11;
         var columnId = id;                              <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
         columnId = columnId.substring(3, id.length);    <%-- for e.g. suppose id is t1c3 we want characters after t1c i.e beginIndex = 3. --%>
         var lowerLimit, higherLimit;
@@ -183,10 +191,11 @@
         document.getElementById("device_type").value = document.getElementById(t1id +(lowerLimit+3)).innerHTML;
         document.getElementById("model").value = document.getElementById(t1id +(lowerLimit+4)).innerHTML;
         document.getElementById("service_name").value = document.getElementById(t1id +(lowerLimit+5)).innerHTML;
-        document.getElementById("characteristic").value = document.getElementById(t1id +(lowerLimit+6)).innerHTML;
-        document.getElementById("ble_operation_name").value = document.getElementById(t1id +(lowerLimit+7)).innerHTML;
-        document.getElementById("order_no").value = document.getElementById(t1id +(lowerLimit+8)).innerHTML;
-        document.getElementById("remark").value = document.getElementById(t1id +(lowerLimit+9)).innerHTML;
+        document.getElementById("read_characteristics").value = document.getElementById(t1id +(lowerLimit+6)).innerHTML;
+        document.getElementById("write_characteristics").value = document.getElementById(t1id +(lowerLimit+7)).innerHTML;
+        document.getElementById("ble_operation_name").value = document.getElementById(t1id +(lowerLimit+8)).innerHTML;
+        document.getElementById("order_no").value = document.getElementById(t1id +(lowerLimit+9)).innerHTML;
+        document.getElementById("remark").value = document.getElementById(t1id +(lowerLimit+10)).innerHTML;
 
         //       var b=  document.getElementById(t1id +(lowerLimit+8)).innerHTML;
         // alert(b);
@@ -283,7 +292,8 @@
                                                 <th class="heading">Device Type</th>
                                                 <th class="heading">Model</th>
                                                 <th class="heading">Service Name</th>
-                                                <th class="heading">Characteristic</th>
+                                                <th class="heading">Characteristic Read</th>
+                                                <th class="heading">Characteristic Write</th>
                                                 <th class="heading">Ble Operation Name</th>
                                                 <th class="heading">Order No</th>
                                                 <th class="heading">Remark</th>
@@ -301,7 +311,8 @@
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.device_type}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.model_name}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.service_name}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.characteristics_name}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.read_characteristics_name}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.write_characteristics_name}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.ble_operation_name}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.order_no}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.remark}</td>
@@ -383,8 +394,12 @@
                                                 <td><input class="input" type="text" id="service_name" name="service_name" value="" size="40" disabled></td>
                                             </tr>
                                             <tr>
-                                                <th class="heading1">Characteristics</th>
-                                                <td><input class="input" type="text" id="characteristics" name="characteristics" value="" size="40" disabled></td>
+                                                <th class="heading1">Read Characteristics</th>
+                                                <td><input class="input" type="text" id="read_characteristics" name="read_characteristics" value="" size="40" disabled></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="heading1"> Write Characteristics</th>
+                                                <td><input class="input" type="text" id="write_characteristics" name="write_characteristics" value="" size="40" disabled></td>
                                             </tr>
                                             <tr>
                                                 <th class="heading1">BLE Operation name</th>

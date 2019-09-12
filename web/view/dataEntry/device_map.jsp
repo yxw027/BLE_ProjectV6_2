@@ -301,13 +301,13 @@
             <tr>
                 <td style="padding-top: 12px; padding-left: 28px;">
                     <nav>
-                        <a href="WelcomeCont.do">Home</a> ->
+                        <a href="WelcomeCont.do">Welcome</a> ->
                         <a href="DeviceMapCont.do">Device Map</a> ->
-                        Device ->
-                        Manufacturer ->
-                        Device Type ->
-                        Model ->
-                        Model Type
+                        <a href="DeviceCont.do">Device</a> ->
+                        <a href="ManufacturerCont.do">Manufacturer</a> ->
+                        <a href="DeviceTypeCont.do">Device Type</a> ->
+                        <a href="ModelCont.do">Model</a> ->
+                        <a href="ModelTypeCont.do">Model Type</a>
                     </nav>
                 </td>
             </tr>
@@ -449,8 +449,8 @@
                                                 <th class="heading1" colspan="2" style="text-align: center">Finished Device</th>                                                
                                             </tr>
                                             <tr>
-                                                <td><input  type="button"  name="select_finished_device" value="Select Finished Device" onclick="expandDetails('finished')"></td>
-                                                <td><input  type="button"  name="create_new_device" value="Create New Device" onclick="goToDevice()"></td>
+                                                <td><input class="button"  type="button"  name="select_finished_device" value="Select Finished Device" onclick="expandDetails('finished')"></td>
+                                                <td><input class="button"  type="button"  name="create_new_device" value="Create New Device" onclick="goToDevice()"></td>
                                             </tr>                                            
                                             <tr class="master" style="display: none">
                                                 <th class="heading1">Manufacturer</th>
@@ -469,8 +469,8 @@
                                                  <th class="heading1" colspan="2" style="text-align: center">Module Device</th>                                                
                                             </tr>
                                             <tr>
-                                                <td><input  type="button"  name="select_module_device" value="Select module Device" onclick="expandDetails('module')"></td>
-                                                <td><input  type="button"  name="create_module_device" value="Create Module Device" onclick="goToDevice()"></td>
+                                                <td><input class="button"  type="button"  name="select_module_device" value="Select module Device" onclick="expandDetails('module')"></td>
+                                                <td><input class="button"  type="button"  name="create_module_device" value="Create Module Device" onclick="goToDevice()"></td>
                                             </tr>    
                                             <tr class="masterModule" style="display: none">
                                                 <th class="heading1">Manufacturer</th>
@@ -490,8 +490,8 @@
                                             </tr>
                                             
                                             <tr>
-                                                <td><input  type="button"  name="select_ble_device" value="Select Ble Device" onclick="expandDetails('ble')"></td>
-                                                <td><input  type="button"  name="create_ble_device" value="Create Ble Device" onclick="goToDevice()"></td>
+                                                <td><input class="button"  type="button"  name="select_ble_device" value="Select Ble Device" onclick="expandDetails('ble')"></td>
+                                                <td><input class="button"  type="button"  name="create_ble_device" value="Create Ble Device" onclick="goToDevice()"></td>
                                             </tr> 
                                             
                                             <tr class="masterBle" style="display: none">

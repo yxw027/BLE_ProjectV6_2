@@ -274,7 +274,8 @@ public class BLEWebServicesModel {
                 JSONObject obj = new JSONObject();
                  obj.put("id",rset.getInt("id"));
                  obj.put("device_id",rset.getInt("device_id"));
-                 obj.put("command",rset.getString("command"));
+                 String command = rset.getString("command");
+                 obj.put("command", command);
                  obj.put("order_no",rset.getInt("order_no"));
                  obj.put("delay",rset.getString("delay"));
                  obj.put("operation_id",rset.getInt("operation_id"));
@@ -342,7 +343,7 @@ public class BLEWebServicesModel {
         {
         JSONArray rowData = new JSONArray();
         String query = null;
-        query = " select device_characteristic_ble_map_id,device_id,characteristic_id,ble_operation_name_id, "
+        query = " select device_characteristic_ble_map_id,device_id,read_characteristic_id,ble_operation_name_id,write_characteristic_id "
                 +" order_no,remark "
                 +" from device_characteristic_ble_map d "
                 +" where d.active='Y' ";
@@ -353,7 +354,8 @@ public class BLEWebServicesModel {
                 JSONObject obj = new JSONObject();
                  obj.put("device_characteristic_ble_map_id",rset.getInt("device_characteristic_ble_map_id"));
                  obj.put("device_id",rset.getInt("device_id"));
-                 obj.put("characteristic_id",rset.getInt("characteristic_id"));
+                 obj.put("read_characteristic_id",rset.getInt("read_characteristic_id"));
+                 obj.put("write_characteristic_id",rset.getInt("write_characteristic_id"));
                  obj.put("ble_operation_name_id",rset.getInt("ble_operation_name_id"));
                  obj.put("order_no",rset.getString("order_no"));
                  obj.put("remark",rset.getString("remark"));

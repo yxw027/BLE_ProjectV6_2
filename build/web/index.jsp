@@ -16,7 +16,7 @@
         <title>JSP Page</title>
         <script>
             function goToDeviceMap() {
-                window.location = "DeviceMapCont.do";
+                window.location = "ModelTypeCont.do";
             }
         </script>
     </head>
@@ -39,7 +39,7 @@
                             </tr>
                             <tr>
                                 <td align="center">
-                                    <input type="button" value="Create Finished Device" name="create_finished_device" onclick="goToDeviceMap()" />
+                                    <input type="button" value="Create New Device" name="create_finished_device" onclick="goToDeviceMap()" />
                                 </td>
                             </tr>
                         </table>

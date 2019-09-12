@@ -16,7 +16,7 @@
         <title>JSP Page</title>
         <script>
             function goToDeviceMap() {
-                window.location = "DeviceMapCont.do";
+                window.location = "ModelTypeCont.do";
             }
         </script>
     </head>

@@ -40,16 +40,17 @@ public class DeviceOprtnChartstcMapModel {
 
 public int insertRecord(DeviceOprtnChartstcMapBean ruleBean) {
 
-        String query = " insert into device_characteristic_ble_map(device_id,characteristic_id,ble_operation_name_id,order_no,remark) values(?, ?, ?, ?, ?) ";
+        String query = " insert into device_characteristic_ble_map(device_id,read_characteristic_id,write_characteristic_id,ble_operation_name_id,order_no,remark) values(?, ?, ?, ?, ?, ?) ";
         int rowsAffected = 0;
         try {
             java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
 
             pstmt.setInt(1, ruleBean.getDevice_id());
-            pstmt.setInt(2, ruleBean.getCharacteristics_id());
-            pstmt.setInt(3, ruleBean.getBle_operation_name_id());
-            pstmt.setInt(4, ruleBean.getOrder_no());
-            pstmt.setString(5, ruleBean.getRemark());
+            pstmt.setInt(2, ruleBean.getRead_characteristics_id());
+            pstmt.setInt(3, ruleBean.getWrite_characteristics_id());
+            pstmt.setInt(4, ruleBean.getBle_operation_name_id());
+            pstmt.setInt(5, ruleBean.getOrder_no());
+            pstmt.setString(6, ruleBean.getRemark());
 
             rowsAffected = pstmt.executeUpdate();
         } catch (Exception e) {
@@ -72,8 +73,8 @@ public boolean reviseRecords(DeviceOprtnChartstcMapBean ruleBean){
     int rowsAffected=0;
 
       String query1 = " SELECT max(revision_no) revision_no FROM device_characteristic_ble_map c WHERE c.device_characteristic_ble_map_id = "+ruleBean.getDevice_characteristic_ble_map_id()+" && active='Y' ORDER BY revision_no DESC";
-      String query2 = " UPDATE device_characteristic_ble_map SET active=? WHERE id = ? && revision_no = ? ";
-      String query3 = " insert into device_characteristic_ble_map(device_characteristic_ble_map_id,device_id,characteristic_id,ble_operation_name_id,order_no,remark) values(?, ?, ?, ?, ?, ?) ";
+      String query2 = " UPDATE device_characteristic_ble_map SET active=? WHERE device_characteristic_ble_map_id = ? && revision_no = ? ";
+      String query3 = " insert into device_characteristic_ble_map(device_characteristic_ble_map_id,device_id,read_characteristic_id,write_characteristic_id,ble_operation_name_id,order_no,remark,revision_no,active) values(?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 
       int updateRowsAffected = 0;
       try {
@@ -87,15 +88,16 @@ public boolean reviseRecords(DeviceOprtnChartstcMapBean ruleBean){
            updateRowsAffected = pst.executeUpdate();
              if(updateRowsAffected >= 1){
              int rev = rs.getInt("revision_no")+1;
-             PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3);
+             PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3); 
              psmt.setInt(1,ruleBean.getDevice_characteristic_ble_map_id());
              psmt.setInt(2,ruleBean.getDevice_id());
-             psmt.setInt(3,ruleBean.getCharacteristics_id());
-             psmt.setInt(4,ruleBean.getBle_operation_name_id());
-             psmt.setInt(5,ruleBean.getOrder_no());
-             psmt.setString(6,ruleBean.getRemark());
-             psmt.setInt(7,rev);
-             psmt.setString(8,"Y");
+             psmt.setInt(3,ruleBean.getRead_characteristics_id());
+             psmt.setInt(4,ruleBean.getWrite_characteristics_id());
+             psmt.setInt(5,ruleBean.getBle_operation_name_id());
+             psmt.setInt(6,ruleBean.getOrder_no());
+             psmt.setString(7,ruleBean.getRemark());
+             psmt.setInt(8,rev);
+             psmt.setString(9,"Y");
 
              int a = psmt.executeUpdate();
               if(a > 0)
@@ -194,13 +196,14 @@ public boolean reviseRecords(DeviceOprtnChartstcMapBean ruleBean){
 //                    +" and d.id = s.device_id and s.id = c.service_id and s.active='Y' and c.active = 'Y' and dcb.active='Y' "
 //                    +" and d.active='Y' and b.active='Y' and dt.active='Y' and mr.active='Y' and md.active='Y'";
         String query2="select dcb.device_characteristic_ble_map_id,mr.name as manufacturer_name,dcb.order_no,dt.type as type,md.device_name, "
-                      +" s.service_name,ch.name as ch_name,dcb.remark,bon.ble_operation_name "
+                      +" s.service_name,chr.name as chr_name,chw.name as chw_name,dcb.remark,bon.ble_operation_name "
                       +" from device_characteristic_ble_map as dcb ,manufacturer as mr,device as d,device_type as dt,model as md "
-                      +" ,servicies as s,charachtristics as ch,ble_operation_name as bon "
+                      +" ,servicies as s,charachtristics as chw,charachtristics as chr,ble_operation_name as bon "
                       +" where dcb.device_id = d.id and d.manufacture_id=mr.id and d.device_type_id=dt.id "
                       +" and d.model_id= md.id "
-                      +" and d.id= s.device_id and s.id = ch.service_id and dcb.ble_operation_name_id= bon.ble_operation_name_id "
-                     +" and d.active='Y' and mr.active='Y' and dt.active='Y' and md.active='Y' and s.active='Y' and ch.active='Y' and bon.active='Y' ";
+                      +" and d.id= s.device_id and s.id = chr.service_id and s.id = chw.service_id and dcb.ble_operation_name_id= bon.ble_operation_name_id "
+                     +" and d.active='Y' and mr.active='Y' and dt.active='Y' and md.active='Y' and dcb.active='Y' and s.active='Y' and chr.active='Y' and chw.active='Y' and bon.active='Y'"
+                     +"and dcb.read_characteristic_id = chr.id and dcb.write_characteristic_id = chw.id";
 
         try {
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);
@@ -217,7 +220,8 @@ public boolean reviseRecords(DeviceOprtnChartstcMapBean ruleBean){
                 manufacturerBean.setModel_name(rset.getString("device_name"));
                 manufacturerBean.setDevice_type(rset.getString("type"));
                 manufacturerBean.setService_name(rset.getString("service_name"));
-                manufacturerBean.setCharacteristics_name(rset.getString("ch_name"));
+                manufacturerBean.setRead_characteristics_name(rset.getString("chr_name"));
+                manufacturerBean.setWrite_characteristics_name(rset.getString("chw_name"));
                 manufacturerBean.setBle_operation_name(rset.getString("ble_operation_name"));
                 manufacturerBean.setOrder_no(rset.getInt("order_no"));
                 manufacturerBean.setRemark(rset.getString("remark"));
@@ -251,7 +255,7 @@ public boolean reviseRecords(DeviceOprtnChartstcMapBean ruleBean){
 
   public List<String> getManufacturer(String q) {
         List<String> list = new ArrayList<String>();
-        String query = "select name from manufacturer where active='y' group by name order by id desc";
+        String query = "select name from manufacturer where active='y' group by name order by name desc";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -301,7 +305,7 @@ public boolean reviseRecords(DeviceOprtnChartstcMapBean ruleBean){
 
   public List<String> geManufacturerName(String q) {
         List<String> list = new ArrayList<String>();
-        String query = "select name from manufacturer where active='Y' group by name order by id desc";
+        String query = "select name from manufacturer where active='Y' group by name order by name desc";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -326,7 +330,7 @@ public boolean reviseRecords(DeviceOprtnChartstcMapBean ruleBean){
 
   public List<String> getDeviceTypeName(String q) {
         List<String> list = new ArrayList<String>();
-        String query = "select type from device_type where active='Y' group by type order by id desc";
+        String query = "select type from device_type where active='Y' group by type order by type desc";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -351,7 +355,7 @@ public boolean reviseRecords(DeviceOprtnChartstcMapBean ruleBean){
 
   public List<String> getModelName(String q) {
         List<String> list = new ArrayList<String>();
-        String query = "select device_name from model where active='Y' group by device_name order by id desc";
+        String query = "select device_name from model where active='Y' group by device_name order by device_name desc";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -376,7 +380,7 @@ public boolean reviseRecords(DeviceOprtnChartstcMapBean ruleBean){
 
   public List<String> getBLEOperationName(String q) {
         List<String> list = new ArrayList<String>();
-        String query = "select ble_operation_name from ble_operation_name where active='Y' group by ble_operation_name order by ble_operation_name_id desc";
+        String query = "select ble_operation_name from ble_operation_name where active='Y' group by ble_operation_name order by ble_operation_name desc";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -401,7 +405,7 @@ public boolean reviseRecords(DeviceOprtnChartstcMapBean ruleBean){
   public List<String> getCharacteristicsName(String q,int services_id) {
         List<String> list = new ArrayList<String>();
         String query = "select name from charachtristics where active='Y' and service_id = "+services_id+""
-                      + " group by name order by id desc";
+                      + " group by name order by name desc";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -427,7 +431,7 @@ public boolean reviseRecords(DeviceOprtnChartstcMapBean ruleBean){
   public List<String> getServices(String q,int device_id) {
         List<String> list = new ArrayList<String>();
         String query = "select service_name from servicies where active='Y' and device_id = "+device_id+""
-                      + " group by service_name order by id desc";
+                      + " group by service_name order by service_name desc";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;

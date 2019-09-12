@@ -11,8 +11,8 @@ package com.ble.dataEntry.bean;
  */
 public class DeviceOprtnChartstcMapBean {
 
-    String manufacturer_name,device_type,model_name,service_name,characteristics_name,ble_operation_name,remark;
-    int device_type_id,manufacturer_id,model_id,device_id,servicies_id,characteristics_id,ble_operation_name_id;
+    String manufacturer_name,device_type,model_name,service_name,read_characteristics_name, write_characteristics_name,ble_operation_name,remark;
+    int device_type_id,manufacturer_id,model_id,device_id,servicies_id,read_characteristics_id, write_characteristics_id,ble_operation_name_id;
     int device_characteristic_ble_map_id,order_no;
 
     public String getBle_operation_name() {
@@ -31,20 +31,38 @@ public class DeviceOprtnChartstcMapBean {
         this.ble_operation_name_id = ble_operation_name_id;
     }
 
-    public int getCharacteristics_id() {
-        return characteristics_id;
+  
+
+    public String getRead_characteristics_name() {
+        return read_characteristics_name;
     }
 
-    public void setCharacteristics_id(int characteristics_id) {
-        this.characteristics_id = characteristics_id;
+    public void setRead_characteristics_name(String read_characteristics_name) {
+        this.read_characteristics_name = read_characteristics_name;
     }
 
-    public String getCharacteristics_name() {
-        return characteristics_name;
+    public String getWrite_characteristics_name() {
+        return write_characteristics_name;
     }
 
-    public void setCharacteristics_name(String characteristics_name) {
-        this.characteristics_name = characteristics_name;
+    public void setWrite_characteristics_name(String write_characteristics_name) {
+        this.write_characteristics_name = write_characteristics_name;
+    }
+
+    public int getRead_characteristics_id() {
+        return read_characteristics_id;
+    }
+
+    public void setRead_characteristics_id(int read_characteristics_id) {
+        this.read_characteristics_id = read_characteristics_id;
+    }
+
+    public int getWrite_characteristics_id() {
+        return write_characteristics_id;
+    }
+
+    public void setWrite_characteristics_id(int write_characteristics_id) {
+        this.write_characteristics_id = write_characteristics_id;
     }
 
     public int getDevice_id() {

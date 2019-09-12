@@ -136,8 +136,10 @@ public class DeviceOprtnChartstcMapController extends HttpServlet {
             int model_id = ruleModel.getModelId(request.getParameter("model"));
             int device_id = ruleModel.getDeviceId(manufacturer_id,device_type_id,model_id);
             ruleBean.setDevice_id(device_id);
-            int characteristic_id = ruleModel.getCharacteristicId(request.getParameter("characteristics"));
-            ruleBean.setCharacteristics_id(characteristic_id);
+            int read_characteristic_id = ruleModel.getCharacteristicId(request.getParameter("read_characteristics"));
+            int write_characteristic_id = ruleModel.getCharacteristicId(request.getParameter("write_characteristics"));
+            ruleBean.setRead_characteristics_id(read_characteristic_id);
+            ruleBean.setWrite_characteristics_id(write_characteristic_id);
             int ble_operation_name_id = ruleModel.getBLEOperationNameId(request.getParameter("ble_operation_name"));
             ruleBean.setBle_operation_name_id(ble_operation_name_id);
             ruleBean.setOrder_no(Integer.parseInt(request.getParameter("order_no")));

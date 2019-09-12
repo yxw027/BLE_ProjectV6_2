@@ -19,14 +19,14 @@
     </context-param>
     <context-param>
         <param-name>db_username</param-name>
+        <!--<param-value>root</param-value>-->
         <param-value>root</param-value>
-        <!--   <param-value>jpss_2</param-value>-->
     </context-param>
     <context-param>
         <description>	</description>
         <param-name>db_password</param-name>
+        <!--<param-value>root</param-value>-->
         <param-value>root</param-value>
-        <!--         <param-value>jpss_1277</param-value>-->
     </context-param>
     <!--<ServletContainer mapping start>-->
     <servlet>
@@ -37,6 +37,7 @@
             <param-value>com.ble.webService.controller</param-value>
         </init-param>
     </servlet>
+    
     
     <servlet-mapping>
         <servlet-name>servlet Dispatcher</servlet-name>
@@ -277,7 +278,7 @@
         <servlet-name>ServiceView</servlet-name>
         <url-pattern>/serviceview</url-pattern>
     </servlet-mapping>
-     <servlet>
+    <servlet>
         <servlet-name>WelcomeController</servlet-name>
         <servlet-class>com.ble.device.controller.WelcomeController</servlet-class>
     </servlet>
@@ -309,6 +310,54 @@
         <servlet-name>charachteristicView</servlet-name>
         <url-pattern>/charachteristic</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>SelectionController</servlet-name>
+        <servlet-class>com.ble.command.controller.SelectionController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SelectionController</servlet-name>
+        <url-pattern>/SelectionCont.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Selection</servlet-name>
+        <jsp-file>/view/dataEntry/selection.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Selection</servlet-name>
+        <url-pattern>/selection</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>InputController</servlet-name>
+        <servlet-class>com.ble.command.controller.InputController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InputController</servlet-name>
+        <url-pattern>/InputCont.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Input</servlet-name>
+        <jsp-file>/view/dataEntry/input.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Input</servlet-name>
+        <url-pattern>/input</url-pattern>
+    </servlet-mapping>
     
+    <servlet>
+        <servlet-name>ParameterController</servlet-name>
+        <servlet-class>com.ble.command.controller.ParameterController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ParameterController</servlet-name>
+        <url-pattern>/ParameterCont.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Parameter</servlet-name>
+        <jsp-file>/view/dataEntry/parameter.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Parameter</servlet-name>
+        <url-pattern>/parameter</url-pattern>
+    </servlet-mapping>
     <!--<DataEntry mapping end>-->
 </web-app>

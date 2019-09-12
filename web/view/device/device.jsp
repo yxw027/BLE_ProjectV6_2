@@ -218,6 +218,10 @@
             window.location.href = "ModelCont.do";
         }
     }
+    
+    function goToDeviceMap() {
+        window.location.href="DeviceMapCont.do";
+    }
 
 </script>
 
@@ -229,6 +233,7 @@
 
     </head>
     <body>
+        
         <table align="center" cellpadding="0" cellspacing="0" class="main">
             <tr><td><%@include file="/layout/header.jsp" %></td></tr>
             <tr>
@@ -240,10 +245,10 @@
                         <a href="WelcomeCont.do">Welcome</a> ->
                         <a href="DeviceMapCont.do">Device Map</a> ->
                         <a href="DeviceCont.do">Device</a> ->
-                        Manufacturer ->
-                        Device Type ->
-                        Model ->
-                        Model Type
+                        <a href="ManufacturerCont.do">Manufacturer</a> ->
+                        <a href="DeviceTypeCont.do">Device Type</a> ->
+                        <a href="ModelCont.do">Model</a> ->
+                        <a href="ModelTypeCont.do">Model Type</a>
                     </nav>
                 </td>
             </tr>
@@ -267,6 +272,7 @@
                                                 <td>Device Type<input class="input" type="text" id="searchDeviceType" name="searchDeviceType" value="${searchDeviceTypeName}" size="20" ></td>
                                                 <td><input class="button" type="submit" name="task" id="searchIn" value="Search"></td>
                                                 <td><input class="button" type="submit" name="task" id="showAllRecords" value="Show All Records"></td>
+                                                <td><input class="button" type="submit" name="task" id="nextPage" value="Next Page" onclick="gotoDeviceMap()"></td>
                                                 <td><input type="button" class="pdf_button" id="viewPdf" name="viewPdf" value="" onclick="displayMapList()"></td>
                                             </tr>
                                         </table>
@@ -360,6 +366,7 @@
                                                 <c:if test="${not empty message}">
                                                     <td colspan="2" bgcolor="${msgBgColor}"><b>Result: ${message}</b></td>
                                                 </c:if>
+                                                    
                                             </tr>
                                             <tr>
                                                 <th class="heading1">Manufacturer Name </th>
@@ -418,6 +425,17 @@
                 </DIV>
             </td>
             <tr><td><%@include file="/layout/footer.jsp" %></td> </tr>
+            <c:if test="${not empty confirmation}">
+                <script> 
+                    alert
+                    var confirmation = confirm("Do you want to add more devices");
+                    if(confirmation === true) {
+                        window.location.href="ModelTypeCont.do";
+                    } else {
+                        window.location.href = "DeviceMapCont.do";
+                    }
+                </script>
+            </c:if>
         </table>
 
 

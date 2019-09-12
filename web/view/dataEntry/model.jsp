@@ -193,6 +193,10 @@
             window.location.href = "ModelTypeCont.do";
         }
     }
+    
+    function goToDeviceType() {
+        window.location.href="DeviceTypeCont.do";
+    }
 
 </script>
 
@@ -212,12 +216,13 @@
             <tr>
                 <td style="padding-top: 12px; padding-left: 28px;">
                     <nav>
+                        <a href="WelcomeCont.do">Welcome</a> ->
                         <a href="DeviceMapCont.do">Device Map</a> ->
                         <a href="DeviceCont.do">Device</a> ->
                         <a href="ManufacturerCont.do">Manufacturer</a> ->
                         <a href="DeviceTypeCont.do">Device Type</a> ->
                         <a href="ModelCont.do">Model</a> ->
-                        Model Type
+                        <a href="ModelTypeCont.do">Model Type</a>
                     </nav>
                 </td>
             </tr>
@@ -240,6 +245,7 @@
                                                 <td>Device Name<input class="input" type="text" id="searchDeviceName" name="searchDeviceName" value="${searchDeviceName}" size="20" ></td>
                                                 <td><input class="button" type="submit" name="task" id="searchIn" value="Search"></td>
                                                 <td><input class="button" type="submit" name="task" id="showAllRecords" value="Show All Records"></td>
+                                                <td><input class="button" type="button" name="task" id="showAllRecords" value="Next Page" onclick="goToDeviceType()"></td>
                                                 <td><input type="button" class="pdf_button" id="viewPdf" name="viewPdf" value="" onclick="displayMapList()"></td>
                                             </tr>
                                         </table>

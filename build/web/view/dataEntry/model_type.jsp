@@ -173,6 +173,10 @@
 
         return window.open(url, window_name, window_features);
     }
+    
+    function goToModel() {
+        window.location.href="ModelCont.do";
+    }
 
 </script>
 
@@ -220,6 +224,7 @@
                                                 <td>Model Type<input class="input" type="text" id="searchModelType" name="searchModelType" value="${searchModelType}" size="20" ></td>
                                                 <td><input class="button" type="submit" name="task" id="searchIn" value="Search"></td>
                                                 <td><input class="button" type="submit" name="task" id="showAllRecords" value="Show All Records"></td>
+                                                <td><input class="button" type="button" name="task" id="showAllRecords" value="Next Page" onclick="goToModel()"></td>
                                                 <td><input type="button" class="pdf_button" id="viewPdf" name="viewPdf" value="" onclick="displayMapList()"></td>
                                             </tr>
                                         </table>

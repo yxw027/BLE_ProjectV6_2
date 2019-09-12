@@ -84,6 +84,10 @@ public class ModelTypeController extends HttpServlet {
 //                servletOutputStream.close();
 //                return;
 //            }
+//        if (task.equals("Next Page")) {
+//            response.sendRedirect("/model");
+//        }
+        
          if (task.equals("Cancel")) {
             modelTypeModel.deleteRecord(Integer.parseInt(request.getParameter("model_type_id")));  // Pretty sure that organisation_type_id will be available.
         } else if (task.equals("Save") || task.equals("Save AS New")) {
@@ -103,7 +107,11 @@ public class ModelTypeController extends HttpServlet {
 
             if (model_type_id == 0) {
                 System.out.println("Inserting values by model......");
-                modelTypeModel.insertRecord(modelTypeBean);
+                int numberOfRows = modelTypeModel.insertRecord(modelTypeBean);
+                if(numberOfRows > 0){      
+                 request.getRequestDispatcher("/ModelCont.do?task=''").forward(request, response);
+                }
+                
             } else {
                 System.out.println("Update values by model........");
                 modelTypeModel.reviseRecords(modelTypeBean);

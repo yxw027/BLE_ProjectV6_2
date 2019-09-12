@@ -92,6 +92,9 @@
                         <li><a href="CommandTypeCont.do">Command Type</a></li>
                         <li><a href="OperationNameCont.do">Operation Name</a></li>
                         <li><a href="ruleCont.do">Rules</a></li>
+                        <li><a href="SelectionCont.do">Selection</a></li>
+                        <li><a href="InputCont.do">Input</a></li>
+                        <li><a href="ParameterCont.do">Parameter</a></li>
                         </ul>
                         </li>
                         <li><a href="CommandCont.do">Command</a></li>
@@ -102,7 +105,9 @@
                     <ul>
                         <li><a href="#">Data Entry</a>
                             <ul>
-                        <li><a href="BleOperationNameCont.do">Ble Operation Nmae</a></li>
+                        <li><a href="BleOperationNameCont.do">BLE Operation Name</a></li>
+                        <li><a href="ServiceCont.do">Services</a></li>
+                        <li><a href="CharachtristicsCont.do">Characteristics</a></li>
                         </ul>
                        </li>
                 <li><a href="DeviceOprtnChartstcMapCont.do">Device Character Operation map</a></li>

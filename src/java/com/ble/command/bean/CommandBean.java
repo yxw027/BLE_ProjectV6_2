@@ -13,7 +13,16 @@ public class CommandBean {
 
     int command_id;
     String device_name,command,order_no,delay,operation_name,starting_del,end_del,remark,command_type;
-    String manufacturer,device_type,model_type,device_no;
+    String manufacturer,device_type,model_type,device_no,format;
+            int input_no,selection_no;
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
 
     public String getDevice_no() {
         return device_no;
@@ -131,6 +140,22 @@ public class CommandBean {
 
     public void setStarting_del(String starting_del) {
         this.starting_del = starting_del;
+    }
+
+    public int getInput_no() {
+        return input_no;
+    }
+
+    public void setInput_no(int input_no) {
+        this.input_no = input_no;
+    }
+
+    public int getSelection_no() {
+        return selection_no;
+    }
+
+    public void setSelection_no(int selection_no) {
+        this.selection_no = selection_no;
     }
 
     

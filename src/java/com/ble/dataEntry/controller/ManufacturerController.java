@@ -104,7 +104,10 @@ public class ManufacturerController extends HttpServlet {
 
             if (manufacturer_id == 0) {
                 System.out.println("Inserting values by model......");
-                manufacturerModel.insertRecord(manufacturerBean);
+                int noOfRecordsAdded = manufacturerModel.insertRecord(manufacturerBean);
+                if(noOfRecordsAdded > 0){      
+                 request.getRequestDispatcher("/DeviceCont.do?task=''").forward(request, response);
+                }
             } else {
                 System.out.println("Update values by model........");
                 manufacturerModel.reviseRecords(manufacturerBean);

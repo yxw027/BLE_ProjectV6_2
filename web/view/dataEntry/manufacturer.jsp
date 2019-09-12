@@ -172,6 +172,10 @@
 
         return window.open(url, window_name, window_features);
     }
+    
+    function goToDevice() {
+        window.location.href="DeviceCont.do";
+    }
 
 </script>
 
@@ -183,6 +187,7 @@
 
     </head>
     <body>
+        
         <table align="center" cellpadding="0" cellspacing="0" class="main">
             <tr><td><%@include file="/layout/header.jsp" %></td></tr>
             <tr>
@@ -192,12 +197,13 @@
              <tr>
                 <td style="padding-top: 12px; padding-left: 28px;">
                     <nav>
+                        <a href="WelcomeCont.do">Welcome</a> ->
                         <a href="DeviceMapCont.do">Device Map</a> ->
                         <a href="DeviceCont.do">Device</a> ->
                         <a href="ManufacturerCont.do">Manufacturer</a> ->
-                        Device Type ->
-                        Model ->
-                        Model Type
+                        <a href="DeviceTypeCont.do">Device Type</a> ->
+                        <a href="ModelCont.do">Model</a> ->
+                        <a href="ModelTypeCont.do">Model Type</a>
                     </nav>
                 </td>
             </tr>
@@ -220,6 +226,7 @@
                                                 <td>Manufacturer Name<input class="input" type="text" id="searchManufacturerName" name="searchManufacturerName" value="${searchManufacturerName}" size="20" ></td>
                                                 <td><input class="button" type="submit" name="task" id="searchIn" value="Search"></td>
                                                 <td><input class="button" type="submit" name="task" id="showAllRecords" value="Show All Records"></td>
+                                                <td><input class="button" type="button" name="task" id="nextPage" value="Next Page" onclick="goToDevice()"></td>
                                                 <td><input type="button" class="pdf_button" id="viewPdf" name="viewPdf" value="" onclick="displayMapList()"></td>
                                             </tr>
                                         </table>

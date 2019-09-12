@@ -172,6 +172,10 @@
 
         return window.open(url, window_name, window_features);
     }
+    
+    function goToManufacturer() {
+        window.location.href="ManufacturerCont.do";
+    }
 
 </script>
 
@@ -191,12 +195,13 @@
             <tr>
                 <td style="padding-top: 12px; padding-left: 28px;">
                     <nav>
+                        <a href="WelcomeCont.do">Welcome</a> ->
                         <a href="DeviceMapCont.do">Device Map</a> ->
                         <a href="DeviceCont.do">Device</a> ->
                         <a href="ManufacturerCont.do">Manufacturer</a> ->
                         <a href="DeviceTypeCont.do">Device Type</a> ->
-                        Model ->
-                        Model Type
+                        <a href="ModelCont.do">Model</a> ->
+                        <a href="ModelTypeCont.do">Model Type</a>
                     </nav>
                 </td>
             </tr>
@@ -219,6 +224,7 @@
                                                 <td>Device Type<input class="input" type="text" id="searchDeviceType" name="searchDeviceType" value="${searchDeviceType}" size="20" ></td>
                                                 <td><input class="button" type="submit" name="task" id="searchIn" value="Search"></td>
                                                 <td><input class="button" type="submit" name="task" id="showAllRecords" value="Show All Records"></td>
+                                                <td><input class="button" type="button" name="task" id="nextPage" value="Next Page" onclick="goToManufacturer()"></td>
                                                 <td><input type="button" class="pdf_button" id="viewPdf" name="viewPdf" value="" onclick="displayMapList()"></td>
                                             </tr>
                                         </table>

@@ -21,57 +21,77 @@
 
 
 <script type="text/javascript" language="javascript">
-    jQuery(function(){
+    jQuery(function () {
 
         $("#device_type").autocomplete("CommandCont.do", {
             extraParams: {
-                action1: function() { return "getDeviceType"}
+                action1: function () {
+                    return "getDeviceType"
+                }
             }
         });
         $("#manufacturer").autocomplete("CommandCont.do", {
             extraParams: {
-                action1: function() { return "getManufacturer"}
+                action1: function () {
+                    return "getManufacturer"
+                }
             }
         });
         $("#device_name").autocomplete("CommandCont.do", {
             extraParams: {
-                action1: function() { return "getDeviceName"}
+                action1: function () {
+                    return "getDeviceName"
+                }
             }
         });
         $("#device_no").autocomplete("CommandCont.do", {
             extraParams: {
-                action1: function() { return "getDeviceNo"}
+                action1: function () {
+                    return "getDeviceNo"
+                }
             }
         });
         $("#operation_name").autocomplete("CommandCont.do", {
             extraParams: {
-                action1: function() { return "getOperationName"}
+                action1: function () {
+                    return "getOperationName"
+                }
             }
         });
         $("#command_type").autocomplete("CommandCont.do", {
             extraParams: {
-                action1: function() { return "getCommandType"}
+                action1: function () {
+                    return "getCommandType"
+                }
             }
         });
         $("#searchManufacturerName").autocomplete("CommandCont.do", {
             extraParams: {
-                action1: function() { return "getManufacturerName"}
+                action1: function () {
+                    return "getManufacturerName"
+                }
             }
         });
         $("#searchDeviceType").autocomplete("CommandCont.do", {
             extraParams: {
-                action1: function() { return "getSearchDeviceType"}
+                action1: function () {
+                    return "getSearchDeviceType"
+                }
             }
         });
         $("#searchDeviceName").autocomplete("CommandCont.do", {
             extraParams: {
-                action1: function() { return "getSearchDeviceName"}
+                action1: function () {
+                    return "getSearchDeviceName"
+                }
             }
         });
 
         $("#searchCommandName").autocomplete("CommandCont.do", {
             extraParams: {
-                action1: function() { return "getSearchCommandName"}
+                action1: function () {
+                    return "getSearchCommandName"
+                }
             }
         });
 
@@ -95,21 +115,22 @@
     });
 
     function setDefaultColor(noOfRowsTraversed, noOfColumns) {
-        for(var i = 0; i < noOfRowsTraversed; i++) {
-            for(var j = 1; j <= noOfColumns; j++) {
+        for (var i = 0; i < noOfRowsTraversed; i++) {
+            for (var j = 1; j <= noOfColumns; j++) {
                 document.getElementById("t1c" + (i * noOfColumns + j)).bgColor = "";     // set the default color.
             }
         }
     }
     function makeEditable(id) {
-       
+
         document.getElementById("device_name").disabled = false;
         document.getElementById("device_no").disabled = false;
 
         document.getElementById("manufacturer").disabled = false;
         document.getElementById("device_type").disabled = false;
 
-
+        document.getElementById("command_format").disabled = false;
+        document.getElementById("command_format1").disabled = false;
         document.getElementById("command").disabled = false;
         document.getElementById("command_type").disabled = false;
         document.getElementById("order_no").disabled = false;
@@ -118,16 +139,18 @@
         document.getElementById("operation_name").disabled = false;
         document.getElementById("starting_del").disabled = false;
         document.getElementById("end_del").disabled = false;
-         document.getElementById("remark").disabled = false;
+        document.getElementById("input_no").disabled = false;
+        document.getElementById("selection_no").disabled = false;
+        document.getElementById("remark").disabled = false;
 
         document.getElementById("save").disabled = false;
 //        document.getElementById("revise").disabled =false;
-        document.getElementById("cancel").disabled =false;
-        document.getElementById("save_As").disabled =false;
+        document.getElementById("cancel").disabled = false;
+        document.getElementById("save_As").disabled = false;
         //document.getElementById("save").disabled = true;
-        if(id === 'new') {
-        //    document.getElementById("created_date").disabled = true;
-           // document.getElementById("active").value ='';
+        if (id === 'new') {
+            //    document.getElementById("created_date").disabled = true;
+            // document.getElementById("active").value ='';
             document.getElementById("message").innerHTML = "";      // Remove message
             document.getElementById("manufacturer").focus();
             $("#message").html("");
@@ -141,31 +164,29 @@
             document.getElementById("manufacturer").focus();
 
         }
-        if(id === 'edit'){
-            
+        if (id === 'edit') {
+
             document.getElementById("save_As").disabled = false;
             document.getElementById("cancel").disabled = false;
         }
     }
     function setStatus(id) {
-        if(id == 'save'){
+        if (id == 'save') {
             document.getElementById("clickedButton").value = "Save";
-        }
-        else if(id == 'save_As'){
+        } else if (id == 'save_As') {
             document.getElementById("clickedButton").value = "Save AS New";
-        }
-        else if(id == 'revise'){
+        } else if (id == 'revise') {
             document.getElementById("clickedButton").value = "Revise";
-        }
-        else document.getElementById("clickedButton").value = "Delete";
+        } else
+            document.getElementById("clickedButton").value = "Delete";
     }
     function verify() {
         var result;
-        if(document.getElementById("clickedButton").value == 'Save' || document.getElementById("clickedButton").value == 'Save AS New' || document.getElementById("clickedButton").value == 'Revise'||document.getElementById("clickedButton").value == 'Delete') {
+        if (document.getElementById("clickedButton").value == 'Save' || document.getElementById("clickedButton").value == 'Save AS New' || document.getElementById("clickedButton").value == 'Revise' || document.getElementById("clickedButton").value == 'Delete') {
             var division_name_m = document.getElementById("division_name_m").value;
-            var a=document.getElementById("active").value;
+            var a = document.getElementById("active").value;
             //    alert(a);
-            if(myLeftTrim(division_name_m).length == 0) {
+            if (myLeftTrim(division_name_m).length == 0) {
 
                 // document.getElementById("message").innerHTML = "<td colspan='5' bgcolor='coral'><b>Organisation Type Name is required...</b></td>";
                 $("#message").html("<td colspan='5' bgcolor='coral'><b>Ward No is required...</b></td>");
@@ -173,68 +194,83 @@
                 return false; // code to stop from submitting the form2.
             }
 
-            if(document.getElementById("active").value =='Revised' || document.getElementById("active").value =='Cancelled')
+            if (document.getElementById("active").value == 'Revised' || document.getElementById("active").value == 'Cancelled')
             {
                 $("#message").html("<td colspan='5' bgcolor='coral'><b>You can not perform any operation on revised and cancelled record...</b></td>");
                 // document.getElementById("source_wattage"+i).focus();
                 return false; // code to stop from submitting the form2.
             }
-            if(result == false)    // if result has value false do nothing, so result will remain contain value false.
+            if (result == false)    // if result has value false do nothing, so result will remain contain value false.
             {
 
-            }
-            else{ result = true;
+            } else {
+                result = true;
             }
 
-            if(document.getElementById("clickedButton").value == 'Save AS New'){
+            if (document.getElementById("clickedButton").value == 'Save AS New') {
                 result = confirm("Are you sure you want to save it as New record?")
                 return result;
             }
-        } else result = confirm("Are you sure you want to cancel this record?")
+        } else
+            result = confirm("Are you sure you want to cancel this record?")
         return result;
     }
     function fillColumns(id) {
+        debugger;
         var noOfRowsTraversed = document.getElementById("noOfRowsTraversed").value;
-        var noOfColumns =14;
-        var columnId = id;                              <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
-        columnId = columnId.substring(3, id.length);    <%-- for e.g. suppose id is t1c3 we want characters after t1c i.e beginIndex = 3. --%>
+        var noOfColumns = 15;
+        var columnId = id;
+    <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
+        columnId = columnId.substring(3, id.length);
+    <%-- for e.g. suppose id is t1c3 we want characters after t1c i.e beginIndex = 3. --%>
         var lowerLimit, higherLimit;
 
-        for(var i = 0; i < noOfRowsTraversed; i++) {
+        for (var i = 0; i < noOfRowsTraversed; i++) {
             lowerLimit = i * noOfColumns + 1;       // e.g. 11 = (1 * 10 + 1)
             higherLimit = (i + 1) * noOfColumns;    // e.g. 20 = ((1 + 1) * 10)
 
-            if((columnId >= lowerLimit) && (columnId <= higherLimit)) break;
+            if ((columnId >= lowerLimit) && (columnId <= higherLimit))
+                break;
         }
 
         setDefaultColor(noOfRowsTraversed, noOfColumns);        // set default color of rows (i.e. of multiple coloumns).
         var t1id = "t1c";       // particular column id of table 1 e.g. t1c3.
 
-        document.getElementById("command_id").value= document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
-        document.getElementById("manufacturer").value = document.getElementById(t1id +(lowerLimit+2)).innerHTML;
-        document.getElementById("device_type").value = document.getElementById(t1id +(lowerLimit+3)).innerHTML;
-        document.getElementById("device_name").value = document.getElementById(t1id +(lowerLimit+4)).innerHTML;
-        document.getElementById("device_no").value = document.getElementById(t1id +(lowerLimit+5)).innerHTML;
-        document.getElementById("operation_name").value = document.getElementById(t1id +(lowerLimit+6)).innerHTML;
-        document.getElementById("command").value = document.getElementById(t1id +(lowerLimit+7)).innerHTML;
-        document.getElementById("command_type").value = document.getElementById(t1id +(lowerLimit+8)).innerHTML;
-        document.getElementById("order_no").value = document.getElementById(t1id +(lowerLimit+9)).innerHTML;
+        document.getElementById("command_id").value = document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
+        document.getElementById("manufacturer").value = document.getElementById(t1id + (lowerLimit + 2)).innerHTML;
+        document.getElementById("device_type").value = document.getElementById(t1id + (lowerLimit + 3)).innerHTML;
+        document.getElementById("device_name").value = document.getElementById(t1id + (lowerLimit + 4)).innerHTML;
+        document.getElementById("device_no").value = document.getElementById(t1id + (lowerLimit + 5)).innerHTML;
+        document.getElementById("operation_name").value = document.getElementById(t1id + (lowerLimit + 6)).innerHTML;
+        document.getElementById("command").value = document.getElementById(t1id + (lowerLimit + 7)).innerHTML;
+        document.getElementById("command_type").value = document.getElementById(t1id + (lowerLimit + 8)).innerHTML;
+        document.getElementById("order_no").value = document.getElementById(t1id + (lowerLimit + 9)).innerHTML;
 
-        document.getElementById("delay").value = document.getElementById(t1id +(lowerLimit+10)).innerHTML;
-        
-        document.getElementById("starting_del").value = document.getElementById(t1id +(lowerLimit+11)).innerHTML;
-        document.getElementById("end_del").value = document.getElementById(t1id +(lowerLimit+12)).innerHTML;
-        document.getElementById("remark").value = document.getElementById(t1id +(lowerLimit+13)).innerHTML;
+        document.getElementById("delay").value = document.getElementById(t1id + (lowerLimit + 10)).innerHTML;
+
+        document.getElementById("starting_del").value = document.getElementById(t1id + (lowerLimit + 11)).innerHTML;
+        document.getElementById("end_del").value = document.getElementById(t1id + (lowerLimit + 12)).innerHTML;
+        document.getElementById("selection_no").value = document.getElementById(t1id + (lowerLimit + 12)).innerHTML;
+        document.getElementById("input_no").value = document.getElementById(t1id + (lowerLimit + 12)).innerHTML;
+        var format = document.getElementById(t1id + (lowerLimit + 13)).innerHTML;
+        if(format === "hex") {
+            document.getElementById("command_format1").checked = true;
+            document.getElementById("command_format").checked = false;
+        }else if(format === "string") {
+            document.getElementById("command_format").checked = true;
+            document.getElementById("command_format1").checked = false;
+        }
+        document.getElementById("remark").value = document.getElementById(t1id + (lowerLimit + 14)).innerHTML;
 
         //       var b=  document.getElementById(t1id +(lowerLimit+8)).innerHTML;
         // alert(b);
-        for(var i = 0; i < noOfColumns; i++) {
+        for (var i = 0; i < noOfColumns; i++) {
             document.getElementById(t1id + (lowerLimit + i)).bgColor = "#d0dafd";        // set the background color of clicked row to yellow.
         }
-     //   makeEditable('');
+        //   makeEditable('');
 
         document.getElementById("edit").disabled = false;
-        if(!document.getElementById("save").disabled)   // if save button is already enabled, then make edit, and cancel button enabled too.
+        if (!document.getElementById("save").disabled)   // if save button is already enabled, then make edit, and cancel button enabled too.
         {
             document.getElementById("save_As").disabled = true;
             document.getElementById("cancel").disabled = false;
@@ -244,17 +280,18 @@
     }
     function myLeftTrim(str) {
         var beginIndex = 0;
-        for(var i = 0; i < str.length; i++) {
-            if(str.charAt(i) == ' ')
+        for (var i = 0; i < str.length; i++) {
+            if (str.charAt(i) == ' ')
                 beginIndex++;
-            else break;
+            else
+                break;
         }
         return str.substring(beginIndex, str.length);
     }
     var popupwin = null;
-    function displayMapList(){
-        var queryString = "task=generateMapReport" ;
-        var url = "divisionCont?"+queryString;
+    function displayMapList() {
+        var queryString = "task=generateMapReport";
+        var url = "divisionCont?" + queryString;
         popupwin = openPopUp(url, "Mounting Type Map Details", 500, 1000);
 
     }
@@ -267,6 +304,26 @@
         return window.open(url, window_name, window_features);
     }
 
+    function pack(bytes) {
+        var str = "";
+// You could make it faster by reading bytes.length once.
+        for (var i = 0; i < bytes.length; i += 2) {
+// If you're using signed bytes, you probably need to mask here.
+            var char = bytes[i] << 8;
+// (undefined | 0) === 0 so you can save a test here by doing
+//     var char = (bytes[i] << 8) | (bytes[i + 1] & 0xff);
+            if (bytes[i + 1])
+                char |= bytes[i + 1];
+// Instead of using string += you could push char onto an array
+// and take advantage of the fact that String.fromCharCode can
+// take any number of arguments to do
+//     String.fromCharCode.apply(null, chars);
+            str += String.fromCharCode(char);
+        }
+        return str;
+    }
+
+
 </script>
 
 <html>
@@ -274,11 +331,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Command Page</title>
         <meta charset="utf-8">
-<!--  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>-->
+        <!--  <meta name="viewport" content="width=device-width, initial-scale=1">
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>-->
 
     </head>
     <body>
@@ -294,7 +351,7 @@
                                 <table align="center">
                                     <tr>
                                         <td align="center" class="header_table" width="100%">COMMAND DETAIL</td>
-                                       
+
                                     </tr>
                                 </table>
                             </td></tr>
@@ -316,7 +373,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td align="center">
+                            <td >
                                 <form name="form1" method="POST" action="CommandCont.do">
                                     <DIV class="content_div">
                                         <table id="table1" width="600"  border="1"  align="center" class="content">
@@ -331,9 +388,12 @@
                                                 <th class="heading">Command Type</th>
                                                 <th class="heading">Order No.</th>
                                                 <th class="heading">Delay</th>
-                                               
+
                                                 <th class="heading">Starting Delay</th>
                                                 <th class="heading">End Delay</th>
+                                                <th class="heading">Selection Number</th>
+                                                <th class="heading">Input Number</th>
+                                                <th class="heading">Format</th>
                                                 <th class="heading">Remark</th>
                                             </tr>
                                             <!---below is the code to show all values on jsp page fetched from trafficTypeList of TrafficController     --->
@@ -355,15 +415,18 @@
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.order_no}</td>
 
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.delay}</td>
-                                              
+
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.starting_del}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.end_del}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.selection_no}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.input_no}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.format}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.remark}</td>
 
                                                 </tr>
                                             </c:forEach>
                                             <tr>
-                                                <td align='center' colspan="13">
+                                                <td align='center' colspan="16">
                                                     <c:choose>
                                                         <c:when test="${showFirst eq 'false'}">
                                                             <input class="button" type='submit' name='buttonAction' value='First' disabled>
@@ -407,9 +470,9 @@
                                 </form>
                             </td>
                         </tr>
-<!--<div  id="divContentToPopup" style="display:none;">
-    <b>...content here...</b>
-</div>-->
+                        <!--<div  id="divContentToPopup" style="display:none;">
+                            <b>...content here...</b>
+                        </div>-->
                         <tr>
                             <td align="center">
                                 <div>
@@ -423,9 +486,9 @@
                                             <tr>
                                                 <th class="heading1">Manufacturer </th>
                                                 <td><input class="input" type="text" id="manufacturer" name="manufacturer" value="${manufacturer}" size="40" disabled></td>
-<!--<button type="button" class="btn btn-primary small" data-toggle="modal" data-target="#myModal">
-    Open modal
-  </button></td>-->
+                                                <!--<button type="button" class="btn btn-primary small" data-toggle="modal" data-target="#myModal">
+                                                    Open modal
+                                                  </button></td>-->
                                             </tr>
 
                                             <tr >
@@ -448,6 +511,13 @@
                                                 <td><input class="input" type="text" id="operation_name" name="operation_name" value="" size="40" disabled></td>
                                             </tr>
                                             <tr>
+                                                <th class="heading1">Command Format</th>
+                                                <td>
+                                                    <input class="input" type="radio" id="command_format1" name="command_format" value="hex" size="40" disabled> Hexadecimal
+                                                    <input class="input" type="radio" id="command_format" name="command_format" value="String" size="40" disabled> String
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <th class="heading1">Command</th>
                                                 <td><input class="input" type="text" id="command" name="command" value="" size="40" disabled></td>
                                             </tr>
@@ -465,7 +535,7 @@
                                                 <th class="heading1">Delay</th>
                                                 <td><input class="input" type="text" id="delay" name="delay" value="" size="40" disabled></td>
                                             </tr>
-                                            
+
                                             <tr>
                                                 <th class="heading1">Starting Del</th>
                                                 <td><input class="input" type="text" id="starting_del" name="starting_del" value="" size="40" disabled></td>
@@ -475,11 +545,19 @@
                                                 <td><input class="input" type="text" id="end_del" name="end_del" value="" size="40" disabled></td>
                                             </tr>
                                             <tr>
+                                                <th class="heading1">Selection No</th>
+                                                <td><input class="input" type="number" id="selection_no" name="selection_no" value="" size="40" disabled style="width: 77.5%;"></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="heading1">Input No</th>
+                                                <td><input class="input" type="number" id="input_no" name="input_no" value="" size="40" disabled style="width: 77.5%;"></td>
+                                            </tr>
+                                            <tr>
                                                 <th class="heading1">Remark</th>
                                                 <td><input class="input" type="text" id="remark" name="remark" value="" size="40" disabled></td>
                                             </tr>
 
-                                            
+
                                             <tr>
                                                 <td align='center' colspan="2">
                                                     <input class="button" type="button" name="edit" id="edit" value="Edit" onclick="makeEditable(id)" disabled>
@@ -507,9 +585,9 @@
 
 
                             </td>
-                            
-                                
-                            
+
+
+
 
                         </tr>
                     </table>
@@ -520,40 +598,40 @@
         </table>
 
 
-<!--        <div class="container">
-  <h2>Modal Example</h2>
-   Button to Open the Modal 
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-    Open modal
-  </button>
-
-   The Modal 
-  <div class="modal" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-
-         Modal Header 
-        <div class="modal-header">
-          <h4 class="modal-title">Modal Heading</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <!--        <div class="container">
+          <h2>Modal Example</h2>
+           Button to Open the Modal 
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            Open modal
+          </button>
+        
+           The Modal 
+          <div class="modal" id="myModal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+        
+                 Modal Header 
+                <div class="modal-header">
+                  <h4 class="modal-title">Modal Heading</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+        
+                 Modal body 
+                <div class="modal-body">
+                  Modal body..
+                </div>
+        
+                 Modal footer 
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+        
+              </div>
+            </div>
+          </div>
+        
         </div>
-
-         Modal body 
-        <div class="modal-body">
-          Modal body..
-        </div>
-
-         Modal footer 
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-</div>
--->
+        -->
 
 
 
