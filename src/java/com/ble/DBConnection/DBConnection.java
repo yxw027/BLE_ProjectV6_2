@@ -9,7 +9,6 @@ import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.servlet.ServletContext;
-import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
 /**
  *
@@ -17,7 +16,7 @@ import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
  */
 public class DBConnection {
 
-    private static BasicDataSource dataSource = null;
+    //private static BasicDataSource dataSource = null;
 
     public static Connection getConnection(ServletContext ctx) throws SQLException
     {

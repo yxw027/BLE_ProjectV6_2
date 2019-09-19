@@ -264,7 +264,7 @@ public class BLEWebServicesModel {
         {
         JSONArray rowData = new JSONArray();
         String query = null;
-        query = "select id,device_id,command,order_no,delay,operation_id,starting_del,end_del,remark,command_type_id "
+        query = "select id,device_id,command,order_no,delay,operation_id,starting_del,end_del,remark,command_type_id,selection,input "
                 +" from command c "
                 +" where c.active='Y' ";
         try {
@@ -283,6 +283,8 @@ public class BLEWebServicesModel {
                  obj.put("end_del",rset.getString("end_del"));
                  obj.put("remark",rset.getString("remark"));
                  obj.put("command_type_id",rset.getInt("command_type_id"));
+                 obj.put("selection",rset.getInt("selection"));
+                 obj.put("input",rset.getInt("input"));
                  rowData.add(obj);
            }
         } catch (Exception e) {
@@ -339,11 +341,40 @@ public class BLEWebServicesModel {
         return rowData;
     }
 
+//    public JSONArray getDeviceCharacteristicBleMapRecord()
+//        {
+//        JSONArray rowData = new JSONArray();
+//        String query = null;
+//        query = " select device_characteristic_ble_map_id,device_id,read_characteristic_id,ble_operation_name_id,write_characteristic_id, "
+//                +" order_no,remark "
+//                +" from device_characteristic_ble_map d "
+//                +" where d.active='Y' ";
+//        try {
+//            PreparedStatement pstmt = connection.prepareStatement(query);
+//            ResultSet rset = pstmt.executeQuery();
+//            while (rset.next()) {
+//                JSONObject obj = new JSONObject();
+//                 obj.put("device_characteristic_ble_map_id",rset.getInt("device_characteristic_ble_map_id"));
+//                 obj.put("device_id",rset.getInt("device_id"));
+//                 obj.put("read_characteristic_id",rset.getInt("read_characteristic_id"));
+//                 obj.put("write_characteristic_id",rset.getInt("write_characteristic_id"));
+//                 obj.put("ble_operation_name_id",rset.getInt("ble_operation_name_id"));
+//                 obj.put("order_no",rset.getString("order_no"));
+//                 obj.put("remark",rset.getString("remark"));
+//
+//                 rowData.add(obj);
+//           }
+//        } catch (Exception e) {
+//            System.out.println("Error inside show data of survey: " + e);
+//        }
+//        return rowData;
+//    }
+    
     public JSONArray getDeviceCharacteristicBleMapRecord()
         {
         JSONArray rowData = new JSONArray();
         String query = null;
-        query = " select device_characteristic_ble_map_id,device_id,read_characteristic_id,ble_operation_name_id,write_characteristic_id "
+        query = " select device_characteristic_ble_map_id,device_id,read_characteristic_id,ble_operation_name_id,write_characteristic_id, "
                 +" order_no,remark "
                 +" from device_characteristic_ble_map d "
                 +" where d.active='Y' ";
@@ -358,6 +389,84 @@ public class BLEWebServicesModel {
                  obj.put("write_characteristic_id",rset.getInt("write_characteristic_id"));
                  obj.put("ble_operation_name_id",rset.getInt("ble_operation_name_id"));
                  obj.put("order_no",rset.getString("order_no"));
+                 obj.put("remark",rset.getString("remark"));
+
+                 rowData.add(obj);
+           }
+        } catch (Exception e) {
+            System.out.println("Error inside show data of survey: " + e);
+        }
+        return rowData;
+    }
+    
+    
+    public JSONArray getSelectionRecord()
+        {
+        JSONArray rowData = new JSONArray();
+        String query = null;
+        query = " select selection_id, command_id, parameter_id, parameter_value, remark "
+                +" from selection d "
+                +" where d.active='Y' ";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            ResultSet rset = pstmt.executeQuery();
+            while (rset.next()) {
+                JSONObject obj = new JSONObject();
+                 obj.put("selection_id",rset.getInt("selection_id"));
+                 obj.put("command_id",rset.getInt("command_id"));
+                 obj.put("parameter_id",rset.getInt("parameter_id"));
+                 obj.put("parameter_value",rset.getString("parameter_value"));
+                 obj.put("remark",rset.getString("remark"));
+
+                 rowData.add(obj);
+           }
+        } catch (Exception e) {
+            System.out.println("Error inside show data of survey: " + e);
+        }
+        return rowData;
+    }
+    
+    
+    public JSONArray getInputRecord()
+        {
+        JSONArray rowData = new JSONArray();
+        String query = null;
+        query = " select input_id, command_id, parameter_id,remark "
+                +" from input d "
+                +" where d.active='Y' ";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            ResultSet rset = pstmt.executeQuery();
+            while (rset.next()) {
+                JSONObject obj = new JSONObject();
+                 obj.put("input_id",rset.getInt("input_id"));
+                 obj.put("command_id",rset.getInt("command_id"));
+                 obj.put("parameter_id",rset.getInt("parameter_id"));
+                 obj.put("remark",rset.getString("remark"));
+
+                 rowData.add(obj);
+           }
+        } catch (Exception e) {
+            System.out.println("Error inside show data of survey: " + e);
+        }
+        return rowData;
+    }
+    
+    public JSONArray getParameterRecord()
+        {
+        JSONArray rowData = new JSONArray();
+        String query = null;
+        query = " select parameter_id, parameter_name, parameter_type, remark "
+                +" from parameter d "
+                +" where d.active='Y' ";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            ResultSet rset = pstmt.executeQuery();
+            while (rset.next()) {
+                JSONObject obj = new JSONObject();
+                 obj.put("parameter_id",rset.getInt("parameter_id"));
+                 obj.put("parameter_name",rset.getString("parameter_name"));
+                 obj.put("parameter_type",rset.getString("parameter_type"));
                  obj.put("remark",rset.getString("remark"));
 
                  rowData.add(obj);

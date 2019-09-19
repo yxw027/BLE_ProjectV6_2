@@ -66,9 +66,9 @@ public class InputModel {
     
     public int insertRecord(InputBean input) {
         int parameter_id = getParameterId(input.getParameter());
-        byte[] hexaByte = DatatypeConverter.parseHexBinary(input.getCommand_name());
-        String jaya = Arrays.toString(hexaByte);
-        int command_id = getCommandId(jaya);
+//        byte[] hexaByte = DatatypeConverter.parseHexBinary(input.getCommand_name());
+//        String jaya = Arrays.toString(hexaByte);
+        int command_id = getCommandId(input.getCommand_name());
 
         String query = " insert into input(input_id,command_id,parameter_id,remark) "
                        +" values(?,?,?,?) ";
@@ -99,9 +99,9 @@ public class InputModel {
         String query="";
         int rowsAffected=0;
         int parameter_id = getParameterId(bean.getParameter());
-        byte[] hexaByte = DatatypeConverter.parseHexBinary(bean.getCommand_name());
-        String jaya = Arrays.toString(hexaByte);
-        int command_id = getCommandId(jaya);
+//        byte[] hexaByte = DatatypeConverter.parseHexBinary(bean.getCommand_name());
+//        String jaya = Arrays.toString(hexaByte);
+        int command_id = getCommandId(bean.getCommand_name());
       String query1 = " SELECT max(revision_no) revision_no FROM input c WHERE c.input_id = "+bean.getInput_id()+" && active='Y' ORDER BY revision_no DESC";
       String query2 = " UPDATE input SET active=? WHERE input_id = ? && revision_no = ? ";
       String query3 = " INSERT INTO input (input_id,command_id,parameter_id,remark,revision_no,active) VALUES (?,?,?,?,?,?) ";
@@ -193,8 +193,8 @@ public class InputModel {
           
           String commandName = "";
           if(searchManufacturerName != null) {
-              byte[] hexaByte = DatatypeConverter.parseHexBinary(searchManufacturerName);
-              commandName = Arrays.toString(hexaByte);
+//              byte[] hexaByte = DatatypeConverter.parseHexBinary(searchManufacturerName);
+              commandName = searchManufacturerName;//Arrays.toString(hexaByte);
           }
 
        String query2="select s.input_id,c.command,s.remark, p.parameter_name, p.parameter_type"
@@ -211,14 +211,14 @@ public class InputModel {
                 InputBean inputBean = new InputBean();
                 inputBean.setInput_id(rset.getInt("input_id"));
                 String command = rset.getString("command");
-                String commandReq = command.substring(1, command.length()-1);
-                String[] commandByte = commandReq.split(", ");
-                Byte[] b = new Byte[commandByte.length];
-                for (int i = 0; i < commandByte.length; i++) {
-                    b[i] = Byte.parseByte(commandByte[i]);                   
-                }
-                String hex = bytesToHex(b);
-                inputBean.setCommand_name(hex.toUpperCase());
+//                String commandReq = command.substring(1, command.length()-1);
+//                String[] commandByte = commandReq.split(", ");
+//                Byte[] b = new Byte[commandByte.length];
+//                for (int i = 0; i < commandByte.length; i++) {
+//                    b[i] = Byte.parseByte(commandByte[i]);                   
+//                }
+//                String hex = bytesToHex(b);
+                inputBean.setCommand_name(command);
                 inputBean.setParameter(rset.getString("parameter_name"));
                 inputBean.setParameter_type(rset.getString("parameter_type"));
                 inputBean.setRemark(rset.getString("remark"));
@@ -238,14 +238,14 @@ public class InputModel {
             int count = 0;
             while (rset.next()) {    
                 String type = rset.getString("command");
-                String commandReq = type.substring(1, type.length()-1);
-                String[] commandByte = commandReq.split(", ");
-                Byte[] b = new Byte[commandByte.length];
-                for (int i = 0; i < commandByte.length; i++) {
-                    b[i] = Byte.parseByte(commandByte[i]);                   
-                }
-                String hex = bytesToHex(b);
-                list.add(hex.toUpperCase());
+//                String commandReq = type.substring(1, type.length()-1);
+//                String[] commandByte = commandReq.split(", ");
+//                Byte[] b = new Byte[commandByte.length];
+//                for (int i = 0; i < commandByte.length; i++) {
+//                    b[i] = Byte.parseByte(commandByte[i]);                   
+//                }
+//                String hex = bytesToHex(b);
+                list.add(type);
                 count++;
             }
             if (count == 0) {
