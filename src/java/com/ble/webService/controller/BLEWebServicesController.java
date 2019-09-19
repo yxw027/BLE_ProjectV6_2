@@ -66,7 +66,12 @@ public class BLEWebServicesController {
          obj.put("ble_operation_name", json);
          json = bLEWebServicesModel.getDeviceCharacteristicBleMapRecord();
          obj.put("device_characteristic_ble_map", json);
-         
+         json = bLEWebServicesModel.getSelectionRecord();
+         obj.put("selection", json);
+         json = bLEWebServicesModel.getInputRecord();
+         obj.put("input", json);
+         json = bLEWebServicesModel.getParameterRecord();
+         obj.put("parameter", json);
 
          json = bLEWebServicesModel.getDeviceMapRecords();
          obj.put("device_map", json);

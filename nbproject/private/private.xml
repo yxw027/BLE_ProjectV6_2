@@ -4,18 +4,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/apogee/Documents/Document/BLE_Project/src/java/com/ble/command/bean/SelectionBean.java</file>
-            <file>file:/home/apogee/Documents/Document/BLE_Project/src/java/com/ble/command/model/SelectionModel.java</file>
-            <file>file:/home/apogee/Documents/Document/BLE_Project/web/view/dataEntry/input.jsp</file>
-            <file>file:/home/apogee/Documents/Document/BLE_Project/src/java/com/ble/command/controller/SelectionController.java</file>
-            <file>file:/home/apogee/Documents/Document/BLE_Project/web/view/dataEntry/selection.jsp</file>
-            <file>file:/home/apogee/Documents/Document/BLE_Project/src/java/com/ble/command/model/CommandModel.java</file>
-            <file>file:/home/apogee/Documents/Document/BLE_Project/src/java/com/ble/command/controller/InputController.java</file>
-            <file>file:/home/apogee/Documents/Document/BLE_Project/web/WEB-INF/web.xml</file>
-            <file>file:/home/apogee/Documents/Document/BLE_Project/src/java/com/ble/command/bean/InputBean.java</file>
-            <file>file:/home/apogee/Documents/Document/BLE_Project/web/layout/menu.jsp</file>
-            <file>file:/home/apogee/Documents/Document/BLE_Project/src/java/com/ble/command/controller/CommandController.java</file>
-            <file>file:/home/apogee/Documents/Document/BLE_Project/web/view/command.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/Jaya/Desktop%20Project/BLE_Project/BLE_Project/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/Administrator/Desktop/Jaya/Desktop%20Project/BLE_Project/BLE_Project/src/java/com/ble/webService/controller/BLEWebServicesController.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/Jaya/Desktop%20Project/BLE_Project/BLE_Project/src/java/com/ble/DBConnection/DBConnection.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/Jaya/Desktop%20Project/BLE_Project/BLE_Project/src/java/com/ble/webService/model/BLEWebServicesModel.java</file>
         </group>
     </open-files>
 </project-private>
