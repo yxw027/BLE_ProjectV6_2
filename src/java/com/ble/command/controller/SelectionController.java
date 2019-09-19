@@ -53,6 +53,7 @@ public class SelectionController extends HttpServlet {
         if (task == null) {
             task = "";
         }
+        String selection_no = request.getParameter("selection_no");
 
         if(action1 == null) {
             action1 = "";
@@ -170,7 +171,13 @@ public class SelectionController extends HttpServlet {
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("message", selectionModel.getMessage());
         request.setAttribute("msgBgColor", selectionModel.getMsgBgColor());
-        request.getRequestDispatcher("/selection").forward(request, response);
+        
+        if(selection_no != null) {
+            request.setAttribute("selection_no", selection_no);
+            request.getRequestDispatcher("/selection_command").forward(request, response);
+        } else {
+            request.getRequestDispatcher("/selection").forward(request, response);
+        }
         
     }
 

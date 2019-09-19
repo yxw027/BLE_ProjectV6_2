@@ -323,10 +323,16 @@
         return str;
     }
 
-    function basicPopup(url) {
-        popupWindow = window.open(url, 'popUpWindow', 'height=500,width=500,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+    function selectionPopup(url, selection_no) {
+        var popup_height = 580;
+        var popup_width = 900;
+        var selection_no = 
+        var popup_top_pos = (screen.availHeight / 2) - (popup_height / 2);
+        var popup_left_pos = (screen.availWidth / 2) - (popup_width / 2);
+        url = url + "?selection_no="+selection_no;
+        var window_features = "left=" + popup_left_pos + ", top=" + popup_top_pos + ", width=" + popup_width + ", height=" + popup_height + ", resizable=no, scrollbars=yes, status=no, dialog=yes, dependent=yes";
+        popupWindow = window.open(url, 'Selection Window', window_features);
     }
-
 
 </script>
 
@@ -422,7 +428,8 @@
 
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.starting_del}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.end_del}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.selection_no}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.selection_no}
+                                                    <a href="CommandCont.do" onclick="selectionPopup(this.href,${divisionTypeBean.selection_no});return false" id="selection_button">View Selection</a></td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.input_no}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.format}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.remark}</td>
@@ -551,7 +558,7 @@
                                             <tr>
                                                 <th class="heading1">Selection No</th>
                                                 <td><input class="input" type="number" id="selection_no" name="selection_no" value="" size="40" disabled style="width: 77.5%;">
-                                                    <a href="CommandCont.do" onclick="basicPopup(this.href);return false" id="selection_button">View Selection</a> </td>
+                                                     </td>
                                             </tr>
                                             <tr>
                                                 <th class="heading1">Input No</th>
