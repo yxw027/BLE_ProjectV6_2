@@ -68,9 +68,9 @@ public class SelectionModel {
     
     public int insertRecord(SelectionBean selectionBean) {
         int parameter_id = getParameterId(selectionBean.getParameter());
-        byte[] hexaByte = DatatypeConverter.parseHexBinary(selectionBean.getCommand_name());
-        String jaya = Arrays.toString(hexaByte);
-        int command_id = getCommandId(jaya);
+//        byte[] hexaByte = DatatypeConverter.parseHexBinary(selectionBean.getCommand_name());
+//        String jaya = Arrays.toString(hexaByte);
+        int command_id = getCommandId(selectionBean.getCommand_name());
 
         String query = " insert into selection(selection_id,command_id,parameter_id,parameter_value,remark) "
                        +" values(?,?,?,?,?) ";
@@ -102,9 +102,9 @@ public class SelectionModel {
         String query="";
         int rowsAffected=0;
         int parameter_id = getParameterId(bean.getParameter());
-        byte[] hexaByte = DatatypeConverter.parseHexBinary(bean.getCommand_name());
-        String jaya = Arrays.toString(hexaByte);
-        int command_id = getCommandId(jaya);
+//        byte[] hexaByte = DatatypeConverter.parseHexBinary(bean.getCommand_name());
+//        String jaya = Arrays.toString(hexaByte);
+        int command_id = getCommandId(bean.getCommand_name());
         String query1 = " SELECT max(revision_no) revision_no FROM selection c WHERE c.selection_id = "+bean.getSelection_id()+" && active='Y' ORDER BY revision_no DESC";
         String query2 = " UPDATE selection SET active=? WHERE selection_id = ? && revision_no = ? ";
         String query3 = " INSERT INTO selection (selection_id,command_id,parameter_id,remark,revision_no,active,parameter_value) VALUES (?,?,?,?,?,?,?) ";
@@ -196,14 +196,14 @@ public class SelectionModel {
             int count = 0;
             while (rset.next()) {    
                 String type = rset.getString("command");
-                String commandReq = type.substring(1, type.length()-1);
-                String[] commandByte = commandReq.split(", ");
-                Byte[] b = new Byte[commandByte.length];
-                for (int i = 0; i < commandByte.length; i++) {
-                    b[i] = Byte.parseByte(commandByte[i]);                   
-                }
-                String hex = bytesToHex(b);
-                list.add(hex.toUpperCase());
+//                String commandReq = type.substring(1, type.length()-1);
+//                String[] commandByte = commandReq.split(", ");
+//                Byte[] b = new Byte[commandByte.length];
+//                for (int i = 0; i < commandByte.length; i++) {
+//                    b[i] = Byte.parseByte(commandByte[i]);                   
+//                }
+//                String hex = bytesToHex(b);
+                list.add(type);
                 count++;
             }
             if (count == 0) {
@@ -270,8 +270,9 @@ public class SelectionModel {
           String commandName = "";
             
           if(searchManufacturerName != null) {
-              byte[] hexaByte = DatatypeConverter.parseHexBinary(searchManufacturerName);
-              commandName = Arrays.toString(hexaByte);
+//              byte[] hexaByte = DatatypeConverter.parseHexBinary(searchManufacturerName);
+//              commandName = Arrays.toString(hexaByte);
+                commandName = searchManufacturerName;
           }
           
 
@@ -288,15 +289,15 @@ public class SelectionModel {
                 SelectionBean selectionBean = new SelectionBean();
                 
                 String command = rset.getString("command");
-                String commandReq = command.substring(1, command.length()-1);
-                String[] commandByte = commandReq.split(", ");
-                Byte[] b = new Byte[commandByte.length];
-                for (int i = 0; i < commandByte.length; i++) {
-                    b[i] = Byte.parseByte(commandByte[i]);                   
-                }
-                String hex = bytesToHex(b);
+//                String commandReq = command.substring(1, command.length()-1);
+//                String[] commandByte = commandReq.split(", ");
+//                Byte[] b = new Byte[commandByte.length];
+//                for (int i = 0; i < commandByte.length; i++) {
+//                    b[i] = Byte.parseByte(commandByte[i]);                   
+//                }
+//                String hex = bytesToHex(b);
                 selectionBean.setSelection_id(rset.getInt("selection_id"));
-                selectionBean.setCommand_name(hex.toUpperCase());
+                selectionBean.setCommand_name(command);
                 selectionBean.setParameter(rset.getString("parameter_name"));
                 selectionBean.setParameter_value(rset.getString("parameter_value"));
                 selectionBean.setParameter_type(rset.getString("parameter_type"));

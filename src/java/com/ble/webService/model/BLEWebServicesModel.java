@@ -264,7 +264,7 @@ public class BLEWebServicesModel {
         {
         JSONArray rowData = new JSONArray();
         String query = null;
-        query = "select id,device_id,command,order_no,delay,operation_id,starting_del,end_del,remark,command_type_id "
+        query = "select id,device_id,command,order_no,delay,operation_id,starting_del,end_del,remark,command_type_id,selection,input "
                 +" from command c "
                 +" where c.active='Y' ";
         try {
@@ -283,6 +283,8 @@ public class BLEWebServicesModel {
                  obj.put("end_del",rset.getString("end_del"));
                  obj.put("remark",rset.getString("remark"));
                  obj.put("command_type_id",rset.getInt("command_type_id"));
+                 obj.put("selection",rset.getInt("selection"));
+                 obj.put("input",rset.getInt("input"));
                  rowData.add(obj);
            }
         } catch (Exception e) {
