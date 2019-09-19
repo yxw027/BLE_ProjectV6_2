@@ -218,7 +218,7 @@
     function fillColumns(id) {
         debugger;
         var noOfRowsTraversed = document.getElementById("noOfRowsTraversed").value;
-        var noOfColumns = 15;
+        var noOfColumns = 17;
         var columnId = id;
     <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
         columnId = columnId.substring(3, id.length);
@@ -247,20 +247,20 @@
         document.getElementById("order_no").value = document.getElementById(t1id + (lowerLimit + 9)).innerHTML;
 
         document.getElementById("delay").value = document.getElementById(t1id + (lowerLimit + 10)).innerHTML;
-
+        debugger;
         document.getElementById("starting_del").value = document.getElementById(t1id + (lowerLimit + 11)).innerHTML;
         document.getElementById("end_del").value = document.getElementById(t1id + (lowerLimit + 12)).innerHTML;
-        document.getElementById("selection_no").value = document.getElementById(t1id + (lowerLimit + 12)).innerHTML;
-        document.getElementById("input_no").value = document.getElementById(t1id + (lowerLimit + 12)).innerHTML;
-        var format = document.getElementById(t1id + (lowerLimit + 13)).innerHTML;
-        if(format === "hex") {
+        document.getElementById("selection_no").value = document.getElementById(t1id + (lowerLimit + 13)).innerHTML;
+        document.getElementById("input_no").value = document.getElementById(t1id + (lowerLimit + 14)).innerHTML;
+        var format = document.getElementById(t1id + (lowerLimit + 15)).innerHTML;
+        if (format === "hex") {
             document.getElementById("command_format1").checked = true;
             document.getElementById("command_format").checked = false;
-        }else if(format === "string") {
+        } else if (format === "string") {
             document.getElementById("command_format").checked = true;
             document.getElementById("command_format1").checked = false;
         }
-        document.getElementById("remark").value = document.getElementById(t1id + (lowerLimit + 14)).innerHTML;
+        document.getElementById("remark").value = document.getElementById(t1id + (lowerLimit + 16)).innerHTML;
 
         //       var b=  document.getElementById(t1id +(lowerLimit+8)).innerHTML;
         // alert(b);
@@ -281,7 +281,7 @@
     function myLeftTrim(str) {
         var beginIndex = 0;
         for (var i = 0; i < str.length; i++) {
-            if (str.charAt(i) == ' ')
+            if (str.charAt(i) === ' ')
                 beginIndex++;
             else
                 break;
@@ -321,6 +321,10 @@
             str += String.fromCharCode(char);
         }
         return str;
+    }
+
+    function basicPopup(url) {
+        popupWindow = window.open(url, 'popUpWindow', 'height=500,width=500,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
     }
 
 
@@ -546,7 +550,8 @@
                                             </tr>
                                             <tr>
                                                 <th class="heading1">Selection No</th>
-                                                <td><input class="input" type="number" id="selection_no" name="selection_no" value="" size="40" disabled style="width: 77.5%;"></td>
+                                                <td><input class="input" type="number" id="selection_no" name="selection_no" value="" size="40" disabled style="width: 77.5%;">
+                                                    <a href="CommandCont.do" onclick="basicPopup(this.href);return false" id="selection_button">View Selection</a> </td>
                                             </tr>
                                             <tr>
                                                 <th class="heading1">Input No</th>

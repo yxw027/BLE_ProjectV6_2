@@ -336,14 +336,14 @@ public boolean reviseRecords(CommandBean bean){
                 commandBean.setDevice_name(rset.getString("device_name"));
                 commandBean.setDevice_no(rset.getString("device_no"));
                 String command = rset.getString("command");
-                String commandReq = command.substring(1, command.length()-1);
-                String[] commandByte = commandReq.split(", ");
-                Byte[] b = new Byte[commandByte.length];
-                for (int i = 0; i < commandByte.length; i++) {
-                    b[i] = Byte.parseByte(commandByte[i]);                   
-                }
-                String hex = bytesToHex(b);
-                commandBean.setCommand(hex.toUpperCase());
+//                String commandReq = command.substring(1, command.length()-1);
+//                String[] commandByte = commandReq.split(", ");
+//                Byte[] b = new Byte[commandByte.length];
+//                for (int i = 0; i < commandByte.length; i++) {
+//                    b[i] = Byte.parseByte(commandByte[i]);                   
+//                }
+//                String hex = bytesToHex(b);
+                commandBean.setCommand(command);
                 commandBean.setOrder_no(rset.getString("order_no"));
                 commandBean.setDelay(rset.getString("delay"));
                 commandBean.setOperation_name(rset.getString("operation_name"));

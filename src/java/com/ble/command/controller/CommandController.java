@@ -9,7 +9,6 @@ import com.ble.command.model.CommandModel;
 import com.ble.util.UniqueIDGenerator;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -128,27 +127,28 @@ public class CommandController extends HttpServlet {
             commandBean.setDevice_name(request.getParameter("device_name"));
             commandBean.setDevice_no(request.getParameter("device_no"));
             commandBean.setFormat(request.getParameter("command_format"));
-            if (request.getParameter("command_format").equals("hex")) {
-                String command = request.getParameter("command").trim();
-                String hex = "";
-                if (!command.isEmpty()) {
-                    byte[] hexaByte = DatatypeConverter.parseHexBinary(command);
-                    String jaya = Arrays.toString(hexaByte);
-                    commandBean.setCommand(jaya);
-                    
-                }
-            } else if (request.getParameter("command_format").equals("string")) {
-                String command = request.getParameter("command");
-                if (!command.isEmpty()) {
-                    command = command + "\r\n";  
-                    byte[] hexaByte = command.getBytes();
-                    
-                    System.out.println(Arrays.toString(hexaByte));
-                    commandBean.setCommand(Arrays.toString(hexaByte));
-                }
-
-            }
+//            if (request.getParameter("command_format").equals("hex")) {
+//                String command = request.getParameter("command").trim();
+//                String hex = "";
+//                if (!command.isEmpty()) {
+//                    byte[] hexaByte = DatatypeConverter.parseHexBinary(command);
+//                    String jaya = Arrays.toString(hexaByte);
+//                    commandBean.setCommand(jaya);
+//                    
+//                }
+//            } else if (request.getParameter("command_format").equals("string")) {
+//                String command = request.getParameter("command");
+//                if (!command.isEmpty()) {
+//                    command = command + "\r\n";  
+//                    byte[] hexaByte = command.getBytes();
+//                    
+//                    System.out.println(Arrays.toString(hexaByte));
+//                    commandBean.setCommand(Arrays.toString(hexaByte));
+//                }
+//
+//            }
             //commandBean.setCommand(request.getParameter("command"));
+             commandBean.setCommand(request.getParameter("command"));
             commandBean.setCommand_type(request.getParameter("command_type"));
             commandBean.setOrder_no(request.getParameter("order_no"));
             commandBean.setDelay(request.getParameter("delay"));
