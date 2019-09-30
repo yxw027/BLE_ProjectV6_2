@@ -38,15 +38,15 @@ public class SelectionController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int lowerLimit, noOfRowsTraversed, noOfRowsToDisplay = 5, noOfRowsInTable;
-        
+
         ServletContext ctx = getServletContext();
         SelectionModel selectionModel = new SelectionModel();
         selectionModel.setDriverClass(ctx.getInitParameter("driverClass"));
-        selectionModel.setConnectionString(ctx.getInitParameter("connectionString"));
+         selectionModel.setConnectionString(ctx.getInitParameter("connectionString"));
         selectionModel.setDb_username(ctx.getInitParameter("db_username"));
         selectionModel.setDb_password(ctx.getInitParameter("db_password"));
         selectionModel.setConnection();
-        
+
         String task = request.getParameter("task");
         String action1 = request.getParameter("action1");
         String q = request.getParameter("q");
@@ -54,79 +54,56 @@ public class SelectionController extends HttpServlet {
             task = "";
         }
         String selection_no = request.getParameter("selection_no");
+        String command_id = request.getParameter("command_id");
+        String command123 = request.getParameter("command");
 
-        if(action1 == null) {
+        if (action1 == null) {
             action1 = "";
-        } else if(action1 != null) {
+        } else if (action1 != null) {
             PrintWriter out = response.getWriter();
             List<String> list = null;
-           
-            if(action1.equals("getCommand")) {
+
+            if (action1.equals("getCommand")) {
                 list = selectionModel.getCommandName();
-            } if(action1.equals("getParameter")) {
+            }
+            if (action1.equals("getParameter")) {
                 list = selectionModel.getParameter();
-            } if(action1.equals("getParameterType")) {
+            }
+            if (action1.equals("getParameterType")) {
                 list = selectionModel.getParameterType();
             }
             Iterator<String> iter = list.iterator();
-                while (iter.hasNext()) {
-                    String data = iter.next();
-                    out.println(data);
-                }
-                selectionModel.closeConnection();
-                return;
+            while (iter.hasNext()) {
+                String data = iter.next();
+                out.println(data);
+            }
+
+            selectionModel.closeConnection();
+            return;
+
         }
-        
-         if (task.equals("Save") || task.equals("Save AS New")) {
-            int selection_id;
-            try {
-                selection_id = Integer.parseInt(request.getParameter("selection_id"));
-            } catch (Exception e) {
-                selection_id = 0;
-            }
-            if (task.equals("Save AS New")) {
-                selection_id = 0;
-            }
-            SelectionBean bean = new SelectionBean();
-            bean.setSelection_id(selection_id);
-            bean.setCommand_name(request.getParameter("command_name"));
-            bean.setParameter(request.getParameter("parameter"));
-            bean.setParameter_type(request.getParameter("parameter_type"));
-            bean.setParameter_value(request.getParameter("parameter_value"));
-            bean.setRemark(request.getParameter("remark"));
-            if (selection_id == 0) {
-                System.out.println("Inserting values by model......");
-                selectionModel.insertRecord(bean);
-            } else {
-                System.out.println("Update values by model........");
-                selectionModel.reviseRecords(bean);
-            }
+
+        String searchCommandName = "";
+
+        searchCommandName = request.getParameter("searchCommandName");
+
+        System.out.println("searching.......... " + searchCommandName);
+
+        noOfRowsInTable = selectionModel.getNoOfRows(searchCommandName);
+        String buttonAction = request.getParameter("buttonAction"); // Holds the name of any of the four buttons: First, Previous, Next, Delete.
+        if (buttonAction == null) {
+            buttonAction = "none";
         }
-            
-        
+
         try {
             lowerLimit = Integer.parseInt(request.getParameter("lowerLimit"));
             noOfRowsTraversed = Integer.parseInt(request.getParameter("noOfRowsTraversed"));
         } catch (Exception e) {
             lowerLimit = noOfRowsTraversed = 0;
         }
-        
-        String buttonAction = request.getParameter("buttonAction"); // Holds the name of any of the four buttons: First, Previous, Next, Delete.
-        if (buttonAction == null) {
-            buttonAction = "none";
-        }
-        
-        
-        String searchCommandName = "";
 
-        searchCommandName = request.getParameter("searchCommandName");
-        
-        System.out.println("searching.......... " + searchCommandName);
-
-         noOfRowsInTable = selectionModel.getNoOfRows(searchCommandName);
-
-         if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
-         else if (buttonAction.equals("Previous")) {
+        if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
+        else if (buttonAction.equals("Previous")) {
             int temp = lowerLimit - noOfRowsToDisplay - noOfRowsTraversed;
             if (temp < 0) {
                 noOfRowsToDisplay = lowerLimit - noOfRowsTraversed;
@@ -142,21 +119,73 @@ public class SelectionController extends HttpServlet {
                 lowerLimit = 0;
             }
         }
+
+        List<SelectionBean> selectionList = selectionModel.showData(lowerLimit, noOfRowsToDisplay, searchCommandName);
+
+        if (task.equals("Save") || task.equals("Save AS New")) {
+            int selection_id;
+            try {
+                selection_id = Integer.parseInt(request.getParameter("selection_id"));
+            } catch (Exception e) {
+                selection_id = 0;
+            }
+            if (task.equals("Save AS New")) {
+                selection_id = 0;
+            }
+
+            if (selection_no != null && command123 != null) {
+                int selection = Integer.parseInt(selection_no);
+                for (int i = 1; i <= selection; i++) {
+                    SelectionBean bean = new SelectionBean();
+                    bean.setSelection_id(selection_id);
+                    bean.setCommand_name(request.getParameter("command_name" + i));
+                    bean.setParameter(request.getParameter("parameter" + i));
+                    bean.setParameter_type(request.getParameter("parameter_type" + i));
+                    bean.setParameter_value(request.getParameter("parameter_value" + i));
+                    bean.setRemark(request.getParameter("remark" + i));
+                    if (selection_id == 0) {
+                        System.out.println("Inserting values by model......");
+                        selectionModel.insertRecord(bean);
+                    } else {
+                        System.out.println("Update values by model........");
+                        selectionModel.reviseRecords(bean);
+                    }
+
+                }
+            } else {
+                SelectionBean bean = new SelectionBean();
+                bean.setSelection_id(selection_id);
+                bean.setCommand_name(request.getParameter("command_name"));
+                bean.setParameter(request.getParameter("parameter"));
+                bean.setParameter_type(request.getParameter("parameter_type"));
+                bean.setParameter_value(request.getParameter("parameter_value"));
+                bean.setRemark(request.getParameter("remark"));
+                if (selection_id == 0) {
+                    System.out.println("Inserting values by model......");
+                    selectionModel.insertRecord(bean);
+                } else {
+                    System.out.println("Update values by model........");
+                    selectionModel.reviseRecords(bean);
+                }
+            }
+
+        }
+
         if (task.equals("Save") || task.equals("Cancel") || task.equals("Save AS New")) {
             lowerLimit = lowerLimit - noOfRowsTraversed;    // Here objective is to display the same view again, i.e. reset lowerLimit to its previous value.
         } else if (task.equals("Show All Records")) {
-            searchCommandName="";
+            searchCommandName = "";
 
         }
-           // Logic to show data in the table.
-        List<SelectionBean> selectionList = selectionModel.showData(lowerLimit, noOfRowsToDisplay,searchCommandName);
+        // Logic to show data in the table.
+
         lowerLimit = lowerLimit + selectionList.size();
         noOfRowsTraversed = selectionList.size();
-         // Now set request scoped attributes, and then forward the request to view.
+        // Now set request scoped attributes, and then forward the request to view.
         request.setAttribute("lowerLimit", lowerLimit);
         request.setAttribute("noOfRowsTraversed", noOfRowsTraversed);
         request.setAttribute("selectionList", selectionList);
-         if ((lowerLimit - noOfRowsTraversed) == 0) {     // if this is the only data in the table or when viewing the data 1st time.
+        if ((lowerLimit - noOfRowsTraversed) == 0) {     // if this is the only data in the table or when viewing the data 1st time.
             request.setAttribute("showFirst", "false");
             request.setAttribute("showPrevious", "false");
         }
@@ -166,19 +195,24 @@ public class SelectionController extends HttpServlet {
         }
 
         System.out.println("color is :" + selectionModel.getMsgBgColor());
-        
-        
+
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("message", selectionModel.getMessage());
         request.setAttribute("msgBgColor", selectionModel.getMsgBgColor());
-        
-        if(selection_no != null) {
+
+        if (selection_no != null) {
             request.setAttribute("selection_no", selection_no);
+            String command = selectionModel.getCommandNameByCommand_id(Integer.parseInt(command_id));
+            int length = command.length();
+            request.setAttribute("command", command);
+            request.setAttribute("command_id", command_id);
+            List<SelectionBean> selectionListById = selectionModel.showDataByCommandId(lowerLimit, noOfRowsToDisplay, selection_no, command_id);
+            request.setAttribute("selectionListById", selectionListById);
             request.getRequestDispatcher("/selection_command").forward(request, response);
         } else {
             request.getRequestDispatcher("/selection").forward(request, response);
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

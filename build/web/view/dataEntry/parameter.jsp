@@ -213,7 +213,7 @@
                         </tr>
                         <tr>
                             <td align="center">
-                                <form name="form1" method="POST" action="SelectionCont.do">
+                                <form name="form1" method="POST" action="ParameterCont.do">
                                     <DIV class="content_div">
                                         <table id="table1" width="600"  border="1"  align="center" class="content">
                                             <tr>

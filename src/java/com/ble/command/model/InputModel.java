@@ -23,6 +23,7 @@ import javax.xml.bind.DatatypeConverter;
  * @author apogee
  */
 public class InputModel {
+
     private Connection connection;
     private String driverClass;
     private String connectionString;
@@ -36,24 +37,23 @@ public class InputModel {
     public void setConnection() {
         try {
             Class.forName(driverClass);
-           // connection = DriverManager.getConnection(connectionString+"?useUnicode=true&characterEncoding=UTF-8&character_set_results=utf8", db_username, db_password);
+            // connection = DriverManager.getConnection(connectionString+"?useUnicode=true&characterEncoding=UTF-8&character_set_results=utf8", db_username, db_password);
             connection = (Connection) DriverManager.getConnection(connectionString, db_username, db_password);
         } catch (Exception e) {
             System.out.println("CommandModel setConnection() Error: " + e);
         }
     }
-    
+
     public int getNoOfRows(String searchManufacturerName) {
 
-      String query1="select count(*) "
-                  +" from input i "
-                  +" where i.active='Y' ";
-                  
+        String query1 = "select count(*) "
+                + " from input i "
+                + " where i.active='Y' ";
 
         int noOfRows = 0;
         try {
             PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
-           
+
             ResultSet rs = stmt.executeQuery();
             rs.next();
             noOfRows = rs.getInt(1);
@@ -63,7 +63,7 @@ public class InputModel {
         System.out.println("No of Rows in Table for search is" + noOfRows);
         return noOfRows;
     }
-    
+
     public int insertRecord(InputBean input) {
         int parameter_id = getParameterId(input.getParameter());
 //        byte[] hexaByte = DatatypeConverter.parseHexBinary(input.getCommand_name());
@@ -71,11 +71,11 @@ public class InputModel {
         int command_id = getCommandId(input.getCommand_name());
 
         String query = " insert into input(input_id,command_id,parameter_id,remark) "
-                       +" values(?,?,?,?) ";
+                + " values(?,?,?,?) ";
         int rowsAffected = 0;
         try {
             java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1,input.getInput_id());
+            pstmt.setInt(1, input.getInput_id());
             pstmt.setInt(2, command_id);
             pstmt.setInt(3, parameter_id);
             pstmt.setString(4, input.getRemark());
@@ -93,72 +93,72 @@ public class InputModel {
         return rowsAffected;
 
     }
-    
-    public boolean reviseRecords(InputBean bean){
-        boolean status=false;
-        String query="";
-        int rowsAffected=0;
+
+    public boolean reviseRecords(InputBean bean) {
+        boolean status = false;
+        String query = "";
+        int rowsAffected = 0;
         int parameter_id = getParameterId(bean.getParameter());
 //        byte[] hexaByte = DatatypeConverter.parseHexBinary(bean.getCommand_name());
 //        String jaya = Arrays.toString(hexaByte);
         int command_id = getCommandId(bean.getCommand_name());
-      String query1 = " SELECT max(revision_no) revision_no FROM input c WHERE c.input_id = "+bean.getInput_id()+" && active='Y' ORDER BY revision_no DESC";
-      String query2 = " UPDATE input SET active=? WHERE input_id = ? && revision_no = ? ";
-      String query3 = " INSERT INTO input (input_id,command_id,parameter_id,remark,revision_no,active) VALUES (?,?,?,?,?,?) ";
+        String query1 = " SELECT max(revision_no) revision_no FROM input c WHERE c.input_id = " + bean.getInput_id() + " && active='Y' ORDER BY revision_no DESC";
+        String query2 = " UPDATE input SET active=? WHERE input_id = ? && revision_no = ? ";
+        String query3 = " INSERT INTO input (input_id,command_id,parameter_id,remark,revision_no,active) VALUES (?,?,?,?,?,?) ";
 
-      int updateRowsAffected = 0;
-      try {
-           PreparedStatement ps=(PreparedStatement) connection.prepareStatement(query1);
-           ResultSet rs = ps.executeQuery();
-           if(rs.next()){
-           PreparedStatement pst = (PreparedStatement) connection.prepareStatement(query2);
-           pst.setString(1,  "N");
-           pst.setInt(2,bean.getInput_id());
-           pst.setInt(3, rs.getInt("revision_no"));
-           updateRowsAffected = pst.executeUpdate();
-             if(updateRowsAffected >= 1){
-             int rev = rs.getInt("revision_no")+1;
-             PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3);
-             psmt.setInt(1,bean.getInput_id());
-             psmt.setInt(2,command_id);
-             psmt.setInt(3,parameter_id);
-             psmt.setString(4,bean.getRemark());
-             psmt.setInt(5,rev);
-             psmt.setString(6,"Y");
+        int updateRowsAffected = 0;
+        try {
+            PreparedStatement ps = (PreparedStatement) connection.prepareStatement(query1);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                PreparedStatement pst = (PreparedStatement) connection.prepareStatement(query2);
+                pst.setString(1, "N");
+                pst.setInt(2, bean.getInput_id());
+                pst.setInt(3, rs.getInt("revision_no"));
+                updateRowsAffected = pst.executeUpdate();
+                if (updateRowsAffected >= 1) {
+                    int rev = rs.getInt("revision_no") + 1;
+                    PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3);
+                    psmt.setInt(1, bean.getInput_id());
+                    psmt.setInt(2, command_id);
+                    psmt.setInt(3, parameter_id);
+                    psmt.setString(4, bean.getRemark());
+                    psmt.setInt(5, rev);
+                    psmt.setString(6, "Y");
 
-             int a = psmt.executeUpdate();
-              if(a > 0)
-              status=true;
-             }
-           }
-          } catch (Exception e)
-             {
-              System.out.println("CommandModel reviseRecord() Error: " + e);
-             }
-      if (status) {
-             message = "Record updated successfully......";
+                    int a = psmt.executeUpdate();
+                    if (a > 0) {
+                        status = true;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("CommandModel reviseRecord() Error: " + e);
+        }
+        if (status) {
+            message = "Record updated successfully......";
             msgBgColor = COLOR_OK;
             System.out.println("Inserted");
         } else {
-             message = "Record Not updated Some Error!";
+            message = "Record Not updated Some Error!";
             msgBgColor = COLOR_ERROR;
             System.out.println("not updated");
         }
 
-       return status;
+        return status;
 
     }
-    
+
     public int getParameterId(String parameter_name) {
-        String query = "select parameter_id from parameter where parameter_name = '"+parameter_name+"';";
+        String query = "select parameter_id from parameter where parameter_name = '" + parameter_name + "';";
         int type = 0;
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
-            while (rset.next()) {    
+            while (rset.next()) {
                 type = rset.getInt("parameter_id");
             }
-           
+
         } catch (Exception e) {
             System.out.println(" ERROR inside CommandModel - " + e);
             message = "Something going wrong";
@@ -166,17 +166,17 @@ public class InputModel {
         }
         return type;
     }
-    
+
     public int getCommandId(String command) {
-        String query = "select id from command where command = '"+command+"';";
+        String query = "select id from command where command = '" + command + "';";
         int type = 0;
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
-            while (rset.next()) {    
+            while (rset.next()) {
                 type = rset.getInt("id");
             }
-           
+
         } catch (Exception e) {
             System.out.println(" ERROR inside CommandModel - " + e);
             message = "Something going wrong";
@@ -184,25 +184,25 @@ public class InputModel {
         }
         return type;
     }
-    
-    public List<InputBean> showData(int lowerLimit, int noOfRowsToDisplay,String searchManufacturerName) {
+
+    public List<InputBean> showData(int lowerLimit, int noOfRowsToDisplay, String searchManufacturerName) {
         List<InputBean> list = new ArrayList<InputBean>();
-         String addQuery = " LIMIT " + lowerLimit + ", " + noOfRowsToDisplay;
-          if(lowerLimit == -1)
+        String addQuery = " LIMIT " + lowerLimit + ", " + noOfRowsToDisplay;
+        if (lowerLimit == -1) {
             addQuery = "";
-          
-          String commandName = "";
-          if(searchManufacturerName != null) {
+        }
+
+        String commandName = "";
+        if (searchManufacturerName != null) {
 //              byte[] hexaByte = DatatypeConverter.parseHexBinary(searchManufacturerName);
-              commandName = searchManufacturerName;//Arrays.toString(hexaByte);
-          }
+            commandName = searchManufacturerName;//Arrays.toString(hexaByte);
+        }
 
-       String query2="select s.input_id,c.command,s.remark, p.parameter_name, p.parameter_type"
-                     +" from input s, parameter p, command c "
-                     +" where s.command_id=c.id and s.parameter_id = p.parameter_id and s.active='Y' "
-                     +" and IF('" + commandName + "' = '', c.command LIKE '%%',c.command ='"+commandName+"') "+ addQuery;
+        String query2 = "select s.input_id,c.command,s.remark, p.parameter_name, p.parameter_type"
+                + " from input s, parameter p, command c "
+                + " where s.command_id=c.id and s.parameter_id = p.parameter_id and s.active='Y' "
+                + " and IF('" + commandName + "' = '', c.command LIKE '%%',c.command ='" + commandName + "') " + addQuery;
 //                     +" and ('" + searchManufacturerName + "' = '', c.command LIKE '%%',c.command =?)";
-
 
         try {
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);
@@ -229,14 +229,46 @@ public class InputModel {
         }
         return list;
     }
-    
+
+    public List<InputBean> showDataByCommandId(int lowerLimit, int noOfRowsToDisplay, String input_no, String command_id) {
+        List<InputBean> list = new ArrayList<InputBean>();
+
+        int i = 1;
+        String query2 = "select s.input_id,c.command,s.remark, p.parameter_name, p.parameter_type"
+                + " from input s, parameter p, command c "
+                + " where s.command_id=c.id and s.parameter_id = p.parameter_id and s.active='Y'and command_id = " + Integer.parseInt(command_id);
+
+        try {
+            PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);
+            ResultSet rset = pstmt.executeQuery();
+            while (rset.next()) {
+                if (i <= Integer.parseInt(input_no)) {
+                    InputBean inputBean = new InputBean();
+                    inputBean.setInput_id(rset.getInt("input_id"));
+                    String command = rset.getString("command");
+                    inputBean.setCommand_name(command);
+                    inputBean.setParameter(rset.getString("parameter_name"));
+                    inputBean.setParameter_type(rset.getString("parameter_type"));
+                    inputBean.setRemark(rset.getString("remark"));
+                    list.add(inputBean);
+                } else {
+                    break;
+                }
+                i++;
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return list;
+    }
+
     public List<String> getCommandName() {
         List<String> list = new ArrayList<String>();
         String query = "select command from command order by id desc;";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
-            while (rset.next()) {    
+            while (rset.next()) {
                 String type = rset.getString("command");
 //                String commandReq = type.substring(1, type.length()-1);
 //                String[] commandByte = commandReq.split(", ");
@@ -258,14 +290,32 @@ public class InputModel {
         }
         return list;
     }
-    
+
+    public String getCommandNameByCommand_id(int command_id) {
+        String type = "";
+        String query = "select command from command where id = " + command_id + " and active = 'Y' order by id desc;";
+        try {
+            ResultSet rset = connection.prepareStatement(query).executeQuery();
+            int count = 0;
+            rset.next();
+            type = rset.getString("command");
+//                
+
+        } catch (Exception e) {
+            System.out.println(" ERROR inside CommandModel - " + e);
+            message = "Something going wrong";
+            //messageBGColor = "red";
+        }
+        return type;
+    }
+
     public List<String> getParameter() {
         List<String> list = new ArrayList<String>();
         String query = "select parameter_name from parameter order by parameter_id desc;";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
-            while (rset.next()) {    
+            while (rset.next()) {
                 String type = rset.getString("parameter_name");
                 list.add(type);
                 count++;
@@ -280,14 +330,14 @@ public class InputModel {
         }
         return list;
     }
-    
+
     public List<String> getParameterType() {
         List<String> list = new ArrayList<String>();
         String query = "select parameter_type from parameter order by parameter_id desc;";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
-            while (rset.next()) {    
+            while (rset.next()) {
                 String type = rset.getString("parameter_type");
                 list.add(type);
                 count++;
@@ -302,7 +352,7 @@ public class InputModel {
         }
         return list;
     }
-    
+
     public void closeConnection() {
         try {
             connection.close();
@@ -361,5 +411,5 @@ public class InputModel {
 
     public void setMsgBgColor(String msgBgColor) {
         this.msgBgColor = msgBgColor;
-    } 
+    }
 }

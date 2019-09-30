@@ -6,6 +6,7 @@
 package com.ble.command.controller;
 
 import com.ble.command.bean.InputBean;
+import com.ble.command.bean.SelectionBean;
 import com.ble.command.model.InputModel;
 import com.ble.util.UniqueIDGenerator;
 import java.io.IOException;
@@ -50,8 +51,42 @@ public class InputController extends HttpServlet {
         if (task == null) {
             task = "";
         }
+        String input_no = request.getParameter("input_no");
+        String command_id = request.getParameter("command_id");
+        String command123 = request.getParameter("command");
+        
         String action1 = request.getParameter("action1");
         String q = request.getParameter("q");
+        
+        String buttonAction = request.getParameter("buttonAction"); // Holds the name of any of the four buttons: First, Previous, Next, Delete.
+        if (buttonAction == null) {
+            buttonAction = "none";
+        }
+        
+
+        String searchCommandName = "";
+
+        searchCommandName = request.getParameter("searchCommandName");
+        
+        System.out.println("searching.......... " + searchCommandName);
+
+         noOfRowsInTable = inputModel.getNoOfRows(searchCommandName);
+        
+        try {
+            lowerLimit = Integer.parseInt(request.getParameter("lowerLimit"));
+            noOfRowsTraversed = Integer.parseInt(request.getParameter("noOfRowsTraversed"));
+        } catch (Exception e) {
+            lowerLimit = noOfRowsTraversed = 0;
+        }
+        
+        List<InputBean> inputList = inputModel.showData(lowerLimit, noOfRowsToDisplay,searchCommandName);
+        lowerLimit = lowerLimit + inputList.size();
+        noOfRowsTraversed = inputList.size();
+         // Now set request scoped attributes, and then forward the request to view.
+        request.setAttribute("lowerLimit", lowerLimit);
+        request.setAttribute("noOfRowsTraversed", noOfRowsTraversed);
+        request.setAttribute("inputList", inputList);
+        
         if(action1 == null) {
             action1 = "";
         } else if(action1 != null) {
@@ -83,42 +118,46 @@ public class InputController extends HttpServlet {
             if (task.equals("Save AS New")) {
                 input_id = 0;
             }
-            InputBean bean = new InputBean();
-            bean.setInput_id(input_id);
-            bean.setCommand_name(request.getParameter("command_name"));
-            bean.setParameter(request.getParameter("parameter"));
-            bean.setParameter_type(request.getParameter("parameter_type"));
-            bean.setRemark(request.getParameter("remark"));
-            if (input_id == 0) {
-                System.out.println("Inserting values by model......");
-                inputModel.insertRecord(bean);
+            
+            if (input_no != null && command123 != null) {
+                int input = Integer.parseInt(input_no);
+                for (int i = 1; i <= input; i++) {
+                    InputBean bean = new InputBean();
+                    bean.setInput_id(input_id);
+                    bean.setCommand_name(request.getParameter("command_name"+i));
+                    bean.setParameter(request.getParameter("parameter"+i));
+                    bean.setParameter_type(request.getParameter("parameter_type"+i));
+                    bean.setRemark(request.getParameter("remark"+i));
+                    if (input_id == 0) {
+                        System.out.println("Inserting values by model......");
+                        inputModel.insertRecord(bean);
+                    } else {
+                        System.out.println("Update values by model........");
+                        inputModel.reviseRecords(bean);
+                    }
+                }
             } else {
-                System.out.println("Update values by model........");
-                inputModel.reviseRecords(bean);
+                InputBean bean = new InputBean();
+                bean.setInput_id(input_id);
+                bean.setCommand_name(request.getParameter("command_name"));
+                bean.setParameter(request.getParameter("parameter"));
+                bean.setParameter_type(request.getParameter("parameter_type"));
+                bean.setRemark(request.getParameter("remark"));
+                if (input_id == 0) {
+                    System.out.println("Inserting values by model......");
+                    inputModel.insertRecord(bean);
+                } else {
+                    System.out.println("Update values by model........");
+                    inputModel.reviseRecords(bean);
+                }
             }
+            
         }
         
         
-        try {
-            lowerLimit = Integer.parseInt(request.getParameter("lowerLimit"));
-            noOfRowsTraversed = Integer.parseInt(request.getParameter("noOfRowsTraversed"));
-        } catch (Exception e) {
-            lowerLimit = noOfRowsTraversed = 0;
-        }
         
-        String buttonAction = request.getParameter("buttonAction"); // Holds the name of any of the four buttons: First, Previous, Next, Delete.
-        if (buttonAction == null) {
-            buttonAction = "none";
-        }
         
-
-        String searchCommandName = "";
-
-        searchCommandName = request.getParameter("searchCommandName");
         
-        System.out.println("searching.......... " + searchCommandName);
-
-         noOfRowsInTable = inputModel.getNoOfRows(searchCommandName);
 
          if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
          else if (buttonAction.equals("Previous")) {
@@ -144,13 +183,7 @@ public class InputController extends HttpServlet {
 
         }
            // Logic to show data in the table.
-        List<InputBean> inputList = inputModel.showData(lowerLimit, noOfRowsToDisplay,searchCommandName);
-        lowerLimit = lowerLimit + inputList.size();
-        noOfRowsTraversed = inputList.size();
-         // Now set request scoped attributes, and then forward the request to view.
-        request.setAttribute("lowerLimit", lowerLimit);
-        request.setAttribute("noOfRowsTraversed", noOfRowsTraversed);
-        request.setAttribute("inputList", inputList);
+        
          if ((lowerLimit - noOfRowsTraversed) == 0) {     // if this is the only data in the table or when viewing the data 1st time.
             request.setAttribute("showFirst", "false");
             request.setAttribute("showPrevious", "false");
@@ -166,7 +199,18 @@ public class InputController extends HttpServlet {
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("message", inputModel.getMessage());
         request.setAttribute("msgBgColor", inputModel.getMsgBgColor());
-        request.getRequestDispatcher("/input").forward(request, response);
+        if (input_no != null) {
+            request.setAttribute("input_no", input_no);
+            String command = inputModel.getCommandNameByCommand_id(Integer.parseInt(command_id));
+            int length = command.length();
+            request.setAttribute("command", command);
+            request.setAttribute("command_id", command_id);
+            List<InputBean> inputListById = inputModel.showDataByCommandId(lowerLimit, noOfRowsToDisplay, input_no, command_id);
+            request.setAttribute("inputListById", inputListById);
+            request.getRequestDispatcher("/input_command").forward(request, response);
+        } else {
+            request.getRequestDispatcher("/input").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

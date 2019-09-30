@@ -217,9 +217,27 @@ public class SelectionModel {
         return list;
     }
     
+    public String getCommandNameByCommand_id(int command_id) {
+        String type = "";
+        String query = "select command from command where id = "+command_id+" and active = 'Y' order by id desc;";
+        try {
+            ResultSet rset = connection.prepareStatement(query).executeQuery();
+            int count = 0;
+            rset.next();
+            type = rset.getString("command");
+//                
+            
+        } catch (Exception e) {
+            System.out.println(" ERROR inside CommandModel - " + e);
+            message = "Something going wrong";
+            //messageBGColor = "red";
+        }
+        return type;
+    }
+    
     public List<String> getParameter() {
         List<String> list = new ArrayList<String>();
-        String query = "select parameter_name from parameter order by parameter_id desc;";
+        String query = "select parameter_name from parameter where active='Y' order by parameter_id desc;";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -241,7 +259,7 @@ public class SelectionModel {
     
     public List<String> getParameterType() {
         List<String> list = new ArrayList<String>();
-        String query = "select parameter_type from parameter order by parameter_id desc;";
+        String query = "select distinct parameter_type from parameter;";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -278,7 +296,7 @@ public class SelectionModel {
 
        String query2="select s.selection_id,c.command,s.remark,s.parameter_value, p.parameter_name, p.parameter_type"
                      +" from selection s, parameter p, command c "
-                     +" where s.command_id=c.id and s.parameter_id = p.parameter_id and s.active='Y' " 
+                     +" where s.command_id=c.id and s.parameter_id = p.parameter_id and s.active='Y' and c.active='Y' and p.active='Y' " 
                      +" and IF('" + commandName + "' = '', c.command LIKE '%%',c.command ='"+commandName+"') "+ addQuery;
 
 
@@ -303,6 +321,55 @@ public class SelectionModel {
                 selectionBean.setParameter_type(rset.getString("parameter_type"));
                 selectionBean.setRemark(rset.getString("remark"));
                 list.add(selectionBean);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return list;
+    }
+    
+    public List<SelectionBean> showDataByCommandId(int lowerLimit, int noOfRowsToDisplay,String selection_no,String command_id) {
+        List<SelectionBean> list = new ArrayList<SelectionBean>();
+        
+          String commandName = "";
+          int i = 1;
+            
+         
+          
+
+       String query2="select s.selection_id,c.command,s.remark,s.parameter_value, p.parameter_name, p.parameter_type"
+                     +" from selection s, parameter p, command c "
+                     +" where s.command_id=c.id and s.parameter_id = p.parameter_id and s.active='Y' and c.active='Y' and p.active='Y' and s.command_id = "+command_id;
+                    
+
+
+        try {
+            PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);
+            ResultSet rset = pstmt.executeQuery();
+            while (rset.next()) {
+                if(i <= Integer.parseInt(selection_no)) {
+                    SelectionBean selectionBean = new SelectionBean();
+                
+                        String command = rset.getString("command");
+        //                String commandReq = command.substring(1, command.length()-1);
+        //                String[] commandByte = commandReq.split(", ");
+        //                Byte[] b = new Byte[commandByte.length];
+        //                for (int i = 0; i < commandByte.length; i++) {
+        //                    b[i] = Byte.parseByte(commandByte[i]);                   
+        //                }
+        //                String hex = bytesToHex(b);
+                        selectionBean.setSelection_id(rset.getInt("selection_id"));
+                        selectionBean.setCommand_name(command);
+                        selectionBean.setParameter(rset.getString("parameter_name"));
+                        selectionBean.setParameter_value(rset.getString("parameter_value"));
+                        selectionBean.setParameter_type(rset.getString("parameter_type"));
+                        selectionBean.setRemark(rset.getString("remark"));
+                        list.add(selectionBean);
+                } else {
+                    break;
+                }
+                i++;
+                
             }
         } catch (Exception e) {
             System.out.println("Error: " + e);

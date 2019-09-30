@@ -15,18 +15,18 @@
     </context-param>
     <context-param>
         <param-name>connectionString</param-name>
-        <param-value>jdbc:mysql://localhost:3306/ble_database</param-value>
+        <param-value>jdbc:mysql://localhost:3306/ble_database1</param-value>
     </context-param>
     <context-param>
         <param-name>db_username</param-name>
-        <!--<param-value>root</param-value>-->
-        <param-value>jpss_2</param-value>
+        <param-value>root</param-value>
+        <!--<param-value>jpss_2</param-value>-->
     </context-param>
     <context-param>
         <description>	</description>
         <param-name>db_password</param-name>
-        <!--<param-value>root</param-value>-->
-        <param-value>jpss_1277</param-value>
+        <param-value>root</param-value>
+        <!--<param-value>jpss_1277</param-value>-->
     </context-param>
     <!--<ServletContainer mapping start>-->
     <servlet>
@@ -327,6 +327,14 @@
         <url-pattern>/selection</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>SelectionCommand</servlet-name>
+        <jsp-file>/view/dataEntry/selection_command.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SelectionCommand</servlet-name>
+        <url-pattern>/selection_command</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>InputController</servlet-name>
         <servlet-class>com.ble.command.controller.InputController</servlet-class>
     </servlet>
@@ -341,6 +349,14 @@
     <servlet-mapping>
         <servlet-name>Input</servlet-name>
         <url-pattern>/input</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>InputCommand</servlet-name>
+        <jsp-file>/view/dataEntry/input_command.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InputCommand</servlet-name>
+        <url-pattern>/input_command</url-pattern>
     </servlet-mapping>
     
     <servlet>

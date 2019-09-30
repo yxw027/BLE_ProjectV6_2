@@ -6,15 +6,11 @@
 package com.ble.device.model;
 
 import com.ble.device.bean.DeviceMapBean;
-import com.ble.device.bean.DeviceRegistrationBean;
-import com.mysql.jdbc.PreparedStatement;
+import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

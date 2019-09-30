@@ -6,8 +6,8 @@
 package com.ble.command.model;
 
 import com.ble.command.bean.CommandBean;
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -202,7 +202,7 @@ public boolean reviseRecords(CommandBean bean){
 
       String query1 = " SELECT max(revision_no) revision_no FROM command c WHERE c.id = "+bean.getCommand_id()+" && active='Y' ORDER BY revision_no DESC";
       String query2 = " UPDATE command SET active=? WHERE id = ? && revision_no = ? ";
-      String query3 = " INSERT INTO command (id,device_id,command,order_no,delay,operation_id,starting_del,end_del,remark,command_type_id,revision_no,active,format) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+      String query3 = " INSERT INTO command (id,device_id,command,order_no,delay,operation_id,starting_del,end_del,remark,command_type_id,revision_no,active,format,selection,input) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 
       int updateRowsAffected = 0;
       try {
@@ -230,6 +230,8 @@ public boolean reviseRecords(CommandBean bean){
              psmt.setInt(11,rev);
              psmt.setString(12,"Y");
              psmt.setString(13, bean.getFormat());
+             psmt.setInt(14, bean.getSelection_no());
+             psmt.setInt(15, bean.getInput_no());
 
              int a = psmt.executeUpdate();
               if(a > 0)
@@ -316,7 +318,7 @@ public boolean reviseRecords(CommandBean bean){
         +" and IF('" + searchDeviceName + "' = '', device_name LIKE '%%',device_name =?) "
         +" and IF('" + searchManufacturerName + "' = '', m.name LIKE '%%',m.name =?) "
         +" and IF('" + searchDeviceType + "' = '', dt.type LIKE '%%',dt.type =?) "
-        +" and m.active='Y' and dt.active='Y'  and md.active='Y' and op_n.active='Y' and c.active='Y' and ct.active='Y' and d.active='Y' "
+        +" and m.active='Y' and dt.active='Y'  and md.active='Y' and op_n.active='Y' and c.active='Y' and ct.active='Y' and d.active='Y' order by c.created_at desc "
         +addQuery;
 
 

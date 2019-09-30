@@ -5,18 +5,13 @@
  */
 package com.ble.command.model;
 
-import com.ble.command.bean.InputBean;
 import com.ble.command.bean.ParameterBean;
-import com.ble.command.bean.SelectionBean;
-import static com.ble.command.model.CommandModel.bytesToHex;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -48,7 +43,7 @@ public class ParameterModel {
 
       String query1="select count(*) "
                   +" from parameter i "
-                  +" where i.active='Y' and parameter_name = '"+searchManufacturerName+"';";
+                  +" where i.active='Y' and IF('" + searchManufacturerName + "' = '', i.parameter_name LIKE '%%',i.parameter_name ='"+searchManufacturerName+"')";
                   
 
         int noOfRows = 0;
@@ -277,6 +272,25 @@ public class ParameterModel {
             //messageBGColor = "red";
         }
         return list;
+    }
+    
+    public int deleteRecord(int parameter_id) {
+
+      String query = "update parameter set active='N' where parameter_id=" + parameter_id;
+        int rowsAffected = 0;
+        try {
+            rowsAffected = connection.prepareStatement(query).executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        if (rowsAffected > 0) {
+            message = "Record deleted successfully......";
+            msgBgColor = COLOR_OK;
+        } else {
+            message = "Error Record cannot be deleted.....";
+            msgBgColor = COLOR_ERROR;
+        }
+        return rowsAffected;
     }
     
     public void closeConnection() {

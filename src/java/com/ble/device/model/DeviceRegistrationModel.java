@@ -6,7 +6,7 @@
 package com.ble.device.model;
 
 import com.ble.device.bean.DeviceRegistrationBean;
-import com.mysql.jdbc.PreparedStatement;
+import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;

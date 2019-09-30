@@ -98,6 +98,11 @@ public class ParameterController extends HttpServlet {
                 parameterModel.reviseRecords(parameterBean);
             }
         }
+        
+        if (task.equals("Cancel")) {
+            int parameter_id = Integer.parseInt(request.getParameter("parameter_id"));
+            parameterModel.deleteRecord(parameter_id);
+        }
 
         String searchCommandName = "";
 
