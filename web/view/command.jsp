@@ -440,9 +440,9 @@
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.starting_del}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.end_del}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.selection_no}
-                                                        <p><a href="#" onclick="selectionPopup('SelectionCont.do',${divisionTypeBean.selection_no},${divisionTypeBean.command_id});return false" id="selection_button">View Selection</a></p></td>
+                                                        <a href="#" onclick="selectionPopup('SelectionCont.do',${divisionTypeBean.selection_no},${divisionTypeBean.command_id});return false" id="selection_button">View Selection</a></td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.input_no}
-                                                    <p><a href="#" onclick="inputPopup('InputCont.do',${divisionTypeBean.input_no},${divisionTypeBean.command_id});return false" id="input_button">View Input</a></p></td>
+                                                    <a href="#" onclick="inputPopup('InputCont.do',${divisionTypeBean.input_no},${divisionTypeBean.command_id});return false" id="input_button">View Input</a></td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.format}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.remark}</td>
 

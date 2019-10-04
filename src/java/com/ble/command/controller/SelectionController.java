@@ -5,9 +5,7 @@
  */
 package com.ble.command.controller;
 
-import com.ble.command.bean.RuleBean;
 import com.ble.command.bean.SelectionBean;
-import com.ble.command.model.RuleModel;
 import com.ble.command.model.SelectionModel;
 import com.ble.util.UniqueIDGenerator;
 import java.io.IOException;
