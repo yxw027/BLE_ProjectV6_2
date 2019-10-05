@@ -427,7 +427,7 @@ public class BLEWebServicesModel {
     }
     
     
-    public JSONArray getInputRecord()
+     public JSONArray getInputRecord()
         {
         JSONArray rowData = new JSONArray();
         String query = null;

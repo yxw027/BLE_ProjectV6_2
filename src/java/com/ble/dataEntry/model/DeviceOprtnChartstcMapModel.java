@@ -169,41 +169,23 @@ public boolean reviseRecords(DeviceOprtnChartstcMapBean ruleBean){
           if(lowerLimit == -1)
             addQuery = "";
 
-//       String query2="select dcb.device_characteristic_ble_map_id,mr.name as manufacturer_name,md.device_name,dt.type"
-//                    + " ,s.service_name,c.name as charstc_name,b.ble_operation_name,dcb.order_no,dcb.remark"
-//                     +" from device_characteristic_ble_map as dcb ,manufacturer as mr ,model as md "
-//                     + " ,device_type as dt,services as s,characteristics as c,ble_operation_name as b"
-//                     +" where dcb.device_id = d.device_id and d.manufacturer_id=mr.manufacturer_id"
-//                     + " and d.device_type_id = dt.device_type_id and d.model_id = md.model_id"
-//                     + " and d.device_id = s.device_id and s.services_id = c.service_id and s.active='Y' and c.active = 'Y'"
-//                     + " and d.active='Y' and b.active='Y' and dt.active='Y' and mr.active='Y' and md.active='Y'";
-//       String query2="select dcb.device_characteristic_ble_map_id,mr.name as manufacturer_name,md.device_name,dt.type"
-//                    + " ,s.service_name,c.name as charstc_name,b.ble_operation_name,dcb.order_no,dcb.remark"
-//                     +" from device_characteristic_ble_map as dcb ,manufacturer as mr ,model as md "
-//                     + " ,device_type as dt,services as s,characteristics as c,ble_operation_name as b"
-//                     +" where dcb.device_id = d.id and d.manufacture_id=mr.id"
-//                     + " and d.device_type_id = dt.id and d.model_id = md.id"
-//                     + " and d.id = s.device_id and s.id = c.service_id and s.active='Y' and c.active = 'Y'"
-//                     + " and d.active='Y' and b.active='Y' and dt.active='Y' and mr.active='Y' and md.active='Y'";
-////                     +" and ('" + searchManufacturerName + "' = '', c.command LIKE '%%',c.command =?)";
-//       
-//       String query2="select dcb.device_characteristic_ble_map_id,mr.name as manufacturer_name,md.device_name,dt.type "
-//                    +" ,s.service_name,c.name as charstc_name,b.ble_operation_name,dcb.order_no,dcb.remark "
-//                    +" from device_characteristic_ble_map as dcb ,manufacturer as mr ,model as md "
-//                    +" ,device_type as dt,servicies as s,charachtristics as c,ble_operation_name as b,device d "
-//                    +" where dcb.device_id = d.id and d.manufacture_id=mr.id "
-//                    +" and d.device_type_id = dt.id and d.model_id = md.id "
-//                    +" and d.id = s.device_id and s.id = c.service_id and s.active='Y' and c.active = 'Y' and dcb.active='Y' "
-//                    +" and d.active='Y' and b.active='Y' and dt.active='Y' and mr.active='Y' and md.active='Y'";
-        String query2="select dcb.device_characteristic_ble_map_id,mr.name as manufacturer_name,dcb.order_no,dt.type as type,md.device_name, "
-                      +" s.service_name,chr.name as chr_name,chw.name as chw_name,dcb.remark,bon.ble_operation_name "
-                      +" from device_characteristic_ble_map as dcb ,manufacturer as mr,device as d,device_type as dt,model as md "
-                      +" ,servicies as s,charachtristics as chw,charachtristics as chr,ble_operation_name as bon "
-                      +" where dcb.device_id = d.id and d.manufacture_id=mr.id and d.device_type_id=dt.id "
-                      +" and d.model_id= md.id "
-                      +" and d.id= s.device_id and s.id = chr.service_id and s.id = chw.service_id and dcb.ble_operation_name_id= bon.ble_operation_name_id "
-                     +" and d.active='Y' and mr.active='Y' and dt.active='Y' and md.active='Y' and dcb.active='Y' and s.active='Y' and chr.active='Y' and chw.active='Y' and bon.active='Y'"
-                     +"and dcb.read_characteristic_id = chr.id and dcb.write_characteristic_id = chw.id";
+
+        String query2="SELECT device_characteristic_ble_map.device_characteristic_ble_map_id, manufacturer.name, device_type.type, model.device_name,c1.uuid as read_characteristics," 
+                      +" c2.uuid as write_characteristics, servicies.service_uuid," 
+                      +" ble_operation_name.ble_operation_name, device_characteristic_ble_map.order_no, device_characteristic_ble_map.remark" 
+                      +" FROM device_characteristic_ble_map " 
+                      +" inner join device on device.id = device_characteristic_ble_map.device_id " 
+                      +" inner join manufacturer on device.manufacture_id= manufacturer.id " 
+                      +" inner join device_type on device.device_type_id= device_type.id "
+                      +" inner join model on device.model_id = model.id " 
+                      +" inner join charachtristics c1 on device_characteristic_ble_map.read_characteristic_id = c1.id " 
+                      +" inner join charachtristics c2 on device_characteristic_ble_map.write_characteristic_id = c2.id " 
+                      +" inner join servicies on c1.service_id = servicies.id" 
+                      +" inner join ble_operation_name on ble_operation_name.ble_operation_name_id = device_characteristic_ble_map.ble_operation_name_id" 
+                      +" where device_characteristic_ble_map.active = 'Y' and device.active = 'Y' and " 
+                      +" manufacturer.active = 'Y' and device_type.active = 'Y' and  "
+                      +" model.active = 'Y' and c1.active = 'Y' and c2.active = 'Y' and "
+                      +" servicies.active = 'Y' and ble_operation_name.active = 'Y' ";
 
         try {
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);
@@ -216,12 +198,12 @@ public boolean reviseRecords(DeviceOprtnChartstcMapBean ruleBean){
                 DeviceOprtnChartstcMapBean manufacturerBean = new DeviceOprtnChartstcMapBean();
 
                 manufacturerBean.setDevice_characteristic_ble_map_id(rset.getInt("device_characteristic_ble_map_id"));
-                manufacturerBean.setManufacturer_name(rset.getString("manufacturer_name"));
+                manufacturerBean.setManufacturer_name(rset.getString("name"));
                 manufacturerBean.setModel_name(rset.getString("device_name"));
                 manufacturerBean.setDevice_type(rset.getString("type"));
-                manufacturerBean.setService_name(rset.getString("service_name"));
-                manufacturerBean.setRead_characteristics_name(rset.getString("chr_name"));
-                manufacturerBean.setWrite_characteristics_name(rset.getString("chw_name"));
+                manufacturerBean.setService_name(rset.getString("service_uuid"));
+                manufacturerBean.setRead_characteristics_name(rset.getString("read_characteristics"));
+                manufacturerBean.setWrite_characteristics_name(rset.getString("write_characteristics"));
                 manufacturerBean.setBle_operation_name(rset.getString("ble_operation_name"));
                 manufacturerBean.setOrder_no(rset.getInt("order_no"));
                 manufacturerBean.setRemark(rset.getString("remark"));

@@ -376,7 +376,7 @@ public boolean reviseRecords(ServiceBean serviceBean){
                 }
             }
             if (count == 0) {
-                list.add("No such Manufacturer Name exists.......");
+                list.add("No such Model Name exists.......");
             }
         } catch (Exception e) {
             System.out.println(" ERROR inside CommandModel - " + e);
