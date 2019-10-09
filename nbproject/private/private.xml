@@ -4,12 +4,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/apogee/Documents/Document/BLE_Project/src/java/com/ble/webService/model/BLEWebServicesModel.java</file>
-            <file>file:/home/apogee/Documents/Document/BLE_Project/src/java/com/ble/command/model/SelectionModel.java</file>
-            <file>file:/home/apogee/Documents/Document/BLE_Project/src/java/com/ble/command/controller/SelectionController.java</file>
-            <file>file:/home/apogee/Documents/Document/BLE_Project/src/java/com/ble/webService/controller/BLEWebServicesController.java</file>
-            <file>file:/home/apogee/Documents/Document/BLE_Project/web/view/dataEntry/parameter.jsp</file>
-            <file>file:/home/apogee/Documents/Document/BLE_Project/web/view/command.jsp</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/BLE_Project/src/java/com/ble/dataEntry/controller/DeviceTypeController.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/BLE_Project/web/view/dataEntry/model_type.jsp</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/BLE_Project/web/layout/header.jsp</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/BLE_Project/web/META-INF/context.xml</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/BLE_Project/web/css/menu.css</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/BLE_Project/web/view/dataEntry/manufacturer.jsp</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/BLE_Project/web/view/dataEntry/device_map.jsp</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/BLE_Project/web/view/dataEntry/model.jsp</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/BLE_Project/web/layout/menu.jsp</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/BLE_Project/web/view/dataEntry/device_oprtn_chartstc_map.jsp</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/BLE_Project/web/view/device/device.jsp</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/BLE_Project/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/BLE_Project/web/view/device/device_registration.jsp</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/BLE_Project/src/java/com/ble/webService/controller/BLEWebServicesController.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/BLE_Project/web/view/dataEntry/device_type.jsp</file>
         </group>
     </open-files>
 </project-private>

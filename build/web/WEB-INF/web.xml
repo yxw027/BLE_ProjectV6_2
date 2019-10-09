@@ -166,6 +166,8 @@
         <servlet-name>CommandType</servlet-name>
         <url-pattern>/commandtype</url-pattern>
     </servlet-mapping>
+    
+    
     <servlet>
         <servlet-name>OperationNameController</servlet-name>
         <servlet-class>com.ble.dataEntry.controller.OperationNameController</servlet-class>
