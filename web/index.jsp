@@ -19,15 +19,57 @@
                 window.location = "ModelTypeCont.do";
             }
         </script>
+        <style>           .button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color:#802900;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 15px;
+  padding: 5px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 15px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+   
+a:hover{
+  background-color: yellow;
+}
+        </style>
     </head>
     <body>
         <table align="center" class="main" cellpadding="0" cellspacing="0" border="1" width="1000px">
             <tr>
                 <td><%@include file="/layout/header.jsp" %></td>
             </tr>
-            <tr>    
-                        <td><%@include file="/layout/menu.jsp" %></td>      
-            </tr>
+          
             <tr>
                 <td nowrap>
                     <DIV id="div_viewQtList" class="maindiv"  style="height: 650px; width: 900px" >
@@ -39,7 +81,7 @@
                             </tr>
                             <tr>
                                 <td align="center">
-                                    <input type="button" value="Create New Device" name="create_finished_device" onclick="goToDeviceMap()" />
+                                    <button  class="button" style="vertical-align:middle" type="button" value="Create Finished Device" name="create_finished_device" onclick="goToDeviceMap()" ><span>Create New Device</span></button>
                                 </td>
                             </tr>
                         </table>

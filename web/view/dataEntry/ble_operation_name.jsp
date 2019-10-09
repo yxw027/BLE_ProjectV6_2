@@ -12,6 +12,7 @@
 <link href="style/style1.css" type="text/css" rel="stylesheet" media="Screen"/>
 <link href="style/style.css" type="text/css" rel="stylesheet" media="Screen"/>
 <link href="style/Table_content.css" type="text/css" rel="stylesheet" media="Screen"/>
+<link type="text/css" href="style/menu.css" rel="stylesheet"/>
 <script type="text/javascript" src="JS/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="JS/jquery.autocomplete.js"></script>
 
@@ -179,6 +180,10 @@
     }
 
 </script>
+        <style>
+a:hover{
+  background-color: yellow;
+}</style>
 
 <html>
     <head>
@@ -190,8 +195,17 @@
     <body>
         <table align="center" cellpadding="0" cellspacing="0" class="main">
             <tr><td><%@include file="/layout/header.jsp" %></td></tr>
-            <tr>
-                <td><%@include file="/layout/menu.jsp" %> </td>
+              <tr>
+                <td id="menu">
+                    <nav>
+                        <a href="WelcomeCont.do">Home</a> 
+                        <a href="BleOperationNameCont.do">Ble Operation Name</a> 
+                        <a href="ServiceCont.do">Service</a> 
+                        <a href="CharachtristicsCont.do">Charachtristics</a> 
+               
+                      
+                    </nav>
+                </td>
             </tr>
             <td>
                 <DIV id="body" class="maindiv" align="center" >

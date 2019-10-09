@@ -12,6 +12,7 @@
 <link href="style/style1.css" type="text/css" rel="stylesheet" media="Screen"/>
 <link href="style/style.css" type="text/css" rel="stylesheet" media="Screen"/>
 <link href="style/Table_content.css" type="text/css" rel="stylesheet" media="Screen"/>
+
 <script type="text/javascript" src="JS/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="JS/jquery.autocomplete.js"></script>
 
@@ -346,7 +347,10 @@
     }
 
 </script>
-
+<style>
+a:hover{
+  background-color: yellow;
+}</style>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
