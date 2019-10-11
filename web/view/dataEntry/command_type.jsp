@@ -12,6 +12,8 @@
 <link href="style/style1.css" type="text/css" rel="stylesheet" media="Screen"/>
 <link href="style/style.css" type="text/css" rel="stylesheet" media="Screen"/>
 <link href="style/Table_content.css" type="text/css" rel="stylesheet" media="Screen"/>
+
+  <link type="text/css" href="style/menu.css" rel="stylesheet"/>
 <script type="text/javascript" src="JS/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="JS/jquery.autocomplete.js"></script>
 
@@ -175,7 +177,10 @@
     }
 
 </script>
-
+<style>
+a:hover{
+  background-color: yellow;
+}</style>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -187,7 +192,16 @@
         <table align="center" cellpadding="0" cellspacing="0" class="main">
             <tr><td><%@include file="/layout/header.jsp" %></td></tr>
             <tr>
-                <td><%@include file="/layout/menu.jsp" %> </td>
+                <td id="menu">
+                    <nav>
+                        <a href="WelcomeCont.do">Home</a> 
+                        <a href="CommandTypeCont.do">Command Type</a> 
+                        <a href="OperationNameCont.do">Operation Name</a> 
+                        <a href="ruleCont.do">Rules</a> 
+                        <a href="ParameterCont.do">Parameter</a> 
+                       
+                    </nav>
+                </td>
             </tr>
             <td>
                 <DIV id="body" class="maindiv" align="center" >

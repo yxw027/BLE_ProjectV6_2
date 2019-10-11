@@ -67,6 +67,7 @@
 
 <div>
             <ul id="menu">
+                <li><a href="WelcomeCont.do">Home</a>
                 <li><a href="#">Device</a>
                     <ul>
                         <li><a href="#">Data Entry</a>

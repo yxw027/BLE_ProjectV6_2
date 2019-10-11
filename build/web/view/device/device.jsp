@@ -15,7 +15,7 @@
 <script type="text/javascript" src="JS/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="JS/jquery.autocomplete.js"></script>
 
-
+  <link type="text/css" href="style/menu.css" rel="stylesheet"/>
 <script type="text/javascript" language="javascript">
     jQuery(function(){
         $("#manufacturer_name").autocomplete("DeviceCont.do", {
@@ -224,7 +224,10 @@
     }
 
 </script>
-
+<style>
+a:hover{
+  background-color: yellow;
+}</style>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -236,18 +239,15 @@
         
         <table align="center" cellpadding="0" cellspacing="0" class="main">
             <tr><td><%@include file="/layout/header.jsp" %></td></tr>
-            <tr>
-                <td><%@include file="/layout/menu.jsp" %> </td>
-            </tr>
              <tr>
-                <td style="padding-top: 12px; padding-left: 28px;">
+                <td id="menu">
                     <nav>
-                        <a href="WelcomeCont.do">Welcome</a> ->
-                        <a href="DeviceMapCont.do">Device Map</a> ->
-                        <a href="DeviceCont.do">Device</a> ->
-                        <a href="ManufacturerCont.do">Manufacturer</a> ->
-                        <a href="DeviceTypeCont.do">Device Type</a> ->
-                        <a href="ModelCont.do">Model</a> ->
+                        <a href="WelcomeCont.do">Welcome</a> 
+                        <a href="DeviceMapCont.do">Device Map</a> 
+                        <a href="DeviceCont.do">Device</a> 
+                        <a href="ManufacturerCont.do">Manufacturer</a> 
+                        <a href="DeviceTypeCont.do">Device Type</a> 
+                        <a href="ModelCont.do">Model</a> 
                         <a href="ModelTypeCont.do">Model Type</a>
                     </nav>
                 </td>
