@@ -124,12 +124,7 @@
     }
     function makeEditable(id) {
 
-        document.getElementById("device_name").disabled = false;
-        document.getElementById("device_no").disabled = false;
-
-        document.getElementById("manufacturer").disabled = false;
-        document.getElementById("device_type").disabled = false;
-
+        
         document.getElementById("command_format").disabled = false;
         document.getElementById("command_format1").disabled = false;
         document.getElementById("command").disabled = false;
@@ -137,11 +132,12 @@
         document.getElementById("order_no").disabled = false;
 
         document.getElementById("delay").disabled = false;
-        document.getElementById("operation_name").disabled = false;
+      
         document.getElementById("starting_del").disabled = false;
         document.getElementById("end_del").disabled = false;
         document.getElementById("input_no").disabled = false;
         document.getElementById("selection_no").disabled = false;
+        document.getElementById("bitwise").disabled = false;
         document.getElementById("remark").disabled = false;
 
         document.getElementById("save").disabled = false;
@@ -153,7 +149,7 @@
             //    document.getElementById("created_date").disabled = true;
             // document.getElementById("active").value ='';
             document.getElementById("message").innerHTML = "";      // Remove message
-            document.getElementById("manufacturer").focus();
+            
             $("#message").html("");
 
             //document.getElementById("revise").disabled = true;
@@ -162,7 +158,7 @@
             document.getElementById("save").disabled = false;
 
             setDefaultColor(document.getElementById("noOfRowsTraversed").value, 3);
-            document.getElementById("manufacturer").focus();
+           
 
         }
         if (id === 'edit') {
@@ -181,45 +177,45 @@
         } else
             document.getElementById("clickedButton").value = "Delete";
     }
-    function verify() {
-        var result;
-        if (document.getElementById("clickedButton").value == 'Save' || document.getElementById("clickedButton").value == 'Save AS New' || document.getElementById("clickedButton").value == 'Revise' || document.getElementById("clickedButton").value == 'Delete') {
-            var division_name_m = document.getElementById("division_name_m").value;
-            var a = document.getElementById("active").value;
-            //    alert(a);
-            if (myLeftTrim(division_name_m).length == 0) {
-
-                // document.getElementById("message").innerHTML = "<td colspan='5' bgcolor='coral'><b>Organisation Type Name is required...</b></td>";
-                $("#message").html("<td colspan='5' bgcolor='coral'><b>Ward No is required...</b></td>");
-                document.getElementById("division_name_m").focus();
-                return false; // code to stop from submitting the form2.
-            }
-
-            if (document.getElementById("active").value == 'Revised' || document.getElementById("active").value == 'Cancelled')
-            {
-                $("#message").html("<td colspan='5' bgcolor='coral'><b>You can not perform any operation on revised and cancelled record...</b></td>");
-                // document.getElementById("source_wattage"+i).focus();
-                return false; // code to stop from submitting the form2.
-            }
-            if (result == false)    // if result has value false do nothing, so result will remain contain value false.
-            {
-
-            } else {
-                result = true;
-            }
-
-            if (document.getElementById("clickedButton").value == 'Save AS New') {
-                result = confirm("Are you sure you want to save it as New record?")
-                return result;
-            }
-        } else
-            result = confirm("Are you sure you want to cancel this record?")
-        return result;
-    }
+//    function verify() {
+//        var result;
+//        if (document.getElementById("clickedButton").value == 'Save' || document.getElementById("clickedButton").value == 'Save AS New' || document.getElementById("clickedButton").value == 'Revise' || document.getElementById("clickedButton").value == 'Delete') {
+//            var division_name_m = document.getElementById("division_name_m").value;
+//            var a = document.getElementById("active").value;
+//            //    alert(a);
+//            if (myLeftTrim(division_name_m).length == 0) {
+//
+//                // document.getElementById("message").innerHTML = "<td colspan='5' bgcolor='coral'><b>Organisation Type Name is required...</b></td>";
+//                $("#message").html("<td colspan='5' bgcolor='coral'><b>Ward No is required...</b></td>");
+//                document.getElementById("division_name_m").focus();
+//                return false; // code to stop from submitting the form2.
+//            }
+//
+//            if (document.getElementById("active").value == 'Revised' || document.getElementById("active").value == 'Cancelled')
+//            {
+//                $("#message").html("<td colspan='5' bgcolor='coral'><b>You can not perform any operation on revised and cancelled record...</b></td>");
+//                // document.getElementById("source_wattage"+i).focus();
+//                return false; // code to stop from submitting the form2.
+//            }
+//            if (result == false)    // if result has value false do nothing, so result will remain contain value false.
+//            {
+//
+//            } else {
+//                result = true;
+//            }
+//
+//            if (document.getElementById("clickedButton").value == 'Save AS New') {
+//                result = confirm("Are you sure you want to save it as New record?")
+//                return result;
+//            }
+//        } else
+//            result = confirm("Are you sure you want to cancel this record?")
+//        return result;
+//    }
     function fillColumns(id) {
         debugger;
         var noOfRowsTraversed = document.getElementById("noOfRowsTraversed").value;
-        var noOfColumns = 17;
+        var noOfColumns = 13;
         var columnId = id;
     <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
         columnId = columnId.substring(3, id.length);
@@ -238,22 +234,19 @@
         var t1id = "t1c";       // particular column id of table 1 e.g. t1c3.
 
         document.getElementById("command_id").value = document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
-        document.getElementById("manufacturer").value = document.getElementById(t1id + (lowerLimit + 2)).innerHTML;
-        document.getElementById("device_type").value = document.getElementById(t1id + (lowerLimit + 3)).innerHTML;
-        document.getElementById("device_name").value = document.getElementById(t1id + (lowerLimit + 4)).innerHTML;
-        document.getElementById("device_no").value = document.getElementById(t1id + (lowerLimit + 5)).innerHTML;
-        document.getElementById("operation_name").value = document.getElementById(t1id + (lowerLimit + 6)).innerHTML;
-        document.getElementById("command").value = document.getElementById(t1id + (lowerLimit + 7)).innerHTML;
-        document.getElementById("command_type").value = document.getElementById(t1id + (lowerLimit + 8)).innerHTML;
-        document.getElementById("order_no").value = document.getElementById(t1id + (lowerLimit + 9)).innerHTML;
+      
+        document.getElementById("command").value = document.getElementById(t1id + (lowerLimit + 2)).innerHTML;
+        document.getElementById("command_type").value = document.getElementById(t1id + (lowerLimit + 3)).innerHTML;
+        document.getElementById("order_no").value = document.getElementById(t1id + (lowerLimit + 4)).innerHTML;
 
-        document.getElementById("delay").value = document.getElementById(t1id + (lowerLimit + 10)).innerHTML;
+        document.getElementById("delay").value = document.getElementById(t1id + (lowerLimit + 5)).innerHTML;
         debugger;
-        document.getElementById("starting_del").value = document.getElementById(t1id + (lowerLimit + 11)).innerHTML;
-        document.getElementById("end_del").value = document.getElementById(t1id + (lowerLimit + 12)).innerHTML;
-        document.getElementById("selection_no").value = document.getElementById(t1id + (lowerLimit + 13)).innerHTML;
-        document.getElementById("input_no").value = document.getElementById(t1id + (lowerLimit + 14)).innerHTML;
-        var format = document.getElementById(t1id + (lowerLimit + 15)).innerHTML;
+        document.getElementById("starting_del").value = document.getElementById(t1id + (lowerLimit + 6)).innerHTML;
+        document.getElementById("end_del").value = document.getElementById(t1id + (lowerLimit + 7)).innerHTML;
+        document.getElementById("selection_no").value = document.getElementById(t1id + (lowerLimit + 8)).innerHTML.split(" ")[0];
+        document.getElementById("input_no").value = document.getElementById(t1id + (lowerLimit + 9)).innerHTML.split(" ")[0];
+        document.getElementById("bitwise").value = document.getElementById(t1id + (lowerLimit + 10)).innerHTML.split(" ")[0];
+        var format = document.getElementById(t1id + (lowerLimit + 11)).innerHTML;
         if (format === "hex") {
             document.getElementById("command_format1").checked = true;
             document.getElementById("command_format").checked = false;
@@ -261,7 +254,7 @@
             document.getElementById("command_format").checked = true;
             document.getElementById("command_format1").checked = false;
         }
-        document.getElementById("remark").value = document.getElementById(t1id + (lowerLimit + 16)).innerHTML;
+        document.getElementById("remark").value = document.getElementById(t1id + (lowerLimit + 12)).innerHTML;
 
         //       var b=  document.getElementById(t1id +(lowerLimit+8)).innerHTML;
         // alert(b);
@@ -345,6 +338,22 @@
         var window_features = "left=" + popup_left_pos + ", top=" + popup_top_pos + ", width=" + popup_width + ", height=" + popup_height + ", resizable=no, scrollbars=yes, status=no, dialog=yes, dependent=yes";
         popupWindow = window.open(url, 'Selection Window', window_features);
     }
+    
+    function selection(selection_no,command_id) {
+        debugger;
+        document.getElementById("selection_no1").value = selection_no;
+        document.getElementById("command_id1").value = command_id;
+      
+        document.forms['redirectSlection'].submit();
+
+    }
+       function bits(bitwise,command_id) {
+           debugger;
+        document.getElementById("bitwise2").value = bitwise;
+        document.getElementById("command_id2").value = command_id;
+        document.forms['redirectByte'].submit();
+
+    }
 
 </script>
 <style>
@@ -385,9 +394,6 @@ a:hover{
                                     <form name="form0" method="POST" action="CommandCont.do">
                                         <table align="center" class="heading1" width="600">
                                             <tr>
-                                                <td>Manufacturer Name<input class="input" type="text" id="searchManufacturerName" name="searchManufacturerName" value="${searchManufacturerName}" size="20" ></td>
-                                                <td>Device Type<input class="input" type="text" id="searchDeviceType" name="searchDeviceType" value="${searchDeviceType}" size="20" ></td>
-                                                <td>Model Name<input class="input" type="text" id="searchDeviceName" name="searchDeviceName" value="${searchDeviceName}" size="20" ></td>
                                                 <td>Command Name<input class="input" type="text" id="searchCommandName" name="searchCommandName" value="${searchCommandName}" size="20" ></td>
                                                 <td><input class="button" type="submit" name="task" id="searchIn" value="Search"></td>
                                                 <td><input class="button" type="submit" name="task" id="showAllRecords" value="Show All Records"></td>
@@ -398,26 +404,21 @@ a:hover{
                             </td>
                         </tr>
                         <tr>
-                            <td >
+                            <td align='center'>
                                 <form name="form1" method="POST" action="CommandCont.do">
                                     <DIV class="content_div">
                                         <table id="table1" width="600"  border="1"  align="center" class="content">
                                             <tr>
                                                 <th class="heading">S.No.</th>
-                                                <th class="heading">Manufacturer</th>
-                                                <th class="heading">Device Type</th>
-                                                <th class="heading">Model Name</th>
-                                                <th class="heading">Model No.</th>
-                                                <th class="heading">Operation Name</th>
+                                                
                                                 <th class="heading">Command</th>
                                                 <th class="heading">Command Type</th>
-                                                <th class="heading">Order No.</th>
-                                                <th class="heading">Delay</th>
 
                                                 <th class="heading">Starting Delay</th>
                                                 <th class="heading">End Delay</th>
                                                 <th class="heading">Selection Number</th>
                                                 <th class="heading">Input Number</th>
+                                                <th class="heading">Bitwise</th>
                                                 <th class="heading">Format</th>
                                                 <th class="heading">Remark</th>
                                             </tr>
@@ -430,23 +431,15 @@ a:hover{
                                                       </td> --%>
                                                     <td id="t1c${IDGenerator.uniqueID}" style="display:none" onclick="fillColumns(id)">${divisionTypeBean.command_id}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">${lowerLimit - noOfRowsTraversed + loopCounter.count}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.manufacturer}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.device_type}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.device_name}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.device_no}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.operation_name}</td>
+                                                    
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.command}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.command_type}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.order_no}</td>
-
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.delay}</td>
 
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.starting_del}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.end_del}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.selection_no}
-                                                        <a href="#" onclick="selectionPopup('SelectionCont.do',${divisionTypeBean.selection_no},${divisionTypeBean.command_id});return false" id="selection_button">View Selection</a></td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.input_no}
-                                                    <a href="#" onclick="inputPopup('InputCont.do',${divisionTypeBean.input_no},${divisionTypeBean.command_id});return false" id="input_button">View Input</a></td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.selection_no} <a href="#" onclick="selection('${divisionTypeBean.selection_no}','${divisionTypeBean.command_id}');">(View Selection)</a></td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.input_no} <a href="#" onclick="inputPopup('InputCont.do',${divisionTypeBean.input_no},${divisionTypeBean.command_id});return false" id="input_button">View Input</a></td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.bitwise} <a href="#" onclick="bits('${divisionTypeBean.bitwise}','${divisionTypeBean.command_id}');">View Bitwise</a></td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.format}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.remark}</td>
 
@@ -503,39 +496,12 @@ a:hover{
                         <tr>
                             <td align="center">
                                 <div>
-                                    <form name="form2" method="POST" action="CommandCont.do" onsubmit="return verify()">
+                                    <form name="form2" method="POST" action="CommandCont.do" >
                                         <table id="table2"  class="content" border="0"  align="center" width="600">
                                             <tr id="message">
                                                 <c:if test="${not empty message}">
                                                     <td colspan="2" bgcolor="${msgBgColor}"><b>Result: ${message}</b></td>
                                                 </c:if>
-                                            </tr>
-                                            <tr>
-                                                <th class="heading1">Manufacturer </th>
-                                                <td><input class="input" type="text" id="manufacturer" name="manufacturer" value="${manufacturer}" size="40" disabled></td>
-                                                <!--<button type="button" class="btn btn-primary small" data-toggle="modal" data-target="#myModal">
-                                                    Open modal
-                                                  </button></td>-->
-                                            </tr>
-
-                                            <tr >
-                                                <th class="heading1">Device Type</th>
-                                                <td>
-                                                    <input class="input" type="hidden" id="command_id" name="command_id" value="" >
-                                                    <input class="input" type="text" id="device_type" name="device_type" value="${device_type}" size="40" disabled>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="heading1">Model Name </th>
-                                                <td><input class="input" type="text" id="device_name" name="device_name" value="${deviceName}" size="40" disabled></td>
-                                            </tr>
-                                            <tr>
-                                                <th class="heading1">Model no.  </th>
-                                                <td><input class="input" type="text" id="device_no" name="device_no" value="${device_no}" size="40" disabled></td>
-                                            </tr>
-                                            <tr>
-                                                <th class="heading1">Operation Name</th>
-                                                <td><input class="input" type="text" id="operation_name" name="operation_name" value="" size="40" disabled></td>
                                             </tr>
                                             <tr>
                                                 <th class="heading1">Command Format</th>
@@ -546,7 +512,8 @@ a:hover{
                                             </tr>
                                             <tr>
                                                 <th class="heading1">Command</th>
-                                                <td><input class="input" type="text" id="command" name="command" value="" size="40" disabled></td>
+                                                <td><input class="input" type="text" id="command" name="command" value="" size="40" disabled>
+                                                <input class="input" type="hidden" id="command_id" name="command_id" value="" size="40" disabled></td>
                                             </tr>
 
                                             <tr>
@@ -579,6 +546,10 @@ a:hover{
                                             <tr>
                                                 <th class="heading1">Input No</th>
                                                 <td><input class="input" type="number" id="input_no" name="input_no" value="" size="40" disabled style="width: 77.5%;"></td>
+                                            </tr>
+                                            <tr>
+                                                <th class="heading1">Bitwise</th>
+                                                <td><input class="input" type="number" id="bitwise" name="bitwise" value="" size="40" disabled style="width: 77.5%;"></td>
                                             </tr>
                                             <tr>
                                                 <th class="heading1">Remark</th>
@@ -623,45 +594,16 @@ a:hover{
                 </DIV>
             </td>
             <tr><td><%@include file="/layout/footer.jsp" %></td> </tr>
-        </table>
+        </table>    
 
-
-        <!--        <div class="container">
-          <h2>Modal Example</h2>
-           Button to Open the Modal 
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-            Open modal
-          </button>
-        
-           The Modal 
-          <div class="modal" id="myModal">
-            <div class="modal-dialog">
-              <div class="modal-content">
-        
-                 Modal Header 
-                <div class="modal-header">
-                  <h4 class="modal-title">Modal Heading</h4>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-        
-                 Modal body 
-                <div class="modal-body">
-                  Modal body..
-                </div>
-        
-                 Modal footer 
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                </div>
-        
-              </div>
-            </div>
-          </div>
-        
-        </div>
-        -->
-
-
+<form name="redirectSlection" method="post" action="SelectionCont.do" target="_blank">
+            <input type="hidden" id="selection_no1" name="selection_no1" value="">
+            <input type="hidden" id="command_id1" name="command_id1" value="">
+</form>
+<form name="redirectByte" method="post" action="ByteDataController" target="_blank">
+            <input type="hidden" id="bitwise2" name="bitwise2" value="">
+            <input type="hidden" id="command_id2" name="command_id2" value="">
+</form>
 
     </body>
 </html>

@@ -40,20 +40,21 @@ public class SelectionController extends HttpServlet {
         ServletContext ctx = getServletContext();
         SelectionModel selectionModel = new SelectionModel();
         selectionModel.setDriverClass(ctx.getInitParameter("driverClass"));
-         selectionModel.setConnectionString(ctx.getInitParameter("connectionString"));
+        selectionModel.setConnectionString(ctx.getInitParameter("connectionString"));
         selectionModel.setDb_username(ctx.getInitParameter("db_username"));
         selectionModel.setDb_password(ctx.getInitParameter("db_password"));
         selectionModel.setConnection();
-
+        int selection_id;
         String task = request.getParameter("task");
         String action1 = request.getParameter("action1");
         String q = request.getParameter("q");
         if (task == null) {
             task = "";
         }
-        String selection_no = request.getParameter("selection_no");
-        String command_id = request.getParameter("command_id");
-        String command123 = request.getParameter("command");
+        
+        String selection_no = request.getParameter("selection_no1");
+        String command_id = request.getParameter("command_id1");
+        String command123 = request.getParameter("command_name");
 
         if (action1 == null) {
             action1 = "";
@@ -81,17 +82,16 @@ public class SelectionController extends HttpServlet {
 
         }
 
-        String searchCommandName = "";
-
-        searchCommandName = request.getParameter("searchCommandName");
-
-        System.out.println("searching.......... " + searchCommandName);
-
-        noOfRowsInTable = selectionModel.getNoOfRows(searchCommandName);
-        String buttonAction = request.getParameter("buttonAction"); // Holds the name of any of the four buttons: First, Previous, Next, Delete.
-        if (buttonAction == null) {
-            buttonAction = "none";
-        }
+//        String searchCommandName = "";
+//
+//        searchCommandName = request.getParameter("searchCommandName");
+//
+//        System.out.println("searching.......... " + searchCommandName);
+        noOfRowsInTable = selectionModel.getNoOfRows();
+//        String buttonAction = request.getParameter("buttonAction"); // Holds the name of any of the four buttons: First, Previous, Next, Delete.
+//        if (buttonAction == null) {
+//            buttonAction = "none";
+//        }
 
         try {
             lowerLimit = Integer.parseInt(request.getParameter("lowerLimit"));
@@ -100,28 +100,26 @@ public class SelectionController extends HttpServlet {
             lowerLimit = noOfRowsTraversed = 0;
         }
 
-        if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
-        else if (buttonAction.equals("Previous")) {
-            int temp = lowerLimit - noOfRowsToDisplay - noOfRowsTraversed;
-            if (temp < 0) {
-                noOfRowsToDisplay = lowerLimit - noOfRowsTraversed;
-                lowerLimit = 0;
-            } else {
-                lowerLimit = temp;
-            }
-        } else if (buttonAction.equals("First")) {
-            lowerLimit = 0;
-        } else if (buttonAction.equals("Last")) {
-            lowerLimit = noOfRowsInTable - noOfRowsToDisplay;
-            if (lowerLimit < 0) {
-                lowerLimit = 0;
-            }
-        }
-
-        List<SelectionBean> selectionList = selectionModel.showData(lowerLimit, noOfRowsToDisplay, searchCommandName);
-
+//        if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
+//        else if (buttonAction.equals("Previous")) {
+//            int temp = lowerLimit - noOfRowsToDisplay - noOfRowsTraversed;
+//            if (temp < 0) {
+//                noOfRowsToDisplay = lowerLimit - noOfRowsTraversed;
+//                lowerLimit = 0;
+//            } else {
+//                lowerLimit = temp;
+//            }
+//        } else if (buttonAction.equals("First")) {
+//            lowerLimit = 0;
+//        } else if (buttonAction.equals("Last")) {
+//            lowerLimit = noOfRowsInTable - noOfRowsToDisplay;
+//            if (lowerLimit < 0) {
+//                lowerLimit = 0;
+//            }
+//        }
+//        List<SelectionBean> selectionList = selectionModel.showData(lowerLimit, noOfRowsToDisplay, searchCommandName);
         if (task.equals("Save") || task.equals("Save AS New")) {
-            int selection_id;
+
             try {
                 selection_id = Integer.parseInt(request.getParameter("selection_id"));
             } catch (Exception e) {
@@ -139,77 +137,50 @@ public class SelectionController extends HttpServlet {
                     bean.setCommand_name(request.getParameter("command_name" + i));
                     bean.setParameter(request.getParameter("parameter" + i));
                     bean.setParameter_type(request.getParameter("parameter_type" + i));
-                    bean.setParameter_value(request.getParameter("parameter_value" + i));
+                    bean.setSelection_value_no(Integer.parseInt(request.getParameter("selection_value_no" + i)));
                     bean.setRemark(request.getParameter("remark" + i));
                     if (selection_id == 0) {
                         System.out.println("Inserting values by model......");
-                        selectionModel.insertRecord(bean);
+                        selectionModel.insertRecord(bean,Integer.parseInt(command_id));
                     } else {
                         System.out.println("Update values by model........");
                         selectionModel.reviseRecords(bean);
                     }
 
                 }
-            } else {
-                SelectionBean bean = new SelectionBean();
-                bean.setSelection_id(selection_id);
-                bean.setCommand_name(request.getParameter("command_name"));
-                bean.setParameter(request.getParameter("parameter"));
-                bean.setParameter_type(request.getParameter("parameter_type"));
-                bean.setParameter_value(request.getParameter("parameter_value"));
-                bean.setRemark(request.getParameter("remark"));
-                if (selection_id == 0) {
-                    System.out.println("Inserting values by model......");
-                    selectionModel.insertRecord(bean);
-                } else {
-                    System.out.println("Update values by model........");
-                    selectionModel.reviseRecords(bean);
-                }
-            }
+            } 
 
         }
+        if (task.equals("update")) {
+            int count = Integer.parseInt(request.getParameter("count"));
+            selection_id = Integer.parseInt(request.getParameter("selection_id" + count));
+            int selection_value_no = Integer.parseInt(request.getParameter("selection_value_no" + count));
+            selection_no = request.getParameter("selection_no");
+            command_id = request.getParameter("command_id");
+            String command_name = request.getParameter("command_name" + count);
+            String parameter = request.getParameter("parameter" + count);
+            String parameter_type = request.getParameter("parameter_type" + count);
+            
+            SelectionBean bean = new SelectionBean();
+            bean.setSelection_id(selection_id);
+            bean.setSelection_value_no(selection_value_no);
+            bean.setParameter(parameter);
+            bean.setParameter_type(parameter_type);
+            bean.setCommand_name(command_name);
+            bean.setRemark(request.getParameter("remark" + count));
 
-        if (task.equals("Save") || task.equals("Cancel") || task.equals("Save AS New")) {
-            lowerLimit = lowerLimit - noOfRowsTraversed;    // Here objective is to display the same view again, i.e. reset lowerLimit to its previous value.
-        } else if (task.equals("Show All Records")) {
-            searchCommandName = "";
+            System.out.println("Update values by model........");
+            selectionModel.updateRecords(bean);
 
         }
-        // Logic to show data in the table.
-
-        lowerLimit = lowerLimit + selectionList.size();
-        noOfRowsTraversed = selectionList.size();
-        // Now set request scoped attributes, and then forward the request to view.
-        request.setAttribute("lowerLimit", lowerLimit);
-        request.setAttribute("noOfRowsTraversed", noOfRowsTraversed);
-        request.setAttribute("selectionList", selectionList);
-        if ((lowerLimit - noOfRowsTraversed) == 0) {     // if this is the only data in the table or when viewing the data 1st time.
-            request.setAttribute("showFirst", "false");
-            request.setAttribute("showPrevious", "false");
-        }
-        if (lowerLimit == noOfRowsInTable) {             // if No further data (rows) in the table.
-            request.setAttribute("showNext", "false");
-            request.setAttribute("showLast", "false");
-        }
-
-        System.out.println("color is :" + selectionModel.getMsgBgColor());
-
-        request.setAttribute("IDGenerator", new UniqueIDGenerator());
-        request.setAttribute("message", selectionModel.getMessage());
-        request.setAttribute("msgBgColor", selectionModel.getMsgBgColor());
-
-        if (selection_no != null) {
             request.setAttribute("selection_no", selection_no);
             String command = selectionModel.getCommandNameByCommand_id(Integer.parseInt(command_id));
             int length = command.length();
-            request.setAttribute("command", command);
+            request.setAttribute("command_name", command);
             request.setAttribute("command_id", command_id);
             List<SelectionBean> selectionListById = selectionModel.showDataByCommandId(lowerLimit, noOfRowsToDisplay, selection_no, command_id);
             request.setAttribute("selectionListById", selectionListById);
             request.getRequestDispatcher("/selection_command").forward(request, response);
-        } else {
-            request.getRequestDispatcher("/selection").forward(request, response);
-        }
 
     }
 

@@ -14,7 +14,7 @@ public class CommandBean {
     int command_id;
     String device_name,command,order_no,delay,operation_name,starting_del,end_del,remark,command_type;
     String manufacturer,device_type,model_type,device_no,format;
-            int input_no,selection_no;
+            int input_no,selection_no,bitwise;
 
     public String getFormat() {
         return format;
@@ -156,6 +156,14 @@ public class CommandBean {
 
     public void setSelection_no(int selection_no) {
         this.selection_no = selection_no;
+    }
+
+    public int getBitwise() {
+        return bitwise;
+    }
+
+    public void setBitwise(int bitwise) {
+        this.bitwise = bitwise;
     }
 
     

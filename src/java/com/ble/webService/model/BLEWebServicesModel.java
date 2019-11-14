@@ -191,7 +191,7 @@ public class BLEWebServicesModel {
         {
         JSONArray rowData = new JSONArray();
         String query = null;
-        query = "select id,device_id,reg_no,manufacture_date,date2,remark "
+        query = "select id,device_id,reg_no,manufacture_date,sale_date,remark "
                +" from device_registration dr "
                +" where dr.active='Y'";
         try {
@@ -264,7 +264,7 @@ public class BLEWebServicesModel {
         {
         JSONArray rowData = new JSONArray();
         String query = null;
-        query = "select id,device_id,command,order_no,delay,operation_id,starting_del,end_del,remark,command_type_id,selection,input "
+        query = "select id,command,starting_del,end_del,remark,command_type_id,selection,input "
                 +" from command c "
                 +" where c.active='Y' ";
         try {
@@ -273,12 +273,8 @@ public class BLEWebServicesModel {
             while (rset.next()) {
                 JSONObject obj = new JSONObject();
                  obj.put("id",rset.getInt("id"));
-                 obj.put("device_id",rset.getInt("device_id"));
                  String command = rset.getString("command");
                  obj.put("command", command);
-                 obj.put("order_no",rset.getInt("order_no"));
-                 obj.put("delay",rset.getString("delay"));
-                 obj.put("operation_id",rset.getInt("operation_id"));
                  obj.put("starting_del",rset.getString("starting_del"));
                  obj.put("end_del",rset.getString("end_del"));
                  obj.put("remark",rset.getString("remark"));
@@ -292,6 +288,35 @@ public class BLEWebServicesModel {
         }
         return rowData;
     }
+    
+    public JSONArray getCommandDeviceMapRecords()
+        {
+        JSONArray rowData = new JSONArray();
+        String query = null;
+        query = "select device_command_id,order_no,delay,device_id,command_id,operation_id,remark"
+                +" from device_command_map c "
+                +" where c.active='Y' ";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            ResultSet rset = pstmt.executeQuery();
+            while (rset.next()) {
+                JSONObject obj = new JSONObject();
+                 obj.put("id",rset.getInt("device_command_id"));                
+                 obj.put("device_id",rset.getInt("device_id"));                 
+                 obj.put("command_id",rset.getInt("command_id"));
+                 obj.put("operation_id",rset.getInt("operation_id"));
+                 obj.put("order_no",rset.getInt("order_no"));
+                 obj.put("delay",rset.getInt("delay"));
+                 obj.put("remark",rset.getString("remark"));
+                 rowData.add(obj);
+           }
+        } catch (Exception e) {
+            System.out.println("Error inside show data of survey: " + e);
+        }
+        return rowData;
+    }
+    
+    
     public JSONArray getRuleRecords()
         {
         JSONArray rowData = new JSONArray();
@@ -404,7 +429,7 @@ public class BLEWebServicesModel {
         {
         JSONArray rowData = new JSONArray();
         String query = null;
-        query = " select selection_id, command_id, parameter_id, parameter_value, remark "
+        query = " select selection_id, command_id, parameter_id, remark , selection_value_no"
                 +" from selection d "
                 +" where d.active='Y' ";
         try {
@@ -415,9 +440,88 @@ public class BLEWebServicesModel {
                  obj.put("selection_id",rset.getInt("selection_id"));
                  obj.put("command_id",rset.getInt("command_id"));
                  obj.put("parameter_id",rset.getInt("parameter_id"));
-                 obj.put("parameter_value",rset.getString("parameter_value"));
                  obj.put("remark",rset.getString("remark"));
-
+                 obj.put("selection_value_no",rset.getInt("selection_value_no"));
+                 rowData.add(obj);
+           }
+        } catch (Exception e) {
+            System.out.println("Error inside show data of survey: " + e);
+        }
+        return rowData;
+    }
+    
+    public JSONArray getSelectionValueRecord()
+        {
+        JSONArray rowData = new JSONArray();
+        String query = null;
+        query = " select selection_value_id, display_value, byte_value, remark, revision_no, selection_id"
+                +" from selection_value d "
+                +" where d.active='Y' ";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            ResultSet rset = pstmt.executeQuery();
+            while (rset.next()) {
+                JSONObject obj = new JSONObject();
+                 obj.put("selection_value_id",rset.getInt("selection_value_id"));
+                 obj.put("display_value",rset.getString("display_value"));
+                 obj.put("byte_value",rset.getString("byte_value"));
+                 obj.put("remark",rset.getString("remark"));
+                 obj.put("revision_no",rset.getInt("revision_no"));
+                 obj.put("selection_id",rset.getInt("selection_id"));
+                 
+                 rowData.add(obj);
+           }
+        } catch (Exception e) {
+            System.out.println("Error inside show data of survey: " + e);
+        }
+        return rowData;
+    }
+    
+    public JSONArray getByteDataRecord()
+        {
+        JSONArray rowData = new JSONArray();
+        String query = null;
+        query = " select byte_data_id, sub_byte_division, command_id, remark, revision_no, parameter_name"
+                +" from byte_data d "
+                +" where d.active='Y' ";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            ResultSet rset = pstmt.executeQuery();
+            while (rset.next()) {
+                JSONObject obj = new JSONObject();
+                 obj.put("byte_data_id",rset.getInt("byte_data_id"));
+                 obj.put("sub_byte_division",rset.getInt("sub_byte_division"));
+                 obj.put("command_id",rset.getInt("command_id"));
+                 obj.put("remark",rset.getString("remark"));
+                 obj.put("revision_no",rset.getInt("revision_no"));
+                 obj.put("parameter_name",rset.getString("parameter_name"));
+                 rowData.add(obj);
+           }
+        } catch (Exception e) {
+            System.out.println("Error inside show data of survey: " + e);
+        }
+        return rowData;
+    }
+    public JSONArray getSubByteDivisionRecord()
+        {
+        JSONArray rowData = new JSONArray();
+        String query = null;
+        query = " select sub_byte_division_id, byte_id, parameter_name, start_pos, no_of_bit,  remark, revision_no, sub_division_no"
+                +" from sub_byte_division d "
+                +" where d.active='Y' ";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            ResultSet rset = pstmt.executeQuery();
+            while (rset.next()) {
+                JSONObject obj = new JSONObject();
+                 obj.put("sub_byte_division_id",rset.getInt("sub_byte_division_id"));
+                 obj.put("byte_id",rset.getInt("byte_id"));
+                 obj.put("parameter_name",rset.getString("parameter_name"));
+                 obj.put("remark",rset.getString("remark"));
+                 obj.put("start_pos",rset.getInt("start_pos"));
+                 obj.put("no_of_bit",rset.getInt("no_of_bit"));
+                 obj.put("sub_division_no",rset.getInt("sub_division_no"));
+                 obj.put("revision_no",rset.getInt("revision_no"));
                  rowData.add(obj);
            }
         } catch (Exception e) {
@@ -519,7 +623,7 @@ public class BLEWebServicesModel {
         try {
             System.out.println("hii inside setConnection() method");
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ble_database1", "jpss_2", "jpss_1277");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ble_database1", "root", "root");
         } catch (Exception e) {
             System.out.println("BLEWebServicesModel setConnection() Error: " + e);
         }

@@ -48,22 +48,22 @@ public class DeviceOperationCommandModel {
             System.out.println("CommandModel setConnection() Error: " + e);
         }
     }
-//    public int getDeviceId(int manufacturer_id,int deviceType_id,int model_id) {
-//        String query = " select id from device where manufacture_id="+manufacturer_id+" and device_type_id="+deviceType_id+" and model_id="+model_id+" and active='Y'";
-//        int device_id = 0;
-//        try {
-//            PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query);
-//
-//            ResultSet rs = stmt.executeQuery();
-//         if(rs.next()){
-//         device_id=rs.getInt("id");
-//         }
-//        } catch (Exception e) {
-//            System.out.println("Error inside getDeviceId CommandModel " + e);
-//        }
-//
-//        return device_id;
-//    }
+    public int getDeviceId(int manufacturer_id,int deviceType_id,int model_id) {
+        String query = " select id from device where manufacture_id="+manufacturer_id+" and device_type_id="+deviceType_id+" and model_id="+model_id+" and active='Y'";
+        int device_id = 0;
+        try {
+            PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query);
+
+            ResultSet rs = stmt.executeQuery();
+         if(rs.next()){
+         device_id=rs.getInt("id");
+         }
+        } catch (Exception e) {
+            System.out.println("Error inside getDeviceId CommandModel " + e);
+        }
+
+        return device_id;
+    }
     
     
      public int getDevice_op_comId(  int device_commamnd_id) {
@@ -120,22 +120,22 @@ public class DeviceOperationCommandModel {
         return command_name_id;
     }
 
-//    public int getManufacturerId(String manufacturere_type) {
-//        String query = " select id from manufacturer m where m.name='"+manufacturere_type+"' and m.active='Y'";
-//        int manufacturerId = 0;
-//        try {
-//            PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query);
-//
-//            ResultSet rs = stmt.executeQuery();
-//         if(rs.next()){
-//         manufacturerId=rs.getInt("id");
-//         }
-//        } catch (Exception e) {
-//            System.out.println("Error inside getOperationId CommandModel" + e);
-//        }
-//
-//        return manufacturerId;
-//    }
+    public int getManufacturerId(String manufacturere_type) {
+        String query = " select id from manufacturer m where m.name='"+manufacturere_type+"' and m.active='Y'";
+        int manufacturerId = 0;
+        try {
+            PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query);
+
+            ResultSet rs = stmt.executeQuery();
+         if(rs.next()){
+         manufacturerId=rs.getInt("id");
+         }
+        } catch (Exception e) {
+            System.out.println("Error inside getOperationId CommandModel" + e);
+        }
+
+        return manufacturerId;
+    }
     public int getDeviceTypeId(String device_type) {
         String query = " select id from device_type d where d.type='"+device_type+"' and d.active='Y'";
         int device_type_id = 0;
@@ -153,22 +153,22 @@ public class DeviceOperationCommandModel {
         return device_type_id;
     }
 
-//    public int getModelId(String device_name,String device_no) {
-//        String query = " select id from model m where device_name='"+device_name+"' and device_no='"+device_no+"' and active='Y'";
-//        int model_id = 0;
-//        try {
-//            PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query);
-//
-//            ResultSet rs = stmt.executeQuery();
-//         if(rs.next()){
-//         model_id=rs.getInt("id");
-//         }
-//        } catch (Exception e) {
-//            System.out.println("Error inside getOperationId CommandModel" + e);
-//        }
-//
-//        return model_id;
-//    }
+    public int getModelId(String device_name,String device_no) {
+        String query = " select id from model m where device_name='"+device_name+"' and device_no='"+device_no+"' and active='Y'";
+        int model_id = 0;
+        try {
+            PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query);
+
+            ResultSet rs = stmt.executeQuery();
+         if(rs.next()){
+         model_id=rs.getInt("id");
+         }
+        } catch (Exception e) {
+            System.out.println("Error inside getOperationId CommandModel" + e);
+        }
+
+        return model_id;
+    }
 
 
     public static List<DeviceOperationCommand> showReport(int device_command_id, DeviceOperationCommand userEntryByImageBean1,String searchCommandName,String searchDeviceName,String searchOperationName  ){
@@ -200,13 +200,6 @@ public class DeviceOperationCommandModel {
                 String manufacturer = rs.getString("manu_name");
                 String device_type = rs.getString("type");
                 String device_no = rs.getString("id");
-                
-                
-           
-                
-                
-          
-
                 tpBean.setDevice_command_id(device_command_id);
                 tpBean.setDevice_name(device_name);
                 tpBean.setCommand(command);
@@ -232,11 +225,11 @@ public class DeviceOperationCommandModel {
       public static List<DeviceOperationCommand> showPDF(DeviceOperationCommand dcm,String searchCommandName,String searchDeviceName,String searchOperationName){
         List<DeviceOperationCommand> list = new ArrayList<DeviceOperationCommand>();
         Map<String, String> map = new HashMap<String, String>();
-        String query=" select dcm.device_command_id,dcm.device_id,dcm.remark,opn.operation_name ," +
-                     " c.command,m.device_name,m.device_no,mf.name ,dt.type from device_command_map dcm,device d," +
-                     " operation_name opn,command c,model m,manufacturer mf,device_type dt " +
-                     " where dcm.device_id=d.id and dcm.operation_id=opn.id and c.id=dcm.command_id and d.model_id=m.id and d.id=mf.id and d.device_type_id=dt.id " +
-                     " and dcm.active='Y' and c.active='Y' and d.active='Y' and opn.active='Y' and m.active='Y' and mf.active='Y' ";
+        String query=" select dcm.device_command_id, " +
+                    " dcm.device_id,dcm.remark,opn.operation_name,c.command,mf.name,m.device_name,m.device_no,dt.type  " +
+                    " from device_command_map dcm,device d,operation_name opn,command c ,manufacturer mf,model m,device_type dt " +
+                    " where dcm.device_id=d.id  and dcm.operation_id=opn.id and c.id=dcm.command_id  and mf.id=d.manufacture_id and d.model_id=m.id and d.device_type_id=dt.id " +
+                    "  and dcm.active='Y' and d.active='Y' and opn.active='Y' and c.active='Y' and mf.active='Y' and m.active='Y' and dt.active='Y'";
 //                      + " and IF('" + searchCommandName + "' = '', c.command LIKE '%%',c.command =?) "
 //                     + " and IF('" + searchDeviceName + "' = '', m.device_name LIKE '%%',m.device_name =?) "
 //                     + " and iF('" + searchOperationName +"'='',opn.operation_name LIKE '%%',opn.operation_name=?)"     
@@ -321,6 +314,9 @@ public class DeviceOperationCommandModel {
      public int insertRecord1(DeviceOperationCommand commandBean) {
        
         int deviceType_id = getDeviceTypeId(commandBean.getDevice_type());
+        int manufdacture_id = getManufacturerId(commandBean.getManufacturer());
+        int model_id = getModelId(commandBean.getDevice_name(), commandBean.getDevice_no());
+        int device_id = getDeviceId(manufdacture_id, deviceType_id, model_id);
       int operation_id = getOperationId(commandBean.getOperation_name());
         int command_type_id = getCommandTypeId(commandBean.getCommand());
         int device_command_id = getDevice_op_comId(commandBean.getDevice_command_id());
@@ -334,8 +330,8 @@ public class DeviceOperationCommandModel {
       int rowsAffected = 0;
         try {
             java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1,device_command_id );
-            pstmt.setInt(2,deviceType_id);
+            pstmt.setInt(1,device_command_id+1 );
+            pstmt.setInt(2,device_id);
             pstmt.setInt(3,command_type_id);
             pstmt.setInt(4,operation_id);
             pstmt.setString(5,commandBean.getRemark());
@@ -354,67 +350,7 @@ public class DeviceOperationCommandModel {
         return rowsAffected;
 
     }
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-//    public int insertRecord(CommandBean commandBean) {
-//        int manufacturer_id = getManufacturerId(commandBean.getManufacturer());
-//        int deviceType_id = getDeviceTypeId(commandBean.getDevice_type());
-//        int model_id = getModelId(commandBean.getDevice_name(),commandBean.getDevice_no());
-//
-//        int device_id = getDeviceId(manufacturer_id,deviceType_id,model_id);
-//
-//        int operation_id = getOperationId(commandBean.getOperation_name());
-//        int command_type_id = getCommandTypeId(commandBean.getCommand_type());
-//
-//        String query = " insert into command(device_id,command,order_no,delay,operation_id,starting_del,end_del,remark,command_type_id,format,input,selection) "
-//                       +" values(?,?,?,?,?,?,?,?,?,?,?,?) ";
-//        int rowsAffected = 0;
-//        try {
-//            java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
-//            pstmt.setInt(1,device_id );
-//            pstmt.setString(2, commandBean.getCommand());
-//            pstmt.setString(3, commandBean.getOrder_no());
-//
-//             pstmt.setString(4, commandBean.getDelay());
-//             pstmt.setInt(5, operation_id);
-//             pstmt.setString(6, commandBean.getStarting_del());
-//             pstmt.setString(7, commandBean.getEnd_del());
-//             pstmt.setString(8, commandBean.getRemark());
-//             pstmt.setInt(9, command_type_id);
-//             pstmt.setString(10, commandBean.getFormat());
-//             pstmt.setInt(11, commandBean.getInput_no());
-//             pstmt.setInt(12, commandBean.getSelection_no());
-//
-//            rowsAffected = pstmt.executeUpdate();
-//        } catch (Exception e) {
-//            System.out.println("Error while inserting record...." + e);
-//        }
-//        if (rowsAffected > 0) {
-//            message = "Record saved successfully.";
-//            msgBgColor = COLOR_OK;
-//        } else {
-//            message = "Cannot save the record, some error.";
-//            msgBgColor = COLOR_ERROR;
-//        }
-//        return rowsAffected;
-//
-//    }
-
+   
 public boolean reviseRecords(DeviceOperationCommand  commandBean){
     boolean status=false;
     String query="";
@@ -481,23 +417,10 @@ public boolean reviseRecords(DeviceOperationCommand  commandBean){
         String query1 = " select count(*)" 
                       + " from device_command_map dcm,device d,command c,operation_name opn"
                       + " where dcm.device_id = d.id and dcm.command_id = c.id and dcm.operation_id = opn.id and dcm.active='Y' and d.active='Y' and c.active='Y' and opn.active='Y'";
-//        String query1="select count(*) "
-//                    + " from device_command_map dcm,device d,model md ,manufacturer m ,device_type dt,operation_name opn,command c"
-//                    + " where dcm.device_id=d.id and d.active='Y' and d.model_id = md.id and d.manufacture_id = m.id and d.device_type_id = dt.id  and dcm.operation_id=opn.id and dcm.command_id=c.id"
-//                    + " and dcm.active='Y' and md.active='Y' and m.active='Y' and dt.active='Y' and opn.active='Y' and c.active='Y'"
-//                    + " and IF('" + searchCommandName + "' = '', c.command LIKE '%%',c.command =?) "
-//                    + " and IF('" + searchDeviceName + "' = '', md.device_name LIKE '%%',md.device_name =?) "
-//                    + " and iF('" + searchOperationName +"'='',opn.operation_name LIKE '%%',opn.operation_name=?)" ;      
-//                    
-      // String query1= "select count(*) from device_command_id";
                
         int noOfRows = 0;
         try {
             PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
-//            stmt.setString(1, searchCommandName);
-//            stmt.setString(2, searchDeviceName);
-//            stmt.setString(3, searchOperationName);
-         
             ResultSet rs = stmt.executeQuery();
             rs.next();
             noOfRows = rs.getInt(1);
@@ -513,42 +436,17 @@ public boolean reviseRecords(DeviceOperationCommand  commandBean){
          String addQuery = " LIMIT " + lowerLimit + ", " + noOfRowsToDisplay;
           if(lowerLimit == -1)
             addQuery = "";
-
-
-//       String query1="select c.id,device_name,command,order_no,delay,operation_name,starting_del,end_del,c.remark "
-//                     +" from command c,device d,operation_name op_n "
-//                     +" where c.device_id=d.id "
-//                     +" and c.operation_id = op_n.id  "
-//                      + " and IF('" + searchCommandName + "' = '', command LIKE '%%',command =?) "
-//                      + " and IF('" + searchDeviceName + "' = '', device_name LIKE '%%',device_name =?) "
-//                     + " and c.active='Y' and d.active='Y' and op_n.active='Y' "
-////                     +addQuery;
-//       String query2="select c.id as command_id,m.name as manufacture_name,dt.type as device_type,"
-//        +" md.device_name,md.device_no,c.command,c.order_no,c.delay, "
-//        +" op_n.operation_name,c.starting_del,c.end_del,c.remark,ct.name as command_type,c.format as format, c.input, c.selection "
-//        +" from manufacturer m,device_type dt,model md,operation_name op_n,command c,command_type ct,device d "
-//        +" where c.device_id=d.id and d.manufacture_id = m.id "
-//        +" and d.device_type_id = dt.id and d.model_id = md.id "
-//        +" and c.operation_id = op_n.id and c.command_type_id = ct.id "
-//        +" and IF('" + searchCommandName + "' = '', command LIKE '%%',command =?) "
-//        +" and IF('" + searchDeviceName + "' = '', device_name LIKE '%%',device_name =?) "
-//        +" and IF('" + searchManufacturerName + "' = '', m.name LIKE '%%',m.name =?) "
-//        +" and IF('" + searchDeviceType + "' = '', dt.type LIKE '%%',dt.type =?) "
-//        +" and m.active='Y' and dt.active='Y'  and md.active='Y' and op_n.active='Y' and c.active='Y' and ct.active='Y' and d.active='Y' order by c.created_at desc "
-//        +addQuery;
-
-      String query3=" select dcm.device_command_id,dcm.device_id,dcm.remark,opn.operation_name,c.command,mf.name,dt.type,m.device_name,m.device_no" +
-                    " from device_command_map dcm,device d,operation_name opn,command c,manufacturer mf,device_type dt,model m" +
-                    " where dcm.device_id=d.id  and dcm.operation_id=opn.id and c.id=dcm.command_id and  d.id=mf.id and d.device_type_id=dt.id and d.model_id=m.id " +
-                    " and dcm.active='Y' and d.active='Y' and opn.active='Y' and c.active='Y' and mf.active='Y' and m.active='Y'"
-                     + " and IF('" + searchCommandName + "' = '', c.command LIKE '%%',c.command =?) "
-                     + " and IF('" + searchDeviceName + "' = '', m.device_name LIKE '%%',m.device_name =?) "
-                     + " and iF('" + searchOperationName +"'='',opn.operation_name LIKE '%%',opn.operation_name=?)"       
-                     + addQuery;
-            
-       
-       
-
+          
+      String query3=" select dcm.device_command_id, " +
+                    " dcm.device_id,dcm.remark,opn.operation_name,c.command,mf.name,m.device_name,m.device_no,dt.type  " +
+                    " from device_command_map dcm,device d,operation_name opn,command c ,manufacturer mf,model m,device_type dt " +
+                    " where dcm.device_id=d.id  and dcm.operation_id=opn.id and c.id=dcm.command_id  and mf.id=d.manufacture_id and d.model_id=m.id and d.device_type_id=dt.id " +
+                    "  and dcm.active='Y' and d.active='Y' and opn.active='Y' and c.active='Y' and mf.active='Y' and m.active='Y' and dt.active='Y'"
+                  + " and IF('" + searchCommandName + "' = '', c.command LIKE '%%',c.command =?) "
+                  + " and IF('" + searchDeviceName + "' = '', m.device_name LIKE '%%',m.device_name =?) "
+                  + " and iF('" + searchOperationName +"'='',opn.operation_name LIKE '%%',opn.operation_name=?)"  
+                  + addQuery;
+                         
         try {
             
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query3);
@@ -860,7 +758,7 @@ public boolean reviseRecords(DeviceOperationCommand  commandBean){
       public List<String> getCommand(String q) {
         List<String> list = new ArrayList<String>();
         String query = " select command from command "
-                       +" where active='Y' group by command order by command desc ";
+                       +" where active='Y' ";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;

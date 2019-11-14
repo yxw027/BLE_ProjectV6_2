@@ -19,7 +19,7 @@
                 window.location = "ModelTypeCont.do";
             }
              function goToDeviceMap1() {
-                window.location = "CommandTypeCont.do";
+                window.location = "CommandCont.do";
             }
              function goToDeviceMap2() {
                 window.location = "BleOperationNameCont.do";

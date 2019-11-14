@@ -18,6 +18,12 @@
             function goToDeviceMap() {
                 window.location = "ModelTypeCont.do";
             }
+             function goToDeviceMap1() {
+                window.location = "CommandCont.do";
+            }
+             function goToDeviceMap2() {
+                window.location = "BleOperationNameCont.do";
+            }
         </script>
         <style>           .button {
   display: inline-block;
@@ -81,7 +87,18 @@ a:hover{
                             </tr>
                             <tr>
                                 <td align="center">
-                                    <button  class="button" style="vertical-align:middle" type="button" value="Create Finished Device" name="create_finished_device" onclick="goToDeviceMap()" ><span>Create New Device</span></button>
+                                    <button  class="button" style="vertical-align:middle" type="button" value="Create Finished Device" name="create_finished_device" onclick="goToDeviceMap()" ><span> Finished</span></button>
+                                   
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <button  class="button" style="vertical-align:middle" type="button" value="Create Module Device" name="create_module_device" onclick="goToDeviceMap1()" ><span>Module</span></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <button class="button" style="vertical-align:middle" type="button" value="Create Ble Device" name="create_commands_device" onclick="goToDeviceMap2()" ><span> Ble </span></button>
                                 </td>
                             </tr>
                         </table>

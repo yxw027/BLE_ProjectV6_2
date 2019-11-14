@@ -145,33 +145,23 @@ public class CommandModel {
 
 
     public int insertRecord(CommandBean commandBean) {
-        int manufacturer_id = getManufacturerId(commandBean.getManufacturer());
-        int deviceType_id = getDeviceTypeId(commandBean.getDevice_type());
-        int model_id = getModelId(commandBean.getDevice_name(),commandBean.getDevice_no());
-
-        int device_id = getDeviceId(manufacturer_id,deviceType_id,model_id);
-
-        int operation_id = getOperationId(commandBean.getOperation_name());
+       
         int command_type_id = getCommandTypeId(commandBean.getCommand_type());
 
-        String query = " insert into command(device_id,command,order_no,delay,operation_id,starting_del,end_del,remark,command_type_id,format,input,selection) "
-                       +" values(?,?,?,?,?,?,?,?,?,?,?,?) ";
+        String query = " insert into command(command,starting_del,end_del,remark,command_type_id,format,input,selection,bitwise) "
+                       +" values(?,?,?,?,?,?,?,?,?) ";
         int rowsAffected = 0;
         try {
             java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1,device_id );
-            pstmt.setString(2, commandBean.getCommand());
-            pstmt.setString(3, commandBean.getOrder_no());
-
-             pstmt.setString(4, commandBean.getDelay());
-             pstmt.setInt(5, operation_id);
-             pstmt.setString(6, commandBean.getStarting_del());
-             pstmt.setString(7, commandBean.getEnd_del());
-             pstmt.setString(8, commandBean.getRemark());
-             pstmt.setInt(9, command_type_id);
-             pstmt.setString(10, commandBean.getFormat());
-             pstmt.setInt(11, commandBean.getInput_no());
-             pstmt.setInt(12, commandBean.getSelection_no());
+            pstmt.setString(1, commandBean.getCommand());
+             pstmt.setString(2, commandBean.getStarting_del());
+             pstmt.setString(3, commandBean.getEnd_del());
+             pstmt.setString(4, commandBean.getRemark());
+             pstmt.setInt(5, command_type_id);
+             pstmt.setString(6, commandBean.getFormat());
+             pstmt.setInt(7, commandBean.getInput_no());
+             pstmt.setInt(8, commandBean.getSelection_no());
+             pstmt.setInt(9, commandBean.getBitwise());
 
             rowsAffected = pstmt.executeUpdate();
         } catch (Exception e) {
@@ -204,7 +194,7 @@ public boolean reviseRecords(CommandBean bean){
 
       String query1 = " SELECT max(revision_no) revision_no FROM command c WHERE c.id = "+bean.getCommand_id()+" && active='Y' ORDER BY revision_no DESC";
       String query2 = " UPDATE command SET active=? WHERE id = ? && revision_no = ? ";
-      String query3 = " INSERT INTO command (id,device_id,command,order_no,delay,operation_id,starting_del,end_del,remark,command_type_id,revision_no,active,format,selection,input) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+      String query3 = " INSERT INTO command (id,device_id,command,operation_id,starting_del,end_del,remark,command_type_id,revision_no,active,format,selection,input) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
 
       int updateRowsAffected = 0;
       try {
@@ -222,18 +212,16 @@ public boolean reviseRecords(CommandBean bean){
              psmt.setInt(1,bean.getCommand_id());
              psmt.setInt(2,device_id);
              psmt.setString(3,bean.getCommand());
-             psmt.setString(4,bean.getOrder_no());
-             psmt.setString(5,bean.getDelay());
-             psmt.setInt(6,operation_id);
-             psmt.setString(7,bean.getStarting_del());
-             psmt.setString(8,bean.getEnd_del());
-             psmt.setString(9,bean.getRemark());
-             psmt.setInt(10,command_type_id);
-             psmt.setInt(11,rev);
-             psmt.setString(12,"Y");
-             psmt.setString(13, bean.getFormat());
-             psmt.setInt(14, bean.getSelection_no());
-             psmt.setInt(15, bean.getInput_no());
+             psmt.setInt(4,operation_id);
+             psmt.setString(5,bean.getStarting_del());
+             psmt.setString(6,bean.getEnd_del());
+             psmt.setString(7,bean.getRemark());
+             psmt.setInt(8,command_type_id);
+             psmt.setInt(9,rev);
+             psmt.setString(10,"Y");
+             psmt.setString(11, bean.getFormat());
+             psmt.setInt(12, bean.getSelection_no());
+             psmt.setInt(13, bean.getInput_no());
 
              int a = psmt.executeUpdate();
               if(a > 0)
@@ -266,24 +254,13 @@ public boolean reviseRecords(CommandBean bean){
 //                      + " and IF('" + searchCommandName + "' = '', command LIKE '%%',command =?) "
 //                      //+ " and IF('" + searchCommandName + "' = '', device_name LIKE '%%',device_name =?) "
 //                      +" and c.active='Y' ";
-        String query1="select count(*) "
-      +" from manufacturer m,device_type dt,model md,operation_name op_n,command c,command_type ct,device d "
-      +" where c.device_id=d.id and d.manufacture_id = m.id "
-      +" and d.device_type_id = dt.id and d.model_id = md.id "
-      +" and c.operation_id = op_n.id and c.command_type_id = ct.id "
-      +" and IF('" + searchCommandName + "' = '', c.command LIKE '%%',c.command =?) "
-      +" and IF('" + searchDeviceName + "' = '', md.device_name LIKE '%%',md.device_name =?) "
-      +" and IF('" + searchManufacturerName + "' = '', m.name LIKE '%%',m.name =?) "
-      +" and IF('" + searchDeviceType + "' = '', dt.type LIKE '%%',dt.type =?) "
-      +" and m.active='Y' and dt.active='Y'  and md.active='Y' and op_n.active='Y' and c.active='Y' and ct.active='Y' and d.active='Y' ";
+    String query1 = "select count(*)  from command c  where IF('" + searchCommandName + "' = '', c.command LIKE '%%',c.command ='')  and c.active='Y' ;";
+        
 
         int noOfRows = 0;
         try {
             PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
-            stmt.setString(1, searchCommandName);
-            stmt.setString(2, searchDeviceName);
-            stmt.setString(3, searchManufacturerName);
-            stmt.setString(4, searchDeviceType);
+           
             ResultSet rs = stmt.executeQuery();
             rs.next();
             noOfRows = rs.getInt(1);
@@ -301,44 +278,24 @@ public boolean reviseRecords(CommandBean bean){
             addQuery = "";
 
 
-//       String query1="select c.id,device_name,command,order_no,delay,operation_name,starting_del,end_del,c.remark "
-//                     +" from command c,device d,operation_name op_n "
-//                     +" where c.device_id=d.id "
-//                     +" and c.operation_id = op_n.id  "
-//                      + " and IF('" + searchCommandName + "' = '', command LIKE '%%',command =?) "
-//                      + " and IF('" + searchDeviceName + "' = '', device_name LIKE '%%',device_name =?) "
-//                     + " and c.active='Y' and d.active='Y' and op_n.active='Y' "
-//                     +addQuery;
-       String query2="select c.id as command_id,m.name as manufacture_name,dt.type as device_type,"
-        +" md.device_name,md.device_no,c.command,c.order_no,c.delay, "
-        +" op_n.operation_name,c.starting_del,c.end_del,c.remark,ct.name as command_type,c.format as format, c.input, c.selection "
-        +" from manufacturer m,device_type dt,model md,operation_name op_n,command c,command_type ct,device d "
-        +" where c.device_id=d.id and d.manufacture_id = m.id "
-        +" and d.device_type_id = dt.id and d.model_id = md.id "
-        +" and c.operation_id = op_n.id and c.command_type_id = ct.id "
+       String query2="select c.id as command_id,c.command, "
+        +" c.starting_del,c.end_del,c.remark,ct.name as command_type,c.format as format, c.input, c.selection, c.bitwise "
+        +" from command c,command_type ct "
+        +" where c.command_type_id = ct.id "
         +" and IF('" + searchCommandName + "' = '', command LIKE '%%',command =?) "
-        +" and IF('" + searchDeviceName + "' = '', device_name LIKE '%%',device_name =?) "
-        +" and IF('" + searchManufacturerName + "' = '', m.name LIKE '%%',m.name =?) "
-        +" and IF('" + searchDeviceType + "' = '', dt.type LIKE '%%',dt.type =?) "
-        +" and m.active='Y' and dt.active='Y'  and md.active='Y' and op_n.active='Y' and c.active='Y' and ct.active='Y' and d.active='Y' order by c.created_at desc "
+        +" and c.active='Y' and ct.active='Y' order by c.created_at desc "
         +addQuery;
 
 
         try {
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);
             pstmt.setString(1, searchCommandName);
-            pstmt.setString(2, searchDeviceName);
-            pstmt.setString(3, searchManufacturerName);
-            pstmt.setString(4, searchDeviceType);
+           
             ResultSet rset = pstmt.executeQuery();
             while (rset.next()) {
                 CommandBean commandBean = new CommandBean();
 
                 commandBean.setCommand_id(rset.getInt("command_id"));
-                commandBean.setManufacturer(rset.getString("manufacture_name"));
-                commandBean.setDevice_type(rset.getString("device_type"));
-                commandBean.setDevice_name(rset.getString("device_name"));
-                commandBean.setDevice_no(rset.getString("device_no"));
                 String command = rset.getString("command");
 //                String commandReq = command.substring(1, command.length()-1);
 //                String[] commandByte = commandReq.split(", ");
@@ -348,9 +305,6 @@ public boolean reviseRecords(CommandBean bean){
 //                }
 //                String hex = bytesToHex(b);
                 commandBean.setCommand(command);
-                commandBean.setOrder_no(rset.getString("order_no"));
-                commandBean.setDelay(rset.getString("delay"));
-                commandBean.setOperation_name(rset.getString("operation_name"));
                 commandBean.setStarting_del(rset.getString("starting_del"));
                 commandBean.setEnd_del(rset.getString("end_del"));
                 commandBean.setRemark(rset.getString("remark"));
@@ -358,6 +312,7 @@ public boolean reviseRecords(CommandBean bean){
                 commandBean.setFormat(rset.getString("format"));
                 commandBean.setSelection_no(rset.getInt("selection"));
                 commandBean.setInput_no(rset.getInt("input"));
+                commandBean.setBitwise(rset.getInt("bitwise"));
 
                 list.add(commandBean);
             }

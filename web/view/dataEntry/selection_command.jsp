@@ -27,14 +27,18 @@
             <body>
         </c:when>        
         <c:otherwise>
-        <body onload="addRow('dataTable',${selection_no}, '${command}')">
+        <body onload="addRow('dataTable',${selection_no},'${command_name}')">
         </c:otherwise>
     </c:choose>
 
-        <table cellspacing="0" border="0" id="table0"  align="center" width="500">
+        <table cellspacing="0" border="0" id="table0"  align="center" width="60%">
+              <tr><td><%@include file="/layout/header.jsp" %></td></tr>
+            <tr>
+                <td><%@include file="/layout/menu.jsp" %> </td>
+            </tr>
             <tr style="font-size:larger ;font-weight: 700;" align="center">
                 <td>
-                    "${command}" Selection Details
+                    "${command_name}" Selection Details
                 </td>
             </tr>
             
@@ -44,7 +48,7 @@
                 </c:if>
             </tr>
             <tr>
-                <td>
+                <td style="padding-top: 13px;">
                     <form name="form1" id ="form1" action="SelectionCont.do" method="post" >
                         <table id="dataTable" style="border-collapse: collapse;" border="1" width="100%" align="center">
                             <tbody>
@@ -52,37 +56,50 @@
                                     <th class="heading">S.No.</th>
                                     <th class="heading">Command</th>
                                     <th class="heading">Parameter</th>                                    
-                                    <th class="heading">Parameter Value</th>
+                                    <th class="heading" colspan="2" style="min-width:200px;">Selection Value No</th>
                                     <th class="heading">Parameter Type</th>
                                     <th class="heading">Remark</th>
+                                    <th class="heading">Action</th>
                                 </tr>
                                 <c:forEach var="list" items="${requestScope['selectionListById']}" varStatus="loopCounter">
                                     <tr>
                                         <td><input type="text" name="s_no${loopCounter.count}" id="s_no${loopCounter.count}" size="5" value="${loopCounter.count}" readonly>
-                                            <input type="hidden" name="selection_id${loopCounter.count}" maxlength="8" size="5" id="selection_id${loopCounter.count}" value="${list.selection_id}"></td>
-                                        <td><input type="text" name="command_name${loopCounter.count}" maxlength="50" size="20" id="command_name${loopCounter.count}" value="${list.command_name}" readonly></td>
-                                        <td><input type="text" name="parameter${loopCounter.count}" maxlength="8" size="5" id="parameter${loopCounter.count}" value="${list.parameter}" onkeyup="autocompleteMethod('parameter',${loopCounter.count}+1)"></td>
-                                        <td><input type="text" name="parameter_value${loopCounter.count}" maxlength="50" size="5" id="parameter_value${loopCounter.count}" value="${list.parameter_value}" ></td>
-                                        <td><input type="text" name="parameter_type${loopCounter.count}" maxlength="8" size="5" id="parameter_type${loopCounter.count}" value="${list.parameter_type}" onkeyup="autocompleteMethod('parameter_type',${loopCounter.count}+1)"></td>
-                                        <td><input type="text" name="remark${loopCounter.count}" maxlength="8" size="5" id="remark{loopCounter.count}" value="${list.remark}" ></td>
+                                        <input type="hidden" name="selection_id${loopCounter.count}" maxlength="8" size="5" id="selection_id${loopCounter.count}" value="${list.selection_id}">
+                                        <input type="hidden" name="count" maxlength="8" size="5" id="count" value="${loopCounter.count}"></td>
+                                        <td><input type="text" name="command_name${loopCounter.count}" maxlength="50" size="80" id="command_name${loopCounter.count}" value="${list.command_name}" readonly></td>
+                                        <td><input type="text" name="parameter${loopCounter.count}" maxlength="8" size="15" id="parameter${loopCounter.count}" value="${list.parameter}" onkeyup="autocompleteMethod('parameter',${loopCounter.count}+1)"></td>
+                                       
+                                        <td><input type="text" name="selection_value_no${loopCounter.count}" maxlength="50" size="5" id="selection_value_no${loopCounter.count}" value="${list.selection_value_no}" onkeyup="check(value)"></td>                                         
+                                        <td><a href="#" onclick="inputPopup('SelectionValueController','${list.parameter}',${list.selection_value_no},${list.selection_id});return false" id="input_button">View Selection Value</a></td>
+                                     
+                                        <td><input type="text" name="parameter_type${loopCounter.count}" maxlength="8" size="10" id="parameter_type${loopCounter.count}" value="${list.parameter_type}" onkeyup="autocompleteMethod('parameter_type',${loopCounter.count}+1)"></td>
+                                       
+                                        <td><input type="text" name="remark${loopCounter.count}" maxlength="8" size="20" id="remark{loopCounter.count}" value="${list.remark}" ></td>
+<!--                                        <td><input type="button" class ="button" name="update" value="update" onclick="update(${list.selection_id},${list.selection_value_no})"></td>-->
+                                        <td><input type="submit" class="button" name="task"  value="update" ></td>
+<!--                                        <td><a href="SelectionCont.do?task=Save&selection_id="${list.selection_id} id="input_button1">Update Value</a></td>                                    -->
                                     </tr>
+                                    
                                 </c:forEach>
-
-                            <input  type="hidden" name="selection_no" value="${selection_no}" >
-                            <input  type="hidden" name="command" value="${command}" >
-                            <input  type="hidden" name="command_id" value="${command_id}" >
-                            <input class="button" type="submit" id="save" name="task" value="Save" >
+                       
+                            <input  type="hidden" name="selection_no1" value="${selection_no}" >
+                            <input  type="hidden" name="command_name" id="command_name" value="${command_name}" >
+                            <input  type="hidden" name="command_id1" id="command_id" value="${command_id}" >
+<!--                            <input  type="hidden" name="selection_update_value" id="selection_update_value" value="${selection_update_value}" >-->
+                            
                             </tbody>
                         </table>
-
+                            <div style="padding-top: 10px;" align="center">
+                                <input class="button" type="submit" id="save" name="task" value="Save">
+                            </div>
                     </form>
                 </td>
             </tr>
         </table>
+                            
         <script type="text/javascript" language="javascript">
 
-
-
+       var selection_update_value;
             function autocompleteMethod(id, count) {
                 debugger;
                 if (id === "command_name") {
@@ -113,15 +130,37 @@
                 }
 
             }
-
-
-            function addRow(tableID, selection_no, command, list) {
+       
+//            function update1(selection_id)
+//            {
+//                debugger;
+//                var selection_value_no =selection_update_value;
+//                var command_id = document.getElementById('command_id').value;
+//                var queryString = "task=update&selection_id=" + selection_id + "&selection_value_no=" + selection_value_no+ "&command_id=" + command_id;
+//                var url = "SelectionCont.do?" + queryString; 
+//                alert(url);
+//                $.ajax({url: url, 
+//                    success: function(result){
+//                        console.log()
+//                    }
+//                });
+//                //window.open(url);
+//            } 
+            
+            function check(selection_value_no){
                 debugger;
+               selection_update_value = selection_value_no;               
+            }
+                
+          
+
+            function addRow(tableID, selection_no, command) {
+                debugger;
+
 
                 $("#message").html("");
                 var table = document.getElementById(tableID);
 
-                //  alert(rowCount);
                 for (var i = 1; i <= selection_no; i++) {
                     var row = table.insertRow(i);
 
@@ -140,7 +179,7 @@
                     element2.type = "text";
                     element2.name = "command_name" + i;
                     element2.id = "command_name" + i;
-                    element2.size = 20;
+                    element2.size = 100;
                     element2.maxLength = 2;
                     element2.value = command;
                     element2.setAttribute("onkeyup", 'autocompleteMethod("command_name",' + i + ')');
@@ -160,8 +199,8 @@
                     var cell4 = row.insertCell(3);
                     var element2 = document.createElement("input");
                     element2.type = "text";
-                    element2.name = "parameter_value" + i;
-                    element2.id = "parameter_value" + i;
+                    element2.name = "selection_value_no" + i;
+                    element2.id = "selection_value_no" + i;
                     element2.size = 5;
                     element2.maxLength = 50;
                     element2.value = "";
@@ -192,7 +231,17 @@
 
 
             }
-
+   function inputPopup(url,parameter,selection_value_no,selection_id) {
+        debugger;
+        var popup_height = 580;
+        var popup_width = 900;
+        var popup_top_pos = (screen.availHeight / 2) - (popup_height / 2);
+        var popup_left_pos = (screen.availWidth / 2) - (popup_width / 2);
+        url = url + "?parameter="+parameter+"&selection_value_no="+selection_value_no+"&selection_id="+selection_id;
+        alert(url);
+        var window_features = "left=" + popup_left_pos + ", top=" + popup_top_pos + ", width=" + popup_width + ", height=" + popup_height + ", resizable=no, scrollbars=yes, status=no, dialog=yes, dependent=yes";
+        popupWindow = window.open(url, 'Selection Window', window_features);
+    }
             function deleteRow(tableID) {
                 try {
                     // alert(tableID);

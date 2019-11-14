@@ -434,7 +434,7 @@ a:hover{
                                                 <td>Command Name<input class="input" type="text" id="searchCommandName" name="searchCommandName" value="${searchCommandName}" size="20" ></td>
                                                 <td><input class="button" type="submit" name="task" id="searchIn" value="Search"></td>
                                                 <td><input class="button" type="submit" name="task" id="showAllRecords" value="Show All Records"></td>
-                                                <td><input class="button" type="pdf_button" id="viewPdf" name="task" value="PDF" onclick="displayMapList()"></td>
+                                                <td><input class="button" type="pdf_button" id="viewPdf" name="task" value="PDF" onclick="displayMapList()" style="width:50px;text-align:center"></td>
                                             </tr>
                                         </table>
                                     </form></div>
@@ -453,6 +453,7 @@ a:hover{
                                                 <th class="heading">Model No.</th>
                                                 <th class="heading">Operation Name</th>
                                                 <th class="heading">Command</th>
+                                                <th class="heading">Remark</th>
                                                 <th class="heading">Report</th>
                                               
                                             </tr>
@@ -471,6 +472,7 @@ a:hover{
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.device_no}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.operation_name}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.command}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.remark}</td>
                                                     <td <input class="button" type="submit" id="${divisionTypeBean.device_command_id}" name="report"  value="Generate Report" size="100" onclick="generateReport(id)" >Generate Report</td>
                                                    
 
@@ -574,7 +576,7 @@ a:hover{
                                             </tr>
                                             <tr>
                                                 <th class="heading1">Command</th>
-                                                <td><input class="input" type="text" id="command" name="command" value="" size="40" disabled></td>
+                                                <td><input class="input" type="text" id="command" name="command" value="" size="80" disabled></td>
                                                    <input class="input" type="hidden" id="command_id" name="command_id" value="" >
                                             </tr>
 

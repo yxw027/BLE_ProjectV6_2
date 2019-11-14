@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package java.com.ble.webService.controller;
+package com.ble.webService.controller;
 
 import com.ble.webService.model.BLEWebServicesModel;
 import javax.ws.rs.Consumes;
@@ -59,6 +59,8 @@ public class BLEWebServicesController {
          obj.put("charachtristics", json);
          json = bLEWebServicesModel.getCommandRecords();
          obj.put("command", json);
+         json = bLEWebServicesModel.getCommandDeviceMapRecords();
+         obj.put("command_device_map", json);
          json = bLEWebServicesModel.getRuleRecords();
          obj.put("rule", json);
 
@@ -68,11 +70,16 @@ public class BLEWebServicesController {
          obj.put("device_characteristic_ble_map", json);
          json = bLEWebServicesModel.getSelectionRecord();
          obj.put("selection", json);
+         json = bLEWebServicesModel.getSelectionValueRecord();
+         obj.put("selection_value", json);
          json = bLEWebServicesModel.getInputRecord();
          obj.put("input", json);
          json = bLEWebServicesModel.getParameterRecord();
          obj.put("parameter", json);
-
+         json = bLEWebServicesModel.getByteDataRecord();
+         obj.put("byte_data", json);
+         json = bLEWebServicesModel.getSubByteDivisionRecord();
+         obj.put("sub_byte_division", json);
          json = bLEWebServicesModel.getDeviceMapRecords();
          obj.put("device_map", json);
         }catch(Exception e){

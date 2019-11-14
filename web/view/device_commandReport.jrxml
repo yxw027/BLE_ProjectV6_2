@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="3"/>
+	<property name="ireport.y" value="0"/>
 	<field name="device_name" class="java.lang.String"/>
 	<field name="operation_name" class="java.lang.String"/>
 	<field name="command" class="java.lang.String"/>
@@ -34,7 +34,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="274" splitType="Stretch">
+		<band height="272" splitType="Stretch">
 			<textField>
 				<reportElement mode="Opaque" x="288" y="59" width="100" height="20" backcolor="#99FFFF"/>
 				<textElement>
@@ -89,14 +89,6 @@
 				</textElement>
 				<text><![CDATA[S.No]]></text>
 			</staticText>
-			<image>
-				<reportElement x="245" y="209" width="79" height="37"/>
-				<imageExpression><![CDATA["D:\\Shubham\\netbeansProject\\BLE_project\\web\\images\\iconmonstr-arrow-down-thin.png"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="235" y="133" width="53" height="57"/>
-				<imageExpression><![CDATA["D:\\Shubham\\netbeansProject\\BLE_project\\web\\images\\iconmonstr-arrow-down-thin.png"]]></imageExpression>
-			</image>
 			<rectangle>
 				<reportElement mode="Transparent" x="154" y="6" width="279" height="127"/>
 			</rectangle>
@@ -145,6 +137,14 @@
 			<break>
 				<reportElement x="0" y="267" width="100" height="1"/>
 			</break>
+			<image>
+				<reportElement x="238" y="133" width="50" height="56"/>
+				<imageExpression><![CDATA["D:\\BLE_project\\web\\images\\iconmonstr-arrow-down-thin.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="238" y="209" width="67" height="37"/>
+				<imageExpression><![CDATA["D:\\BLE_project\\web\\images\\iconmonstr-arrow-down-thin.png"]]></imageExpression>
+			</image>
 		</band>
 	</detail>
 	<columnFooter>

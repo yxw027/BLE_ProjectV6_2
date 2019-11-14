@@ -157,10 +157,10 @@ public class CommandController extends HttpServlet {
             commandBean.setEnd_del(request.getParameter("end_del"));
             commandBean.setInput_no(Integer.parseInt(request.getParameter("input_no")));
             commandBean.setSelection_no(Integer.parseInt(request.getParameter("selection_no")));
+            commandBean.setBitwise(Integer.parseInt(request.getParameter("bitwise")));
             commandBean.setRemark(request.getParameter("remark"));
 
-            //session.setAttribute("deviceName", request.getParameter("device_name"));
-            //session.setAttribute("operationName", request.getParameter("operation_name"));
+         
             if (command_id == 0) {
                 System.out.println("Inserting values by model......");
                 commandModel.insertRecord(commandBean);
