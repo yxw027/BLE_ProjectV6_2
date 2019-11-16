@@ -138,6 +138,7 @@ public class DeviceOperationCommandController extends HttpServlet {
                     listAll=DeviceOperationCommandModel.showPDF(dcm,searchCommandName,searchDeviceName,searchOperationName);
              //  listAll=DeviceOperationCommandModel.showPDF(dcm,searchOperationName,searchCommandName,searchDeviceName);
                 jrxmlFilePath = ctx.getRealPath("/view/device_commandReport.jrxml");
+                //jrxmlFilePath = ctx.getRealPath("/view/TestReport.jrxml");
                 byte[] reportInbytes = DeviceOperationCommandModel.generateRecordList(jrxmlFilePath,listAll);
                 response.setContentLength(reportInbytes.length);
                 servletOutputStream.write(reportInbytes, 0, reportInbytes.length);

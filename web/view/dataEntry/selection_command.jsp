@@ -238,7 +238,7 @@
         var popup_top_pos = (screen.availHeight / 2) - (popup_height / 2);
         var popup_left_pos = (screen.availWidth / 2) - (popup_width / 2);
         url = url + "?parameter="+parameter+"&selection_value_no="+selection_value_no+"&selection_id="+selection_id;
-        alert(url);
+        //alert(url);
         var window_features = "left=" + popup_left_pos + ", top=" + popup_top_pos + ", width=" + popup_width + ", height=" + popup_height + ", resizable=no, scrollbars=yes, status=no, dialog=yes, dependent=yes";
         popupWindow = window.open(url, 'Selection Window', window_features);
     }

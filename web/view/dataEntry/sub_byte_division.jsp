@@ -137,7 +137,7 @@
                 var byte_id = document.getElementById('bit_id').value;
                 var queryString = "task=update&sub_byte_division_id=" + sub_byte_division_id + "&sub_division_no=" + sub_division_no + "&bitwise=" + bitwise + "&byte_id=" + byte_id;
                 var url = "SubByteDivision?" + queryString;
-                alert(url);
+                //alert(url);
                 window.open(url);
             }
 
@@ -239,7 +239,7 @@
                 var popup_top_pos = (screen.availHeight / 2) - (popup_height / 2);
                 var popup_left_pos = (screen.availWidth / 2) - (popup_width / 2);
                 url = url + "?parameter_name=" + parameter + "&sub_division_no=" + sub_division_no + "&sub_byte_division_id=" + sub_byte_division_id;
-                alert(url);
+                //alert(url);
                 var window_features = "left=" + popup_left_pos + ", top=" + popup_top_pos + ", width=" + popup_width + ", height=" + popup_height + ", resizable=no, scrollbars=yes, status=no, dialog=yes, dependent=yes";
                 popupWindow = window.open(url, 'Selection Window', window_features);
             }
