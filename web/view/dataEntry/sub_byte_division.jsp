@@ -137,7 +137,7 @@
                 var byte_id = document.getElementById('bit_id').value;
                 var queryString = "task=update&sub_byte_division_id=" + sub_byte_division_id + "&sub_division_no=" + sub_division_no + "&bitwise=" + bitwise + "&byte_id=" + byte_id;
                 var url = "SubByteDivision?" + queryString;
-                alert(url);
+                //alert(url);
                 window.open(url);
             }
 

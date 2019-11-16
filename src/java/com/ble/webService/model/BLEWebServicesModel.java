@@ -530,6 +530,30 @@ public class BLEWebServicesModel {
         return rowData;
     }
     
+    public JSONArray getSubDivisionSelectionRecord()
+        {
+        JSONArray rowData = new JSONArray();
+        String query = null;
+        query = " select sub_division_selection_id, display_value, bit_value, sub_byte_division_id"
+                +" from sub_division_selection d "
+                +" where d.active='Y' ";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            ResultSet rset = pstmt.executeQuery();
+            while (rset.next()) {
+                JSONObject obj = new JSONObject();
+                 obj.put("sub_division_selection_id",rset.getInt("sub_division_selection_id"));
+                 obj.put("display_value",rset.getString("display_value"));
+                 obj.put("bit_value",rset.getString("bit_value"));
+                 obj.put("sub_byte_division_id",rset.getInt("sub_byte_division_id"));
+                 rowData.add(obj);
+           }
+        } catch (Exception e) {
+            System.out.println("Error inside show data of survey: " + e);
+        }
+        return rowData;
+    }
+    
     
      public JSONArray getInputRecord()
         {
