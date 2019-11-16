@@ -80,6 +80,8 @@ public class BLEWebServicesController {
          obj.put("byte_data", json);
          json = bLEWebServicesModel.getSubByteDivisionRecord();
          obj.put("sub_byte_division", json);
+         json = bLEWebServicesModel.getSubDivisionSelectionRecord();
+         obj.put("sub_division_selection", json);
          json = bLEWebServicesModel.getDeviceMapRecords();
          obj.put("device_map", json);
         }catch(Exception e){
