@@ -19,13 +19,13 @@
     <context-param>
         <param-name>db_username</param-name>
         <!--<param-value>root</param-value>-->
-        <param-value>jpss_2</param-value>
+        <param-value>root</param-value>
     </context-param>
     <context-param>
         <description>	</description>
         <param-name>db_password</param-name>
         <!--<param-value>root</param-value>-->
-        <param-value>jpss_1277</param-value>
+        <param-value>jpss</param-value>
     </context-param>
     <!--<ServletContainer mapping start>-->
     <servlet>
@@ -460,5 +460,21 @@
     <servlet-mapping>
         <servlet-name>SubDivisionSelectionController</servlet-name>
         <url-pattern>/SubDivisionSelectionController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>command_description</servlet-name>
+        <jsp-file>/view/dataEntry/command_description.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>command_description</servlet-name>
+        <url-pattern>/command_description</url-pattern>
+    </servlet-mapping>
+        <servlet>
+        <servlet-name>CommandDescriptionController</servlet-name>
+        <servlet-class>com.ble.command.controller.CommandDescriptionController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CommandDescriptionController</servlet-name>
+        <url-pattern>/CommandDescriptionCont.do</url-pattern>
     </servlet-mapping>
 </web-app>

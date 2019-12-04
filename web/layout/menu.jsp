@@ -60,6 +60,7 @@
                             <ul>
                                 <li><a href="CommandTypeCont.do">Command Type</a></li>
                                 <li><a href="CommandCont.do">Command</a></li>
+                                <li><a href="CommandDescriptionCont.do">Command Description</a></li>
                                 <li><a href="OperationNameCont.do">Operation Name</a></li>
                                 <li><a href="ruleCont.do">Rules</a></li>
                                 <li><a href="SelectionCont.do">Selection</a></li>

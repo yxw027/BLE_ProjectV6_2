@@ -20,10 +20,10 @@
 
 <script type="text/javascript" language="javascript">
     jQuery(function () {
-        $("#searchModelType").autocomplete("CommandTypeCont.do", {
+        $("#searchCommandType").autocomplete("CommandTypeCont.do", {
             extraParams: {
                 action1: function () {
-                    return "getDeviceType"
+                    return "getCommandType"
                 }
             }
         });
@@ -39,7 +39,8 @@
     }
     function makeEditable(id) {
 
-        document.getElementById("model_type").disabled = false;
+        document.getElementById("command_type").disabled = false;
+         document.getElementById("shorthand").disabled = false;
         document.getElementById("remark").disabled = false;
 
         document.getElementById("save").disabled = false;
@@ -117,7 +118,7 @@
     }
     function fillColumns(id) {
         var noOfRowsTraversed = document.getElementById("noOfRowsTraversed").value;
-        var noOfColumns = 4;
+        var noOfColumns = 5;
         var columnId = id;
         <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
         columnId = columnId.substring(3, id.length);
@@ -135,9 +136,10 @@
         setDefaultColor(noOfRowsTraversed, noOfColumns);        // set default color of rows (i.e. of multiple coloumns).
         var t1id = "t1c";       // particular column id of table 1 e.g. t1c3.
 
-        document.getElementById("model_type_id").value = document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
-        document.getElementById("model_type").value = document.getElementById(t1id + (lowerLimit + 2)).innerHTML;
-        document.getElementById("remark").value = document.getElementById(t1id + (lowerLimit + 3)).innerHTML;
+        document.getElementById("command_type_id").value = document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
+        document.getElementById("command_type").value = document.getElementById(t1id + (lowerLimit + 2)).innerHTML;
+         document.getElementById("shorthand").value = document.getElementById(t1id + (lowerLimit + 3)).innerHTML;
+        document.getElementById("remark").value = document.getElementById(t1id + (lowerLimit + 4)).innerHTML;
 
         //       var b=  document.getElementById(t1id +(lowerLimit+8)).innerHTML;
         // alert(b);
@@ -226,7 +228,7 @@
                                 <form name="form0" method="POST" action="CommandTypeCont.do">
                                     <table align="center" class="heading1" width="600">
                                         <tr>
-                                            <td>Model Type<input class="input" type="text" id="searchModelType" name="searchModelType" value="${searchModelType}" size="20" ></td>
+                                            <td>Command Type<input class="input" type="text" id="searchModelType" name="searchModelType" value="${searchModelType}" size="20" ></td>
                                             <td><input class="button" type="submit" name="task" id="searchIn" value="Search"></td>
                                             <td><input class="button" type="submit" name="task" id="showAllRecords" value="Show All Records"></td>
                                             <td><input type="button" class="pdf_button" id="viewPdf" name="viewPdf" value="" onclick="displayMapList()"></td>
@@ -242,21 +244,23 @@
                                     <table id="table1" width="600"  border="1"  align="center" class="content">
                                         <tr>
                                             <th class="heading">S.No.</th>
-                                            <th class="heading">Model Type</th>
+                                            <th class="heading">Command Type</th>
+                                            <th class="heading">Short Hand</th>
 
                                             <th class="heading">Remark</th>
                                         </tr>
                                         <!---below is the code to show all values on jsp page fetched from trafficTypeList of TrafficController     --->
-                                        <c:forEach var="divisionTypeBean" items="${requestScope['divisionTypeList']}"  varStatus="loopCounter">
+                                        <c:forEach var="commandTypeBean" items="${requestScope['commandTypeList']}"  varStatus="loopCounter">
                                             <tr  class="${loopCounter.index % 2 == 0 ? 'even': 'odd'}" >
                                                 <%--  <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">
                                                       <input type="hidden" id="status_type_id${loopCounter.count}" value="${statusTypeBean.status_type_id}">${lowerLimit - noOfRowsTraversed + loopCounter.count}
                                                       <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">${lowerLimit - noOfRowsTraversed + loopCounter.count}</td>
                                                   </td> --%>
-                                                <td id="t1c${IDGenerator.uniqueID}" style="display:none" onclick="fillColumns(id)">${divisionTypeBean.model_type_id}</td>
+                                                <td id="t1c${IDGenerator.uniqueID}" style="display:none" onclick="fillColumns(id)">${commandTypeBean.command_type_id}</td>
                                                 <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">${lowerLimit - noOfRowsTraversed + loopCounter.count}</td>
-                                                <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.type}</td>
-                                                <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.remark}</td>
+                                                 <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${commandTypeBean.name}</td>
+                                                <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${commandTypeBean.shorthand}</td>
+                                                <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${commandTypeBean.remark}</td>
 
                                             </tr>
                                         </c:forEach>
@@ -319,8 +323,12 @@
                                         <tr>
                                             <th class="heading1">Command Type </th>
 
-                                            <td><input class="input" type="text" id="model_type" name="model_type" value="" size="40" disabled>
-                                                <input class="input" type="hidden" id="model_type_id" name="model_type_id" value="" ></td>
+                                            <td><input class="input" type="text" id="model_type" name="command_type" value="" size="40" disabled>
+                                                <input class="input" type="hidden" id="model_type_id" name="command_type_id" value="" ></td>
+                                        </tr>
+                                         <tr>
+                                            <th class="heading1">Short Hand</th>
+                                            <td><input class="input" type="text" id="shorthand" name="shorthand" value="" size="40" disabled></td>
                                         </tr>
                                         <tr>
                                             <th class="heading1">Remark</th>

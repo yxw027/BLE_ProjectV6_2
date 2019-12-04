@@ -39,15 +39,16 @@ private Connection connection;
     }
 
 
-public int insertRecord(CommandTypeBean modelTypeBean) {
+public int insertRecord(CommandTypeBean commandTypeBean) {
 
-        String query = " insert into command_type(name,remark) values(?,?); ";
+        String query = " insert into command_type(name,shorthand,remark) values(?,?,?); ";
         int rowsAffected = 0;
         try {
             java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
 
-            pstmt.setString(1, modelTypeBean.getType());
-            pstmt.setString(2, modelTypeBean.getRemark());
+            pstmt.setString(1, commandTypeBean.getName());
+             pstmt.setString(2, commandTypeBean.getShorthand());
+            pstmt.setString(3, commandTypeBean.getRemark());
 
             rowsAffected = pstmt.executeUpdate();
         } catch (Exception e) {
@@ -64,14 +65,14 @@ public int insertRecord(CommandTypeBean modelTypeBean) {
 
     }
 
-public boolean reviseRecords(CommandTypeBean modelTypeBean){
+public boolean reviseRecords(CommandTypeBean commandTypeBean){
     boolean status=false;
     String query="";
     int rowsAffected=0;
 
-      String query1 = " SELECT max(revision_no) revision_no FROM command_type c WHERE c.id = "+modelTypeBean.getModel_type_id()+" && active='Y' ORDER BY revision_no DESC";
+      String query1 = " SELECT max(revision_no) revision_no FROM command_type c WHERE c.id = "+commandTypeBean.getCommand_type_id()+" && active='Y' ORDER BY revision_no DESC";
       String query2 = " UPDATE command_type SET active=? WHERE id = ? && revision_no = ? ";
-      String query3 = " INSERT INTO command_type (id,name,remark,revision_no,active) VALUES (?,?,?,?,?) ";
+      String query3 = " INSERT INTO command_type (id,name,shorthand,remark,revision_no,active) VALUES (?,?,?,?,?,?) ";
 
       int updateRowsAffected = 0;
       try {
@@ -80,17 +81,18 @@ public boolean reviseRecords(CommandTypeBean modelTypeBean){
            if(rs.next()){
            PreparedStatement pst = (PreparedStatement) connection.prepareStatement(query2);
            pst.setString(1,  "N");
-           pst.setInt(2,modelTypeBean.getModel_type_id());
+           pst.setInt(2,commandTypeBean.getCommand_type_id());
            pst.setInt(3, rs.getInt("revision_no"));
            updateRowsAffected = pst.executeUpdate();
              if(updateRowsAffected >= 1){
              int rev = rs.getInt("revision_no")+1;
              PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3);
-             psmt.setInt(1,modelTypeBean.getModel_type_id());
-             psmt.setString(2,modelTypeBean.getType());
-             psmt.setString(3,modelTypeBean.getRemark());
-             psmt.setInt(4,rev);
-             psmt.setString(5,"Y");
+             psmt.setInt(1,commandTypeBean.getCommand_type_id());
+             psmt.setString(2,commandTypeBean.getName());
+             psmt.setString(3,commandTypeBean.getShorthand());
+             psmt.setString(4,commandTypeBean.getRemark());
+             psmt.setInt(5,rev);
+             psmt.setString(6,"Y");
 
              int a = psmt.executeUpdate();
               if(a > 0)
@@ -113,17 +115,17 @@ public boolean reviseRecords(CommandTypeBean modelTypeBean){
 
        return status;
     }
-  public int getNoOfRows(String searchModelType) {
+  public int getNoOfRows(String searchCommandType) {
       String query1="select count(*) "
                     +" from command_type mt "
-                    +" where IF('" + searchModelType + "' = '', name LIKE '%%',name =?) "
+                    +" where IF('" + searchCommandType + "' = '', name LIKE '%%',name =?) "
                     +" and mt.active='Y'";
 
         int noOfRows = 0;
         try {
             PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
 
-            stmt.setString(1, searchModelType);
+            stmt.setString(1, searchCommandType);
 
             ResultSet rs = stmt.executeQuery();
             rs.next();
@@ -135,27 +137,28 @@ public boolean reviseRecords(CommandTypeBean modelTypeBean){
         return noOfRows;
     }
 
-  public List<CommandTypeBean> showData(int lowerLimit, int noOfRowsToDisplay,String searchModelType) {
+  public List<CommandTypeBean> showData(int lowerLimit, int noOfRowsToDisplay,String searchCommandType) {
         List<CommandTypeBean> list = new ArrayList<CommandTypeBean>();
          String addQuery = " LIMIT " + lowerLimit + ", " + noOfRowsToDisplay;
           if(lowerLimit == -1)
             addQuery = "";
        String query2="select id,name,remark "
                      +" from command_type m "
-                     +" where IF('" + searchModelType + "' = '', name LIKE '%%',name =?) "
+                     +" where IF('" + searchCommandType + "' = '', name LIKE '%%',name =?) "
                      +" and m.active='Y' "
                      +addQuery;
         try {
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);
-            pstmt.setString(1, searchModelType);
+            pstmt.setString(1, searchCommandType);
             ResultSet rset = pstmt.executeQuery();
             while (rset.next()) {
-                CommandTypeBean deviceTypeBean = new CommandTypeBean();
+                CommandTypeBean commandTypeBean = new CommandTypeBean();
 
-                deviceTypeBean.setModel_type_id(rset.getInt("id"));
-                deviceTypeBean.setType(rset.getString("name"));
-                deviceTypeBean.setRemark(rset.getString("remark"));
-                list.add(deviceTypeBean);
+                commandTypeBean.setCommand_type_id(rset.getInt("id"));
+                commandTypeBean.setName(rset.getString("name"));
+                commandTypeBean.setShorthand(rset.getString("shorthand"));
+                commandTypeBean.setRemark(rset.getString("remark"));
+                list.add(commandTypeBean);
             }
         } catch (Exception e) {
             System.out.println("Error: " + e);
@@ -163,9 +166,9 @@ public boolean reviseRecords(CommandTypeBean modelTypeBean){
         return list;
     }
 
-  public int deleteRecord(int model_type_id) {
+  public int deleteRecord(int command_type_id) {
 
-      String query = "update command_type set active='N' where id=" + model_type_id;
+      String query = "update command_type set active='N' where id=" + command_type_id;
         int rowsAffected = 0;
         try {
             rowsAffected = connection.prepareStatement(query).executeUpdate();
