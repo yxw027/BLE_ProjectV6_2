@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d536d87b-f6c6-4a3a-b33c-f894974bc081">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -25,7 +25,7 @@
 	<columnHeader>
 		<band height="38" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="64" y="0" width="416" height="33" backcolor="#FFCCFF"/>
+				<reportElement mode="Opaque" x="64" y="0" width="416" height="33" backcolor="#FFCCFF" uuid="f7b6f820-8055-43a8-87a0-8c73919763a8"/>
 				<textElement>
 					<font size="24"/>
 				</textElement>
@@ -36,115 +36,112 @@
 	<detail>
 		<band height="272" splitType="Stretch">
 			<textField>
-				<reportElement mode="Opaque" x="288" y="59" width="100" height="20" backcolor="#99FFFF"/>
+				<reportElement mode="Opaque" x="288" y="59" width="100" height="20" backcolor="#99FFFF" uuid="7d9f7155-9669-4c8c-8fe0-5256873d92fe"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{device_name}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="171" y="59" width="117" height="20" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="171" y="59" width="117" height="20" backcolor="#CCCCCC" uuid="2d4af84c-8514-4d73-96f1-889b645e8868"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Device Name]]></text>
 			</staticText>
 			<textField>
-				<reportElement mode="Opaque" x="288" y="79" width="117" height="20" backcolor="#99FFFF"/>
+				<reportElement mode="Opaque" x="288" y="79" width="117" height="20" backcolor="#99FFFF" uuid="a0722fc3-1097-4356-9adf-7dcf31466747"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{operation_name}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="171" y="79" width="117" height="20" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="171" y="79" width="117" height="20" backcolor="#CCCCCC" uuid="f71a358f-7ca8-4842-beb9-1df67f307589"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Operation Name]]></text>
 			</staticText>
 			<textField>
-				<reportElement mode="Opaque" x="30" y="246" width="464" height="20" backcolor="#99FFFF"/>
+				<reportElement mode="Opaque" x="30" y="246" width="464" height="20" backcolor="#99FFFF" uuid="7fd25ca3-94a1-4906-878d-981df3e037da"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{command}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="224" y="189" width="100" height="20" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="224" y="189" width="100" height="20" backcolor="#CCCCCC" uuid="41fa7e35-222f-4c90-8a27-20ef3cd3e3eb"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Command]]></text>
 			</staticText>
 			<textField>
-				<reportElement mode="Opaque" x="115" y="39" width="28" height="25" backcolor="#99FFFF"/>
-				<textElement/>
+				<reportElement mode="Opaque" x="115" y="39" width="28" height="25" backcolor="#99FFFF" uuid="749fe3fd-de4d-4662-a14e-98f3281cbafc"/>
 				<textFieldExpression><![CDATA[$V{S.No}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="115" y="19" width="28" height="20" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="115" y="19" width="28" height="20" backcolor="#CCCCCC" uuid="d0c87424-901b-47d0-81fc-cf55ac5b686b"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[S.No]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement mode="Transparent" x="154" y="6" width="279" height="127"/>
+				<reportElement mode="Transparent" x="154" y="6" width="279" height="127" uuid="88dce56d-19e9-4538-bed5-e5d9eeda287b"/>
 			</rectangle>
 			<textField>
-				<reportElement mode="Opaque" x="288" y="39" width="100" height="20" backcolor="#66FFFF"/>
+				<reportElement mode="Opaque" x="288" y="39" width="100" height="20" backcolor="#66FFFF" uuid="e33586f8-5138-4f55-a070-110516ce62fe"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{manufacturer}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="171" y="39" width="117" height="20" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="171" y="39" width="117" height="20" backcolor="#CCCCCC" uuid="c5cbe037-cf2a-481c-baeb-debb4a67df1a"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Manufacturer]]></text>
 			</staticText>
 			<textField>
-				<reportElement mode="Opaque" x="288" y="19" width="100" height="20" backcolor="#66FFFF"/>
+				<reportElement mode="Opaque" x="288" y="19" width="100" height="20" backcolor="#66FFFF" uuid="4a46aa0c-56a5-468c-a9e3-716a18d3bff9"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{device_no}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="171" y="19" width="117" height="20" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="171" y="19" width="117" height="20" backcolor="#CCCCCC" uuid="c1e64e56-4df1-4966-ac87-28f6fc0404a6"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Device no]]></text>
 			</staticText>
 			<textField>
-				<reportElement mode="Opaque" x="288" y="99" width="117" height="20" backcolor="#66FFFF"/>
+				<reportElement mode="Opaque" x="288" y="99" width="117" height="20" backcolor="#66FFFF" uuid="e63783d2-6366-4e2f-aa56-8902315eef91"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{device_type}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="171" y="99" width="117" height="20" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="171" y="99" width="117" height="20" backcolor="#CCCCCC" uuid="b8b50162-9b47-45be-aef2-1e2bb5e13916"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Device Type]]></text>
 			</staticText>
 			<break>
-				<reportElement x="0" y="267" width="100" height="1"/>
+				<reportElement x="0" y="267" width="100" height="1" uuid="d3d09e74-4779-49bf-ac39-51c20faca8a8"/>
 			</break>
-			<image>
-				<reportElement x="238" y="133" width="50" height="56"/>
-				<imageExpression><![CDATA["D:\\BLE_project\\web\\images\\iconmonstr-arrow-down-thin.png"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="238" y="209" width="67" height="37"/>
-				<imageExpression><![CDATA["D:\\BLE_project\\web\\images\\iconmonstr-arrow-down-thin.png"]]></imageExpression>
-			</image>
+			<line>
+				<reportElement x="275" y="133" width="1" height="56" uuid="bf1831f5-65e3-4123-a600-4805bfe60afd"/>
+			</line>
+			<line>
+				<reportElement x="275" y="209" width="1" height="37" uuid="a0671920-6727-42c1-ab64-62607ccdf451"/>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>

@@ -161,8 +161,8 @@
 
        
         document.getElementById("operation_name").disabled = false;
-       
-       
+       document.getElementById("order_no").disabled = false;
+       document.getElementById("delay").disabled = false;
         document.getElementById("remark").disabled = false;
 
         document.getElementById("save").disabled = false;
@@ -261,7 +261,7 @@
     function fillColumns(id) {
         debugger;
         var noOfRowsTraversed = document.getElementById("noOfRowsTraversed").value;
-        var noOfColumns = 17;
+        var noOfColumns = 10;
         var columnId = id;
     <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
         columnId = columnId.substring(3, id.length);
@@ -286,8 +286,8 @@
         document.getElementById("device_no").value = document.getElementById(t1id + (lowerLimit + 5)).innerHTML;
         document.getElementById("operation_name").value = document.getElementById(t1id + (lowerLimit + 6)).innerHTML;
         document.getElementById("command").value = document.getElementById(t1id + (lowerLimit + 7)).innerHTML;
-        document.getElementById("command_type").value = document.getElementById(t1id + (lowerLimit + 8)).innerHTML;
-    
+        document.getElementById("order").value = document.getElementById(t1id + (lowerLimit + 8)).innerHTML;
+       
         var format = document.getElementById(t1id + (lowerLimit + 9)).innerHTML;
         if (format === "hex") {
             document.getElementById("command_format1").checked = true;
@@ -453,6 +453,8 @@ a:hover{
                                                 <th class="heading">Model No.</th>
                                                 <th class="heading">Operation Name</th>
                                                 <th class="heading">Command</th>
+                                                <th class="heading">Order No</th>
+                                                <th class="heading">Delay</th>
                                                 <th class="heading">Remark</th>
                                                 <th class="heading">Report</th>
                                               
@@ -472,6 +474,8 @@ a:hover{
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.device_no}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.operation_name}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.command}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.order_no}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.delay}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.remark}</td>
                                                     <td <input class="button" type="submit" id="${divisionTypeBean.device_command_id}" name="report"  value="Generate Report" size="100" onclick="generateReport(id)" >Generate Report</td>
                                                    
@@ -579,18 +583,15 @@ a:hover{
                                                 <td><input class="input" type="text" id="command" name="command" value="" size="80" disabled></td>
                                                    <input class="input" type="hidden" id="command_id" name="command_id" value="" >
                                             </tr>
-
-<!--                                            <tr>
-                                                <th class="heading1">Command Type</th>
-                                                <td><input class="input" type="text" id="command_type" name="command_type" value="" size="40" disabled></td>
-                                            </tr>-->
-
+                                            <tr>
+                                                <th class="heading1">Order No</th>
+                                                <td><input class="input" type="text" id="order_no" name="order_no" value="" size="80" disabled></td>
+                                            </tr>
                                             
-                                            
-                                            
-                                           
-                                            
-                                            
+                                             <tr>
+                                                <th class="heading1">Delay</th>
+                                                <td><input class="input" type="text" id="delay" name="delay" value="" size="80" disabled></td>
+                                            </tr>
                                             <tr>
                                                 <th class="heading1">Remark</th>
                                                    <input class="input" type="hidden" id="device_command_id" name="device_command_id" value="" >
