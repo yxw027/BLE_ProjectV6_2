@@ -3,17 +3,6 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Administrator/Desktop/Jaya/Desktop%20Project/BLE_ProjectV2/BLE_Project/src/java/com/ble/command/controller/DeviceOperationCommandController.java</file>
-            <file>file:/C:/Users/Administrator/Desktop/Jaya/Desktop%20Project/BLE_ProjectV2/BLE_Project/web/view/dataEntry/selection_command.jsp</file>
-            <file>file:/C:/Users/Administrator/Desktop/Jaya/Desktop%20Project/BLE_ProjectV2/BLE_Project/src/java/com/ble/command/bean/SelectionBean.java</file>
-            <file>file:/C:/Users/Administrator/Desktop/Jaya/Desktop%20Project/BLE_ProjectV2/BLE_Project/src/java/com/ble/command/model/DeviceOperationCommandModel.java</file>
-            <file>file:/C:/Users/Administrator/Desktop/Jaya/Desktop%20Project/BLE_ProjectV2/BLE_Project/web/index.jsp</file>
-            <file>file:/C:/Users/Administrator/Desktop/Jaya/Desktop%20Project/BLE_ProjectV2/BLE_Project/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/Administrator/Desktop/Jaya/Desktop%20Project/BLE_ProjectV2/BLE_Project/web/view/welcome.jsp</file>
-            <file>file:/C:/Users/Administrator/Desktop/Jaya/Desktop%20Project/BLE_ProjectV2/BLE_Project/web/view/dataEntry/sub_byte_division.jsp</file>
-            <file>file:/C:/Users/Administrator/Desktop/Jaya/Desktop%20Project/BLE_ProjectV2/BLE_Project/web/view/dataEntry/sub_division_selection.jsp</file>
-            <file>file:/C:/Users/Administrator/Desktop/Jaya/Desktop%20Project/BLE_ProjectV2/BLE_Project/web/view/dataEntry/selection_value.jsp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

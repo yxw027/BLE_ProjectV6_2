@@ -130,9 +130,10 @@ public class DeviceOperationCommandController extends HttpServlet {
                 String jrxmlFilePath;
                  DeviceOperationCommand dcm = new DeviceOperationCommand();
 //                 int device_command_id =Integer.parseInt(request.getParameter("device_command_id"));
-              String searchOperationName=request.getParameter("searchoperationname");
-               String searchCommandName=request.getParameter("searchCommandname");
-               String searchDeviceName=request.getParameter("searchDevicename");
+              String searchOperationName=request.getParameter("searchOperationName");
+               String searchCommandName=request.getParameter("searchCommandName");
+               String searchDeviceName=request.getParameter("searchDeviceName");
+               String searchDeviceType=request.getParameter("searchDeviceType");
                 response.setContentType("application/pdf");
                 ServletOutputStream servletOutputStream = response.getOutputStream();
                     listAll=DeviceOperationCommandModel.showPDF(dcm,searchCommandName,searchDeviceName,searchOperationName);
@@ -204,7 +205,8 @@ public class DeviceOperationCommandController extends HttpServlet {
 //            commandBean.setInput_no(Integer.parseInt(request.getParameter("input_no")));
 //            commandBean.setSelection_no(Integer.parseInt(request.getParameter("selection_no")));
             commandBean.setRemark(request.getParameter("remark"));
-
+            commandBean.setOrder_no(request.getParameter("order_no"));
+            commandBean.setDelay(request.getParameter("delay"));
             //session.setAttribute("deviceName", request.getParameter("device_name"));
             //session.setAttribute("operationName", request.getParameter("operation_name"));
             if (device_command_id == 0) {
