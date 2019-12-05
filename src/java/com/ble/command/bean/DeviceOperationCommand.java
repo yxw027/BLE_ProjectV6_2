@@ -15,9 +15,17 @@ public class DeviceOperationCommand {
     int device_id;
     int operation_id;
     int device_command_id;
-    String device_name,command,order_no,delay,operation_name,starting_del,end_del,remark,command_type;
+    String device_name,command,order_no,delay,operation_name,starting_del,end_del,remark,command_type,description;
     String manufacturer,device_type,model_type,device_no,format;
             int input_no,selection_no;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getFormat() {
         return format;
