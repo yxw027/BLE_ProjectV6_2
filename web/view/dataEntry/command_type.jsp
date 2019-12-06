@@ -6,30 +6,23 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
+   "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <link href="style/style1.css" type="text/css" rel="stylesheet" media="Screen"/>
 <link href="style/style.css" type="text/css" rel="stylesheet" media="Screen"/>
 <link href="style/Table_content.css" type="text/css" rel="stylesheet" media="Screen"/>
-
-<link type="text/css" href="style/menu.css" rel="stylesheet"/>
 <script type="text/javascript" src="JS/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="JS/jquery.autocomplete.js"></script>
 
-
+  <link type="text/css" href="style/menu.css" rel="stylesheet"/>
 <script type="text/javascript" language="javascript">
-    jQuery(function () {
-        $("#searchCommandType").autocomplete("CommandTypeCont.do", {
+ 
+         $("#searchCommandType").autocomplete("CommandTypeCont.do", {
             extraParams: {
-                action1: function () {
-                    return "getCommandType"
-                }
+                action1: function() { return "getCommandType";}
             }
         });
-
-    });
-
     function setDefaultColor(noOfRowsTraversed, noOfColumns) {
         for (var i = 0; i < noOfRowsTraversed; i++) {
             for (var j = 1; j <= noOfColumns; j++) {
@@ -39,7 +32,7 @@
     }
     function makeEditable(id) {
 
-        document.getElementById("command_type").disabled = false;
+        document.getElementById("name").disabled = false;
          document.getElementById("shorthand").disabled = false;
         document.getElementById("remark").disabled = false;
 
@@ -137,8 +130,8 @@
         var t1id = "t1c";       // particular column id of table 1 e.g. t1c3.
 
         document.getElementById("command_type_id").value = document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
-        document.getElementById("command_type").value = document.getElementById(t1id + (lowerLimit + 2)).innerHTML;
-         document.getElementById("shorthand").value = document.getElementById(t1id + (lowerLimit + 3)).innerHTML;
+        document.getElementById("name").value = document.getElementById(t1id + (lowerLimit + 2)).innerHTML;
+        document.getElementById("shorthand").value = document.getElementById(t1id + (lowerLimit + 3)).innerHTML;
         document.getElementById("remark").value = document.getElementById(t1id + (lowerLimit + 4)).innerHTML;
 
         //       var b=  document.getElementById(t1id +(lowerLimit+8)).innerHTML;
@@ -185,82 +178,69 @@
 
 </script>
 <style>
-    a:hover{
-        background-color: yellow;
-    }</style>
-<html>
+a:hover{
+  background-color: yellow;
+}</style>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Command Page</title>
+        <title>Rule Page</title>
         <meta charset="utf-8">
 
     </head>
     <body>
+    
         <table align="center" cellpadding="0" cellspacing="0" class="main">
             <tr><td><%@include file="/layout/header.jsp" %></td></tr>
             <tr>
-                <td id="menu">
-                    <nav>
-                        <a href="WelcomeCont.do">Home</a> 
-                        <a href="CommandTypeCont.do">Command Type</a> 
-                        <a href="CommandCont.do">Command</a> 
-                        <a href="DeviceOperationCommandCont.do">Device Operation Command Map</a>
-                        <a href="OperationNameCont.do">Operation Name</a> 
-                        <a href="ruleCont.do">Rules</a> 
-                        <a href="ParameterCont.do">Parameter</a> 
+                <td><%@include file="/layout/menu.jsp" %> </td>
+            </tr>
+            <td>
+                <DIV id="body" class="maindiv" align="center" >
+                    <table width="100%" align="center">
+                        <tr><td>
+                                <table align="center">
+                                    <tr>
+                                        <td align="center" class="header_table" width="100%">Command Type</td>
 
-                    </nav> 
-                </td>
-        </tr>
-        <td>
-            <DIV id="body" class="maindiv" align="center" >
-                <table width="100%" align="center">
-                    <tr><td>
-                            <table align="center">
-                                <tr>
-                                    <td align="center" class="header_table" width="100%">Command Type</td>
-
-                                </tr>
-                            </table>
-                        </td></tr>
-                    <tr>
-                        <td> <div align="center">
+                                    </tr>
+                                </table>
+                            </td></tr>
+                        <tr>
+                            <td> <div align="center">
                                 <form name="form0" method="POST" action="CommandTypeCont.do">
-                                    <table align="center" class="heading1" width="600">
+                                   <table align="center" class="heading1" width="600">
                                         <tr>
-                                            <td>Command Type<input class="input" type="text" id="searchModelType" name="searchModelType" value="${searchModelType}" size="20" ></td>
+                                            <td>Command Type</td><td><input class="input" type="text" id="searchCommandType" name="searchCommandType" value="${searchCommandType}" size="20" ></td>
                                             <td><input class="button" type="submit" name="task" id="searchIn" value="Search"></td>
                                             <td><input class="button" type="submit" name="task" id="showAllRecords" value="Show All Records"></td>
-                                            <td><input type="button" class="pdf_button" id="viewPdf" name="viewPdf" value="" onclick="displayMapList()"></td>
-                                        </tr>
-                                    </table>
-                                </form></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center">
+                                            <td><input type="button" class="button" id="viewPdf" name="viewPdf" value="Pdf" onclick="displayMapList()"></td>
+                                         </tr>
+                                        </table>
+                                    </form></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
                             <form name="form1" method="POST" action="CommandTypeCont.do">
-                                <DIV class="content_div">
-                                    <table id="table1" width="600"  border="1"  align="center" class="content">
+                              <table align="center" class="heading1" width="600">
                                         <tr>
                                             <th class="heading">S.No.</th>
                                             <th class="heading">Command Type</th>
                                             <th class="heading">Short Hand</th>
-
                                             <th class="heading">Remark</th>
                                         </tr>
                                         <!---below is the code to show all values on jsp page fetched from trafficTypeList of TrafficController     --->
-                                        <c:forEach var="commandTypeBean" items="${requestScope['commandTypeList']}"  varStatus="loopCounter">
+                                        <c:forEach var="divisionTypeBean" items="${requestScope['divisionTypeList']}"  varStatus="loopCounter">
                                             <tr  class="${loopCounter.index % 2 == 0 ? 'even': 'odd'}" >
                                                 <%--  <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">
                                                       <input type="hidden" id="status_type_id${loopCounter.count}" value="${statusTypeBean.status_type_id}">${lowerLimit - noOfRowsTraversed + loopCounter.count}
                                                       <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">${lowerLimit - noOfRowsTraversed + loopCounter.count}</td>
                                                   </td> --%>
-                                                <td id="t1c${IDGenerator.uniqueID}" style="display:none" onclick="fillColumns(id)">${commandTypeBean.command_type_id}</td>
-                                                <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">${lowerLimit - noOfRowsTraversed + loopCounter.count}</td>
-                                                 <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${commandTypeBean.name}</td>
-                                                <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${commandTypeBean.shorthand}</td>
-                                                <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${commandTypeBean.remark}</td>
+                                                <td id="t1c${IDGenerator.uniqueID}" style="display:none" onclick="fillColumns(id)">${divisionTypeBean.command_type_id}</td>
+                                                <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" >${lowerLimit - noOfRowsTraversed + loopCounter.count}</td>
+                                                <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.name}</td>
+                                                 <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.shorthand}</td>
+                                                <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.remark}</td>
 
                                             </tr>
                                         </c:forEach>
@@ -305,14 +285,14 @@
                                         <input type="hidden" id="noOfRowsTraversed" name="noOfRowsTraversed" value="${noOfRowsTraversed}">
                                         <input  type="hidden" id="searchCityType" name="searchCityType" value="${searchCityType}" >
                                         <input  type="hidden" id="searchDivisionType" name="searchDivisionType" value="${searchDivisionType}" >
-                                    </table></DIV>
-                            </form>
-                        </td>
-                    </tr>
+                                     </table></DIV>
+                                </form>
+                            </td>
+                        </tr>
 
-                    <tr>
-                        <td align="center">
-                            <div>
+                        <tr>
+                            <td align="center">
+                                <div>
                                 <form name="form2" method="POST" action="CommandTypeCont.do" onsubmit="return verify()">
                                     <table id="table2"  class="content" border="0"  align="center" width="600">
                                         <tr id="message">
@@ -323,8 +303,8 @@
                                         <tr>
                                             <th class="heading1">Command Type </th>
 
-                                            <td><input class="input" type="text" id="model_type" name="command_type" value="" size="40" disabled>
-                                                <input class="input" type="hidden" id="model_type_id" name="command_type_id" value="" ></td>
+                                            <td><input class="input" type="text" id="name" name="name" value="" size="40" disabled></td>
+                                                <input class="input" type="hidden" id="command_type_id" name="command_type_id" value="" >
                                         </tr>
                                          <tr>
                                             <th class="heading1">Short Hand</th>
@@ -354,20 +334,16 @@
                                         <input type="hidden" id="clickedButton" value="">
                                         <input type="hidden"  name="searchCityType" value="${searchCityType}" >
                                         <input type="hidden"  name="searchDivisionType" value="${searchDivisionType}" >
-                                    </table>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                                       </table>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
 
-            </DIV>
-        </td>
-        <tr><td><%@include file="/layout/footer.jsp" %></td> </tr>
-    </table>
-
-
-
-
+                </DIV>
+            </td>
+            <tr><td><%@include file="/layout/footer.jsp" %></td> </tr>
+        </table>
 </body>
 </html>

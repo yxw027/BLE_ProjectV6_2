@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -55,12 +56,12 @@ public class CommandTypeController extends HttpServlet {
                     list = commandTypeModel.getCommandType(q);
                 }
 
-                Iterator<String> iter = list.iterator();
+               Iterator<String> iter = list.iterator();
                 while (iter.hasNext()) {
                     String data = iter.next();
                         out.println(data);
                 }
-                commandTypeModel.closeConnection();
+               commandTypeModel.closeConnection();
                 return;
             }
         } catch (Exception e) {
@@ -99,7 +100,7 @@ public class CommandTypeController extends HttpServlet {
             CommandTypeBean commandTypeBean = new CommandTypeBean();
             commandTypeBean.setCommand_type_id(command_type_id);
             commandTypeBean.setName(request.getParameter("name"));
-             commandTypeBean.setShorthand(request.getParameter("shorthand"));
+            commandTypeBean.setShorthand(request.getParameter("shorthand"));
             commandTypeBean.setRemark(request.getParameter("remark"));
 
             if (command_type_id == 0) {
@@ -111,7 +112,7 @@ public class CommandTypeController extends HttpServlet {
             }
         }
 
-        String searchCommandType = "";
+        String searchCommandType= "";
 
         searchCommandType = request.getParameter("searchCommandType");
 
@@ -167,7 +168,7 @@ public class CommandTypeController extends HttpServlet {
          // Now set request scoped attributes, and then forward the request to view.
         request.setAttribute("lowerLimit", lowerLimit);
         request.setAttribute("noOfRowsTraversed", noOfRowsTraversed);
-        request.setAttribute("commandTypeList", commandTypeList);
+        request.setAttribute("divisionTypeList", commandTypeList);
          if ((lowerLimit - noOfRowsTraversed) == 0) {     // if this is the only data in the table or when viewing the data 1st time.
             request.setAttribute("showFirst", "false");
             request.setAttribute("showPrevious", "false");
@@ -178,10 +179,7 @@ public class CommandTypeController extends HttpServlet {
         }
 
         System.out.println("color is :" + commandTypeModel.getMsgBgColor());
-        request.setAttribute("manufacturer", request.getParameter("manufacturer"));
-        request.setAttribute("device_type", request.getParameter("device_type"));
-        request.setAttribute("deviceName", request.getParameter("device_name"));
-        request.setAttribute("device_no", request.getParameter("device_no"));
+      
 
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("searchCommandType",searchCommandType );

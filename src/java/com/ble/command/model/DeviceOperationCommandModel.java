@@ -214,19 +214,19 @@ public class DeviceOperationCommandModel {
 //        }
 //        return list;
 //    }
-    public static List<DeviceOperationCommand> showReport(int device_command_id, DeviceOperationCommand userEntryByImageBean1, String searchCommandName, String searchDeviceName, String searchOperationName) {
-        List<DeviceOperationCommand> list = new ArrayList<DeviceOperationCommand>();
-        List<DeviceOperationCommand> list1 = new ArrayList<DeviceOperationCommand>();
-        DeviceOperationCommand tpBean = new DeviceOperationCommand();
-
-        Map<String, String> map = new HashMap<String, String>();
-        String query="select md.device_name,dcm.device_command_id,m.name as manu_name,dt.type ,md.device_no as mno,opn.operation_name,c.command,c.id,dcm.remark"
-                    + " from device_command_map dcm,device d,model md ,manufacturer m ,device_type dt,operation_name opn,command c"
-                    + " where dcm.device_id=d.id and d.active='Y' and d.model_id = md.id and d.manufacture_id = m.id and d.device_type_id = dt.id  and dcm.operation_id=opn.id and dcm.command_id=c.id"
-                    + " and dcm.active='Y' and md.active='Y' and m.active='Y' and dt.active='Y' and opn.active='Y' and c.active='Y'"
-                    +" and device_command_id="+ device_command_id; 
-            
-            
+//    public static List<DeviceOperationCommand> showReport(int device_command_id, DeviceOperationCommand userEntryByImageBean1, String searchCommandName, String searchDeviceName, String searchOperationName) {
+//        List<DeviceOperationCommand> list = new ArrayList<DeviceOperationCommand>();
+//        List<DeviceOperationCommand> list1 = new ArrayList<DeviceOperationCommand>();
+//        DeviceOperationCommand tpBean = new DeviceOperationCommand();
+//
+//        Map<String, String> map = new HashMap<String, String>();
+////        String query="select md.device_name,dcm.device_command_id,m.name as manu_name,dt.type ,md.device_no as mno,opn.operation_name,c.command,c.id,dcm.remark"
+////                    + " from device_command_map dcm,device d,model md ,manufacturer m ,device_type dt,operation_name opn,command c"
+////                    + " where dcm.device_id=d.id and d.active='Y' and d.model_id = md.id and d.manufacture_id = m.id and d.device_type_id = dt.id  and dcm.operation_id=opn.id and dcm.command_id=c.id"
+////                    + " and dcm.active='Y' and md.active='Y' and m.active='Y' and dt.active='Y' and opn.active='Y' and c.active='Y'"
+////                    +" and device_command_id="+ device_command_id; 
+//            
+//            
 //            String query = "select dcm.device_command_id,dt.type,m.name as manu_name,mt.type as model_type,opn.operation_name,c.command,cds.description,dcm.remark \n"
 //                + "from device_command_map dcm,device d,model md ,modal_type mt,manufacturer m ,device_type dt,operation_name opn,command c,command_description cds \n"
 //                + "where dcm.device_id=d.id  and d.device_type_id=dt.id \n"
@@ -238,47 +238,47 @@ public class DeviceOperationCommandModel {
 //                + " and dcm.active='Y' and md.active='Y' and m.active='Y' and dt.active='Y' \n"
 //                + "and opn.active='Y' and c.active='Y' and d.active='Y'  and device_command_id=7 "
 //                + " and device_command_id=" + device_command_id;
-
-        try {
-            PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query);
-
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                // userEntryByImageBean tpBean = new userEntryByImageBean();
-                //String key_person_name = unicodeToKruti.Convert_to_Kritidev_010(rs.getString("key_person_name"));
-
-                device_command_id = rs.getInt("device_command_id");
-//                String device_name = rs.getString("device_name");
-               
-                String description = rs.getString("description");
-                 String model_type= rs.getString("model_type");
-                String operation_name = rs.getString("operation_name");
-                String command = rs.getString("command");
-                String manufacturer = rs.getString("manu_name");
-                String device_type = rs.getString("type");                      //device_type
-//                String device_no = rs.getString("id");
-
-                tpBean.setDevice_command_id(device_command_id);
-                tpBean.setDescription(description);
-                 tpBean.setModel_type(model_type);
-               
-                tpBean.setOperation_name(operation_name);
-                 tpBean.setCommand(command);
-                tpBean.setManufacturer(manufacturer);
-                tpBean.setDevice_type(device_type);
-//                tpBean.setDevice_no(device_no);
-
-                //list.add(tpBean);
-            }
-            //list.add(list1);
-            // showMISData2(tpBean,device_command_id);
-            list.add(tpBean);
-            //}
-        } catch (Exception ex) {
-            System.out.println("ERROR : in showData() in Model : " + query);
-        }
-        return list;
-    }
+//
+//        try {
+//            PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query);
+//
+//            ResultSet rs = pstmt.executeQuery();
+//            while (rs.next()) {
+//                // userEntryByImageBean tpBean = new userEntryByImageBean();
+//                //String key_person_name = unicodeToKruti.Convert_to_Kritidev_010(rs.getString("key_person_name"));
+//
+//                device_command_id = rs.getInt("device_command_id");
+////                String device_name = rs.getString("device_name");
+//               
+//                String description = rs.getString("description");
+//                 String model_type= rs.getString("model_type");
+//                String operation_name = rs.getString("operation_name");
+//                String command = rs.getString("command");
+//                String manufacturer = rs.getString("manu_name");
+//                String device_type = rs.getString("type");                      //device_type
+////                String device_no = rs.getString("id");
+//
+//                tpBean.setDevice_command_id(device_command_id);
+//                tpBean.setDescription(description);
+//                 tpBean.setModel_type(model_type);
+//               
+//                tpBean.setOperation_name(operation_name);
+//                 tpBean.setCommand(command);
+//                tpBean.setManufacturer(manufacturer);
+//                tpBean.setDevice_type(device_type);
+////                tpBean.setDevice_no(device_no);
+//
+//                //list.add(tpBean);
+//            }
+//            //list.add(list1);
+//            // showMISData2(tpBean,device_command_id);
+//            list.add(tpBean);
+//            //}
+//        } catch (Exception ex) {
+//            System.out.println("ERROR : in showData() in Model : " + query);
+//        }
+//        return list;
+//    }
 //    public static List<DeviceOperationCommand> showReport(int device_command_id, DeviceOperationCommand userEntryByImageBean1, String searchCommandName, String searchDeviceName, String searchOperationName) {
 //        List<DeviceOperationCommand> list = new ArrayList<DeviceOperationCommand>();
 //        List<DeviceOperationCommand> list1 = new ArrayList<DeviceOperationCommand>();
@@ -296,7 +296,6 @@ public class DeviceOperationCommandModel {
 //            if (rs.next()) {
 //                device_type = rs.getString("type");
 //                tpBean.setManufacturer(device_type);
-//
 //            }
 //        } catch (Exception ex) {
 //            System.out.println("ERROR : in showData() in Model : " + query);
@@ -309,14 +308,106 @@ public class DeviceOperationCommandModel {
 //
 //                String manufacturer = rst.getString("manu_name");
 //                tpBean.setManufacturer(manufacturer);
-//                list1.add(tpBean);
 //            }
 //        } catch (Exception ex) {
 //            System.out.println("ERROR : in showData() in Model : " + query1);
 //        }
-//        list.add(tpBean);
+//
 //        return list;
 //    }
+    public static List<DeviceOperationCommand> showReport(int device_command_id, DeviceOperationCommand userEntryByImageBean1, String searchCommandName, String searchDeviceName, String searchOperationName) {
+        List<DeviceOperationCommand> list = new ArrayList<DeviceOperationCommand>();
+        List<DeviceOperationCommand> list1 = new ArrayList<DeviceOperationCommand>();
+        DeviceOperationCommand tpBean = new DeviceOperationCommand();
+        DeviceOperationCommand tpBean_manu = new DeviceOperationCommand();
+        DeviceOperationCommand tpBean_model_type = new DeviceOperationCommand();
+        Map<Object, Map<Object, Map<Object, Map<Object, Map<Object, Object>>>>> map1 = new HashMap<>();
+        Map<Object, Map<Object, Map<Object, Map<Object, Object>>>> map2 = new HashMap<>();
+        Map<Object, Map<Object, Map<Object, Object>>> map3 = new HashMap<>();
+        Map<Object, Map<Object, String>> map4 = new HashMap<>();
+        Map<Object, String> map5 = new HashMap<>();
+        List<String> ls1 = new ArrayList<>();
+        
+        
+        String device_type = "";
+        String manufacturer = "";
+        String model_type = "";
+        String operation = "";
+        String command = "";
+        String description = "";
+        int i = 0;
+
+        String query = "select dcm.device_command_id,dt.type as device_type,m.name as manufacturer,mt.type as model_type,opn.operation_name,c.command,cds.description,dcm.remark \n"
+                + "from device_command_map dcm,device d,model md ,modal_type mt,manufacturer m ,device_type dt,operation_name opn,command c,command_description cds \n"
+                + "where dcm.device_id=d.id  and d.device_type_id=dt.id \n"
+                + "and dcm.device_id=d.id and d.manufacture_id = m.id \n"
+                + "and d.model_id = md.id and mt.id=md.model_type_id\n"
+                + "and dcm.operation_id=opn.id  \n"
+                + "and dcm.command_id=c.id\n"
+                + "and cds.command_id=c.id\n"
+                + " and dcm.active='Y' and md.active='Y' and m.active='Y' and dt.active='Y' \n"
+                + "and opn.active='Y' and c.active='Y' and d.active='Y' "
+                + " and device_command_id=" + device_command_id;
+
+        try {
+            PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query);
+
+            ResultSet rs = pstmt.executeQuery();
+            int k  = 0;
+            rs.last();
+            int rows = rs.getRow();
+            rs.beforeFirst();
+            
+//            while (rs.next()) {
+//                String dt = rs.getString("device_type");
+//                String man = rs.getString("manufacturer");
+//                String m_type = rs.getString("model_type");
+//                if (device_type.equals("")) {
+//                    device_type = dt;
+//                    map5.put(man, m_type);
+//                } else if(device_type.equals(dt)) {
+//                    map5.put(man, m_type);
+//                } else if(!device_type.equals(dt)){
+//                    map4.put(device_type, map5);
+//                    device_type = dt;
+//                    map5 = new HashMap<>();
+//                    map5.put(man,m_type);
+//                }
+//                
+//                if(k == rows-1) {
+//                    map4.put(device_type, map5);
+//                }
+//                k++;
+//                
+//            }
+  while (rs.next()) {
+                String dt = rs.getString("device_type");
+                String man = rs.getString("manufacturer");
+                String m_type = rs.getString("model_type");
+                if (device_type.equals("")) {
+                    device_type = dt;
+                    map5.put(man, m_type);
+                } else if(device_type.equals(dt)) {
+                    map5.put(man, m_type);
+                } else if(!device_type.equals(dt)){
+                    map4.put(device_type, map5);
+                    device_type = dt;
+                    map5 = new HashMap<>();
+                    map5.put(man,m_type);
+                }
+                
+                if(k == rows-1) {
+                    map4.put(device_type, map5);
+                }
+                k++;
+                
+            }
+        } catch (Exception ex) {
+            System.out.println("ERROR : in showData() in Model : " + query);
+        }
+
+        return list;
+    }
 
     public static List<DeviceOperationCommand> showPDF(DeviceOperationCommand dcm, String searchCommandName, String searchDeviceName, String searchOperationName) {
         List<DeviceOperationCommand> list = new ArrayList<DeviceOperationCommand>();

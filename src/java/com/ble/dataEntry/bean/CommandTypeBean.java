@@ -10,7 +10,7 @@ package com.ble.dataEntry.bean;
  * @author Shobha
  */
 public class CommandTypeBean {
-    String name,shorthand,remark;
+    String name,remark,shorthand;
     int command_type_id;
 
     public String getName() {
@@ -21,20 +21,20 @@ public class CommandTypeBean {
         this.name = name;
     }
 
-    public String getShorthand() {
-        return shorthand;
-    }
-
-    public void setShorthand(String shorthand) {
-        this.shorthand = shorthand;
-    }
-
     public String getRemark() {
         return remark;
     }
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getShorthand() {
+        return shorthand;
+    }
+
+    public void setShorthand(String shorthand) {
+        this.shorthand = shorthand;
     }
 
     public int getCommand_type_id() {

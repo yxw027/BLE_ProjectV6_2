@@ -189,20 +189,9 @@ a:hover{
     </head>
     <body>
         <table align="center" cellpadding="0" cellspacing="0" class="main">
-            <tr><td><%@include file="/layout/header.jsp" %></td></tr>
+           <tr><td><%@include file="/layout/header.jsp" %></td></tr>
             <tr>
-                <td id="menu">
-                    <nav>
-                        <a href="WelcomeCont.do">Home</a> 
-                        <a href="CommandTypeCont.do">Command Type</a> 
-                      <a href="CommandCont.do">Command</a> 
-                        <a href="device_operation_commandController">DeviceOperationCommandMap</a>
-                        <a href="OperationNameCont.do">Operation Name</a> 
-                        <a href="ruleCont.do">Rules</a> 
-                        <a href="ParameterCont.do">Parameter</a> 
-                       
-                    </nav>
-                </td>
+                <td><%@include file="/layout/menu.jsp" %> </td>
             </tr>
             <td>
                 <DIV id="body" class="maindiv" align="center" >
