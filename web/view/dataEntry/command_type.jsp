@@ -222,7 +222,7 @@ a:hover{
                         <tr>
                             <td align="center">
                             <form name="form1" method="POST" action="CommandTypeCont.do">
-                              <table align="center" class="heading1" width="600">
+                                <table align="center" class="content" width="600" >
                                         <tr>
                                             <th class="heading">S.No.</th>
                                             <th class="heading">Command Type</th>

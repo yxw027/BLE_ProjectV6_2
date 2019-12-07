@@ -501,8 +501,8 @@ public class DeviceOperationCommandModel {
         int command_type_id = getCommandTypeId(commandBean.getCommand());
         int device_command_id = getDevice_op_comId(commandBean.getDevice_command_id());
 
-        String query = " insert into device_command_map(device_command_id,device_id,command_id,operation_id,remark) "
-                + " values(?,?,?,?,?) ";
+        String query = " insert into device_command_map(device_command_id,device_id,command_id,operation_id,order_no,delay,remark) "
+                + " values(?,?,?,?,?,?,?) ";
 
         int rowsAffected = 0;
         try {
@@ -511,7 +511,9 @@ public class DeviceOperationCommandModel {
             pstmt.setInt(2, device_id);
             pstmt.setInt(3, command_type_id);
             pstmt.setInt(4, operation_id);
-            pstmt.setString(5, commandBean.getRemark());
+            pstmt.setString(5, commandBean.getOrder_no());
+            pstmt.setString(6, commandBean.getDelay());
+            pstmt.setString(7, commandBean.getRemark());
 
             rowsAffected = pstmt.executeUpdate();
         } catch (Exception e) {
@@ -528,19 +530,19 @@ public class DeviceOperationCommandModel {
 
     }
 
-    public boolean reviseRecords(DeviceOperationCommand commandBean) {
+    public boolean reviseRecords(DeviceOperationCommand commandBean, int device_command_id) {
         boolean status = false;
         String query = "";
         int rowsAffected = 0;
 
-        int deviceType_id = getDeviceTypeId(commandBean.getDevice_type());
+        int device_id = getDeviceTypeId(commandBean.getDevice_type());
         int operation_id = getOperationId(commandBean.getOperation_name());
-        int command_type_id = getCommandTypeId(commandBean.getCommand_type());
-        int device_command_id = getDevice_op_comId(commandBean.getDevice_command_id());
+        int command_id = getCommandTypeId(commandBean.getCommand());
+//       int device_command_id = getDevice_op_comId(commandBean.getDevice_command_id());
 
-        String query1 = " SELECT max(revision_no) revision_no FROM device_command_map c WHERE c.device_command_id = " + device_command_id + " && active='Y' ORDER BY revision_no DESC";
-        String query2 = " UPDATE device_command_map SET active=? WHERE device_command_id = ? && revision_no = ? ";
-        String query3 = " insert into device_command_map(device_command_id,device_id,command_id,operation_id,remark) VALUES (?,?,?,?,?) ";
+        String query1 = " SELECT max(revision_no) revision_no FROM device_command_map c WHERE c.device_command_id = " + device_command_id + " AND active='Y' ORDER BY revision_no DESC";
+        String query2 = " UPDATE device_command_map SET active=? WHERE device_command_id = ? AND revision_no = ? ";
+        String query3 = " insert into device_command_map(device_command_id,device_id,command_id,operation_id,remark,revision_no,active,order_no,delay) VALUES (?,?,?,?,?,?,?,?,?) ";
 
         int updateRowsAffected = 0;
         try {
@@ -556,14 +558,16 @@ public class DeviceOperationCommandModel {
                     int rev = rs.getInt("revision_no") + 1;
                     PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3);
                     psmt.setInt(1, device_command_id);
-                    psmt.setInt(2, deviceType_id);
-                    psmt.setInt(3, command_type_id);
+                    psmt.setInt(2, device_id);
+                    psmt.setInt(3, command_id);
                     psmt.setInt(4, operation_id);
 
                     psmt.setString(5, commandBean.getRemark());
 
                     psmt.setInt(6, rev);
                     psmt.setString(7, "Y");
+                    psmt.setString(8,commandBean.getOrder_no());
+                    psmt.setString(9, commandBean.getDelay());
 
                     int a = psmt.executeUpdate();
                     if (a > 0) {
@@ -614,7 +618,7 @@ public class DeviceOperationCommandModel {
         }
 
         String query3 = " select dcm.device_command_id, "
-                + " dcm.device_id,dcm.remark,opn.operation_name,c.command,mf.name,m.device_name,m.device_no,dt.type  "
+                + " dcm.device_id,dcm.remark,dcm.order_no,dcm.delay,opn.operation_name,c.command,mf.name,m.device_name,m.device_no,dt.type  "
                 + " from device_command_map dcm,device d,operation_name opn,command c ,manufacturer mf,model m,device_type dt "
                 + " where dcm.device_id=d.id  and dcm.operation_id=opn.id and c.id=dcm.command_id  and mf.id=d.manufacture_id and d.model_id=m.id and d.device_type_id=dt.id "
                 + "  and dcm.active='Y' and d.active='Y' and opn.active='Y' and c.active='Y' and mf.active='Y' and m.active='Y' and dt.active='Y'"
@@ -642,6 +646,8 @@ public class DeviceOperationCommandModel {
                 commandBean.setDevice_name(rset.getString("device_name"));
                 commandBean.setDevice_no(rset.getString("device_no"));
                 String command = rset.getString("command");
+                 commandBean.setOrder_no(rset.getString("order_no"));
+                  commandBean.setDelay(rset.getString("delay"));
 //                String commandReq = command.substring(1, command.length()-1);
 //                String[] commandByte = commandReq.split(", ");
 //                Byte[] b = new Byte[commandByte.length];

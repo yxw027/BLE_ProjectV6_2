@@ -218,7 +218,7 @@ a:hover{
                                                 <td><input class="button" type="submit" name="task" id="showAllRecords" value="Show All Records"></td>
                                                 <td><input class="button" type="button" name="task" id="showAllRecords" value="Next Page" onclick="goToModel()"></td>
                                                 <td><input type="button" class="pdf_button" id="viewPdf" name="viewPdf" value="" onclick="displayMapList()"></td>
-                                            </tr>
+                                               </tr>
                                         </table>
                                     </form></div>
                             </td>

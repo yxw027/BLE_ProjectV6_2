@@ -146,23 +146,26 @@
         }
     }
     function makeEditable(id) {
+       debugger;
+       document.getElementById("manufacturer").disabled = false;
+        document.getElementById("device_type").disabled = false;
 
         document.getElementById("device_name").disabled = false;
         document.getElementById("device_no").disabled = false;
-
-        document.getElementById("manufacturer").disabled = false;
-        document.getElementById("device_type").disabled = false;
-
+            document.getElementById("operation_name").disabled = false;
+             document.getElementById("command").disabled = false;
+        document.getElementById("order_no").disabled = false;
+        document.getElementById("delay").disabled = false;
         document.getElementById("command_format").disabled = false;
         document.getElementById("command_format1").disabled = false;
-        document.getElementById("command").disabled = false;
+    
      
    
 
        
-        document.getElementById("operation_name").disabled = false;
-       document.getElementById("order_no").disabled = false;
-       document.getElementById("delay").disabled = false;
+    
+       
+      
         document.getElementById("remark").disabled = false;
 
         document.getElementById("save").disabled = false;
@@ -261,7 +264,7 @@
     function fillColumns(id) {
         debugger;
         var noOfRowsTraversed = document.getElementById("noOfRowsTraversed").value;
-        var noOfColumns = 10;
+        var noOfColumns = 11;
         var columnId = id;
     <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
         columnId = columnId.substring(3, id.length);
@@ -278,7 +281,7 @@
 
         setDefaultColor(noOfRowsTraversed, noOfColumns);        // set default color of rows (i.e. of multiple coloumns).
         var t1id = "t1c";       // particular column id of table 1 e.g. t1c3.
-
+        debugger;
         document.getElementById("device_command_id").value = document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
         document.getElementById("manufacturer").value = document.getElementById(t1id + (lowerLimit + 2)).innerHTML;
         document.getElementById("device_type").value = document.getElementById(t1id + (lowerLimit + 3)).innerHTML;
@@ -286,17 +289,11 @@
         document.getElementById("device_no").value = document.getElementById(t1id + (lowerLimit + 5)).innerHTML;
         document.getElementById("operation_name").value = document.getElementById(t1id + (lowerLimit + 6)).innerHTML;
         document.getElementById("command").value = document.getElementById(t1id + (lowerLimit + 7)).innerHTML;
-        document.getElementById("order").value = document.getElementById(t1id + (lowerLimit + 8)).innerHTML;
+        document.getElementById("order_no").value = document.getElementById(t1id + (lowerLimit + 8)).innerHTML;
+        document.getElementById("delay").value = document.getElementById(t1id + (lowerLimit + 9)).innerHTML;
        
-        var format = document.getElementById(t1id + (lowerLimit + 9)).innerHTML;
-        if (format === "hex") {
-            document.getElementById("command_format1").checked = true;
-            document.getElementById("command_format").checked = false;
-        } else if (format === "string") {
-            document.getElementById("command_format").checked = true;
-            document.getElementById("command_format1").checked = false;
-        }
-        document.getElementById("remark").value = document.getElementById(t1id + (lowerLimit + 16)).innerHTML;
+        
+        document.getElementById("remark").value = document.getElementById(t1id + (lowerLimit + 10)).innerHTML;
 
         //       var b=  document.getElementById(t1id +(lowerLimit+8)).innerHTML;
         // alert(b);
@@ -601,7 +598,7 @@ a:hover{
 
                                             <tr>
                                                 <td align='center' colspan="2">
-                                                    <input class="button" type="button" name="edit" id="edit" value="Edit" onclick="makeEditable(id)" disabled>
+                                                    <input class="button" type="button" name="edit" id="edit" value="Edit" onclick="makeEditable(id)">
                                                     <%--       <input class="button" type="submit" name="task" id="revise" value="Revise" onclick="setStatus(id)" disabled>  --%>
                                                     <input class="button" type="submit" name="task" id="save" value="Save" onclick="setStatus(id)" >
                                                     <input class="button" type="submit" name="task" id="save_As" value="Save AS New" onclick="setStatus(id)" disabled>
