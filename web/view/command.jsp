@@ -129,9 +129,6 @@
         document.getElementById("command_format1").disabled = false;
         document.getElementById("command").disabled = false;
         document.getElementById("command_type").disabled = false;
-        document.getElementById("order_no").disabled = false;
-
-        document.getElementById("delay").disabled = false;
       
         document.getElementById("starting_del").disabled = false;
         document.getElementById("end_del").disabled = false;
@@ -215,7 +212,7 @@
     function fillColumns(id) {
         debugger;
         var noOfRowsTraversed = document.getElementById("noOfRowsTraversed").value;
-        var noOfColumns = 13;
+        var noOfColumns = 11;
         var columnId = id;
     <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
         columnId = columnId.substring(3, id.length);
@@ -237,24 +234,21 @@
       
         document.getElementById("command").value = document.getElementById(t1id + (lowerLimit + 2)).innerHTML;
         document.getElementById("command_type").value = document.getElementById(t1id + (lowerLimit + 3)).innerHTML;
-        document.getElementById("order_no").value = document.getElementById(t1id + (lowerLimit + 4)).innerHTML;
-
-        document.getElementById("delay").value = document.getElementById(t1id + (lowerLimit + 5)).innerHTML;
         debugger;
-        document.getElementById("starting_del").value = document.getElementById(t1id + (lowerLimit + 6)).innerHTML;
-        document.getElementById("end_del").value = document.getElementById(t1id + (lowerLimit + 7)).innerHTML;
-        document.getElementById("selection_no").value = document.getElementById(t1id + (lowerLimit + 8)).innerHTML.split(" ")[0];
-        document.getElementById("input_no").value = document.getElementById(t1id + (lowerLimit + 9)).innerHTML.split(" ")[0];
-        document.getElementById("bitwise").value = document.getElementById(t1id + (lowerLimit + 10)).innerHTML.split(" ")[0];
-        var format = document.getElementById(t1id + (lowerLimit + 11)).innerHTML;
-        if (format === "hex") {
+        document.getElementById("starting_del").value = document.getElementById(t1id + (lowerLimit + 4)).innerHTML;
+        document.getElementById("end_del").value = document.getElementById(t1id + (lowerLimit + 5)).innerHTML;
+        document.getElementById("selection_no").value = document.getElementById(t1id + (lowerLimit + 6)).innerHTML.split(" ")[0];
+        document.getElementById("input_no").value = document.getElementById(t1id + (lowerLimit + 7)).innerHTML.split(" ")[0];
+        document.getElementById("bitwise").value = document.getElementById(t1id + (lowerLimit + 8)).innerHTML.split(" ")[0];
+        var format = document.getElementById(t1id + (lowerLimit + 9)).innerHTML;
+        if (format.toLowerCase() === "hex") {
             document.getElementById("command_format1").checked = true;
             document.getElementById("command_format").checked = false;
-        } else if (format === "string") {
+        } else if (format.toLowerCase() === "string") {
             document.getElementById("command_format").checked = true;
             document.getElementById("command_format1").checked = false;
         }
-        document.getElementById("remark").value = document.getElementById(t1id + (lowerLimit + 12)).innerHTML;
+        document.getElementById("remark").value = document.getElementById(t1id + (lowerLimit + 10)).innerHTML;
 
         //       var b=  document.getElementById(t1id +(lowerLimit+8)).innerHTML;
         // alert(b);
@@ -521,14 +515,7 @@ a:hover{
                                                 <td><input class="input" type="text" id="command_type" name="command_type" value="" size="40" disabled></td>
                                             </tr>
 
-                                            <tr>
-                                                <th class="heading1">Order no.</th>
-                                                <td><input class="input" type="text" id="order_no" name="order_no" value="" size="40" disabled></td>
-                                            </tr>
-                                            <tr>
-                                                <th class="heading1">Delay</th>
-                                                <td><input class="input" type="text" id="delay" name="delay" value="" size="40" disabled></td>
-                                            </tr>
+                                            
 
                                             <tr>
                                                 <th class="heading1">Starting Del</th>

@@ -712,7 +712,6 @@ public class DeviceOperationCommandModel {
                 + " inner join device_type dt on dt.id = d.device_type_id"
                 + " inner join modal_type mt on ml.model_type_id = mt.id"
                 + " where d.manufacture_id = (select id from manufacturer m where m.name=? and m.active='Y')"
-                + " and mt.type = 'module'"
                 + " and d.device_type_id = dt.id  and dt.active='Y' and d.active='Y' and m.active='Y' and mt.active='Y' and ml.active = 'Y'";
         try {
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query);
@@ -766,13 +765,13 @@ public class DeviceOperationCommandModel {
 
     public List<String> getDeviceName(String q, String manufacturer, String devicetype) {
         List<String> list = new ArrayList<String>();
-        String query = " select ml.device_name "
+        String query = " select distinct ml.device_name "
                 + " from device d inner join manufacturer m on d.manufacture_id = m.id "
                 + " inner join model ml on d.model_id = ml.id "
                 + " inner join device_type dt on dt.id = d.device_type_id "
                 + " inner join modal_type mt on ml.model_type_id = mt.id "
-                + " where d.manufacture_id = (select id from manufacturer m where m.name='UBlox' and m.active='Y') "
-                + " and d.device_type_id = (select id from device_type dt where dt.type='DGPS' and dt.active='Y') "
+                + " where d.manufacture_id = (select id from manufacturer m where m.name='"+manufacturer+"' and m.active='Y') "
+                + " and d.device_type_id = (select id from device_type dt where dt.type='"+devicetype+"' and dt.active='Y') "
                 + " and mt.type = 'module'"
                 + " and d.device_type_id = dt.id  and dt.active='Y' and d.active='Y' and m.active='Y' and mt.active='Y' ";
         try {
@@ -799,7 +798,7 @@ public class DeviceOperationCommandModel {
 
     public List<String> getDeviceNo(String q, String device_name, String manufacturer, String devicetype) {
         List<String> list = new ArrayList<String>();
-        String query = " select ml.device_no from device d "
+        String query = " select distinct ml.device_no from device d "
                 + " inner join manufacturer m on d.manufacture_id = m.id "
                 + " inner join model ml on d.model_id = ml.id inner join device_type dt on dt.id = d.device_type_id "
                 + " inner join modal_type mt on ml.model_type_id = mt.id where d.manufacture_id = (select id from manufacturer m where m.name=? and m.active='Y')"
