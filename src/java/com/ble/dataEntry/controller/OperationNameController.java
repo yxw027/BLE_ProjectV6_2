@@ -99,6 +99,7 @@ public class OperationNameController extends HttpServlet {
             OperationNameBean operationNameBean = new OperationNameBean();
             operationNameBean.setOperation_name_id(operation_name_id);
             operationNameBean.setOperation_name(request.getParameter("operation_name"));
+             operationNameBean.setParent_operation(request.getParameter("parent_operation"));
             operationNameBean.setRemark(request.getParameter("remark"));
 
             if (operation_name_id == 0) {

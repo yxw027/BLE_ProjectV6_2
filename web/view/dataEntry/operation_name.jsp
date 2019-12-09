@@ -26,7 +26,14 @@
         });
 
     });
+ jQuery(function(){
+        $("#parent_operation").autocomplete("OperationNameCont.do", {
+            extraParams: {
+                action1: function() { return "getOperationName"}
+            }
+        });
 
+    });
     function setDefaultColor(noOfRowsTraversed, noOfColumns) {
         for(var i = 0; i < noOfRowsTraversed; i++) {
             for(var j = 1; j <= noOfColumns; j++) {
@@ -37,6 +44,7 @@
     function makeEditable(id) {
 
         document.getElementById("operation_name").disabled = false;
+        document.getElementById("parent_operation").disabled = false;
          document.getElementById("remark").disabled = false;
 
         document.getElementById("save").disabled = false;
@@ -115,7 +123,7 @@
     }
     function fillColumns(id) {
         var noOfRowsTraversed = document.getElementById("noOfRowsTraversed").value;
-        var noOfColumns =4;
+        var noOfColumns =5;
         var columnId = id;                              <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
         columnId = columnId.substring(3, id.length);    <%-- for e.g. suppose id is t1c3 we want characters after t1c i.e beginIndex = 3. --%>
         var lowerLimit, higherLimit;
@@ -132,7 +140,8 @@
 
         document.getElementById("operation_name_id").value= document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
         document.getElementById("operation_name").value = document.getElementById(t1id +(lowerLimit+2)).innerHTML;
-        document.getElementById("remark").value = document.getElementById(t1id +(lowerLimit+3)).innerHTML;
+         document.getElementById("parent_operation").value = document.getElementById(t1id +(lowerLimit+3)).innerHTML;
+        document.getElementById("remark").value = document.getElementById(t1id +(lowerLimit+4)).innerHTML;
 
         //       var b=  document.getElementById(t1id +(lowerLimit+8)).innerHTML;
         // alert(b);
@@ -226,7 +235,7 @@ a:hover{
                                             <tr>
                                                 <th class="heading">S.No.</th>
                                                 <th class="heading">Operation Name</th>
-
+                                                <th class="heading">Parent Operation</th>
                                                 <th class="heading">Remark</th>
                                             </tr>
                                             <!---below is the code to show all values on jsp page fetched from trafficTypeList of TrafficController     --->
@@ -239,6 +248,7 @@ a:hover{
                                                     <td id="t1c${IDGenerator.uniqueID}" style="display:none" onclick="fillColumns(id)">${divisionTypeBean.operation_name_id}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">${lowerLimit - noOfRowsTraversed + loopCounter.count}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.operation_name}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.parent_operation}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.remark}</td>
 
                                                 </tr>
@@ -304,6 +314,10 @@ a:hover{
 
                                                 <td><input class="input" type="text" id="operation_name" name="operation_name" value="" size="40" disabled>
                                                 <input class="input" type="hidden" id="operation_name_id" name="operation_name_id" value="" ></td>
+                                            </tr>
+                                              <tr>
+                                                <th class="heading1">Parent Operation Name</th>
+                                                <td><input class="input" type="text" id="parent_operation" name="parent_operation" value="${searchOperationName}" size="40" disabled></td>
                                             </tr>
                                             <tr>
                                                 <th class="heading1">Remark</th>

@@ -18,7 +18,7 @@
   <link type="text/css" href="style/menu.css" rel="stylesheet"/>
 <script type="text/javascript" language="javascript">
     jQuery(function(){
-//       
+            debugger;
         $("#finished_model_name").autocomplete("DeviceMapCont.do", {
             extraParams: {
                 action1: function() { return "getDeviceName";}
@@ -52,24 +52,27 @@
                 action2: function() { return  $("#module_manufacture_name").val();}
             }
         });
-        
-        $("#ble_model_name").autocomplete("DeviceMapCont.do", {
+         $("#searchManufactureName").autocomplete("DeviceMapCont.do", {
             extraParams: {
-                action1: function() { return "getDeviceName"}
+                action1: function() { return "getsearchManufactureName"}
+                }
+            
+        });
+       
+           $("#searchDeviceType").autocomplete("DeviceMapCont.do", {
+            extraParams: {
+                action1: function() { return "getsearchDeviceType"}
+            
             }
         });
-        $("#ble_manufacture_name").autocomplete("DeviceMapCont.do", {
+           $("#searchModelName").autocomplete("DeviceMapCont.do", {
             extraParams: {
-                action1: function() { return "getManufactureName"}
+                action1: function() { return "getsearchModelName"}
+              
+                
             }
         });
-        $("#ble_device_type").autocomplete("DeviceMapCont.do", {
-            extraParams: {
-                action1: function() { return "getDeviceTypeName"},
-                action2: function() { return  $("#ble_manufacture_name").val();}
-            }
-        });
-
+     
     });
 
     function setDefaultColor(noOfRowsTraversed, noOfColumns) {
@@ -88,9 +91,9 @@
          document.getElementById("module_manufacture_name").disabled = false;
         document.getElementById("module_device_type").disabled = false;
         document.getElementById("module_model_name").disabled = false;
-         document.getElementById("ble_manufacture_name").disabled = false;
-        document.getElementById("ble_device_type").disabled = false;
-        document.getElementById("ble_model_name").disabled = false;
+//         document.getElementById("ble_manufacture_name").disabled = false;
+//        document.getElementById("ble_device_type").disabled = false;
+//        document.getElementById("ble_model_name").disabled = false;
       
         document.getElementById("remark").disabled = false;
 
@@ -178,13 +181,9 @@
             for (i = 0; i < row2.length; i++) {
                 row2[i].style.display = "";
             }
-        var row3 = document.getElementsByClassName("masterBle");
-            var i;
-            for (i = 0; i < row3.length; i++) {
-                row3[i].style.display = "";
-            }
+     
         var noOfRowsTraversed = document.getElementById("noOfRowsTraversed").value;
-        var noOfColumns =12;
+        var noOfColumns =9;
         var columnId = id;                              <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
         columnId = columnId.substring(3, id.length);    <%-- for e.g. suppose id is t1c3 we want characters after t1c i.e beginIndex = 3. --%>
         var lowerLimit, higherLimit;
@@ -199,6 +198,7 @@
         setDefaultColor(noOfRowsTraversed, noOfColumns);        // set default color of rows (i.e. of multiple coloumns).
         var t1id = "t1c";       // particular column id of table 1 e.g. t1c3.
         alert(lowerLimit);
+        debugger;
         document.getElementById("device_map_id").value= document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
         document.getElementById("finished_manufacture_name").value = document.getElementById(t1id +(lowerLimit+2)).innerHTML;
         document.getElementById("finished_device_type").value = document.getElementById(t1id +(lowerLimit+3)).innerHTML;
@@ -206,11 +206,9 @@
          document.getElementById("module_manufacture_name").value = document.getElementById(t1id +(lowerLimit+5)).innerHTML;
         document.getElementById("module_device_type").value = document.getElementById(t1id +(lowerLimit+6)).innerHTML;
         document.getElementById("module_model_name").value = document.getElementById(t1id +(lowerLimit+7)).innerHTML;
-         document.getElementById("ble_manufacture_name").value = document.getElementById(t1id +(lowerLimit+8)).innerHTML;
-        document.getElementById("ble_device_type").value = document.getElementById(t1id +(lowerLimit+9)).innerHTML;
-        document.getElementById("ble_model_name").value = document.getElementById(t1id +(lowerLimit+10)).innerHTML;
+
       
-        document.getElementById("remark").value = document.getElementById(t1id +(lowerLimit+11)).innerHTML;
+        document.getElementById("remark").value = document.getElementById(t1id +(lowerLimit+8)).innerHTML;
 
         //       var b=  document.getElementById(t1id +(lowerLimit+8)).innerHTML;
         // alert(b);
@@ -268,13 +266,6 @@
             for (i = 0; i < row.length; i++) {
                 row[i].style.display = "";
             }
-        }else if(type == "ble") {
-            var row = document.getElementsByClassName("masterBle");
-            console.log(row);
-            var i;
-            for (i = 0; i < row.length; i++) {
-                row[i].style.display = "";
-            }
         }
         
     }
@@ -319,7 +310,7 @@ a:hover{
                                             
                                             <tr>
 <!--                                                <td>Rule<input class="input" type="text" id="searchRule" name="searchRule" value="${searchRule}" size="20" ></td>-->
-                                                <td>Manufacturer Name<input class="input" type="text" id="searchCommandName" name="searchCommandName" value="${searchCommandName}" size="20" ></td>
+                                                <td>Manufacturer Name<input class="input" type="text" id="searchManufactureName" name="searchManufactureName" value="${searchCommandName}" size="20" ></td>
                                                 <td>Device Type<input class="input" type="text" id="searchDeviceType" name="searchDeviceType" value="${searchDeviceType}" size="20" ></td>
                                                 <td>Model<input class="input" type="text" id="searchModelName" name="searchModelName" value="${searchModelName}" size="20" ></td>                                               
                                                 <td><input class="button" type="submit" name="task" id="searchIn" value="Search"></td>
@@ -338,7 +329,7 @@ a:hover{
                                             <tr>
                                                 <th class="heading"></th>
                                                 <th colspan="3" class="heading">Finished Device</th>
-                                                <th colspan="3" class="heading">BLE Device</th>
+<!--                                                <th colspan="3" class="heading">BLE Device</th>-->
                                                 <th colspan="3" class="heading">Module Device</th>
                                                  <th class="heading"></th>
                                             </tr>
@@ -347,9 +338,9 @@ a:hover{
                                                 <th class="heading">Manufacturer Name</th>
                                                 <th class="heading">Device Type</th>
                                                 <th class="heading">Model</th>
-                                                <th class="heading">Manufacturer Name</th>
+<!--                                                <th class="heading">Manufacturer Name</th>
                                                 <th class="heading">Device Type</th>
-                                                <th class="heading">Model</th>
+                                                <th class="heading">Model</th>-->
                                                <th class="heading">Manufacturer Name</th>
                                                 <th class="heading">Device Type</th>
                                                 <th class="heading">Model</th>
@@ -370,9 +361,7 @@ a:hover{
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${deviceMap.module_manufacture_name}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${deviceMap.module_device_type}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${deviceMap.module_model_name}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${deviceMap.ble_manufacture_name}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${deviceMap.ble_device_type}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${deviceMap.ble_model_name}</td>
+                                         
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${deviceMap.remark}</td>
 
                                                 </tr>
@@ -474,28 +463,7 @@ a:hover{
                                                 <th class="heading1">Model</th>
                                                 <td><input class="input" type="text" id="module_model_name" name="module_model_name" value="" size="40" disabled></td>
                                             </tr>
-                                             <tr>
-                                                 <th class="heading1" colspan="2" style="text-align: center">BLE Device</th>                                                
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td><input class="button"  type="button"  name="select_ble_device" value="Select Ble Device" onclick="expandDetails('ble')"></td>
-                                                <td><input class="button"  type="button"  name="create_ble_device" value="Create Ble Device" onclick="goToDevice()"></td>
-                                            </tr> 
-                                            
-                                            <tr class="masterBle" style="display: none">
-                                                <th class="heading1">Manufacturer</th>
-                                                <td><input class="input" type="text" id="ble_manufacture_name" name="ble_manufacture_name" value="" size="40" disabled></td>
-                                            </tr>
-                                            <tr class="masterBle" style="display: none">
-                                                <th class="heading1">Device Type</th>
-                                                <td><input class="input" type="text" id="ble_device_type" name="ble_device_type" value="" size="40" disabled>
-                                                
-                                            </tr>
-                                            <tr class="masterBle" style="display: none">
-                                                <th class="heading1">Model</th>
-                                                <td><input class="input" type="text" id="ble_model_name" name="ble_model_name" value="" size="40" disabled></td>
-                                            </tr>
+                                           
                                             <tr>
                                                 <th class="heading1">Remark</th>
                                                 <td><input class="input" type="text" id="remark" name="remark" value="" size="40" disabled></td>

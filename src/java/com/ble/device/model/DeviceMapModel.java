@@ -111,16 +111,16 @@ public class DeviceMapModel {
         }
         return device_id;
     }
-    
+
     public int getFinishedDeviceId(String manufactureName, String deviceType, String modelName) {
-        
+
         //
-        String query1 = "Select d.id as finished_device_id " 
-                + "from manufacturer m, device_type dt, model mo, device d " 
-                + "where d.manufacture_id = m.id and d.device_type_id = dt.id " 
-                + "and d.model_id = mo.id " 
-                + "and d.active = 'Y'" 
-                + "and m.active = 'Y' and dt.active = 'Y' and mo.active = 'Y' " 
+        String query1 = "Select d.id as finished_device_id "
+                + "from manufacturer m, device_type dt, model mo, device d "
+                + "where d.manufacture_id = m.id and d.device_type_id = dt.id "
+                + "and d.model_id = mo.id "
+                + "and d.active = 'Y'"
+                + "and m.active = 'Y' and dt.active = 'Y' and mo.active = 'Y' "
                 + "and m.name = ? and dt.type = ? and mo.device_name = ?;";
         int finished_device_id = 0;
         try {
@@ -132,20 +132,20 @@ public class DeviceMapModel {
             System.out.println("Jaya");
             rs.next();
             finished_device_id = rs.getInt("finished_device_id");
-            
+
         } catch (Exception e) {
             System.out.println("Error inside getNoOfRows CommandModel" + e);
         }
-         return finished_device_id;
+        return finished_device_id;
     }
-    
+
     public int getModuleDeviceId(String manufactureName, String deviceType, String modelName) {
-        
+
         //
-        String query1 = "Select d.id as module_device_id from manufacturer m, device_type dt, model mo, device d " 
-                +"where d.manufacture_id = m.id and d.device_type_id = dt.id and d.model_id = mo.id " 
-                +"and d.active = 'Y' and m.active = 'Y' and dt.active = 'Y' and mo.active = 'Y'" 
-                +"and m.name = ? and dt.type = ? and mo.device_name = ?;";
+        String query1 = "Select d.id as module_device_id from manufacturer m, device_type dt, model mo, device d "
+                + "where d.manufacture_id = m.id and d.device_type_id = dt.id and d.model_id = mo.id "
+                + "and d.active = 'Y' and m.active = 'Y' and dt.active = 'Y' and mo.active = 'Y'"
+                + "and m.name = ? and dt.type = ? and mo.device_name = ?;";
         int module_device_id = 0;
         try {
             PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
@@ -160,14 +160,14 @@ public class DeviceMapModel {
         }
         return module_device_id;
     }
-    
+
     public int getBleDeviceId(String manufactureName, String deviceType, String modelName) {
-        
+
         //
-        String query1 = "Select d.id as ble_device_id from manufacturer m, device_type dt, model mo, device d " 
-                        + "where d.manufacture_id = m.id and d.device_type_id = dt.id and d.model_id = mo.id " 
-                        + "and d.active = 'Y' and m.active = 'Y' and dt.active = 'Y' and mo.active = 'Y'" 
-                        + "and m.name = ? and dt.type = ? and mo.device_name = ?;";
+        String query1 = "Select d.id as ble_device_id from manufacturer m, device_type dt, model mo, device d "
+                + "where d.manufacture_id = m.id and d.device_type_id = dt.id and d.model_id = mo.id "
+                + "and d.active = 'Y' and m.active = 'Y' and dt.active = 'Y' and mo.active = 'Y'"
+                + "and m.name = ? and dt.type = ? and mo.device_name = ?;";
         int ble_device_id = 0;
         try {
             PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
@@ -186,23 +186,25 @@ public class DeviceMapModel {
 
     public int insertRecord(DeviceMapBean deviceMapBean) {
 
-        int finished_device_id = getFinishedDeviceId(deviceMapBean.getFinished_manufacture_name(),deviceMapBean.getFinished_device_type(), deviceMapBean.getFinished_model_name());
-        int module_device_id = getModuleDeviceId(deviceMapBean.getModule_manufacture_name(),deviceMapBean.getModule_device_type(), deviceMapBean.getModule_model_name());
-        int ble_device_id = getBleDeviceId(deviceMapBean.getBle_manufacture_name(),deviceMapBean.getBle_device_type(), deviceMapBean.getBle_model_name());
-        
+        int finished_device_id = getFinishedDeviceId(deviceMapBean.getFinished_manufacture_name(), deviceMapBean.getFinished_device_type(), deviceMapBean.getFinished_model_name());
+        int module_device_id = getModuleDeviceId(deviceMapBean.getModule_manufacture_name(), deviceMapBean.getModule_device_type(), deviceMapBean.getModule_model_name());
+//        int ble_device_id = getBleDeviceId(deviceMapBean.getBle_manufacture_name(),deviceMapBean.getBle_device_type(), deviceMapBean.getBle_model_name());
+
         String query1 = " select count(*) from device_map "
-                        + " where finished_device_";
-        
-        String query = " insert into device_map(finished_device_id,module_device_id,ble_device_id,remark) "
-                + " values(?,?,?,?) ";
+                + " where finished_device_";
+
+//        String query = " insert into device_map(finished_device_id,module_device_id,ble_device_id,remark) "
+//                + " values(?,?,?,?) ";
+        String query = " insert into device_map(finished_device_id,module_device_id,remark) "
+                + " values(?,?,?) ";
         int rowsAffected = 0;
         try {
             java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
 
             pstmt.setInt(1, finished_device_id);
             pstmt.setInt(2, module_device_id);
-            pstmt.setInt(3, ble_device_id);
-            pstmt.setString(4, deviceMapBean.getRemark());
+//            pstmt.setInt(3, ble_device_id);
+            pstmt.setString(3, deviceMapBean.getRemark());
 
             rowsAffected = pstmt.executeUpdate();
         } catch (Exception e) {
@@ -224,15 +226,16 @@ public class DeviceMapModel {
         String query = "";
         int rowsAffected = 0;
 
-        int finished_device_id = getFinishedDeviceId(deviceMapBean.getFinished_manufacture_name(),deviceMapBean.getFinished_device_type(), deviceMapBean.getFinished_model_name());
-        int module_device_id = getModuleDeviceId(deviceMapBean.getModule_manufacture_name(),deviceMapBean.getModule_device_type(), deviceMapBean.getModule_model_name());
-        int ble_device_id = getBleDeviceId(deviceMapBean.getBle_manufacture_name(),deviceMapBean.getBle_device_type(), deviceMapBean.getBle_model_name());
-        
+        int finished_device_id = getFinishedDeviceId(deviceMapBean.getFinished_manufacture_name(), deviceMapBean.getFinished_device_type(), deviceMapBean.getFinished_model_name());
+        int module_device_id = getModuleDeviceId(deviceMapBean.getModule_manufacture_name(), deviceMapBean.getModule_device_type(), deviceMapBean.getModule_model_name());
+//        int ble_device_id = getBleDeviceId(deviceMapBean.getBle_manufacture_name(),deviceMapBean.getBle_device_type(), deviceMapBean.getBle_model_name());
+
         String query1 = " SELECT max(revision_no) revision_no FROM device_map c WHERE c.device_map_id = " + deviceMapBean.getDevice_map_id() + " && active='Y' ORDER BY revision_no DESC";
         String query2 = " UPDATE device_map SET active=? WHERE device_map_id = ? && revision_no = ? ";
-        String query3 = " insert into device_map(device_map_id,finished_device_id,module_device_id,ble_device_id,remark,revision_no,active) "
-                        + " values(?,?,?,?,?,?,?) ";
-
+//        String query3 = " insert into device_map(device_map_id,finished_device_id,module_device_id,ble_device_id,remark,revision_no,active) "
+//                        + " values(?,?,?,?,?,?,?) ";
+        String query3 = " insert into device_map(device_map_id,finished_device_id,module_device_id,remark,revision_no,active) "
+                + " values(?,?,?,?,?,?) ";
         int updateRowsAffected = 0;
         try {
             PreparedStatement ps = (PreparedStatement) connection.prepareStatement(query1);
@@ -249,10 +252,10 @@ public class DeviceMapModel {
                     psmt.setInt(1, deviceMapBean.getDevice_map_id());
                     psmt.setInt(2, finished_device_id);
                     psmt.setInt(3, module_device_id);
-                    psmt.setInt(4, ble_device_id);
-                    psmt.setString(5, deviceMapBean.getRemark());
-                    psmt.setInt(6, rev);
-                    psmt.setString(7, "Y");
+//                    psmt.setInt(4, ble_device_id);
+                    psmt.setString(4, deviceMapBean.getRemark());
+                    psmt.setInt(5, rev);
+                    psmt.setString(6, "Y");
 
                     int a = psmt.executeUpdate();
                     if (a > 0) {
@@ -277,20 +280,19 @@ public class DeviceMapModel {
     }
 
     public int getNoOfRows(String searchManufacturerName, String searchDeviceTypeName) {
-        String query1 = "SELECT count(*)" 
-                +" FROM device_map dm, device d, device d1, device d2, manufacturer m, model mo, device_type dt," 
-                +" manufacturer m1, model mo1, device_type dt1, manufacturer m2, model mo2, device_type dt2" 
-                +" where dm.finished_device_id = d.id " 
-                +" and dm.module_device_id = d1.id and dm.ble_device_id = d2.id" 
-                +" and d.manufacture_id = m.id and d.device_type_id = dt.id and d.model_id = mo.id" 
-                +" and d1.manufacture_id = m1.id and d1.device_type_id = dt1.id and d1.model_id = mo1.id" 
-                +" and d2.manufacture_id = m2.id and d2.device_type_id = dt2.id and d2.model_id = mo2.id and dm.active = 'Y'" 
-                +" and d.active = 'Y' and m.active = 'Y' and dt.active = 'Y' and mo.active = 'Y'" 
-                +" and d1.active = 'Y' and m1.active = 'Y' and dt1.active = 'Y' and mo1.active = 'Y'" 
-                +" and d2.active = 'Y' and m2.active = 'Y' and dt2.active = 'Y' and mo2.active = 'Y'"
-                +" AND IF('" + searchManufacturerName + "' = '', m.name LIKE '%%',m.name =?) "
-                +" AND IF('" + searchDeviceTypeName + "' = '', dt.type LIKE '%%',dt.type =?) ";
-      
+        String query1 = "SELECT count(*)"
+                + " FROM device_map dm, device d, device d1, device d2, manufacturer m, model mo, device_type dt,"
+                + " manufacturer m1, model mo1, device_type dt1, manufacturer m2, model mo2, device_type dt2"
+                + " where dm.finished_device_id = d.id "
+                + " and dm.module_device_id = d1.id and dm.ble_device_id = d2.id"
+                + " and d.manufacture_id = m.id and d.device_type_id = dt.id and d.model_id = mo.id"
+                + " and d1.manufacture_id = m1.id and d1.device_type_id = dt1.id and d1.model_id = mo1.id"
+                + " and d2.manufacture_id = m2.id and d2.device_type_id = dt2.id and d2.model_id = mo2.id and dm.active = 'Y'"
+                + " and d.active = 'Y' and m.active = 'Y' and dt.active = 'Y' and mo.active = 'Y'"
+                + " and d1.active = 'Y' and m1.active = 'Y' and dt1.active = 'Y' and mo1.active = 'Y'"
+                + " and d2.active = 'Y' and m2.active = 'Y' and dt2.active = 'Y' and mo2.active = 'Y'"
+                + " AND IF('" + searchManufacturerName + "' = '', m.name LIKE '%%',m.name =?) "
+                + " AND IF('" + searchDeviceTypeName + "' = '', dt.type LIKE '%%',dt.type =?) ";
 
         int noOfRows = 0;
         try {
@@ -325,27 +327,26 @@ public class DeviceMapModel {
 //                     +" AND IF('" + searchDeviceTypeName + "' = '', dt.type LIKE '%%',dt.type =?) "
 //                     +" and d.active='Y' and mt.active='Y' and dt.active='Y'  and m.active='Y' "
 //                     +addQuery;
-        String query2 = "SELECT dm.device_map_id as device_map_id," 
-                +" dm.finished_device_id as finished_device_id,m.name as finished_manufacturer_name," 
-                +" mo.device_name as finished_model_name, mo.device_no as finished_model_number, dt.type as finished_device_type," 
-                +" dm.module_device_id as module_device_id,m1.name as module_manufacturer_name," 
-                +" mo1.device_name as module_model_name, mo1.device_no as module_model_number, dt1.type as module_device_type," 
-                +" dm.ble_device_id as ble_device_id,m2.name as ble_manufacturer_name, mo2.device_no as ble_model_number," 
-                +" mo2.device_name as ble_model_name, dt2.type as ble_device_type, dm.remark" 
-                +" FROM device_map dm, device d, device d1, device d2, manufacturer m, model mo, device_type dt," 
-                +" manufacturer m1, model mo1, device_type dt1, manufacturer m2, model mo2, device_type dt2" 
-                +" where dm.finished_device_id = d.id " 
-                +" and dm.module_device_id = d1.id and dm.ble_device_id = d2.id" 
-                +" and d.manufacture_id = m.id and d.device_type_id = dt.id and d.model_id = mo.id" 
-                +" and d1.manufacture_id = m1.id and d1.device_type_id = dt1.id and d1.model_id = mo1.id" 
-                +" and d2.manufacture_id = m2.id and d2.device_type_id = dt2.id and d2.model_id = mo2.id and dm.active = 'Y'" 
-                +" and d.active = 'Y' and m.active = 'Y' and dt.active = 'Y' and mo.active = 'Y'" 
-                +" and d1.active = 'Y' and m1.active = 'Y' and dt1.active = 'Y' and mo1.active = 'Y'" 
-                +" and d2.active = 'Y' and m2.active = 'Y' and dt2.active = 'Y' and mo2.active = 'Y'"
-                +" AND IF('" + searchManufacturerName + "' = '', m.name LIKE '%%',m.name =?) "
-                +" AND IF('" + searchDeviceTypeName + "' = '', dt.type LIKE '%%',dt.type =?) "
-                + addQuery;
-                
+//    last working query:    String query2 = "SELECT dm.device_map_id as device_map_id," 
+//                +" dm.finished_device_id as finished_device_id,m.name as finished_manufacturer_name," 
+//                +" mo.device_name as finished_model_name, mo.device_no as finished_model_number, dt.type as finished_device_type," 
+//                +" dm.module_device_id as module_device_id,m1.name as module_manufacturer_name," 
+//                +" mo1.device_name as module_model_name, mo1.device_no as module_model_number, dt1.type as module_device_type," 
+//                +" dm.ble_device_id as ble_device_id,m2.name as ble_manufacturer_name, mo2.device_no as ble_model_number," 
+//                +" mo2.device_name as ble_model_name, dt2.type as ble_device_type, dm.remark" 
+//                +" FROM device_map dm, device d, device d1, device d2, manufacturer m, model mo, device_type dt," 
+//                +" manufacturer m1, model mo1, device_type dt1, manufacturer m2, model mo2, device_type dt2" 
+//                +" where dm.finished_device_id = d.id " 
+//                +" and dm.module_device_id = d1.id and dm.ble_device_id = d2.id" 
+//                +" and d.manufacture_id = m.id and d.device_type_id = dt.id and d.model_id = mo.id" 
+//                +" and d1.manufacture_id = m1.id and d1.device_type_id = dt1.id and d1.model_id = mo1.id" 
+//                +" and d2.manufacture_id = m2.id and d2.device_type_id = dt2.id and d2.model_id = mo2.id and dm.active = 'Y'" 
+//                +" and d.active = 'Y' and m.active = 'Y' and dt.active = 'Y' and mo.active = 'Y'" 
+//                +" and d1.active = 'Y' and m1.active = 'Y' and dt1.active = 'Y' and mo1.active = 'Y'" 
+//                +" and d2.active = 'Y' and m2.active = 'Y' and dt2.active = 'Y' and mo2.active = 'Y'"
+//                +" AND IF('" + searchManufacturerName + "' = '', m.name LIKE '%%',m.name =?) "
+//                +" AND IF('" + searchDeviceTypeName + "' = '', dt.type LIKE '%%',dt.type =?) "
+//                + addQuery;
 //                "select dr.id as device_reg_id,name as manufacture_name,type as device_type,device_name, "
 //                + " device_no,reg_no,manufacture_date,sale_date,dr.remark "
 //                + " from device f, device b, device f,device_type dt,manufacturer mt,model m "
@@ -357,7 +358,16 @@ public class DeviceMapModel {
 //                + " AND IF('" + searchDeviceTypeName + "' = '', dt.type LIKE '%%',dt.type =?) "
 //                + " and dr.active='Y' and d.active='Y' "
 //                + " and mt.active='Y' and dt.active='Y' and m.active='Y' "
-                
+        String query2 = " SELECT dm.device_map_id as device_map_id, dm.finished_device_id as finished_device_id,m.name as finished_manufacturer_name, mo.device_name as finished_model_name, mo.device_no as finished_model_number, "
+                + " dt.type as finished_device_type, dm.module_device_id as module_device_id,m1.name as module_manufacturer_name, mo1.device_name as module_model_name, mo1.device_no as module_model_number, dt1.type as module_device_type, dm.remark  FROM device_map dm, device d, device d1, device d2, manufacturer m, model mo, device_type dt, manufacturer m1, model mo1, device_type dt1, manufacturer m2, model mo2, device_type dt2 "
+                + " where dm.finished_device_id = d.id "
+                + " and dm.module_device_id = d1.id and  d.manufacture_id = m.id and d.device_type_id = dt.id and d.model_id = mo.id and d1.manufacture_id = m1.id and d1.device_type_id = dt1.id and d1.model_id = mo1.id "
+                + " and d2.manufacture_id = m2.id and d2.device_type_id = dt2.id and d2.model_id = mo2.id and dm.active = 'Y' and d.active = 'Y' and m.active = 'Y' and dt.active = 'Y' and mo.active = 'Y' and d1.active = 'Y' and m1.active = 'Y' and dt1.active = 'Y' and mo1.active = 'Y' and d2.active = 'Y' and m2.active = 'Y' "
+                + " and dt2.active = 'Y' and mo2.active = 'Y' "
+                + " AND IF('' = '', m.name LIKE '%%',m.name =?) "
+                + " AND IF('' = '', dt.type LIKE '%%',dt.type =?) "
+                + addQuery;
+
         try {
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);
             pstmt.setString(1, searchManufacturerName);
@@ -366,24 +376,24 @@ public class DeviceMapModel {
             while (rset.next()) {
                 DeviceMapBean deviceBean = new DeviceMapBean();
                 deviceBean.setDevice_map_id(rset.getInt("device_map_id"));
-                deviceBean.setBle_device_id(rset.getInt("ble_device_id"));
-                deviceBean.setBle_manufacture_name(rset.getString("ble_manufacturer_name"));
-                deviceBean.setBle_device_type(rset.getString("ble_device_type"));
-                deviceBean.setBle_model_name(rset.getString("ble_model_name"));
-                deviceBean.setBle_model_no(rset.getString("ble_model_number"));
-                
+//                deviceBean.setBle_device_id(rset.getInt("ble_device_id"));
+//                deviceBean.setBle_manufacture_name(rset.getString("ble_manufacturer_name"));
+//                deviceBean.setBle_device_type(rset.getString("ble_device_type"));
+//                deviceBean.setBle_model_name(rset.getString("ble_model_name"));
+//                deviceBean.setBle_model_no(rset.getString("ble_model_number"));
+
                 deviceBean.setFinished_device_id(rset.getInt("finished_device_id"));
                 deviceBean.setFinished_manufacture_name(rset.getString("finished_manufacturer_name"));
                 deviceBean.setFinished_device_type(rset.getString("finished_device_type"));
                 deviceBean.setFinished_model_name(rset.getString("finished_model_name"));
                 deviceBean.setFinished_model_no(rset.getString("finished_model_number"));
-                
+
                 deviceBean.setModule_device_id(rset.getInt("module_device_id"));
                 deviceBean.setModule_manufacture_name(rset.getString("module_manufacturer_name"));
                 deviceBean.setModule_device_type(rset.getString("module_device_type"));
                 deviceBean.setModule_model_name(rset.getString("module_model_name"));
                 deviceBean.setModule_model_no(rset.getString("module_model_number"));
-                
+
                 deviceBean.setRemark(rset.getString("remark"));
                 list.add(deviceBean);
             }
@@ -579,6 +589,35 @@ public class DeviceMapModel {
             }
             if (count == 0) {
                 list.add("No such Manufacturer Name exists.......");
+            }
+        } catch (Exception e) {
+            System.out.println(" ERROR inside CommandModel - " + e);
+            message = "Something going wrong";
+            //messageBGColor = "red";
+        }
+        return list;
+    }
+     public List<String> getSearchModelName(String q) {
+        List<String> list = new ArrayList<String>();
+        String query = " select m.device_name "
+                + " from device_registration dr,device d,model m "
+                + " where dr.device_id = d.id "
+                + " and d.model_id = m.id "
+                + " and dr.active='Y' and d.active='Y' and m.active='Y' "
+                + " group by m.device_name ";
+        try {
+            ResultSet rset = connection.prepareStatement(query).executeQuery();
+            int count = 0;
+            q = q.trim();
+            while (rset.next()) {
+                String device_name = rset.getString("device_name");
+                if (device_name.toUpperCase().startsWith(q.toUpperCase())) {
+                    list.add(device_name);
+                    count++;
+                }
+            }
+            if (count == 0) {
+                list.add("No such Model Name exists.......");
             }
         } catch (Exception e) {
             System.out.println(" ERROR inside CommandModel - " + e);
