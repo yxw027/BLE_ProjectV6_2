@@ -12,7 +12,7 @@ package com.ble.dataEntry.bean;
 public class ModelBean {
 
     String device_name,device_no,warrenty_period,remark,model_type,device_address;
-    int model_type_id,model_id;
+    int model_type_id,model_id,no_of_module;
 
     public String getDevice_address() {
         return device_address;
@@ -84,8 +84,12 @@ public class ModelBean {
         this.warrenty_period = warrenty_period;
     }
 
-    
+    public int getNo_of_module() {
+        return no_of_module;
+    }
 
-
+    public void setNo_of_module(int no_of_module) {
+        this.no_of_module = no_of_module;
+    }
 
 }

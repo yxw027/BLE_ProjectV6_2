@@ -105,6 +105,7 @@ public class ModelController extends HttpServlet {
             modelBean.setDevice_no(request.getParameter("device_no"));
             modelBean.setWarrenty_period(request.getParameter("warranty_period"));
             modelBean.setDevice_address(request.getParameter("device_address"));
+             modelBean.setNo_of_module(Integer.parseInt(request.getParameter("no_of_module")));
             modelBean.setRemark(request.getParameter("remark"));
 
             if (model_id == 0) {

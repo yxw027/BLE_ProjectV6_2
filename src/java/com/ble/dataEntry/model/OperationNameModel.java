@@ -38,16 +38,39 @@ public class OperationNameModel {
         }
     }
 
+  public int getParentOperationId(String parent_operation_name) {
+      String query1="select id as operation_id "
+                    +" from operation_name mt "
+                    +" where IF('" + parent_operation_name + "' = '', operation_name LIKE '%%',operation_name =?) "
+                    +" and mt.active='Y'";
+
+        int operation_parent_name_id = 0;
+        try {
+            PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
+
+            stmt.setString(1, parent_operation_name);
+
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            operation_parent_name_id = rs.getInt(1);
+        } catch (Exception e) {
+            System.out.println("Error inside getNoOfRows CommandModel" + e);
+        }
+        System.out.println("operation_parent_name_id in Table for search is" + operation_parent_name_id);
+        return operation_parent_name_id;
+    }
 
 public int insertRecord(OperationNameBean operationNameBean) {
 
-        String query = " insert into operation_name(operation_name,remark) values(?,?) ";
+        String query = " insert into operation_name(operation_name,parent_id,remark) values(?,?,?) ";
+        int parent_id= getParentOperationId(operationNameBean.getParent_operation());
         int rowsAffected = 0;
         try {
             java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
 
             pstmt.setString(1, operationNameBean.getOperation_name());
-            pstmt.setString(2, operationNameBean.getRemark());
+            pstmt.setInt(2,parent_id);
+            pstmt.setString(3, operationNameBean.getRemark());
 
             rowsAffected = pstmt.executeUpdate();
         } catch (Exception e) {
@@ -71,8 +94,8 @@ public boolean reviseRecords(OperationNameBean operationNameBean){
 
       String query1 = " SELECT max(revision_no) revision_no FROM operation_name c WHERE c.id = "+operationNameBean.getOperation_name_id()+" && active='Y' ORDER BY revision_no DESC";
       String query2 = " UPDATE operation_name SET active=? WHERE id = ? && revision_no = ? ";
-      String query3 = " INSERT INTO operation_name (id,operation_name,remark,revision_no,active) VALUES (?,?,?,?,?) ";
-
+      String query3 = " INSERT INTO operation_name (id,operation_name,parent_id,remark,revision_no,active) VALUES (?,?,?,?,?,?) ";
+  int parent_id= getParentOperationId(operationNameBean.getParent_operation());
       int updateRowsAffected = 0;
       try {
            PreparedStatement ps=(PreparedStatement) connection.prepareStatement(query1);
@@ -88,9 +111,10 @@ public boolean reviseRecords(OperationNameBean operationNameBean){
              PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3);
              psmt.setInt(1,operationNameBean.getOperation_name_id());
              psmt.setString(2,operationNameBean.getOperation_name());
-             psmt.setString(3,operationNameBean.getRemark());
-             psmt.setInt(4,rev);
-             psmt.setString(5,"Y");
+             psmt.setInt(3,parent_id);
+             psmt.setString(4,operationNameBean.getRemark());
+             psmt.setInt(5,rev);
+             psmt.setString(6,"Y");
 
              int a = psmt.executeUpdate();
               if(a > 0)
@@ -140,9 +164,9 @@ public boolean reviseRecords(OperationNameBean operationNameBean){
          String addQuery = " LIMIT " + lowerLimit + ", " + noOfRowsToDisplay;
           if(lowerLimit == -1)
             addQuery = "";
-       String query2="select id,operation_name,remark "
-                     +" from operation_name m "
-                     +" where IF('" + searchOperationname + "' = '', operation_name LIKE '%%',operation_name =?) "
+       String query2="select m.id,m.operation_name,m.remark,op.operation_name as parent_operation  "
+                     +" from operation_name m left join operation_name op on m.parent_id = op.id "
+                     +" where IF('" + searchOperationname + "' = '', m.operation_name LIKE '%%',m.operation_name =?) "
                      +" and m.active='Y' "
                      +addQuery;
         try {
@@ -154,6 +178,7 @@ public boolean reviseRecords(OperationNameBean operationNameBean){
 
                 operationNameBean.setOperation_name_id(rset.getInt("id"));
                 operationNameBean.setOperation_name(rset.getString("operation_name"));
+                operationNameBean.setParent_operation(rset.getString("parent_operation"));
                 operationNameBean.setRemark(rset.getString("remark"));
                 list.add(operationNameBean);
             }
@@ -266,6 +291,8 @@ public boolean reviseRecords(OperationNameBean operationNameBean){
     public void setMsgBgColor(String msgBgColor) {
         this.msgBgColor = msgBgColor;
     }
+
+    
 
 
 }
