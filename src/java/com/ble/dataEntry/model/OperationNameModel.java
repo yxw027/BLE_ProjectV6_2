@@ -167,7 +167,7 @@ public boolean reviseRecords(OperationNameBean operationNameBean){
        String query2="select m.id,m.operation_name,m.remark,op.operation_name as parent_operation  "
                      +" from operation_name m left join operation_name op on m.parent_id = op.id "
                      +" where IF('" + searchOperationname + "' = '', m.operation_name LIKE '%%',m.operation_name =?) "
-                     +" and m.active='Y' "
+                     +" and m.active='Y' and op.active = 'Y' "
                      +addQuery;
         try {
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);

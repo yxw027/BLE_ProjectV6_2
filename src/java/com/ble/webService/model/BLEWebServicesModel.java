@@ -96,7 +96,7 @@ public class BLEWebServicesModel {
         {
         JSONArray rowData = new JSONArray();
         String query = null;
-        query = "select id,device_name,device_no,warranty_period,remark,model_type_id,device_address "
+        query = "select id,device_name,device_no,warranty_period,remark,model_type_id,device_address,no_of_module "
                 +" from model m "
                 +" where m.active='Y'";
         try {
@@ -110,6 +110,7 @@ public class BLEWebServicesModel {
                  obj.put("warranty_period",rset.getString("warranty_period"));
                  obj.put("remark",rset.getString("remark"));
                  obj.put("model_type_id",rset.getInt("model_type_id"));
+                 obj.put("no_of_module",rset.getInt("no_of_module"));
                  obj.put("device_address",rset.getString("device_address"));
 
                  rowData.add(obj);
@@ -145,7 +146,7 @@ public class BLEWebServicesModel {
         {
         JSONArray rowData = new JSONArray();
         String query = null;
-        query = "select id,operation_name,remark "
+        query = "select id,operation_name,remark, parent_id "
                 +" from operation_name op_n "
                 +" where op_n.active='Y'";
         try {
@@ -156,6 +157,7 @@ public class BLEWebServicesModel {
                  obj.put("id",rset.getInt("id"));
                  obj.put("operation_name",rset.getString("operation_name"));
                  obj.put("remark",rset.getString("remark"));
+                 obj.put("parent_id",rset.getString("parent_id"));
                  rowData.add(obj);
            }
         } catch (Exception e) {
@@ -610,7 +612,7 @@ public class BLEWebServicesModel {
         {
         JSONArray rowData = new JSONArray();
         String query = null;
-        query = "select device_map_id,finished_device_id,ble_device_id,module_device_id,remark "
+        query = "select device_map_id,finished_device_id,module_device_id,remark "
                 +" from device_map dm "
                 +" where dm.active='Y' ";
         try {
@@ -620,7 +622,6 @@ public class BLEWebServicesModel {
                 JSONObject obj = new JSONObject();
                  obj.put("device_map_id",rset.getInt("device_map_id"));
                  obj.put("finished_device_id",rset.getInt("finished_device_id"));
-                 obj.put("ble_device_id",rset.getInt("ble_device_id"));
                  obj.put("module_device_id",rset.getInt("module_device_id"));
                  obj.put("remark",rset.getString("remark"));
 
@@ -647,7 +648,7 @@ public class BLEWebServicesModel {
         try {
             System.out.println("hii inside setConnection() method");
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ble_database2", "jpss_2", "jpss_1277");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ble_database4", "jpss_2", "jpss_1277");
         } catch (Exception e) {
             System.out.println("BLEWebServicesModel setConnection() Error: " + e);
         }

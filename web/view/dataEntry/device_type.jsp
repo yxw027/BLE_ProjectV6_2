@@ -37,7 +37,6 @@
     function makeEditable(id) {
 
         document.getElementById("device_type").disabled = false;
-         document.getElementById("shorthand").disabled = false;
          document.getElementById("remark").disabled = false;
 
         document.getElementById("save").disabled = false;
@@ -132,7 +131,6 @@
 
         document.getElementById("device_type_id").value= document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
         document.getElementById("device_type").value = document.getElementById(t1id +(lowerLimit+2)).innerHTML;
-         document.getElementById("shorthand").value = document.getElementById(t1id +(lowerLimit+2)).innerHTML;
         document.getElementById("remark").value = document.getElementById(t1id +(lowerLimit+3)).innerHTML;
 
         //       var b=  document.getElementById(t1id +(lowerLimit+8)).innerHTML;
@@ -232,7 +230,6 @@ a:hover{
                                             <tr>
                                                 <th class="heading">S.No.</th>
                                                 <th class="heading">Device Type</th>
-                                                   <th class="heading">Short Hand</th>
                                                 <th class="heading">Remark</th>
                                             </tr>
                                             <!---below is the code to show all values on jsp page fetched from trafficTypeList of TrafficController     --->
@@ -245,7 +242,6 @@ a:hover{
                                                     <td id="t1c${IDGenerator.uniqueID}" style="display:none" onclick="fillColumns(id)">${divisionTypeBean.device_type_id}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">${lowerLimit - noOfRowsTraversed + loopCounter.count}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.type}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.shorthand}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.remark}</td>
 
                                                 </tr>

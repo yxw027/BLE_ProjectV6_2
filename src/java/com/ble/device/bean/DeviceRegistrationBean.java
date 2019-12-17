@@ -5,13 +5,22 @@
 
 package com.ble.device.bean;
 
+import java.util.List;
+
 /**
  *
  * @author Shobha
  */
 public class DeviceRegistrationBean {
     int device_registration_id;
+    //int device_registration_id;
+    int operation_id;
+    int command_id;
     String manufacture_name,device_type_name,device_name,device_no,registration_no,manufacture_date,sale_date,remark;
+    List<DeviceRegistrationBean> deviceregBean;
+    List<DeviceRegistrationBean> commandListBean;
+    String operation_name;
+    String command;
 
     public String getDevice_name() {
         return device_name;
@@ -83,6 +92,54 @@ public class DeviceRegistrationBean {
 
     public void setSale_date(String sale_date) {
         this.sale_date = sale_date;
+    }
+
+    public int getOperation_id() {
+        return operation_id;
+    }
+
+    public void setOperation_id(int operation_id) {
+        this.operation_id = operation_id;
+    }
+
+    public int getCommand_id() {
+        return command_id;
+    }
+
+    public void setCommand_id(int command_id) {
+        this.command_id = command_id;
+    }
+
+    public List<DeviceRegistrationBean> getDeviceregBean() {
+        return deviceregBean;
+    }
+
+    public void setDeviceregBean(List<DeviceRegistrationBean> deviceregBean) {
+        this.deviceregBean = deviceregBean;
+    }
+
+    public List<DeviceRegistrationBean> getCommandListBean() {
+        return commandListBean;
+    }
+
+    public void setCommandListBean(List<DeviceRegistrationBean> commandListBean) {
+        this.commandListBean = commandListBean;
+    }
+
+    public String getOperation_name() {
+        return operation_name;
+    }
+
+    public void setOperation_name(String operation_name) {
+        this.operation_name = operation_name;
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
     }
 
     

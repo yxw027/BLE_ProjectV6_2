@@ -477,4 +477,20 @@
         <servlet-name>CommandDescriptionController</servlet-name>
         <url-pattern>/CommandDescriptionCont.do</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>DeviceRegConController</servlet-name>
+        <servlet-class>com.ble.device.controller.DeviceRegConController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeviceRegConController</servlet-name>
+        <url-pattern>/deviceRegistrationCont.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>deviceRegConnPage</servlet-name>
+        <jsp-file>/view/device/deviceRegConnPage.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deviceRegConnPage</servlet-name>
+        <url-pattern>/deviceRegConnPage</url-pattern>
+    </servlet-mapping>
 </web-app>

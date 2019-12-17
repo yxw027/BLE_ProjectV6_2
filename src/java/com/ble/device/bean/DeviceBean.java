@@ -10,8 +10,8 @@ package com.ble.device.bean;
  * @author Shobha
  */
 public class DeviceBean {
-    int device_id, device_no;
-    String manufacture_name,device_type_name,device_name,remark;
+    int device_id;
+    String manufacture_name,device_type_name,device_name,remark, device_no;
 
     public int getDevice_id() {
         return device_id;
@@ -29,14 +29,15 @@ public class DeviceBean {
         this.device_name = device_name;
     }
 
-    public int getDevice_no() {
+    public String getDevice_no() {
         return device_no;
     }
 
-    public void setDevice_no(int device_no) {
+    public void setDevice_no(String device_no) {
         this.device_no = device_no;
     }
 
+    
     public String getDevice_type_name() {
         return device_type_name;
     }
