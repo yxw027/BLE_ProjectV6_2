@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-   <session-config>
+    
+    <session-config>
         <session-timeout>
             30
         </session-timeout>
@@ -14,7 +15,7 @@
     </context-param>
     <context-param>
         <param-name>connectionString</param-name>
-        <param-value>jdbc:mysql://localhost:3306/ble_database1</param-value>
+        <param-value>jdbc:mysql://localhost:3306/ble_database5</param-value>
     </context-param>
     <context-param>
         <param-name>db_username</param-name>
@@ -36,7 +37,7 @@
             <param-value>com.ble.webService.controller</param-value>
         </init-param>
     </servlet>
-   
+    
     <servlet-mapping>
         <servlet-name>servlet Dispatcher</servlet-name>
         <url-pattern>/resources/*</url-pattern>
@@ -51,29 +52,22 @@
         <url-pattern>/webServiceCont</url-pattern>
     </servlet-mapping>
     <!--<ServletContainer mapping end>-->
-     <servlet>
+    <servlet>
         <servlet-name>DeviceOperationCommandCont</servlet-name>
         <servlet-class>com.ble.command.controller.DeviceOperationCommandController</servlet-class>
     </servlet>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>DeviceOperationCommandCont</servlet-name>
         <url-pattern>/DeviceOperationCommandCont.do</url-pattern>
     </servlet-mapping>
-     <servlet>
+    <servlet>
         <servlet-name>device_operation_commandView</servlet-name>
         <jsp-file>/view/device_operation_command.jsp</jsp-file>
     </servlet>
-      <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>device_operation_commandView</servlet-name>
         <url-pattern>/device_operation_commandView</url-pattern>
     </servlet-mapping>
-    
-    
-    
-    
-    
-    
-    
     <servlet>
         <servlet-name>CommandController</servlet-name>
         <servlet-class>com.ble.command.controller.CommandController</servlet-class>
@@ -396,7 +390,6 @@
         <url-pattern>/parameter</url-pattern>
     </servlet-mapping>
     <!--<DataEntry mapping end>-->
-    
     <servlet>
         <servlet-name>ByteDataController</servlet-name>
         <servlet-class>com.ble.command.controller.ByteDataController</servlet-class>
@@ -413,7 +406,7 @@
         <servlet-name>SelectionValueController</servlet-name>
         <url-pattern>/SelectionValueController</url-pattern>
     </servlet-mapping>
-     <servlet>
+    <servlet>
         <servlet-name>selection_value</servlet-name>
         <jsp-file>/view/dataEntry/selection_value.jsp</jsp-file>
     </servlet>
@@ -437,7 +430,7 @@
         <servlet-name>sub_byte_division</servlet-name>
         <url-pattern>/sub_byte_division</url-pattern>
     </servlet-mapping>
-      <servlet>
+    <servlet>
         <servlet-name>sub_division_selection</servlet-name>
         <jsp-file>/view/dataEntry/sub_division_selection.jsp</jsp-file>
     </servlet>
@@ -460,5 +453,50 @@
     <servlet-mapping>
         <servlet-name>SubDivisionSelectionController</servlet-name>
         <url-pattern>/SubDivisionSelectionController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Response</servlet-name>
+        <servlet-class>com.ble.response.controller.ResponseController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Response</servlet-name>
+        <url-pattern>/Response</url-pattern>
+    </servlet-mapping>
+     <servlet>
+        <servlet-name>response</servlet-name>
+        <jsp-file>/view/response/response.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>response</servlet-name>
+        <url-pattern>/response</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>FixedResponseController</servlet-name>
+        <servlet-class>com.ble.response.controller.FixedResponseController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FixedResponseController</servlet-name>
+        <url-pattern>/FixedResponseCont</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>FixedResponseValueController</servlet-name>
+        <servlet-class>com.ble.response.controller.FixedResponseValueController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FixedResponseValueController</servlet-name>
+        <url-pattern>/FixedResponseValueController</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>VariableResponseController</servlet-name>
+        <servlet-class>com.ble.response.controller.VariableResponseController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VariableResponseController</servlet-name>
+        <url-pattern>/VariableResponseController</url-pattern>
     </servlet-mapping>
 </web-app>

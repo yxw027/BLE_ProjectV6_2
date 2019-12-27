@@ -6,16 +6,11 @@
 package com.ble.webService.controller;
 
 import com.ble.webService.model.BLEWebServicesModel;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.xml.ws.WebServiceContext;
-import javax.xml.ws.handler.MessageContext;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -28,9 +23,7 @@ import org.json.simple.JSONObject;
 @Path("/")
 public class BLEWebServicesController {
 
-    @Resource
-    WebServiceContext wsContext;  
-    
+
     @POST
     @Path("/getAllTableRecords")
     @Produces(MediaType.APPLICATION_JSON)//http://192.168.1.15:8084/BLE_Project/resources/getAllTableRecords
@@ -66,8 +59,11 @@ public class BLEWebServicesController {
          obj.put("charachtristics", json);
          json = bLEWebServicesModel.getCommandRecords();
          obj.put("command", json);
+<<<<<<< HEAD
          json = bLEWebServicesModel.getCommandDeviceMapRecords();
          obj.put("command_device_map", json);
+=======
+>>>>>>> deb449c37b0ae0ea4090c86347e476c52b9a0e3b
          json = bLEWebServicesModel.getRuleRecords();
          obj.put("rule", json);
 
@@ -77,25 +73,30 @@ public class BLEWebServicesController {
          obj.put("device_characteristic_ble_map", json);
          json = bLEWebServicesModel.getSelectionRecord();
          obj.put("selection", json);
+<<<<<<< HEAD
          json = bLEWebServicesModel.getSelectionValueRecord();
          obj.put("selection_value", json);
+=======
+>>>>>>> deb449c37b0ae0ea4090c86347e476c52b9a0e3b
          json = bLEWebServicesModel.getInputRecord();
          obj.put("input", json);
          json = bLEWebServicesModel.getParameterRecord();
          obj.put("parameter", json);
+<<<<<<< HEAD
          json = bLEWebServicesModel.getByteDataRecord();
          obj.put("byte_data", json);
          json = bLEWebServicesModel.getSubByteDivisionRecord();
          obj.put("sub_byte_division", json);
-         json = bLEWebServicesModel.getSubDivisionSelectionRecord();
-         obj.put("sub_division_selection", json);
+=======
+
+>>>>>>> deb449c37b0ae0ea4090c86347e476c52b9a0e3b
          json = bLEWebServicesModel.getDeviceMapRecords();
          obj.put("device_map", json);
         }catch(Exception e){
             System.out.println("Error in BLEWebServices 'requestData' url calling getWardData()..."+e);
         }
         return obj;
-    }    
+    }
 
 
 

@@ -18,7 +18,7 @@ import java.util.List;
  * @author Shobha
  */
 public class ModelTypeModel {
-private Connection connection;
+    private Connection connection;
     private String driverClass;
     private String connectionString;
     private String db_username;
