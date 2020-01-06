@@ -11,7 +11,7 @@ package com.ble.response.bean;
  */
 public class FixedResponseValue {
     int fixed_response_value_id,fixed_response_id;
-    String display_value,select_value;
+    String display_value,select_value,remark,parameter;
 
     public int getFixed_response_value_id() {
         return fixed_response_value_id;
@@ -43,6 +43,22 @@ public class FixedResponseValue {
 
     public void setSelect_value(String select_value) {
         this.select_value = select_value;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getParameter() {
+        return parameter;
+    }
+
+    public void setParameter(String parameter) {
+        this.parameter = parameter;
     }
     
     

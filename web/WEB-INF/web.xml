@@ -25,7 +25,7 @@
     <context-param>
         <description>	</description>
         <param-name>db_password</param-name>
-        <param-value>root</param-value>
+        <param-value>jpss</param-value>
         <!--<param-value>jpss_1277</param-value>-->
     </context-param>
     <!--<ServletContainer mapping start>-->
@@ -479,15 +479,29 @@
         <servlet-name>FixedResponseController</servlet-name>
         <url-pattern>/FixedResponseCont</url-pattern>
     </servlet-mapping>
-    
-    
+         <servlet>
+        <servlet-name>fixed_response</servlet-name>
+        <jsp-file>/view/response/fixed_response.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>fixed_response</servlet-name>
+        <url-pattern>/fixed_response</url-pattern>
+    </servlet-mapping>
+       <servlet>
+        <servlet-name>fixed_response_value</servlet-name>
+        <jsp-file>/view/response/fixed_response_value.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>fixed_response_value</servlet-name>
+        <url-pattern>/fixed_response_value</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>FixedResponseValueController</servlet-name>
         <servlet-class>com.ble.response.controller.FixedResponseValueController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>FixedResponseValueController</servlet-name>
-        <url-pattern>/FixedResponseValueController</url-pattern>
+        <url-pattern>/FixedResponseValueCont</url-pattern>
     </servlet-mapping>
     
     
@@ -497,6 +511,14 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>VariableResponseController</servlet-name>
-        <url-pattern>/VariableResponseController</url-pattern>
+        <url-pattern>/VariableResponseCont</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>variable_response_input</servlet-name>
+        <jsp-file>/view/response/variable_response_input.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>variable_response_input</servlet-name>
+        <url-pattern>/variable_response_input</url-pattern>
     </servlet-mapping>
 </web-app>

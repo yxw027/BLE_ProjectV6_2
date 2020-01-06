@@ -12,7 +12,7 @@ package com.ble.response.bean;
 public class VariableResponse {
     
     int variable_response_id,response_id,parameter_id,start_pos,no_of_byte;
-    String parameter,response;
+    String parameter,response,remark;
 
     public int getVariable_response_id() {
         return variable_response_id;
@@ -68,6 +68,18 @@ public class VariableResponse {
 
     public void setResponse(String response) {
         this.response = response;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public int setStart_pos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
