@@ -4,14 +4,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/BLE_project/src/java/com/ble/response/bean/Response.java</file>
-            <file>file:/D:/BLE_project/src/java/com/ble/response/controller/ResponseController.java</file>
-            <file>file:/D:/BLE_project/src/java/com/ble/command/model/CommandModel.java</file>
+            <file>file:/D:/BLE_project/src/java/com/ble/webService/controller/BLEWebServicesController.java</file>
             <file>file:/D:/BLE_project/web/WEB-INF/web.xml</file>
-            <file>file:/D:/BLE_project/src/java/com/ble/command/controller/CommandController.java</file>
-            <file>file:/D:/BLE_project/src/java/com/ble/response/model/ResponseModel.java</file>
-            <file>file:/D:/BLE_project/web/view/response/response.jsp</file>
-            <file>file:/D:/BLE_project/src/java/com/ble/command/model/DeviceOperationCommandModel.java</file>
         </group>
     </open-files>
 </project-private>
