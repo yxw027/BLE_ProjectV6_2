@@ -11,8 +11,8 @@ package com.ble.response.bean;
  */
 public class FixedResponse {
     
-    int fixed_response_id,parameter_id,response_id,response_no, start_pos,no_of_byte;
-    String parameter,response;
+    int fixed_response_id,parameter_id,response_id,fixed_response_value_no, start_pos,no_of_byte;
+    String parameter,response,remark;
 
     public int getFixed_response_id() {
         return fixed_response_id;
@@ -38,13 +38,15 @@ public class FixedResponse {
         this.response_id = response_id;
     }
 
-    public int getResponse_no() {
-        return response_no;
+    public int getFixed_response_value_no() {
+        return fixed_response_value_no;
     }
 
-    public void setResponse_no(int response_no) {
-        this.response_no = response_no;
+    public void setFixed_response_value_no(int fixed_response_value_no) {
+        this.fixed_response_value_no = fixed_response_value_no;
     }
+
+   
 
     public int getStart_pos() {
         return start_pos;
@@ -76,6 +78,14 @@ public class FixedResponse {
 
     public void setResponse(String response) {
         this.response = response;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
     
     

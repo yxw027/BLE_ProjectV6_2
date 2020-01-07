@@ -245,29 +245,29 @@
         popupWindow = window.open(url, 'Selection Window', window_features);
     }
     
-    function inputPopup(url,input_no,command_id) {
+    function inputPopup(url,variable_response,response_id) {
         debugger;
         var popup_height = 580;
         var popup_width = 900;
         var popup_top_pos = (screen.availHeight / 2) - (popup_height / 2);
         var popup_left_pos = (screen.availWidth / 2) - (popup_width / 2);
-        url = url + "?input_no="+input_no+"&command_id="+command_id;
+        url = url + "?variable_response="+variable_response+"&response_id="+response_id;
         var window_features = "left=" + popup_left_pos + ", top=" + popup_top_pos + ", width=" + popup_width + ", height=" + popup_height + ", resizable=no, scrollbars=yes, status=no, dialog=yes, dependent=yes";
-        popupWindow = window.open(url, 'Selection Window', window_features);
+        popupWindow = window.open(url, 'response Window', window_features);
     }
     
-    function selection(selection_no,command_id) {
+     function fixed(fixed_response,response,response_id) {
         debugger;
-        document.getElementById("selection_no1").value = selection_no;
-        document.getElementById("command_id1").value = command_id;
-      
-        document.forms['redirectSlection'].submit();
+        document.getElementById("fixed_response1").value = fixed_response;
+        document.getElementById("response1").value = response;
+               document.getElementById("response_id1").value = response_id;
+        document.forms['redirectFixedResponse'].submit();
 
     }
-       function bits(bitwise,command_id) {
+       function variable(variable_response,response_id) {
            debugger;
-        document.getElementById("bitwise2").value = bitwise;
-        document.getElementById("command_id2").value = command_id;
+        document.getElementById("variable_response2").value = variable_response;
+        document.getElementById("response_id2").value = response_id;
         document.forms['redirectByte'].submit();
 
     }
@@ -353,8 +353,8 @@ a:hover{
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.command}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.response}</td>
 
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.fixed_response} <a href="#" onclick="fixed('${divisionTypeBean.selection_no}','${divisionTypeBean.command_id}');">(View Selection)</a></td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.variable_response} <a href="#" onclick="variable('InputCont.do',${divisionTypeBean.input_no},${divisionTypeBean.command_id});return false" id="input_button">View Input</a></td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.fixed_response} <a href="#" onclick="fixed('${response.fixed_response}','${response.response}', '${response.response_id}');">(View Fixed Response)</a></td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.variable_response} <a href="#" onclick="inputPopup('VariableResponseCont',${response.variable_response},${response.response_id});return false" id="input_button">View Input</a></td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.bitwise_response} <a href="#" onclick="bits('${divisionTypeBean.bitwise}','${divisionTypeBean.command_id}');">View Bitwise</a></td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.data_extract_type} </td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.format}</td>
@@ -501,13 +501,14 @@ a:hover{
             <tr><td><%@include file="/layout/footer.jsp" %></td> </tr>
         </table>    
 
-<form name="redirectSlection" method="post" action="SelectionCont.do" target="_blank">
-            <input type="hidden" id="selection_no1" name="selection_no1" value="">
-            <input type="hidden" id="command_id1" name="command_id1" value="">
+<form name="redirectFixedResponse" method="post" action="FixedResponseCont" target="_blank">
+            <input type="hidden" id="fixed_response1" name="fixed_response1" value="">
+            <input type="hidden" id="response1" name="response1" value="">
+            <input type="hidden" id="response_id1" name="response_id1" value="">
 </form>
-<form name="redirectByte" method="post" action="ByteDataController" target="_blank">
-            <input type="hidden" id="bitwise2" name="bitwise2" value="">
-            <input type="hidden" id="command_id2" name="command_id2" value="">
+<form name="redirectByte" method="post" action="VariableResponseCont" target="_blank">
+            <input type="hidden" id="variable_response2" name="variable_response2" value="">
+            <input type="hidden" id="response_id2" name="response_id2" value="">
 </form>
 
     </body>

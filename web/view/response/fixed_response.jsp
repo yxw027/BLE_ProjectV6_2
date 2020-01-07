@@ -23,12 +23,11 @@
 
     </head>
     <c:choose>        
-        <c:when test="${fn:length(selectionListById) > 0}">            
+        <c:when test="${fn:length(fixedResponseListById) > 0}">            
             <body>
         </c:when>        
         <c:otherwise>
-<<<<<<< HEAD
-        <body onload="addRow('dataTable',${selection_no},'${command_name}')">
+        <body onload="addRow('dataTable',${fixed_response},'${response}')">
         </c:otherwise>
     </c:choose>
 
@@ -39,17 +38,7 @@
             </tr>
             <tr style="font-size:larger ;font-weight: 700;" align="center">
                 <td>
-                    "${command_name}" Selection Details
-=======
-        <body onload="addRow('dataTable',${selection_no}, '${command}')">
-        </c:otherwise>
-    </c:choose>
-
-        <table cellspacing="0" border="0" id="table0"  align="center" width="500">
-            <tr style="font-size:larger ;font-weight: 700;" align="center">
-                <td>
-                    "${command}" Selection Details
->>>>>>> deb449c37b0ae0ea4090c86347e476c52b9a0e3b
+                    "${response}" Fixed Response Details
                 </td>
             </tr>
             
@@ -59,98 +48,63 @@
                 </c:if>
             </tr>
             <tr>
-<<<<<<< HEAD
                 <td style="padding-top: 13px;">
-=======
-                <td>
->>>>>>> deb449c37b0ae0ea4090c86347e476c52b9a0e3b
-                    <form name="form1" id ="form1" action="SelectionCont.do" method="post" >
+                    <form name="form1" id ="form1" action="FixedResponseCont" method="post" >
                         <table id="dataTable" style="border-collapse: collapse;" border="1" width="100%" align="center">
                             <tbody>
                                 <tr>
                                     <th class="heading">S.No.</th>
-                                    <th class="heading">Command</th>
+                                    <th class="heading">Response</th>
                                     <th class="heading">Parameter</th>                                    
-<<<<<<< HEAD
-                                    <th class="heading" colspan="2" style="min-width:200px;">Selection Value No</th>
-                                    <th class="heading">Parameter Type</th>
+                                    <th class="heading" style="min-width:200px;">Fixed Response Value No</th>
+                                    <th class="heading">Start Pos</th>
+                                    <th class="heading">No of Byte</th>
                                     <th class="heading">Remark</th>
                                     <th class="heading">Action</th>
-=======
-                                    <th class="heading">Parameter Value</th>
-                                    <th class="heading">Parameter Type</th>
-                                    <th class="heading">Remark</th>
->>>>>>> deb449c37b0ae0ea4090c86347e476c52b9a0e3b
+                                    
                                 </tr>
-                                <c:forEach var="list" items="${requestScope['selectionListById']}" varStatus="loopCounter">
+                                <c:forEach var="list" items="${requestScope['fixedResponseListById']}" varStatus="loopCounter">
                                     <tr>
                                         <td><input type="text" name="s_no${loopCounter.count}" id="s_no${loopCounter.count}" size="5" value="${loopCounter.count}" readonly>
-<<<<<<< HEAD
-                                        <input type="hidden" name="selection_id${loopCounter.count}" maxlength="8" size="5" id="selection_id${loopCounter.count}" value="${list.selection_id}">
+                                        <input type="hidden" name="fixed_response_id${loopCounter.count}" maxlength="8" size="5" id="fixed_response_id${loopCounter.count}" value="${list.fixed_response_id}">
                                         <input type="hidden" name="count" maxlength="8" size="5" id="count" value="${loopCounter.count}"></td>
-                                        <td><input type="text" name="command_name${loopCounter.count}" maxlength="50" size="80" id="command_name${loopCounter.count}" value="${list.command_name}" readonly></td>
+                                        <td><input type="text" name="response${loopCounter.count}" maxlength="50" size="80" id="response${loopCounter.count}" value="${list.response}" readonly></td>
                                         <td><input type="text" name="parameter${loopCounter.count}" maxlength="8" size="15" id="parameter${loopCounter.count}" value="${list.parameter}" onkeyup="autocompleteMethod('parameter',${loopCounter.count}+1)"></td>
                                        
-                                        <td><input type="text" name="selection_value_no${loopCounter.count}" maxlength="50" size="5" id="selection_value_no${loopCounter.count}" value="${list.selection_value_no}" onkeyup="check(value)"></td>                                         
-                                        <td><a href="#" onclick="inputPopup('SelectionValueController','${list.parameter}',${list.selection_value_no},${list.selection_id});return false" id="input_button">View Selection Value</a></td>
-                                     
-                                        <td><input type="text" name="parameter_type${loopCounter.count}" maxlength="8" size="10" id="parameter_type${loopCounter.count}" value="${list.parameter_type}" onkeyup="autocompleteMethod('parameter_type',${loopCounter.count}+1)"></td>
-                                       
+                                        <td><input type="text" name="fixed_response_value_no${loopCounter.count}" maxlength="50" size="5" id=" fixed_response_value_no${loopCounter.count}" value="${list. fixed_response_value_no}" onkeyup="check(value)">                                         
+                                        <a href="#" onclick="inputPopup('FixedResponseValueCont','${list.parameter}',${list.fixed_response_value_no},${list.fixed_response_id});return false" id="input_button">View Fixed Response Value</a></td>
+                                        <td><input type="text" name="start_pos${loopCounter.count}" maxlength="50" size="80" id="start_pos${loopCounter.count}" value="${list.start_pos}"></td>
+                                        <td><input type="text" name="no_of_byte${loopCounter.count}" maxlength="50" size="80" id="no_of_byte${loopCounter.count}" value="${list.no_of_byte}"></td>
                                         <td><input type="text" name="remark${loopCounter.count}" maxlength="8" size="20" id="remark{loopCounter.count}" value="${list.remark}" ></td>
-<!--                                        <td><input type="button" class ="button" name="update" value="update" onclick="update(${list.selection_id},${list.selection_value_no})"></td>-->
+                                           <td><input type="submit" class="button" name="task"  value="update"></td>
+<!--                                      
                                         <td><input type="submit" class="button" name="task"  value="update" ></td>
-<!--                                        <td><a href="SelectionCont.do?task=Save&selection_id="${list.selection_id} id="input_button1">Update Value</a></td>                                    -->
+<!--                                                                        -->
                                     </tr>
                                     
                                 </c:forEach>
                        
-                            <input  type="hidden" name="selection_no1" value="${selection_no}" >
-                            <input  type="hidden" name="command_name" id="command_name" value="${command_name}" >
-                            <input  type="hidden" name="command_id1" id="command_id" value="${command_id}" >
-<!--                            <input  type="hidden" name="selection_update_value" id="selection_update_value" value="${selection_update_value}" >-->
+                            <input  type="hidden" name="fixed_response1" value="${fixed_response}" >
+                            <input  type="hidden" name="response" id="response" value="${response}" >
+                            <input  type="hidden" name="response_id1" id="response_id" value="${response_id}">
                             
                             </tbody>
                         </table>
                             <div style="padding-top: 10px;" align="center">
                                 <input class="button" type="submit" id="save" name="task" value="Save">
                             </div>
-=======
-                                            <input type="hidden" name="selection_id${loopCounter.count}" maxlength="8" size="5" id="selection_id${loopCounter.count}" value="${list.selection_id}"></td>
-                                        <td><input type="text" name="command_name${loopCounter.count}" maxlength="50" size="20" id="command_name${loopCounter.count}" value="${list.command_name}" readonly></td>
-                                        <td><input type="text" name="parameter${loopCounter.count}" maxlength="8" size="5" id="parameter${loopCounter.count}" value="${list.parameter}" onkeyup="autocompleteMethod('parameter',${loopCounter.count}+1)"></td>
-                                        <td><input type="text" name="parameter_value${loopCounter.count}" maxlength="50" size="5" id="parameter_value${loopCounter.count}" value="${list.parameter_value}" ></td>
-                                        <td><input type="text" name="parameter_type${loopCounter.count}" maxlength="8" size="5" id="parameter_type${loopCounter.count}" value="${list.parameter_type}" onkeyup="autocompleteMethod('parameter_type',${loopCounter.count}+1)"></td>
-                                        <td><input type="text" name="remark${loopCounter.count}" maxlength="8" size="5" id="remark{loopCounter.count}" value="${list.remark}" ></td>
-                                    </tr>
-                                </c:forEach>
-
-                            <input  type="hidden" name="selection_no" value="${selection_no}" >
-                            <input  type="hidden" name="command" value="${command}" >
-                            <input  type="hidden" name="command_id" value="${command_id}" >
-                            <input class="button" type="submit" id="save" name="task" value="Save" >
-                            </tbody>
-                        </table>
-
->>>>>>> deb449c37b0ae0ea4090c86347e476c52b9a0e3b
                     </form>
                 </td>
             </tr>
         </table>
-<<<<<<< HEAD
                             
         <script type="text/javascript" language="javascript">
 
-       var selection_update_value;
-=======
-        <script type="text/javascript" language="javascript">
-
-
-
->>>>>>> deb449c37b0ae0ea4090c86347e476c52b9a0e3b
+       var fixed_response_value_no_update;
             function autocompleteMethod(id, count) {
                 debugger;
-                if (id === "command_name") {
-                    $("#command_name" + count).autocomplete("SelectionCont.do", {
+                if (id === "response") {
+                    $("#response" + count).autocomplete("FixedResponseCont", {
                         extraParams: {
                             action1: function () {
                                 return "getCommand";
@@ -158,7 +112,7 @@
                         }
                     });
                 } else if (id === "parameter") {
-                    $("#parameter" + count).autocomplete("SelectionCont.do", {
+                    $("#parameter" + count).autocomplete("FixedResponseCont", {
                         extraParams: {
                             action1: function () {
                                 return "getParameter";
@@ -167,7 +121,7 @@
                     });
 
                 } else if (id === "parameter_type") {
-                    $("#parameter_type" + count).autocomplete("SelectionCont.do", {
+                    $("#parameter_type" + count).autocomplete("FixedResponseCont", {
                         extraParams: {
                             action1: function () {
                                 return "getParameterType";
@@ -177,27 +131,11 @@
                 }
 
             }
-<<<<<<< HEAD
-       
-//            function update1(selection_id)
-//            {
-//                debugger;
-//                var selection_value_no =selection_update_value;
-//                var command_id = document.getElementById('command_id').value;
-//                var queryString = "task=update&selection_id=" + selection_id + "&selection_value_no=" + selection_value_no+ "&command_id=" + command_id;
-//                var url = "SelectionCont.do?" + queryString; 
-//                alert(url);
-//                $.ajax({url: url, 
-//                    success: function(result){
-//                        console.log()
-//                    }
-//                });
-//                //window.open(url);
-//            } 
+
             
-            function check(selection_value_no){
+            function check(fixed_response_value_no){
                 debugger;
-               selection_update_value = selection_value_no;               
+              fixed_response_value_no_update = fixed_response_value_no;               
             }
                 
           
@@ -205,20 +143,10 @@
             function addRow(tableID, selection_no, command) {
                 debugger;
 
-=======
-
-
-            function addRow(tableID, selection_no, command, list) {
-                debugger;
->>>>>>> deb449c37b0ae0ea4090c86347e476c52b9a0e3b
 
                 $("#message").html("");
                 var table = document.getElementById(tableID);
 
-<<<<<<< HEAD
-=======
-                //  alert(rowCount);
->>>>>>> deb449c37b0ae0ea4090c86347e476c52b9a0e3b
                 for (var i = 1; i <= selection_no; i++) {
                     var row = table.insertRow(i);
 
@@ -235,16 +163,12 @@
                     var cell2 = row.insertCell(1);
                     var element2 = document.createElement("input");
                     element2.type = "text";
-                    element2.name = "command_name" + i;
-                    element2.id = "command_name" + i;
-<<<<<<< HEAD
+                    element2.name = "response" + i;
+                    element2.id = "response" + i;
                     element2.size = 100;
-=======
-                    element2.size = 20;
->>>>>>> deb449c37b0ae0ea4090c86347e476c52b9a0e3b
                     element2.maxLength = 2;
                     element2.value = command;
-                    element2.setAttribute("onkeyup", 'autocompleteMethod("command_name",' + i + ')');
+                    element2.setAttribute("onkeyup", 'autocompleteMethod("response",' + i + ')');
                     cell2.appendChild(element2);
 
                     var cell3 = row.insertCell(2);
@@ -261,13 +185,8 @@
                     var cell4 = row.insertCell(3);
                     var element2 = document.createElement("input");
                     element2.type = "text";
-<<<<<<< HEAD
-                    element2.name = "selection_value_no" + i;
-                    element2.id = "selection_value_no" + i;
-=======
-                    element2.name = "parameter_value" + i;
-                    element2.id = "parameter_value" + i;
->>>>>>> deb449c37b0ae0ea4090c86347e476c52b9a0e3b
+                    element2.name = "fixed_response_value_no" + i;
+                    element2.id = "fixed_response_value_no" + i;
                     element2.size = 5;
                     element2.maxLength = 50;
                     element2.value = "";
@@ -276,8 +195,8 @@
                     var cell5 = row.insertCell(4);
                     var element2 = document.createElement("input");
                     element2.type = "text";
-                    element2.name = "parameter_type" + i;
-                    element2.id = "parameter_type" + i;
+                    element2.name = "start_pos" + i;
+                    element2.id = "start_pos" + i;
                     element2.size = 5;
                     element2.maxLength = 8;
                     element2.value = "";
@@ -287,32 +206,38 @@
                     var cell6 = row.insertCell(5);
                     var element2 = document.createElement("input");
                     element2.type = "text";
+                    element2.name = "no_of_byte" + i;
+                    element2.id = "no_of_byte" + i;
+                    element2.size = 5;
+                    element2.maxLength = 8;
+                    element2.value = "";
+                    cell6.appendChild(element2);
+                    
+                    var cell7 = row.insertCell(6);
+                    var element2 = document.createElement("input");
+                    element2.type = "text";
                     element2.name = "remark" + i;
                     element2.id = "remark" + i;
                     element2.size = 5;
                     element2.maxLength = 8;
                     element2.value = "";
-                    cell6.appendChild(element2);
+                    cell7.appendChild(element2);
 
                 }
 
 
             }
-<<<<<<< HEAD
-   function inputPopup(url,parameter,selection_value_no,selection_id) {
+   function inputPopup(url,parameter,fixed_response_value_no,fixed_response_id) {
         debugger;
         var popup_height = 580;
         var popup_width = 900;
         var popup_top_pos = (screen.availHeight / 2) - (popup_height / 2);
         var popup_left_pos = (screen.availWidth / 2) - (popup_width / 2);
-        url = url + "?parameter="+parameter+"&selection_value_no="+selection_value_no+"&selection_id="+selection_id;
+        url = url + "?parameter="+parameter+"&fixed_response_value_no="+fixed_response_value_no+"&fixed_response_id="+fixed_response_id;
         alert(url);
         var window_features = "left=" + popup_left_pos + ", top=" + popup_top_pos + ", width=" + popup_width + ", height=" + popup_height + ", resizable=no, scrollbars=yes, status=no, dialog=yes, dependent=yes";
-        popupWindow = window.open(url, 'Selection Window', window_features);
+        popupWindow = window.open(url, 'Fixed Response Window', window_features);
     }
-=======
-
->>>>>>> deb449c37b0ae0ea4090c86347e476c52b9a0e3b
             function deleteRow(tableID) {
                 try {
                     // alert(tableID);
