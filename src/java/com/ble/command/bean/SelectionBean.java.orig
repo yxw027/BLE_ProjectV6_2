@@ -11,13 +11,8 @@ package com.ble.command.bean;
  */
 public class SelectionBean {
     
-<<<<<<< HEAD
     int selection_id,Selection_value_no;
     String command_name,parameter,parameter_type,remark;
-=======
-    int selection_id;
-    String command_name,parameter,parameter_type,parameter_value,remark;
->>>>>>> deb449c37b0ae0ea4090c86347e476c52b9a0e3b
 
     public int getSelection_id() {
         return selection_id;
@@ -27,7 +22,6 @@ public class SelectionBean {
         this.selection_id = selection_id;
     }
 
-<<<<<<< HEAD
     public int getSelection_value_no() {
         return Selection_value_no;
     }
@@ -38,8 +32,6 @@ public class SelectionBean {
 
   
 
-=======
->>>>>>> deb449c37b0ae0ea4090c86347e476c52b9a0e3b
     public String getCommand_name() {
         return command_name;
     }
@@ -65,16 +57,9 @@ public class SelectionBean {
     }
 
 <<<<<<< HEAD
-   
 =======
-    public String getParameter_value() {
-        return parameter_value;
-    }
-
-    public void setParameter_value(String parameter_value) {
-        this.parameter_value = parameter_value;
-    }
->>>>>>> deb449c37b0ae0ea4090c86347e476c52b9a0e3b
+    
+>>>>>>> a1cffbf53b349a97ea40bbb682532c47999d375b
 
     public String getRemark() {
         return remark;
