@@ -3,16 +3,6 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/DELL/Pictures/BleProject_old1.0/Ble_Project%20Response%20V5/BLE_Project/web/view/response/fixed_response_value.jsp</file>
-            <file>file:/C:/Users/DELL/Pictures/BleProject_old1.0/Ble_Project%20Response%20V5/BLE_Project/web/view/command.jsp</file>
-            <file>file:/C:/Users/DELL/Pictures/BleProject_old1.0/Ble_Project%20Response%20V5/BLE_Project/src/java/com/ble/response/controller/VariableResponseController.java</file>
-            <file>file:/C:/Users/DELL/Pictures/BleProject_old1.0/Ble_Project%20Response%20V5/BLE_Project/src/java/com/ble/command/model/InputModel.java</file>
-            <file>file:/C:/Users/DELL/Pictures/BleProject_old1.0/Ble_Project%20Response%20V5/BLE_Project/web/view/dataEntry/input_command.jsp</file>
-            <file>file:/C:/Users/DELL/Pictures/BleProject_old1.0/Ble_Project%20Response%20V5/BLE_Project/src/java/com/ble/response/model/VariableResponseModel.java</file>
-            <file>file:/C:/Users/DELL/Pictures/BleProject_old1.0/Ble_Project%20Response%20V5/BLE_Project/src/java/com/ble/command/controller/InputController.java</file>
-            <file>file:/C:/Users/DELL/Pictures/BleProject_old1.0/Ble_Project%20Response%20V5/BLE_Project/web/layout/menu.jsp</file>
-            <file>file:/C:/Users/DELL/Pictures/BleProject_old1.0/Ble_Project%20Response%20V5/BLE_Project/web/view/response/response.jsp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
