@@ -24,6 +24,9 @@
              function goToDeviceMap2() {
                 window.location = "BleOperationNameCont.do";
             }
+            function goToDeviceMap3() {
+                window.location = "deviceRegistrationCont.do";
+            }
         </script>
         <style>           .button {
   display: inline-block;
@@ -99,6 +102,11 @@ a:hover{
                             <tr>
                                 <td align="center">
                                     <button class="button" style="vertical-align:middle" type="button" value="Create Ble Device" name="create_commands_device" onclick="goToDeviceMap2()" ><span> Ble </span></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <button class="button" style="vertical-align:middle" type="button" value="device_registration_connection" name="device_registration_connection" onclick="goToDeviceMap3()" ><span> Device Registration Connection </span></button>
                                 </td>
                             </tr>
                         </table>

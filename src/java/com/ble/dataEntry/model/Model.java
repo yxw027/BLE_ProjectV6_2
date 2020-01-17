@@ -64,8 +64,8 @@ public int insertRecord(ModelBean modelBean) {
 
     int model_type_id = getModelTypeId(modelBean.getModel_type());
 
-        String query = " insert into model(device_name,device_no,warranty_period,remark,model_type_id,device_address) "
-                       +" values(?,?,?,?,?,?) ";
+        String query = " insert into model(device_name,device_no,warranty_period,remark,model_type_id,device_address,no_of_module) "
+                       +" values(?,?,?,?,?,?,?) ";
         int rowsAffected = 0;
         try {
             java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
@@ -76,7 +76,7 @@ public int insertRecord(ModelBean modelBean) {
             pstmt.setString(4, modelBean.getRemark());
             pstmt.setInt(5,model_type_id );
             pstmt.setString(6, modelBean.getDevice_address());
-
+            pstmt.setInt(7, modelBean.getNo_of_module());
             rowsAffected = pstmt.executeUpdate();
         } catch (Exception e) {
             System.out.println("Error while inserting record...." + e);
@@ -100,7 +100,7 @@ public boolean reviseRecords(ModelBean modelBean){
 
       String query1 = " SELECT max(revision_no) revision_no FROM model c WHERE c.id = "+modelBean.getModel_id()+" && active='Y' ORDER BY revision_no DESC";
       String query2 = " UPDATE model SET active=? WHERE id = ? && revision_no = ? ";
-      String query3 = " INSERT INTO model (id,device_name,device_no,warranty_period,model_type_id,remark,device_address,revision_no,active) VALUES (?,?,?,?,?,?,?,?,?) ";
+      String query3 = " INSERT INTO model (id,device_name,device_no,warranty_period,model_type_id,remark,device_address,no_of_module,revision_no,active) VALUES (?,?,?,?,?,?,?,?,?,?) ";
 
       int updateRowsAffected = 0;
       try {
@@ -123,8 +123,9 @@ public boolean reviseRecords(ModelBean modelBean){
 
              psmt.setString(6,modelBean.getRemark());
              psmt.setString(7,modelBean.getDevice_address());
-             psmt.setInt(8,rev);
-             psmt.setString(9,"Y");
+               psmt.setInt(8,modelBean.getNo_of_module());
+             psmt.setInt(9,rev);
+             psmt.setString(10,"Y");
 
              int a = psmt.executeUpdate();
               if(a > 0)

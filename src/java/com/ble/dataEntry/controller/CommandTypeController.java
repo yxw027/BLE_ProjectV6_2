@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -51,16 +52,16 @@ public class CommandTypeController extends HttpServlet {
                 PrintWriter out = response.getWriter();
                 List<String> list = null;
 
-                if(JQstring.equals("getDeviceType")) {
+                if(JQstring.equals("getCommandType")) {
                     list = commandTypeModel.getCommandType(q);
                 }
 
-                Iterator<String> iter = list.iterator();
+               Iterator<String> iter = list.iterator();
                 while (iter.hasNext()) {
                     String data = iter.next();
                         out.println(data);
                 }
-                commandTypeModel.closeConnection();
+               commandTypeModel.closeConnection();
                 return;
             }
         } catch (Exception e) {
@@ -85,23 +86,24 @@ public class CommandTypeController extends HttpServlet {
 //                return;
 //            }
          if (task.equals("Cancel")) {
-            commandTypeModel.deleteRecord(Integer.parseInt(request.getParameter("model_type_id")));  // Pretty sure that organisation_type_id will be available.
+            commandTypeModel.deleteRecord(Integer.parseInt(request.getParameter("command_type_id")));  // Pretty sure that organisation_type_id will be available.
         } else if (task.equals("Save") || task.equals("Save AS New")) {
-            int model_type_id;
+            int command_type_id;
             try {
-                model_type_id = Integer.parseInt(request.getParameter("model_type_id"));
+                command_type_id = Integer.parseInt(request.getParameter("command_type_id"));
             } catch (Exception e) {
-                model_type_id = 0;
+                command_type_id = 0;
             }
             if (task.equals("Save AS New")) {
-                model_type_id = 0;
+               command_type_id = 0;
             }
             CommandTypeBean commandTypeBean = new CommandTypeBean();
-            commandTypeBean.setModel_type_id(model_type_id);
-            commandTypeBean.setType(request.getParameter("model_type"));
+            commandTypeBean.setCommand_type_id(command_type_id);
+            commandTypeBean.setName(request.getParameter("name"));
+            commandTypeBean.setShorthand(request.getParameter("shorthand"));
             commandTypeBean.setRemark(request.getParameter("remark"));
 
-            if (model_type_id == 0) {
+            if (command_type_id == 0) {
                 System.out.println("Inserting values by model......");
                 commandTypeModel.insertRecord(commandTypeBean);
             } else {
@@ -110,13 +112,13 @@ public class CommandTypeController extends HttpServlet {
             }
         }
 
-        String searchModelType = "";
+        String searchCommandType= "";
 
-        searchModelType = request.getParameter("searchModelType");
+        searchCommandType = request.getParameter("searchCommandType");
 
          try {
-            if (searchModelType == null) {
-                searchModelType="";
+            if (searchCommandType == null) {
+                searchCommandType="";
             }
         } catch (Exception e) {
             System.out.println("Exception while searching in controller" + e);
@@ -132,9 +134,9 @@ public class CommandTypeController extends HttpServlet {
         if (buttonAction == null) {
             buttonAction = "none";
         }
-        System.out.println("searching.......... " + searchModelType);
+        System.out.println("searching.......... " + searchCommandType);
 
-         noOfRowsInTable = commandTypeModel.getNoOfRows(searchModelType);
+         noOfRowsInTable = commandTypeModel.getNoOfRows(searchCommandType);
 
          if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
          else if (buttonAction.equals("Previous")) {
@@ -156,11 +158,11 @@ public class CommandTypeController extends HttpServlet {
         if (task.equals("Save") || task.equals("Cancel") || task.equals("Save AS New")) {
             lowerLimit = lowerLimit - noOfRowsTraversed;    // Here objective is to display the same view again, i.e. reset lowerLimit to its previous value.
         } else if (task.equals("Show All Records")) {
-            searchModelType="";
+            searchCommandType="";
 
         }
            // Logic to show data in the table.
-        List<CommandTypeBean> commandTypeList = commandTypeModel.showData(lowerLimit, noOfRowsToDisplay,searchModelType);
+        List<CommandTypeBean> commandTypeList = commandTypeModel.showData(lowerLimit, noOfRowsToDisplay,searchCommandType);
         lowerLimit = lowerLimit + commandTypeList.size();
         noOfRowsTraversed = commandTypeList.size();
          // Now set request scoped attributes, and then forward the request to view.
@@ -177,13 +179,10 @@ public class CommandTypeController extends HttpServlet {
         }
 
         System.out.println("color is :" + commandTypeModel.getMsgBgColor());
-        request.setAttribute("manufacturer", request.getParameter("manufacturer"));
-        request.setAttribute("device_type", request.getParameter("device_type"));
-        request.setAttribute("deviceName", request.getParameter("device_name"));
-        request.setAttribute("device_no", request.getParameter("device_no"));
+      
 
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
-        request.setAttribute("searchModelType",searchModelType );
+        request.setAttribute("searchCommandType",searchCommandType );
         request.setAttribute("message", commandTypeModel.getMessage());
         request.setAttribute("msgBgColor", commandTypeModel.getMsgBgColor());
         request.getRequestDispatcher("/commandtype").forward(request, response);

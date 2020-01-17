@@ -46,6 +46,7 @@
         document.getElementById("model_id").disabled = false;
         document.getElementById("warranty_period").disabled = false;
         document.getElementById("device_address").disabled = false;
+        document.getElementById("no_of_module").disabled = false;
          document.getElementById("remark").disabled = false;
 
         document.getElementById("save").disabled = false;
@@ -124,7 +125,7 @@
     }
     function fillColumns(id) {
         var noOfRowsTraversed = document.getElementById("noOfRowsTraversed").value;
-        var noOfColumns =8;
+        var noOfColumns =9;
         var columnId = id;                              <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
         columnId = columnId.substring(3, id.length);    <%-- for e.g. suppose id is t1c3 we want characters after t1c i.e beginIndex = 3. --%>
         var lowerLimit, higherLimit;
@@ -145,7 +146,8 @@
         document.getElementById("device_no").value = document.getElementById(t1id +(lowerLimit+4)).innerHTML;
         document.getElementById("warranty_period").value = document.getElementById(t1id +(lowerLimit+5)).innerHTML;
         document.getElementById("device_address").value = document.getElementById(t1id +(lowerLimit+6)).innerHTML;
-        document.getElementById("remark").value = document.getElementById(t1id +(lowerLimit+7)).innerHTML;
+        document.getElementById("no_of_module").value = document.getElementById(t1id +(lowerLimit+7)).innerHTML;
+        document.getElementById("remark").value = document.getElementById(t1id +(lowerLimit+8)).innerHTML;
 
         //       var b=  document.getElementById(t1id +(lowerLimit+8)).innerHTML;
         // alert(b);
@@ -212,19 +214,9 @@ a:hover{
     </head>
     <body>
         <table align="center" cellpadding="0" cellspacing="0" class="main">
-            <tr><td><%@include file="/layout/header.jsp" %></td></tr>
-                 <tr>
-                <td id="menu">
-                    <nav>
-                        <a href="WelcomeCont.do">Welcome</a> 
-                        <a href="DeviceMapCont.do">Device Map</a> 
-                        <a href="DeviceCont.do">Device</a> 
-                        <a href="ManufacturerCont.do">Manufacturer</a> 
-                        <a href="DeviceTypeCont.do">Device Type</a> 
-                        <a href="ModelCont.do">Model</a> 
-                        <a href="ModelTypeCont.do">Model Type</a>
-                    </nav>
-                </td>
+             <tr><td><%@include file="/layout/header.jsp" %></td></tr>
+            <tr>
+                <td><%@include file="/layout/menu.jsp" %> </td>
             </tr>
             <td>
                 <DIV id="body" class="maindiv" align="center" >
@@ -264,7 +256,7 @@ a:hover{
                                                 <th class="heading">Device No.</th>
                                                 <th class="heading">Warranty Period</th>
                                                 <th class="heading">Device Address</th>
-
+                                                <th class="heading">No Of Module</th>
                                                 <th class="heading">Remark</th>
                                             </tr>
                                             <!---below is the code to show all values on jsp page fetched from trafficTypeList of TrafficController     --->
@@ -281,6 +273,7 @@ a:hover{
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.device_no}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.warrenty_period}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.device_address}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.no_of_module}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.remark}</td>
 
                                                 </tr>
@@ -363,6 +356,10 @@ a:hover{
                                             <tr>
                                                 <th class="heading1">Device Address</th>
                                                 <td><input class="input" type="text" id="device_address" name="device_address" value="" size="40" disabled></td>
+                                            </tr>
+                                             <tr>
+                                                <th class="heading1">No Of Module</th>
+                                                <td><input class="input" type="text" id="no_of_module" name="no_of_module" value="" size="40" disabled></td>
                                             </tr>
                                             <tr>
                                                 <th class="heading1">Remark</th>

@@ -258,18 +258,9 @@ a:hover{
     </head>
     <body>
         <table align="center" cellpadding="0" cellspacing="0" class="main">
-            <tr><td><%@include file="/layout/header.jsp" %></td></tr>
-              <tr>
-                <td id="menu">
-                    <nav>
-                        <a href="WelcomeCont.do">Home</a> 
-                        <a href="BleOperationNameCont.do">Ble Operation Name</a> 
-                        <a href="ServiceCont.do">Service</a> 
-                        <a href="CharachtristicsCont.do">Charachtristics</a> 
-                   
-                      
-                    </nav>
-                </td>
+           <tr><td><%@include file="/layout/header.jsp" %></td></tr>
+            <tr>
+                <td><%@include file="/layout/menu.jsp" %> </td>
             </tr>
             <td>
                 <DIV id="body" class="maindiv" align="center" >

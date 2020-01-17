@@ -61,10 +61,13 @@ public class DeviceMapController extends HttpServlet {
                     list = deviceMapModel.getDeviceName(q);
                 }else if(JQstring.equals("getDeviceNo")) {
                     list = deviceMapModel.getDeviceNo(q,request.getParameter("action2"));
-                }else if(JQstring.equals("getSearchManufactureName")) {
+                }else if(JQstring.equals("getsearchManufactureName")) {
                     list = deviceMapModel.getSearchManufactureName(q);
-                }else if(JQstring.equals("getSearchDeviceType")) {
+                }else if(JQstring.equals("getsearchDeviceType")) {
                     list = deviceMapModel.getSearchDeviceType(q);
+                }
+                else if(JQstring.equals("getsearchModelName")) {
+                    list = deviceMapModel.getSearchModelName(q);
                 }
                 Iterator<String> iter = list.iterator();
                 while (iter.hasNext()) {
@@ -115,9 +118,9 @@ public class DeviceMapController extends HttpServlet {
             deviceMapBean.setModule_manufacture_name(request.getParameter("module_manufacture_name"));
             deviceMapBean.setModule_device_type(request.getParameter("module_device_type"));
             deviceMapBean.setModule_model_name(request.getParameter("module_model_name"));
-            deviceMapBean.setBle_manufacture_name(request.getParameter("ble_manufacture_name"));
-            deviceMapBean.setBle_device_type(request.getParameter("ble_device_type"));
-            deviceMapBean.setBle_model_name(request.getParameter("ble_model_name"));
+//            deviceMapBean.setBle_manufacture_name(request.getParameter("ble_manufacture_name"));
+//            deviceMapBean.setBle_device_type(request.getParameter("ble_device_type"));
+//            deviceMapBean.setBle_model_name(request.getParameter("ble_model_name"));
             deviceMapBean.setRemark(request.getParameter("remark"));
 
             if (device_map_id == 0) {

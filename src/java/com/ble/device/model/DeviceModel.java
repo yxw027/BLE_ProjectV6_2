@@ -71,7 +71,7 @@ public class DeviceModel {
         return device_type_id;
     }
 
-    public int getModelId(String device_name,int device_no) {
+    public int getModelId(String device_name,String device_no) {
       String query1="select id from model m "
                     +" where m.device_name=? and m.device_no=? "
                     +" and m.active='Y' ";
@@ -79,7 +79,7 @@ public class DeviceModel {
         try {
             PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
             stmt.setString(1,device_name);
-            stmt.setInt(2,device_no);
+            stmt.setString(2,device_no);
             ResultSet rs = stmt.executeQuery();
             rs.next();//jieji
             model_id = rs.getInt("id");
@@ -237,7 +237,7 @@ public boolean reviseRecords(DeviceBean deviceBean){
                 deviceBean.setManufacture_name(rset.getString("manufacturer_name"));
                 deviceBean.setDevice_type_name(rset.getString("device_type"));
                 deviceBean.setDevice_name(rset.getString("device_name"));
-                deviceBean.setDevice_no(rset.getInt("device_no"));
+                deviceBean.setDevice_no(rset.getString("device_no"));
                 deviceBean.setRemark(rset.getString("remark"));
                 list.add(deviceBean);
             }

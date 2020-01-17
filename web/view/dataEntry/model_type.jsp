@@ -193,19 +193,9 @@ a:hover{
     </head>
     <body>
         <table align="center" cellpadding="0" cellspacing="0" class="main">
-            <tr><td><%@include file="/layout/header.jsp" %></td></tr>
-               <tr>
-                <td id="menu">
-                    <nav>
-                        <a href="WelcomeCont.do">Welcome</a> 
-                        <a href="DeviceMapCont.do">Device Map</a> 
-                        <a href="DeviceCont.do">Device</a> 
-                        <a href="ManufacturerCont.do">Manufacturer</a> 
-                        <a href="DeviceTypeCont.do">Device Type</a> 
-                        <a href="ModelCont.do">Model</a> 
-                        <a href="ModelTypeCont.do">Model Type</a>
-                    </nav>
-                </td>
+         <tr><td><%@include file="/layout/header.jsp" %></td></tr>
+            <tr>
+                <td><%@include file="/layout/menu.jsp" %> </td>
             </tr>
             <td>
                 <DIV id="body" class="maindiv" align="center" >
@@ -228,7 +218,7 @@ a:hover{
                                                 <td><input class="button" type="submit" name="task" id="showAllRecords" value="Show All Records"></td>
                                                 <td><input class="button" type="button" name="task" id="showAllRecords" value="Next Page" onclick="goToModel()"></td>
                                                 <td><input type="button" class="pdf_button" id="viewPdf" name="viewPdf" value="" onclick="displayMapList()"></td>
-                                            </tr>
+                                               </tr>
                                         </table>
                                     </form></div>
                             </td>

@@ -15,18 +15,18 @@
     </context-param>
     <context-param>
         <param-name>connectionString</param-name>
-        <param-value>jdbc:mysql://localhost:3306/ble_database5</param-value>
+        <param-value>jdbc:mysql://localhost:3306/ble_database1</param-value>
     </context-param>
     <context-param>
         <param-name>db_username</param-name>
-        <param-value>root</param-value>
-        <!--<param-value>jpss_2</param-value>-->
+        <!--<param-value>root</param-value>-->
+        <param-value>jpss_2</param-value>
     </context-param>
     <context-param>
         <description>	</description>
         <param-name>db_password</param-name>
-        <param-value>jpss</param-value>
-        <!--<param-value>jpss_1277</param-value>-->
+        <param-value>root</param-value>
+        <param-value>jpss_1277</param-value>
     </context-param>
     <!--<ServletContainer mapping start>-->
     <servlet>
@@ -390,6 +390,7 @@
         <url-pattern>/parameter</url-pattern>
     </servlet-mapping>
     <!--<DataEntry mapping end>-->
+    
     <servlet>
         <servlet-name>ByteDataController</servlet-name>
         <servlet-class>com.ble.command.controller.ByteDataController</servlet-class>
@@ -458,6 +459,42 @@
         <servlet-name>Response</servlet-name>
         <servlet-class>com.ble.response.controller.ResponseController</servlet-class>
     </servlet>
+      </servlet-mapping>
+    <servlet>
+        <servlet-name>command_description</servlet-name>
+        <jsp-file>/view/dataEntry/command_description.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>command_description</servlet-name>
+        <url-pattern>/command_description</url-pattern>
+    </servlet-mapping>
+        <servlet>
+        <servlet-name>CommandDescriptionController</servlet-name>
+        <servlet-class>com.ble.command.controller.CommandDescriptionController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CommandDescriptionController</servlet-name>
+        <url-pattern>/CommandDescriptionCont.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>DeviceRegConController</servlet-name>
+        <servlet-class>com.ble.device.controller.DeviceRegConController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeviceRegConController</servlet-name>
+        <url-pattern>/deviceRegistrationCont.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>deviceRegConnPage</servlet-name>
+        <jsp-file>/view/device/deviceRegConnPage.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deviceRegConnPage</servlet-name>
+        <url-pattern>/deviceRegConnPage</url-pattern>
+    </servlet-mapping>
+</web-app>
+
+
     <servlet-mapping>
         <servlet-name>Response</servlet-name>
         <url-pattern>/Response</url-pattern>

@@ -5,6 +5,9 @@
 
 package com.ble.webService.controller;
 
+import com.ble.device.model.DeviceRegConModel;
+import static com.ble.device.model.DeviceRegConModel.isModuleOperation;
+import static com.ble.device.model.DeviceRegConModel.isOperationArr;
 import com.ble.webService.model.BLEWebServicesModel;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -97,8 +100,24 @@ public class BLEWebServicesController {
         return obj;
     }    
 
-
-
+    @POST
+    @Path("/sendRequest")
+    @Produces(MediaType.APPLICATION_JSON)//http://192.168.1.15:8084/BLE_Project/resources/getAllTableRecords
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String  sendConfigurationReq(String dataString) {
+        String status = "not ready";
+        System.out.println("shweta req data"+dataString);
+        DeviceRegConModel drc = new DeviceRegConModel();
+        String arr = drc.isModuleOperation;
+        if(arr != null){
+        status = arr;
+        }
+//        for (int i = 0; i < arr.length; i++) {
+//            status = arr[i]; 
+//            System.out.println("in status ..... "+status);
+//    }
+         return status;
+    }
 
 
 }

@@ -10,15 +10,15 @@ package com.ble.dataEntry.bean;
  * @author Shobha
  */
 public class CommandTypeBean {
-    String type,remark;
-    int model_type_id;
+    String name,remark,shorthand;
+    int command_type_id;
 
-    public int getModel_type_id() {
-        return model_type_id;
+    public String getName() {
+        return name;
     }
 
-    public void setModel_type_id(int model_type_id) {
-        this.model_type_id = model_type_id;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getRemark() {
@@ -29,13 +29,23 @@ public class CommandTypeBean {
         this.remark = remark;
     }
 
-    public String getType() {
-        return type;
+    public String getShorthand() {
+        return shorthand;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setShorthand(String shorthand) {
+        this.shorthand = shorthand;
     }
+
+    public int getCommand_type_id() {
+        return command_type_id;
+    }
+
+    public void setCommand_type_id(int command_type_id) {
+        this.command_type_id = command_type_id;
+    }
+
+ 
 
     
 

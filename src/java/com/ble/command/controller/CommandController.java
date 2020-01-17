@@ -107,10 +107,12 @@ public class CommandController extends HttpServlet {
 //                servletOutputStream.close();
 //                return;
 //            }
+ 
         if (task.equals("Cancel")) {
             commandModel.deleteRecord(Integer.parseInt(request.getParameter("command_id")));  // Pretty sure that organisation_type_id will be available.
         } else if (task.equals("Save") || task.equals("Save AS New")) {
             int command_id;
+            
             try {
                 command_id = Integer.parseInt(request.getParameter("command_id"));
             } catch (Exception e) {
@@ -122,37 +124,11 @@ public class CommandController extends HttpServlet {
             CommandBean commandBean = new CommandBean();
             commandBean.setCommand_id(command_id);
 
-            commandBean.setManufacturer(request.getParameter("manufacturer"));
-            commandBean.setDevice_type(request.getParameter("device_type"));
-            commandBean.setDevice_name(request.getParameter("device_name"));
-            commandBean.setDevice_no(request.getParameter("device_no"));
             commandBean.setFormat(request.getParameter("command_format"));
-//            if (request.getParameter("command_format").equals("hex")) {
-//                String command = request.getParameter("command").trim();
-//                String hex = "";
-//                if (!command.isEmpty()) {
-//                    byte[] hexaByte = DatatypeConverter.parseHexBinary(command);
-//                    String jaya = Arrays.toString(hexaByte);
-//                    commandBean.setCommand(jaya);
-//                    
-//                }
-//            } else if (request.getParameter("command_format").equals("string")) {
-//                String command = request.getParameter("command");
-//                if (!command.isEmpty()) {
-//                    command = command + "\r\n";  
-//                    byte[] hexaByte = command.getBytes();
-//                    
-//                    System.out.println(Arrays.toString(hexaByte));
-//                    commandBean.setCommand(Arrays.toString(hexaByte));
-//                }
-//
-//            }
-            //commandBean.setCommand(request.getParameter("command"));
+//          
              commandBean.setCommand(request.getParameter("command"));
             commandBean.setCommand_type(request.getParameter("command_type"));
-            commandBean.setOrder_no(request.getParameter("order_no"));
-            commandBean.setDelay(request.getParameter("delay"));
-            commandBean.setOperation_name(request.getParameter("operation_name"));
+         
             commandBean.setStarting_del(request.getParameter("starting_del"));
             commandBean.setEnd_del(request.getParameter("end_del"));
             commandBean.setInput_no(Integer.parseInt(request.getParameter("input_no")));

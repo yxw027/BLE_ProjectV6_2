@@ -192,20 +192,9 @@ a:hover{
     </head>
     <body>
         <table align="center" cellpadding="0" cellspacing="0" class="main">
-            <tr><td><%@include file="/layout/header.jsp" %></td></tr>
-
+         <tr><td><%@include file="/layout/header.jsp" %></td></tr>
             <tr>
-                <td id="menu">
-                    <nav>
-                        <a href="WelcomeCont.do">Welcome</a> 
-                        <a href="DeviceMapCont.do">Device Map</a> 
-                        <a href="DeviceCont.do">Device</a> 
-                        <a href="ManufacturerCont.do">Manufacturer</a> 
-                        <a href="DeviceTypeCont.do">Device Type</a> 
-                        <a href="ModelCont.do">Model</a> 
-                        <a href="ModelTypeCont.do">Model Type</a>
-                    </nav>
-                </td>
+                <td><%@include file="/layout/menu.jsp" %> </td>
             </tr>
             <td>
                 <DIV id="body" class="maindiv" align="center" >
@@ -241,7 +230,6 @@ a:hover{
                                             <tr>
                                                 <th class="heading">S.No.</th>
                                                 <th class="heading">Device Type</th>
-
                                                 <th class="heading">Remark</th>
                                             </tr>
                                             <!---below is the code to show all values on jsp page fetched from trafficTypeList of TrafficController     --->
