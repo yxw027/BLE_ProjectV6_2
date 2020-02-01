@@ -83,7 +83,6 @@
                 }
             }
         });
-
         $("#searchCommandName").autocomplete("CommandCont.do", {
             extraParams: {
                 action1: function () {
@@ -91,7 +90,6 @@
                 }
             }
         });
-
 
 
 //        $('#btnDialog').click(function ()
@@ -335,7 +333,7 @@
         document.getElementById("command_id1").value = command_id;
       
         document.forms['redirectSlection'].submit();
-
+ 
     }
        function bits(bitwise,command_id) {
            debugger;
@@ -497,7 +495,7 @@ a:hover{
                                             <tr>
                                                 <th class="heading1">Command</th>
                                                 <td><input class="input" type="text" id="command" name="command" value="" size="40" disabled>
-                                                <input class="input" type="hidden" id="command_id" name="command_id" value="" size="40" disabled></td>
+                                                <input class="input" type="hidden" id="command_id" name="command_id" value="" size="40"></td>
                                             </tr>
 
                                             <tr>

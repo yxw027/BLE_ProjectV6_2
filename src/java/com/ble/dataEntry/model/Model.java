@@ -249,7 +249,7 @@ public boolean reviseRecords(ModelBean modelBean){
                 }
             }
             if (count == 0) {
-                list.add("No such Manufacturer Name exists.......");
+                list.add("No such Device Name exists.......");
             }
         } catch (Exception e) {
             System.out.println(" ERROR inside CommandModel - " + e);
@@ -273,7 +273,7 @@ public boolean reviseRecords(ModelBean modelBean){
                 }
             }
             if (count == 0) {
-                list.add("No such Manufacturer Name exists.......");
+                list.add("No such Model Type exists.......");
             }
         } catch (Exception e) {
             System.out.println(" ERROR inside CommandModel - " + e);

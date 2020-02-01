@@ -55,9 +55,9 @@ public class SelectionController extends HttpServlet {
         String selection_no = request.getParameter("selection_no1");
         String command_id = request.getParameter("command_id1");
         String command123 = request.getParameter("command_name");
-        if(command123.equals("AT+CIPSTART=\"TCP\",\"\\IP Address\\\",\"\\PORT\\\"")) {
-            
-        }
+//        if(command123.equals("AT+CIPSTART=\"TCP\",\"\\IP Address\\\",\"\\PORT\\\"")) {
+//            
+//        }
 
         if (action1 == null) {
             action1 = "";

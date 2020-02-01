@@ -223,7 +223,7 @@ public boolean reviseRecords(OperationNameBean operationNameBean){
                 }
             }
             if (count == 0) {
-                list.add("No such Manufacturer Name exists.......");
+                list.add("No such Operation Name exists.......");
             }
         } catch (Exception e) {
             System.out.println(" ERROR inside CommandModel - " + e);

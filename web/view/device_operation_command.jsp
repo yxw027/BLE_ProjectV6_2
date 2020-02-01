@@ -65,10 +65,10 @@
                 }
             }
         });
-        $("#command_type").autocomplete("DeviceOperationCommandCont.do", {
+        $("#short_name").autocomplete("DeviceOperationCommandCont.do", {
             extraParams: {
                 action1: function () {
-                    return "getCommandType"
+                    return "getCommandShortName"
                 }
             }
         });
@@ -99,7 +99,10 @@
                 action1: function () {
                     return "getSearchCommandName"
                 }
-            }
+            },
+             action2: function() { return  $("#searchOperationName").val();},
+                action3: function() { return  $("#device_type").val();},
+                action4: function() { return  $("#searchDeviceName").val();}
         });
         
          $("#searchOperationName").autocomplete("DeviceOperationCommandCont.do", {
@@ -111,7 +114,14 @@
         });
         
         
-          
+              $("#command1").autocomplete("DeviceOperationCommandCont.do", {
+            extraParams: {
+                action1: function () {
+                    return "getCommand1"
+                },
+                 action2: function() { return  $("#short_name").val();}
+            }
+        });
            $("#command").autocomplete("DeviceOperationCommandCont.do", {
             extraParams: {
                 action1: function () {
@@ -153,7 +163,8 @@
         document.getElementById("device_name").disabled = false;
         document.getElementById("device_no").disabled = false;
             document.getElementById("operation_name").disabled = false;
-             document.getElementById("command").disabled = false;
+               document.getElementById("short_name").disabled = false;
+             document.getElementById("command1").disabled = false;
         document.getElementById("order_no").disabled = false;
         document.getElementById("delay").disabled = false;
         document.getElementById("command_format").disabled = false;
@@ -264,7 +275,7 @@
     function fillColumns(id) {
         debugger;
         var noOfRowsTraversed = document.getElementById("noOfRowsTraversed").value;
-        var noOfColumns = 11;
+        var noOfColumns = 12;
         var columnId = id;
     <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
         columnId = columnId.substring(3, id.length);
@@ -288,12 +299,13 @@
         document.getElementById("device_name").value = document.getElementById(t1id + (lowerLimit + 4)).innerHTML;
         document.getElementById("device_no").value = document.getElementById(t1id + (lowerLimit + 5)).innerHTML;
         document.getElementById("operation_name").value = document.getElementById(t1id + (lowerLimit + 6)).innerHTML;
-        document.getElementById("command").value = document.getElementById(t1id + (lowerLimit + 7)).innerHTML;
-        document.getElementById("order_no").value = document.getElementById(t1id + (lowerLimit + 8)).innerHTML;
-        document.getElementById("delay").value = document.getElementById(t1id + (lowerLimit + 9)).innerHTML;
+         document.getElementById("short_name").value = document.getElementById(t1id + (lowerLimit + 7)).innerHTML;
+        document.getElementById("command1").value = document.getElementById(t1id + (lowerLimit + 8)).innerHTML;
+        document.getElementById("order_no").value = document.getElementById(t1id + (lowerLimit + 9)).innerHTML;
+        document.getElementById("delay").value = document.getElementById(t1id + (lowerLimit + 10)).innerHTML;
        
         
-        document.getElementById("remark").value = document.getElementById(t1id + (lowerLimit + 10)).innerHTML;
+        document.getElementById("remark").value = document.getElementById(t1id + (lowerLimit + 11)).innerHTML;
 
         //       var b=  document.getElementById(t1id +(lowerLimit+8)).innerHTML;
         // alert(b);
@@ -449,6 +461,7 @@ a:hover{
                                                 <th class="heading">Model Name</th>
                                                 <th class="heading">Model No.</th>
                                                 <th class="heading">Operation Name</th>
+                                                <th class="heading">Short Name</th>
                                                 <th class="heading">Command</th>
                                                 <th class="heading">Order No</th>
                                                 <th class="heading">Delay</th>
@@ -470,6 +483,7 @@ a:hover{
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.device_name}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.device_no}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.operation_name}</td>
+                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.short_name}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.command}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.order_no}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.delay}</td>
@@ -575,10 +589,15 @@ a:hover{
                                                     <input class="input" type="radio" id="command_format" name="command_format" value="String" size="40" disabled> String
                                                 </td>
                                             </tr>
+                                              <tr>
+                                                <th class="heading1">Short Name</th>
+                                                <td><input class="input" type="text" id="short_name" name="short_name" value="${short_name}" size="80" disabled></td>
+                                                   <input class="input" type="hidden" id="short_name_id" name="short_name_id" value="">
+                                            </tr>
                                             <tr>
                                                 <th class="heading1">Command</th>
-                                                <td><input class="input" type="text" id="command" name="command" value="" size="80" disabled></td>
-                                                   <input class="input" type="hidden" id="command_id" name="command_id" value="" >
+                                                <td><input class="input" type="text" id="command1" name="command1" value="${command}" size="80" disabled></td>
+                                                   <input class="input" type="hidden" id="command_id" name="command_id" value="">
                                             </tr>
                                             <tr>
                                                 <th class="heading1">Order No</th>

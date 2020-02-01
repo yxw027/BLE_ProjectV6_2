@@ -15,7 +15,7 @@
     </context-param>
     <context-param>
         <param-name>connectionString</param-name>
-        <param-value>jdbc:mysql://localhost:3306/ble_database1</param-value>
+        <param-value>jdbc:mysql://localhost:3306/ble_database6</param-value>
     </context-param>
     <context-param>
         <param-name>db_username</param-name>
@@ -25,7 +25,7 @@
     <context-param>
         <description>	</description>
         <param-name>db_password</param-name>
-        <param-value>root</param-value>
+        <param-value>jpss</param-value>
     </context-param>
     <!--<ServletContainer mapping start>-->
     <servlet>

@@ -247,9 +247,27 @@ public boolean reviseRecords(ServiceBean serviceBean){
         return list;
     }
 
-  public int deleteRecord(int device_type_id) {
-
-      String query = "update device_type set active='N' where id=" + device_type_id;
+//  public int deleteRecord(int device_type_id) {
+//
+//      String query = "update device_type set active='N' where id=" + device_type_id;
+//        int rowsAffected = 0;
+//        try {
+//            rowsAffected = connection.prepareStatement(query).executeUpdate();
+//        } catch (Exception e) {
+//            System.out.println("Error: " + e);
+//        }
+//        if (rowsAffected > 0) {
+//            message = "Record deleted successfully......";
+//            msgBgColor = COLOR_OK;
+//        } else {
+//            message = "Error Record cannot be deleted.....";
+//            msgBgColor = COLOR_ERROR;
+//        }
+//        return rowsAffected;
+//    }
+   public int deleteRecord(int device_type_id) {
+// String query = "update device_type set active='N' where id=" + device_type_id;
+      String query = "update servicies set active='N' where id=" + device_type_id;
         int rowsAffected = 0;
         try {
             rowsAffected = connection.prepareStatement(query).executeUpdate();
@@ -265,7 +283,6 @@ public boolean reviseRecords(ServiceBean serviceBean){
         }
         return rowsAffected;
     }
-  
   public List<String> getSearchServiceName(String q) {
         List<String> list = new ArrayList<String>();
         String query = "select service_name\n" +
@@ -284,7 +301,7 @@ public boolean reviseRecords(ServiceBean serviceBean){
                 }
             }
             if (count == 0) {
-                list.add("No such Manufacturer Name exists.......");
+                list.add("No such Service Name exists.......");
             }
         } catch (Exception e) {
             System.out.println(" ERROR inside CommandModel - " + e);
@@ -317,7 +334,7 @@ public boolean reviseRecords(ServiceBean serviceBean){
                 }
             }
             if (count == 0) {
-                list.add("No such Manufacturer Name exists.......");
+                list.add("No such Device Type exists.......");
             }
         } catch (Exception e) {
             System.out.println(" ERROR inside CommandModel - " + e);

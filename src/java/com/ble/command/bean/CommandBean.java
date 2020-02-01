@@ -13,7 +13,7 @@ public class CommandBean {
 
     int command_id;
     String device_name,command,order_no,delay,operation_name,starting_del,end_del,remark,command_type;
-    String manufacturer,device_type,model_type,device_no,format;
+    String manufacturer,device_type,model_type,device_no,format,short_name;
             int input_no,selection_no,bitwise;
 
     public String getFormat() {
@@ -164,6 +164,14 @@ public class CommandBean {
 
     public void setBitwise(int bitwise) {
         this.bitwise = bitwise;
+    }
+
+    public String getShort_name() {
+        return short_name;
+    }
+
+    public void setShort_name(String short_name) {
+        this.short_name = short_name;
     }
 
     

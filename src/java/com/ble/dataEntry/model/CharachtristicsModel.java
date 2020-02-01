@@ -260,7 +260,7 @@ public boolean reviseRecords(CharachtristicsBean charachtristicsBean){
                 }
             }
             if (count == 0) {
-                list.add("No such Manufacturer Name exists.......");
+                list.add("No such Charectersticks Name exists.......");
             }
         } catch (Exception e) {
             System.out.println(" ERROR inside CommandModel - " + e);
@@ -289,7 +289,7 @@ public boolean reviseRecords(CharachtristicsBean charachtristicsBean){
                 }
             }
             if (count == 0) {
-                list.add("No such Manufacturer Name exists.......");
+                list.add("No such Service Uuid exists.......");
             }
         } catch (Exception e) {
             System.out.println(" ERROR inside CommandModel - " + e);
@@ -316,7 +316,7 @@ public boolean reviseRecords(CharachtristicsBean charachtristicsBean){
                 }
             }
             if (count == 0) {
-                list.add("No such Manufacturer Name exists.......");
+                list.add("No such Service Name exists.......");
             }
         } catch (Exception e) {
             System.out.println(" ERROR inside CommandModel - " + e);
@@ -351,7 +351,7 @@ public boolean reviseRecords(CharachtristicsBean charachtristicsBean){
                 }
             }
             if (count == 0) {
-                list.add("No such Manufacturer Name exists.......");
+                list.add("No such Model Type exists.......");
             }
         } catch (Exception e) {
             System.out.println(" ERROR inside CommandModel - " + e);

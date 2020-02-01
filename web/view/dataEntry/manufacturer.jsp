@@ -175,7 +175,7 @@
     }
     
     function goToDevice() {
-        window.location.href="DeviceCont.do";
+        window.location.href="ModelTypeCont.do";
     }
 
 </script>

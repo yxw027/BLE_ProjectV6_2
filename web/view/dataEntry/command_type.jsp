@@ -17,12 +17,13 @@
 
   <link type="text/css" href="style/menu.css" rel="stylesheet"/>
 <script type="text/javascript" language="javascript">
- 
+ jQuery(function(){
          $("#searchCommandType").autocomplete("CommandTypeCont.do", {
             extraParams: {
                 action1: function() { return "getCommandType";}
             }
         });
+    });
     function setDefaultColor(noOfRowsTraversed, noOfColumns) {
         for (var i = 0; i < noOfRowsTraversed; i++) {
             for (var j = 1; j <= noOfColumns; j++) {

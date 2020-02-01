@@ -63,8 +63,8 @@
                                 <li><a href="CommandDescriptionCont.do">Command Description</a></li>
                                 <li><a href="OperationNameCont.do">Operation Name</a></li>
                                 <li><a href="ruleCont.do">Rules</a></li>
-                                <li><a href="SelectionCont.do">Selection</a></li>
-                                <li><a href="InputCont.do">Input</a></li>
+<!--                                <li><a href="SelectionCont.do">Selection</a></li>
+                                <li><a href="InputCont.do">Input</a></li>-->
                                 <li><a href="ParameterCont.do">Parameter</a></li>
                                 <li><a href="DeviceOperationCommandCont.do">Operation Command Map</a></li>
                             </ul>

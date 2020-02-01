@@ -67,16 +67,24 @@ public class DeviceOperationCommandController extends HttpServlet {
                     list = commandModel.getDeviceNo(q, request.getParameter("action2"), request.getParameter("action3"), request.getParameter("action4"));
                 } else if (JQstring.equals("getOperationName")) {
                     list = commandModel.getOperationName(q);
-                } else if (JQstring.equals("getCommandType")) {
-                    list = commandModel.getCommandType(q);
-                } else if (JQstring.equals("getSearchCommandName")) {
-                    list = commandModel.getSearchCommandName(q);
+                } 
+//                else if (JQstring.equals("getCommandType")) {
+//                    list = commandModel.getCommandType(q);
+//                } 
+                 else if (JQstring.equals("getCommandShortName")) {
+                    list = commandModel.getCommandShortName(q);
+                }else if (JQstring.equals("getSearchCommandName")) {
+                    list = commandModel.getSearchCommandName(q, request.getParameter("action2"), request.getParameter("action3"), request.getParameter("action4"));
                 } else if (JQstring.equals("getSearchOperationName")) {
                     list = commandModel.getSearchOperationName(q);
                 } else if (JQstring.equals("getCommand")) {
                     list = commandModel.getCommand(q);
 
-                } else if (JQstring.equals("getManufacturerName")) {
+                } 
+                else if (JQstring.equals("getCommand1")) {
+                    list = commandModel.getCommand1(q,request.getParameter("action2"));
+
+                }else if (JQstring.equals("getManufacturerName")) {
                     list = commandModel.getSearchManufacturerName(q);
                 } else if (JQstring.equals("getSearchDeviceType")) {
                     list = commandModel.getSearchDeviceType(q);
@@ -129,9 +137,10 @@ public class DeviceOperationCommandController extends HttpServlet {
             String searchDeviceName = request.getParameter("searchDevicename");
             response.setContentType("application/pdf");
             ServletOutputStream servletOutputStream = response.getOutputStream();
-            listAll = DeviceOperationCommandModel.showPDF(dcm, searchCommandName, searchDeviceName, searchOperationName);
+            listAll = DeviceOperationCommandModel.getDevice();
+//             listAll = DeviceOperationCommandModel.showPDF(dcm, searchCommandName, searchDeviceName, searchOperationName);
             //  listAll=DeviceOperationCommandModel.showPDF(dcm,searchOperationName,searchCommandName,searchDeviceName);
-            jrxmlFilePath = ctx.getRealPath("/view/device_commandReport.jrxml");
+            jrxmlFilePath = ctx.getRealPath("/view/DeviceCommandMapReport.jrxml");
             //jrxmlFilePath = ctx.getRealPath("/view/TestReport.jrxml");
             byte[] reportInbytes = DeviceOperationCommandModel.generateRecordList(jrxmlFilePath, listAll);
             response.setContentLength(reportInbytes.length);
@@ -183,7 +192,8 @@ public class DeviceOperationCommandController extends HttpServlet {
 //                }
 //
 //            }
-            commandBean.setCommand(request.getParameter("command"));
+            commandBean.setCommand_type(request.getParameter("command_type"));
+            commandBean.setCommand(request.getParameter("command1"));
 //             commandBean.setCommand(request.getParameter("command"));
             // commandBean.setCommand_type(request.getParameter("command_type"));
 //            commandBean.setOrder_no(request.getParameter("order_no"));
@@ -196,6 +206,7 @@ public class DeviceOperationCommandController extends HttpServlet {
             commandBean.setOrder_no(request.getParameter("order_no"));
             commandBean.setDelay(request.getParameter("delay"));
             commandBean.setRemark(request.getParameter("remark"));
+             commandBean.setShort_name(request.getParameter("short_name"));
 
             //session.setAttribute("deviceName", request.getParameter("device_name"));
             //session.setAttribute("operationName", request.getParameter("operation_name"));
@@ -204,20 +215,20 @@ public class DeviceOperationCommandController extends HttpServlet {
                 commandModel.insertRecord1(commandBean);
             } else {
                 System.out.println("Update values by model........");
-                commandModel.reviseRecords(commandBean,device_command_id);
+                commandModel.reviseRecords1(commandBean,device_command_id);
             }
         }
 
         String searchCommandName = "";
         String searchDeviceName = "";
         String searchManufacturerName = "";
-        String searchDeviceType = "";
+        String searchDeviceTypeName = "";
         String searchOperationName = "";
 
         searchCommandName = request.getParameter("searchCommandName");
         searchDeviceName = request.getParameter("searchDeviceName");
         searchManufacturerName = request.getParameter("searchManufacturerName");
-        searchDeviceType = request.getParameter("searchDeviceType");
+        searchDeviceTypeName = request.getParameter("searchDeviceType");
         searchOperationName = request.getParameter("searchOperationName");
         try {
             if (searchCommandName == null) {
@@ -229,8 +240,8 @@ public class DeviceOperationCommandController extends HttpServlet {
             if (searchManufacturerName == null) {
                 searchManufacturerName = "";
             }
-            if (searchDeviceType == null) {
-                searchDeviceType = "";
+            if (searchDeviceTypeName == null) {
+                searchDeviceTypeName = "";
             }
             if (searchOperationName == null) {
                 searchOperationName = "";
@@ -252,7 +263,7 @@ public class DeviceOperationCommandController extends HttpServlet {
         System.out.println("searching.......... " + searchCommandName);
         System.out.println("searching.......... " + searchDeviceName);
         System.out.println("searching.......... " + searchManufacturerName);
-        System.out.println("searching.......... " + searchDeviceType);
+        System.out.println("searching.......... " + searchDeviceTypeName);
         System.out.println("searching.......... " + searchOperationName);
         noOfRowsInTable = DeviceOperationCommandModel.getNoOfRows(searchCommandName, searchDeviceName, searchOperationName);
 
@@ -279,11 +290,11 @@ public class DeviceOperationCommandController extends HttpServlet {
             searchCommandName = "";
             searchDeviceName = "";
             searchManufacturerName = "";
-            searchDeviceType = "";
+            searchDeviceTypeName = "";
             searchOperationName = "";
         }
         // Logic to show data in the table.
-        List<DeviceOperationCommand> commandTypeList = DeviceOperationCommandModel.showData(lowerLimit, noOfRowsToDisplay, searchCommandName, searchDeviceName, searchOperationName);
+        List<DeviceOperationCommand> commandTypeList = DeviceOperationCommandModel.showData1(lowerLimit, noOfRowsToDisplay, searchCommandName, searchDeviceName, searchOperationName, searchDeviceTypeName);
 
         lowerLimit = lowerLimit + commandTypeList.size();
         noOfRowsTraversed = commandTypeList.size();
@@ -312,10 +323,10 @@ public class DeviceOperationCommandController extends HttpServlet {
         request.setAttribute("searchOperationName", searchOperationName);
 
         request.setAttribute("searchCommandName", searchCommandName);
-        request.setAttribute("searchCommandName", searchOperationName);
+        request.setAttribute("searchOperationName", searchOperationName);
         request.setAttribute("searchDeviceName", searchDeviceName);
         request.setAttribute("searchManufacturerName", searchManufacturerName);
-        request.setAttribute("searchDeviceType", searchDeviceType);
+        request.setAttribute("searchDeviceType", searchDeviceTypeName);
         request.setAttribute("message", commandModel.getMessage());
         request.setAttribute("msgBgColor", commandModel.getMsgBgColor());
         request.getRequestDispatcher("/device_operation_commandView").forward(request, response);

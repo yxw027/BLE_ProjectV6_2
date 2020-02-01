@@ -56,7 +56,7 @@
                                     <th class="heading">S.No.</th>
                                     <th class="heading">Command</th>
                                     <th class="heading">Parameter</th>                                    
-                                    <th class="heading" colspan="2" style="min-width:200px;">Selection Value No</th>
+                                    <th class="heading">Selection Value No</th>
                                     <th class="heading">Parameter Type</th>
                                     <th class="heading">Remark</th>
                                     <th class="heading">Action</th>
@@ -69,14 +69,15 @@
                                         <td><input type="text" name="command_name${loopCounter.count}" maxlength="50" size="80" id="command_name${loopCounter.count}" value="${list.command_name}" readonly></td>
                                         <td><input type="text" name="parameter${loopCounter.count}" maxlength="8" size="15" id="parameter${loopCounter.count}" value="${list.parameter}" onkeyup="autocompleteMethod('parameter',${loopCounter.count}+1)"></td>
                                        
-                                        <td><input type="text" name="selection_value_no${loopCounter.count}" maxlength="50" size="5" id="selection_value_no${loopCounter.count}" value="${list.selection_value_no}" onkeyup="check(value)"></td>                                         
-                                        <td><a href="#" onclick="inputPopup('SelectionValueController','${list.parameter}',${list.selection_value_no},${list.selection_id});return false" id="input_button">View Selection Value</a></td>
+                                        <td><input type="text" name="selection_value_no${loopCounter.count}" maxlength="50" size="5" id="selection_value_no${loopCounter.count}" value="${list.selection_value_no}" onkeyup="check(value)">                                         
+                                        <a href="#" onclick="inputPopup('SelectionValueController','${list.parameter}',${list.selection_value_no},${list.selection_id});return false" id="input_button">View Selection Value</a></td>
                                      
                                         <td><input type="text" name="parameter_type${loopCounter.count}" maxlength="8" size="10" id="parameter_type${loopCounter.count}" value="${list.parameter_type}" onkeyup="autocompleteMethod('parameter_type',${loopCounter.count}+1)"></td>
                                        
                                         <td><input type="text" name="remark${loopCounter.count}" maxlength="8" size="20" id="remark{loopCounter.count}" value="${list.remark}" ></td>
+                                         <td><input type="submit" class="button" name="task"  value="update" ></td>
 <!--                                        <td><input type="button" class ="button" name="update" value="update" onclick="update(${list.selection_id},${list.selection_value_no})"></td>-->
-                                        <td><input type="submit" class="button" name="task"  value="update" ></td>
+                                       
 <!--                                        <td><a href="SelectionCont.do?task=Save&selection_id="${list.selection_id} id="input_button1">Update Value</a></td>                                    -->
                                     </tr>
                                     

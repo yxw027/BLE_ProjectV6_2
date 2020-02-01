@@ -109,7 +109,7 @@ public class ModelTypeController extends HttpServlet {
                 System.out.println("Inserting values by model......");
                 int numberOfRows = modelTypeModel.insertRecord(modelTypeBean);
                 if(numberOfRows > 0){      
-                 request.getRequestDispatcher("/ModelCont.do?task=''").forward(request, response);
+                 request.getRequestDispatcher("/ModelCont.do?task=''");
                 }
                 
             } else {

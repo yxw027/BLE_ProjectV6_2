@@ -69,9 +69,13 @@ public class CommandController extends HttpServlet {
                     list = commandModel.getOperationName(q);
                 } else if (JQstring.equals("getCommandType")) {
                     list = commandModel.getCommandType(q);
-                } else if (JQstring.equals("getSearchCommandName")) {
+                }
+//                else if (JQstring.equals("getSearchCommandName")) {
+//                    list = commandModel.getSearchCommandName(q);
+//                }
+                else if (JQstring.equals("getSearchCommandName")) {
                     list = commandModel.getSearchCommandName(q);
-                } else if (JQstring.equals("getManufacturerName")) {
+                }else if (JQstring.equals("getManufacturerName")) {
                     list = commandModel.getSearchManufacturerName(q);
                 } else if (JQstring.equals("getSearchDeviceType")) {
                     list = commandModel.getSearchDeviceType(q);
@@ -142,29 +146,37 @@ public class CommandController extends HttpServlet {
                 commandModel.insertRecord(commandBean);
             } else {
                 System.out.println("Update values by model........");
-                commandModel.reviseRecords(commandBean);
-            }
+                commandModel.updateRecords(commandBean);
+             }
         }
 
         String searchCommandName = "";
         String searchDeviceName = "";
         String searchManufacturerName = "";
         String searchDeviceType = "";
-
         searchCommandName = request.getParameter("searchCommandName");
         searchDeviceName = request.getParameter("searchDeviceName");
         searchManufacturerName = request.getParameter("searchManufacturerName");
         searchDeviceType = request.getParameter("searchDeviceType");
-        try {
-            if (searchCommandName == null | searchDeviceName == null | searchManufacturerName == null | searchDeviceType == null) {
+//        try {
+//            if (searchCommandName == null | searchDeviceName == null | searchManufacturerName == null | searchDeviceType == null) {
+//                searchCommandName = "";
+//                searchDeviceName = "";
+//                searchManufacturerName = "";
+//                searchDeviceType = "";
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Exception while searching in controller" + e);
+//        }
+try {
+            if (searchCommandName == null) {
                 searchCommandName = "";
-                searchDeviceName = "";
-                searchManufacturerName = "";
-                searchDeviceType = "";
+               
             }
         } catch (Exception e) {
             System.out.println("Exception while searching in controller" + e);
         }
+
 
         try {
             lowerLimit = Integer.parseInt(request.getParameter("lowerLimit"));

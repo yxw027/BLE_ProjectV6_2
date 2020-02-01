@@ -270,9 +270,9 @@ a:hover{
                                             <tr>
                                                 <td>Manufacture Name<input class="input" type="text" id="searchManufactureName" name="searchManufactureName" value="${searchManufacturerName}" size="20" ></td>
                                                 <td>Device Type<input class="input" type="text" id="searchDeviceType" name="searchDeviceType" value="${searchDeviceTypeName}" size="20" ></td>
-                                                <td><input class="button" type="submit" name="task" id="searchIn" value="Search"></td>
+                                               <td><input class="button" type="submit" name="task" id="searchIn" value="Search"></td>
                                                 <td><input class="button" type="submit" name="task" id="showAllRecords" value="Show All Records"></td>
-                                                <td><input class="button" type="submit" name="task" id="nextPage" value="Next Page" onclick="gotoDeviceMap()"></td>
+                                                  <td><input class="button" type="button" name="task" id="nextPage" value="Next Page" onclick="goToDeviceMap()"></input></td>
                                                 <td><input type="button" class="pdf_button" id="viewPdf" name="viewPdf" value="" onclick="displayMapList()"></td>
                                             </tr>
                                         </table>

@@ -56,13 +56,8 @@ public class SelectionBean {
         this.parameter_type = parameter_type;
     }
 
-    public String getParameter_value() {
-        return parameter_value;
-    }
 
-    public void setParameter_value(String parameter_value) {
-        this.parameter_value = parameter_value;
-    }
+   
 
     public String getRemark() {
         return remark;

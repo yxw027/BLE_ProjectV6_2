@@ -16,7 +16,7 @@ public class DeviceOperationCommand {
     int operation_id;
     int device_command_id;
     String device_name,command,order_no,delay,operation_name,starting_del,end_del,remark,command_type,description;
-    String manufacturer,device_type,model_type,device_no,format;
+    String manufacturer,device_type,model_type,device_no,format,short_name;
             int input_no,selection_no;
 
     public String getDescription() {
@@ -195,6 +195,14 @@ public class DeviceOperationCommand {
 
     public void setDevice_id(String device_id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public String getShort_name() {
+        return short_name;
+    }
+
+    public void setShort_name(String short_name) {
+        this.short_name = short_name;
     }
 
     

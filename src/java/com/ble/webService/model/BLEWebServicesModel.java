@@ -648,7 +648,7 @@ public class BLEWebServicesModel {
         try {
             System.out.println("hii inside setConnection() method");
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ble_database4", "jpss_2", "jpss_1277");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ble_database6", "root", "jpss");
         } catch (Exception e) {
             System.out.println("BLEWebServicesModel setConnection() Error: " + e);
         }

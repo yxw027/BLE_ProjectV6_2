@@ -175,7 +175,7 @@
     }
     
     function goToManufacturer() {
-        window.location.href="ManufacturerCont.do";
+        window.location.href="DeviceCont.do";
     }
 
 </script>

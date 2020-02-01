@@ -187,8 +187,8 @@ public class DeviceOprtnChartstcMapController extends HttpServlet {
             buttonAction = "none";
         }
         System.out.println("searching.......... " + searchCommandName);
-
-         noOfRowsInTable = ruleModel.getNoOfRows(searchCommandName);
+    noOfRowsInTable = ruleModel.getNoOfRowsnew(searchCommandName,searchDeviceType,searchModelName);
+       //  noOfRowsInTable = ruleModel.getNoOfRows(searchCommandName);
 
          if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
          else if (buttonAction.equals("Previous")) {
@@ -216,8 +216,9 @@ public class DeviceOprtnChartstcMapController extends HttpServlet {
 
         }
            // Logic to show data in the table.
-        List<DeviceOprtnChartstcMapBean> commandTypeList = ruleModel.showData(lowerLimit, noOfRowsToDisplay,searchCommandName);
-        lowerLimit = lowerLimit + commandTypeList.size();
+    //    List<DeviceOprtnChartstcMapBean> commandTypeList = ruleModel.showData(lowerLimit, noOfRowsToDisplay,searchCommandName);
+    List<DeviceOprtnChartstcMapBean> commandTypeList = ruleModel.showData(lowerLimit, noOfRowsToDisplay,searchCommandName,searchDeviceType,searchModelName);  
+    lowerLimit = lowerLimit + commandTypeList.size();
         noOfRowsTraversed = commandTypeList.size();
          // Now set request scoped attributes, and then forward the request to view.
         request.setAttribute("lowerLimit", lowerLimit);

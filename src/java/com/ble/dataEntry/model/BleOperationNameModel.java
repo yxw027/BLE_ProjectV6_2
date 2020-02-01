@@ -154,24 +154,61 @@ public boolean reviseRecords(BleOperationNameBean ruleBean){
         System.out.println("No of Rows in Table for search is" + noOfRows);
         return noOfRows;
     }
-
-  public List<BleOperationNameBean> showData(int lowerLimit, int noOfRowsToDisplay,String searchManufacturerName) {
+//
+//  public List<BleOperationNameBean> showData(int lowerLimit, int noOfRowsToDisplay,String searchManufacturerName) {
+//        List<BleOperationNameBean> list = new ArrayList<BleOperationNameBean>();
+//         String addQuery = " LIMIT " + lowerLimit + ", " + noOfRowsToDisplay;
+//          if(lowerLimit == -1)
+//            addQuery = "";
+//
+//       String query2="select r.ble_operation_name_id,r.remark,r.ble_operation_name "
+//                     +" from ble_operation_name r"
+//                     +" where  r.active='Y'";
+////                     +" and ('" + searchManufacturerName + "' = '', c.command LIKE '%%',c.command =?)";
+//
+//
+//        try {
+//            PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);
+//            //pstmt.setString(1, searchCommandName);
+//            //pstmt.setString(2, searchDeviceName);
+//            //pstmt.setString(3, searchManufacturerName);
+//            //pstmt.setString(4, searchDeviceType);
+//            ResultSet rset = pstmt.executeQuery();
+//            while (rset.next()) {
+//                BleOperationNameBean manufacturerBean = new BleOperationNameBean();
+//                manufacturerBean.setBle_operation_name_id(rset.getInt("ble_operation_name_id"));
+//                manufacturerBean.setBle_operation_name(rset.getString("ble_operation_name"));
+//                manufacturerBean.setRemark(rset.getString("remark"));
+//                list.add(manufacturerBean);
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Error: " + e);
+//        }
+//        return list;
+//    }
+public List<BleOperationNameBean> showData(int lowerLimit, int noOfRowsToDisplay,String searchManufacturerName) {
         List<BleOperationNameBean> list = new ArrayList<BleOperationNameBean>();
          String addQuery = " LIMIT " + lowerLimit + ", " + noOfRowsToDisplay;
           if(lowerLimit == -1)
             addQuery = "";
 
-       String query2="select r.ble_operation_name_id,r.remark,r.ble_operation_name "
+//       String query2="select r.ble_operation_name_id,r.remark,r.ble_operation_name "
+//                     +" from ble_operation_name r"
+//                     +" where  r.active='Y'"
+//               +addQuery;
+//                   +" and ('" + searchManufacturerName + "' = '', c.command LIKE '%%',c.command =?)";
+
+     String query2="select r.ble_operation_name_id,r.remark,r.ble_operation_name "
                      +" from ble_operation_name r"
-                     +" where  r.active='Y'";
-//                     +" and ('" + searchManufacturerName + "' = '', c.command LIKE '%%',c.command =?)";
-
-
+                     +" where  r.active='Y'"
+              +" and IF('" + searchManufacturerName + "' = '', ble_operation_name LIKE '%%',ble_operation_name =?) "
+                     
+                    + addQuery;
         try {
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);
             //pstmt.setString(1, searchCommandName);
             //pstmt.setString(2, searchDeviceName);
-            //pstmt.setString(3, searchManufacturerName);
+            pstmt.setString(1, searchManufacturerName);
             //pstmt.setString(4, searchDeviceType);
             ResultSet rset = pstmt.executeQuery();
             while (rset.next()) {
@@ -186,6 +223,8 @@ public boolean reviseRecords(BleOperationNameBean ruleBean){
         }
         return list;
     }
+
+
 
 
   public int deleteRecord(int manufacturer_id) {

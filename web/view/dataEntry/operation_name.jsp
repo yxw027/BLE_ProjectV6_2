@@ -1,7 +1,7 @@
 <%--
     Document   : manufacturer
     Created on : Jan 7, 2019, 12:52:04 PM
-    Author     : Shobha
+    Author     : Prachi
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,31 +12,35 @@
 <link href="style/style1.css" type="text/css" rel="stylesheet" media="Screen"/>
 <link href="style/style.css" type="text/css" rel="stylesheet" media="Screen"/>
 <link href="style/Table_content.css" type="text/css" rel="stylesheet" media="Screen"/>
-  <link type="text/css" href="style/menu.css" rel="stylesheet"/>
+<link type="text/css" href="style/menu.css" rel="stylesheet"/>
 <script type="text/javascript" src="JS/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="JS/jquery.autocomplete.js"></script>
 
 
 <script type="text/javascript" language="javascript">
-    jQuery(function(){
+    jQuery(function () {
         $("#searchOperationName").autocomplete("OperationNameCont.do", {
             extraParams: {
-                action1: function() { return "getOperationName"}
+                action1: function () {
+                    return "getOperationName"
+                }
             }
         });
 
     });
- jQuery(function(){
+    jQuery(function () {
         $("#parent_operation").autocomplete("OperationNameCont.do", {
             extraParams: {
-                action1: function() { return "getOperationName"}
+                action1: function () {
+                    return "getOperationName"
+                }
             }
         });
 
     });
     function setDefaultColor(noOfRowsTraversed, noOfColumns) {
-        for(var i = 0; i < noOfRowsTraversed; i++) {
-            for(var j = 1; j <= noOfColumns; j++) {
+        for (var i = 0; i < noOfRowsTraversed; i++) {
+            for (var j = 1; j <= noOfColumns; j++) {
                 document.getElementById("t1c" + (i * noOfColumns + j)).bgColor = "";     // set the default color.
             }
         }
@@ -45,16 +49,16 @@
 
         document.getElementById("operation_name").disabled = false;
         document.getElementById("parent_operation").disabled = false;
-         document.getElementById("remark").disabled = false;
+        document.getElementById("remark").disabled = false;
 
         document.getElementById("save").disabled = false;
 //        document.getElementById("revise").disabled =false;
-        document.getElementById("cancel").disabled =false;
-        document.getElementById("save_As").disabled =false;
+        document.getElementById("cancel").disabled = false;
+        document.getElementById("save_As").disabled = false;
         //document.getElementById("save").disabled = true;
-        if(id === 'new') {
-        //    document.getElementById("created_date").disabled = true;
-           // document.getElementById("active").value ='';
+        if (id === 'new') {
+            //    document.getElementById("created_date").disabled = true;
+            // document.getElementById("active").value ='';
 
             document.getElementById("message").innerHTML = "";      // Remove message
             document.getElementById("operation_name").focus();
@@ -69,31 +73,29 @@
 
 
         }
-        if(id === 'edit'){
+        if (id === 'edit') {
 
             document.getElementById("save_As").disabled = false;
             document.getElementById("cancel").disabled = false;
         }
     }
     function setStatus(id) {
-        if(id == 'save'){
+        if (id == 'save') {
             document.getElementById("clickedButton").value = "Save";
-        }
-        else if(id == 'save_As'){
+        } else if (id == 'save_As') {
             document.getElementById("clickedButton").value = "Save AS New";
-        }
-        else if(id == 'revise'){
+        } else if (id == 'revise') {
             document.getElementById("clickedButton").value = "Revise";
-        }
-        else document.getElementById("clickedButton").value = "Delete";
+        } else
+            document.getElementById("clickedButton").value = "Delete";
     }
     function verify() {
         var result;
-        if(document.getElementById("clickedButton").value == 'Save' || document.getElementById("clickedButton").value == 'Save AS New' || document.getElementById("clickedButton").value == 'Revise'||document.getElementById("clickedButton").value == 'Delete') {
+        if (document.getElementById("clickedButton").value == 'Save' || document.getElementById("clickedButton").value == 'Save AS New' || document.getElementById("clickedButton").value == 'Revise' || document.getElementById("clickedButton").value == 'Delete') {
             var division_name_m = document.getElementById("division_name_m").value;
-            var a=document.getElementById("active").value;
+            var a = document.getElementById("active").value;
             //    alert(a);
-            if(myLeftTrim(division_name_m).length == 0) {
+            if (myLeftTrim(division_name_m).length == 0) {
 
                 // document.getElementById("message").innerHTML = "<td colspan='5' bgcolor='coral'><b>Organisation Type Name is required...</b></td>";
                 $("#message").html("<td colspan='5' bgcolor='coral'><b>Ward No is required...</b></td>");
@@ -101,57 +103,61 @@
                 return false; // code to stop from submitting the form2.
             }
 
-            if(document.getElementById("active").value =='Revised' || document.getElementById("active").value =='Cancelled')
+            if (document.getElementById("active").value == 'Revised' || document.getElementById("active").value == 'Cancelled')
             {
                 $("#message").html("<td colspan='5' bgcolor='coral'><b>You can not perform any operation on revised and cancelled record...</b></td>");
                 // document.getElementById("source_wattage"+i).focus();
                 return false; // code to stop from submitting the form2.
             }
-            if(result == false)    // if result has value false do nothing, so result will remain contain value false.
+            if (result == false)    // if result has value false do nothing, so result will remain contain value false.
             {
 
-            }
-            else{ result = true;
+            } else {
+                result = true;
             }
 
-            if(document.getElementById("clickedButton").value == 'Save AS New'){
+            if (document.getElementById("clickedButton").value == 'Save AS New') {
                 result = confirm("Are you sure you want to save it as New record?")
                 return result;
             }
-        } else result = confirm("Are you sure you want to cancel this record?")
+        } else
+            result = confirm("Are you sure you want to cancel this record?")
         return result;
     }
     function fillColumns(id) {
         var noOfRowsTraversed = document.getElementById("noOfRowsTraversed").value;
-        var noOfColumns =5;
-        var columnId = id;                              <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
-        columnId = columnId.substring(3, id.length);    <%-- for e.g. suppose id is t1c3 we want characters after t1c i.e beginIndex = 3. --%>
+        var noOfColumns = 5;
+        var columnId = id;
+        <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
+        columnId = columnId.substring(3, id.length);
+        <%-- for e.g. suppose id is t1c3 we want characters after t1c i.e beginIndex = 3. --%>
         var lowerLimit, higherLimit;
 
-        for(var i = 0; i < noOfRowsTraversed; i++) {
+        for (var i = 0; i < noOfRowsTraversed; i++) {
             lowerLimit = i * noOfColumns + 1;       // e.g. 11 = (1 * 10 + 1)
             higherLimit = (i + 1) * noOfColumns;    // e.g. 20 = ((1 + 1) * 10)
 
-            if((columnId >= lowerLimit) && (columnId <= higherLimit)) break;
+            if ((columnId >= lowerLimit) && (columnId <= higherLimit))
+                break;
         }
 
         setDefaultColor(noOfRowsTraversed, noOfColumns);        // set default color of rows (i.e. of multiple coloumns).
         var t1id = "t1c";       // particular column id of table 1 e.g. t1c3.
 
-        document.getElementById("operation_name_id").value= document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
-        document.getElementById("operation_name").value = document.getElementById(t1id +(lowerLimit+2)).innerHTML;
-         document.getElementById("parent_operation").value = document.getElementById(t1id +(lowerLimit+3)).innerHTML;
-        document.getElementById("remark").value = document.getElementById(t1id +(lowerLimit+4)).innerHTML;
+        document.getElementById("operation_name_id").value = document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
+        document.getElementById("operation_name").value = document.getElementById(t1id + (lowerLimit + 2)).innerHTML;
+        document.getElementById("parent_operation").value = document.getElementById(t1id + (lowerLimit + 3)).innerHTML;
+        document.getElementById("remark").value = document.getElementById(t1id + (lowerLimit + 4)).innerHTML;
 
         //       var b=  document.getElementById(t1id +(lowerLimit+8)).innerHTML;
         // alert(b);
-        for(var i = 0; i < noOfColumns; i++) {
+        for (var i = 0; i < noOfColumns; i++) {
             document.getElementById(t1id + (lowerLimit + i)).bgColor = "#d0dafd";        // set the background color of clicked row to yellow.
         }
-     //   makeEditable('');
+        //   makeEditable('');
 
         document.getElementById("edit").disabled = false;
-        if(!document.getElementById("save").disabled)   // if save button is already enabled, then make edit, and cancel button enabled too.
+        if (!document.getElementById("save").disabled)   // if save button is already enabled, then make edit, and cancel button enabled too.
         {
             document.getElementById("save_As").disabled = true;
             document.getElementById("cancel").disabled = false;
@@ -161,17 +167,18 @@
     }
     function myLeftTrim(str) {
         var beginIndex = 0;
-        for(var i = 0; i < str.length; i++) {
-            if(str.charAt(i) == ' ')
+        for (var i = 0; i < str.length; i++) {
+            if (str.charAt(i) == ' ')
                 beginIndex++;
-            else break;
+            else
+                break;
         }
         return str.substring(beginIndex, str.length);
     }
     var popupwin = null;
-    function displayMapList(){
-        var queryString = "task=generateMapReport" ;
-        var url = "divisionCont?"+queryString;
+    function displayMapList() {
+        var queryString = "task=generateMapReport";
+        var url = "divisionCont?" + queryString;
         popupwin = openPopUp(url, "Mounting Type Map Details", 500, 1000);
 
     }
@@ -183,12 +190,52 @@
 
         return window.open(url, window_name, window_features);
     }
+  function generate_table(id) {
+             
+              
+             debugger;
+                var elementHiddenl = document.createElement("input");
+                elementHiddenl.name = "columns";
+                elementHiddenl.value = "";
+                elementHiddenl.type = "hidden";
+               
+                    var row = document.createElement("tr");
+                 
+                    for (var j = 0; j < 1; j++) {
+                
+                        var cell = document.createElement("td");
+                         var cell1 = document.createElement("td");
+                          var cellText = document.createElement("td");  
+                        
+                              
+                         cellText = document.createTextNode("Child Name");
+                        
+                        cell1.appendChild(cellText);
+                        row.appendChild(cell1);
+                  
+                        var element1 = document.createElement("input");
+                        element1.type = "text";
+                        element1.id = "hp"+j;
+                        element1.name = "hp"+j;
+                        element1.value = "";
+                        element1.size = 30;
+                        cell.appendChild(element1);
+                        row.appendChild(cell);
+            }
+
+                debugger;
+                var p = document.getElementById("tableDiv");
+                p.appendChild(row);
+
+
+//   divl.setAttribute("class", "center");
+            }
 
 </script>
 <style>
-a:hover{
-  background-color: yellow;
-}</style>
+    a:hover{
+        background-color: yellow;
+    }</style>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -198,7 +245,7 @@ a:hover{
     </head>
     <body>
         <table align="center" cellpadding="0" cellspacing="0" class="main">
-           <tr><td><%@include file="/layout/header.jsp" %></td></tr>
+            <tr><td><%@include file="/layout/header.jsp" %></td></tr>
             <tr>
                 <td><%@include file="/layout/menu.jsp" %> </td>
             </tr>
@@ -236,7 +283,7 @@ a:hover{
                                                 <th class="heading">S.No.</th>
                                                 <th class="heading">Operation Name</th>
                                                 <th class="heading">Parent Operation</th>
-                                                <th class="heading">Remark</th>
+                                                <th class="heading">Is Super Child</th>
                                             </tr>
                                             <!---below is the code to show all values on jsp page fetched from trafficTypeList of TrafficController     --->
                                             <c:forEach var="divisionTypeBean" items="${requestScope['divisionTypeList']}"  varStatus="loopCounter">
@@ -302,8 +349,8 @@ a:hover{
                         <tr>
                             <td align="center">
                                 <div>
-                                    <form name="form2" method="POST" action="OperationNameCont.do" onsubmit="return verify()">
-                                        <table id="table2"  class="content" border="0"  align="center" width="600">
+                                    <form name="form2" id="form2" method="POST" action="OperationNameCont.do" onsubmit="return verify()">
+                                        <table id="table2"  class="content" border="0" name="tableChild" align="center" width="600">
                                             <tr id="message">
                                                 <c:if test="${not empty message}">
                                                     <td colspan="2" bgcolor="${msgBgColor}"><b>Result: ${message}</b></td>
@@ -313,15 +360,28 @@ a:hover{
                                                 <th class="heading1">Operation Name </th>
 
                                                 <td><input class="input" type="text" id="operation_name" name="operation_name" value="" size="40" disabled>
-                                                <input class="input" type="hidden" id="operation_name_id" name="operation_name_id" value="" ></td>
+                                                    <input class="input" type="hidden" id="operation_name_id" name="operation_name_id" value="" ></td>
                                             </tr>
-                                              <tr>
+                                            <tr>
                                                 <th class="heading1">Parent Operation Name</th>
                                                 <td><input class="input" type="text" id="parent_operation" name="parent_operation" value="${searchOperationName}" size="40" disabled></td>
                                             </tr>
+                                            <tr id="mainTable">
+                                                 <td>
+                                    <div id="tableDiv" class="divtab"></div>
+                                </td>
+                            </tr>
                                             <tr>
-                                                <th class="heading1">Remark</th>
-                                                <td><input class="input" type="text" id="remark" name="remark" value="" size="40" disabled></td>
+                                                <th class="heading1">Is Super Child</th>
+<!--                                                <td><input class="input" type="text" id="remark" name="remark" value="" size="40" disabled></td>-->
+                                                <td> <select name="remark" id="remark">
+                                                        <option value="">--select--</option>
+                                                        <option value="yes">yes</option>
+                                                        <option value="no">no</option>
+                                                       
+                                                    </select>
+                                                    <input class="button"  type="button"  id="add" name="addChild" value="Add" onclick="generate_table(id)"></td>
+                                                    
                                             </tr>
 
                                             <tr>

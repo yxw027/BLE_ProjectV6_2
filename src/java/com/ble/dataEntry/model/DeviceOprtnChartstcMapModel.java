@@ -123,7 +123,7 @@ public boolean reviseRecords(DeviceOprtnChartstcMapBean ruleBean){
     }
 
 
-  public int getNoOfRows(String searchManufacturerName) {
+    public int getNoOfRows(String searchManufacturerName) {
 //        String query = " select count(*) "
 //                      +" from command c,device d "
 //                      +" where c.device_id = d.id "
@@ -162,8 +162,63 @@ public boolean reviseRecords(DeviceOprtnChartstcMapBean ruleBean){
         System.out.println("No of Rows in Table for search is" + noOfRows);
         return noOfRows;
     }
+    
+    
+     public int getNoOfRowsnew(String searchManufacturerName, String Devicetype,String Modelname) {
+//        String query = " select count(*) "
+//                      +" from command c,device d "
+//                      +" where c.device_id = d.id "
+//                      + " and IF('" + searchCommandName + "' = '', command LIKE '%%',command =?) "
+//                      //+ " and IF('" + searchCommandName + "' = '', device_name LIKE '%%',device_name =?) "
+//                      +" and c.active='Y' ";
+//        String query1="select count(*) "
+//      +" from manufacturer m,device_type dt,model md,operation_name op_n,command c,command_type ct,device d "
+//      +" where c.device_id=d.id and d.manufacture_id = m.id "
+//      +" and d.device_type_id = dt.id and d.model_id = md.id "
+//      +" and c.operation_id = op_n.id and c.command_type_id = ct.id "
+//      +" and IF('" + searchCommandName + "' = '', c.command LIKE '%%',c.command =?) "
+//      +" and IF('" + searchDeviceName + "' = '', md.device_name LIKE '%%',md.device_name =?) "
+//      +" and IF('" + searchManufacturerName + "' = '', m.name LIKE '%%',m.name =?) "
+//      +" and IF('" + searchDeviceType + "' = '', dt.type LIKE '%%',dt.type =?) "
+//      +" and c.active='Y' ";
 
-  public List<DeviceOprtnChartstcMapBean> showData(int lowerLimit, int noOfRowsToDisplay,String searchManufacturerName) {
+      String query1="SELECT count(*) FROM device_characteristic_ble_map "
+              + "inner join device on device.id = device_characteristic_ble_map.device_id "
+              + "inner join manufacturer on device.manufacture_id= manufacturer.id "
+              + "inner join device_type on device.device_type_id= device_type.id "
+              + "inner join model on device.model_id = model.id "
+              + "inner join charachtristics c1 on device_characteristic_ble_map.read_characteristic_id = c1.id "
+              + "inner join charachtristics c2 on device_characteristic_ble_map.write_characteristic_id = c2.id "
+              + "inner join servicies on c1.service_id = servicies.id "
+              + "inner join ble_operation_name on ble_operation_name.ble_operation_name_id = device_characteristic_ble_map.ble_operation_name_id "
+              + "where device_characteristic_ble_map.active = 'Y' and device.active = 'Y' "
+              + "and manufacturer.active = 'Y' and device_type.active = 'Y' and model.active = 'Y' "
+              + "and c1.active = 'Y' and c2.active = 'Y' and servicies.active = 'Y' and ble_operation_name.active = 'Y' "
+              + "and  manufacturer.name='"+searchManufacturerName+"' and device_type.type='"+Devicetype+"'"
+      + " and model.device_name='"+Modelname+"'";
+
+
+        int noOfRows = 0;
+        try {
+            PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
+            //stmt.setString(1, searchCommandName);
+            //stmt.setString(2, searchDeviceName);
+            //stmt.setString(3, searchManufacturerName);
+            //stmt.setString(4, searchDeviceType);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            noOfRows = rs.getInt(1);
+        } catch (Exception e) {
+            System.out.println("Error inside getNoOfRows CommandModel" + e);
+        }
+        System.out.println("No of Rows in Table for search is" + noOfRows);
+        return noOfRows;
+    }
+    
+    
+      
+
+  public List<DeviceOprtnChartstcMapBean> showData(int lowerLimit, int noOfRowsToDisplay,String searchManufacturerName, String Devicetype,String Modelname) {
         List<DeviceOprtnChartstcMapBean> list = new ArrayList<DeviceOprtnChartstcMapBean>();
          String addQuery = " LIMIT " + lowerLimit + ", " + noOfRowsToDisplay;
           if(lowerLimit == -1)
@@ -185,13 +240,19 @@ public boolean reviseRecords(DeviceOprtnChartstcMapBean ruleBean){
                       +" where device_characteristic_ble_map.active = 'Y' and device.active = 'Y' and " 
                       +" manufacturer.active = 'Y' and device_type.active = 'Y' and  "
                       +" model.active = 'Y' and c1.active = 'Y' and c2.active = 'Y' and "
-                      +" servicies.active = 'Y' and ble_operation_name.active = 'Y' ";
+                      +" servicies.active = 'Y' and ble_operation_name.active = 'Y' "
+                + "and IF('" +searchManufacturerName + "' = '', manufacturer.name LIKE '%%',manufacturer.name =?)"
+                + "and IF('" +Devicetype + "' = '', device_type.type LIKE '%%',device_type.type =?) "
+                + "and iF('" +Modelname + "'='',model.device_name  LIKE '%%',model.device_name =?)"
+              
+                +addQuery;
 
         try {
+
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);
-            //pstmt.setString(1, searchCommandName);
-            //pstmt.setString(2, searchDeviceName);
-            //pstmt.setString(3, searchManufacturerName);
+            pstmt.setString(1, searchManufacturerName);
+            pstmt.setString(2, Devicetype);
+            pstmt.setString(3, Modelname);
             //pstmt.setString(4, searchDeviceType);
             ResultSet rset = pstmt.executeQuery();
             while (rset.next()) {
