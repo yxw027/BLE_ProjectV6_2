@@ -10,7 +10,7 @@ package com.ble.dataEntry.bean;
  * @author Shobha
  */
 public class OperationNameBean {
-    String operation_name,remark,parent_operation;
+    String operation_name,remark,parent_operation,is_super_child;
     int operation_name_id;
 
     public String getOperation_name() {
@@ -43,6 +43,14 @@ public class OperationNameBean {
 
     public void setParent_operation(String parent_operation) {
         this.parent_operation = parent_operation;
+    }
+
+    public String getIs_super_child() {
+        return is_super_child;
+    }
+
+    public void setIs_super_child(String is_super_child) {
+        this.is_super_child = is_super_child;
     }
 
     

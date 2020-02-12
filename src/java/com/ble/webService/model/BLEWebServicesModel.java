@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Random;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -146,7 +147,7 @@ public class BLEWebServicesModel {
         {
         JSONArray rowData = new JSONArray();
         String query = null;
-        query = "select id,operation_name,remark, parent_id "
+        query = "select id,operation_name,remark, parent_id,is_super_child "
                 +" from operation_name op_n "
                 +" where op_n.active='Y'";
         try {
@@ -158,6 +159,7 @@ public class BLEWebServicesModel {
                  obj.put("operation_name",rset.getString("operation_name"));
                  obj.put("remark",rset.getString("remark"));
                  obj.put("parent_id",rset.getString("parent_id"));
+                 obj.put("is_super_child",rset.getString("is_super_child"));
                  rowData.add(obj);
            }
         } catch (Exception e) {
@@ -297,7 +299,7 @@ public class BLEWebServicesModel {
         String query = null;
         query = "select device_command_id,order_no,delay,device_id,command_id,operation_id,remark"
                 +" from device_command_map c "
-                +" where c.active='Y' ";
+                +" where c.active='Y' ORDER BY c.order_no ASC ";
         try {
             PreparedStatement pstmt = connection.prepareStatement(query);
             ResultSet rset = pstmt.executeQuery();
@@ -633,6 +635,175 @@ public class BLEWebServicesModel {
         return rowData;
     }
 
+    public String saveDeviceReg(String device_type,String manu_name,String device_name,String device_no){
+    String status = "";
+    int device_registration_id=0;
+    int manufacture_id=getManufactureId(manu_name);
+    int device_type_id = getDeviceTypeId(device_type);
+    int model_id = getModelId(device_name,device_no);
+    int device_id = getDeviceId(manufacture_id,device_type_id,model_id);
+    String lat_re_no = getLatestRegNo();
+    int update_reg_no = Integer.parseInt(lat_re_no.split("_")[1]) + 1;
+    String reg_no1 = "D_"+update_reg_no;
+    Random random = new Random();        
+    int rand_int1 = random.nextInt(100000);
+    String pass = "P_"+rand_int1;
+    String query = " insert into device_registration(device_id,reg_no,password,remark)"
+                       +" values(?,?,?,?) ";
+        int rowsAffected = 0;
+        try {
+           // java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
+            PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query);
+            pstmt.setInt(1,device_id);
+            pstmt.setString(2,reg_no1);
+            pstmt.setString(3,pass);
+            pstmt.setString(4,"");
+//            pstmt.setString(5,deviceRegistrationBean.getRemark());
+            rowsAffected = pstmt.executeUpdate();
+//            ResultSet rs = pstmt.getGeneratedKeys();
+//           if(rs.next()){
+//               device_registration_id=rs.getInt(1);
+//           }
+        } catch (Exception e) {
+            System.out.println("Error while inserting record...." + e);
+        }
+        if (rowsAffected > 0) {
+            saveDeviceAllocationStratus(device_registration_id);
+            status=device_id+","+reg_no1+","+pass;
+            message = "Record saved successfully.";
+            msgBgColor = COLOR_OK;
+        } else {
+            message = "Cannot save the record, some error.";
+            msgBgColor = COLOR_ERROR;
+        }    
+    return status;
+    }
+
+public void saveDeviceAllocationStratus(int device_registration_id){
+     device_registration_id = getLastdeviceRegistrationId(); 
+     String query = " insert into device_allocation_status(device_registration_id,is_allocate,remark)"
+                       +" values(?,?,?) ";
+        int rowsAffected = 0;
+        try {
+            java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
+
+            pstmt.setInt(1,device_registration_id);
+            pstmt.setString(2,"Yes");
+            pstmt.setString(3,"");
+//            pstmt.setString(4,deviceRegistrationBean.getSale_date());
+//            pstmt.setString(5,deviceRegistrationBean.getRemark());
+
+            rowsAffected = pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error while inserting record...." + e);
+        }
+        if (rowsAffected > 0) {           
+        } 
+    }
+
+public int getManufactureId(String manufactureName) {
+      String query1="select id from manufacturer m "
+                    +" where m.name=? "
+                    +" and m.active='Y' ";
+        int manufacturer_id = 0;
+        try {
+            PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
+            stmt.setString(1, manufactureName);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            manufacturer_id = rs.getInt("id");
+        } catch (Exception e) {
+            System.out.println("Error inside getNoOfRows CommandModel" + e);
+        }
+        return manufacturer_id;
+    }
+
+public int getLastdeviceRegistrationId() {
+      String query1="select id from device_registration m "                                     
+              + " order by id desc limit 1";
+         int manufacturer_id = 0;
+        try {
+            PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);           
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            manufacturer_id = rs.getInt("id");
+        } catch (Exception e) {
+            System.out.println("Error inside getNoOfRows CommandModel" + e);
+        }
+        return manufacturer_id;
+    }
+    
+    public String getLatestRegNo() {
+      String query1="select reg_no from device_registration m "
+                    +" where m.active='Y'"
+                   + " order by reg_no desc limit 1";
+                    
+        String reg_no = "D_0";
+        try {
+            PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);          
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            reg_no = rs.getString("reg_no");
+        } catch (Exception e) {
+            System.out.println("Error inside getNoOfRows CommandModel" + e);
+        }
+        return reg_no;
+    }
+    
+    public int getDeviceTypeId(String deviceTypeName) {
+      String query1="select id from device_type d "
+                    +" where d.type=? "
+                    +" and d.active='Y' ";
+        int device_type_id = 0;
+        try {
+            PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
+            stmt.setString(1, deviceTypeName);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            device_type_id = rs.getInt("id");
+        } catch (Exception e) {
+            System.out.println("Error inside getNoOfRows CommandModel" + e);
+        }
+        return device_type_id;
+    }
+
+    public int getModelId(String device_name,String device_no) {
+      String query1="select id from model m "
+                    +" where m.device_name=? and m.device_no=? "
+                    +" and m.active='Y' ";
+        int model_id = 0;
+        try {
+            PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
+            stmt.setString(1,device_name);
+            stmt.setString(2,device_no);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            model_id = rs.getInt("id");
+        } catch (Exception e) {
+            System.out.println("Error inside getNoOfRows CommandModel" + e);
+        }
+        return model_id;
+    }
+    public int getDeviceId(int manufacture_id,int device_type_id,int model_id) {
+      String query1="select d.id from device d "
+                    +" where d.manufacture_id=? "
+                    +" and d.device_type_id=? "
+                    +" and d.model_id=? "
+                    +" and d.active='Y' ";
+        int device_id = 0;
+        try {
+            PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
+            stmt.setInt(1,manufacture_id);
+            stmt.setInt(2,device_type_id);
+            stmt.setInt(3,model_id);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            device_id = rs.getInt("id");
+        } catch (Exception e) {
+            System.out.println("Error inside getNoOfRows CommandModel" + e);
+        }
+        return device_id;
+    }
 
 
 
@@ -648,7 +819,7 @@ public class BLEWebServicesModel {
         try {
             System.out.println("hii inside setConnection() method");
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ble_database6", "root", "jpss");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ble_database6", "jpss_2", "jpss_1277");
         } catch (Exception e) {
             System.out.println("BLEWebServicesModel setConnection() Error: " + e);
         }

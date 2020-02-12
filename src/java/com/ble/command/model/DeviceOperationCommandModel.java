@@ -1176,7 +1176,8 @@ public class DeviceOperationCommandModel {
 
     public List<String> getOperationName(String q) {
         List<String> list = new ArrayList<String>();
-        String query = "select operation_name from operation_name group by operation_name order by operation_name desc;";
+//        String query = "select operation_name from operation_name group by operation_name order by operation_name desc;";
+  String query = "select operation_name from operation_name where is_super_child='on' group by operation_name order by operation_name desc;";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;

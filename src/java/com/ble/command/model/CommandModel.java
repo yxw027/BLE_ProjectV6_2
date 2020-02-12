@@ -245,73 +245,73 @@ public class CommandModel {
 //       return status;
 //
 //    }
-public boolean reviseRecords(CommandBean bean){
-    boolean status=false;
-    String query="";
-    int rowsAffected=0;
-        int manufacturer_id = getManufacturerId(bean.getManufacturer());
-        int deviceType_id = getDeviceTypeId(bean.getDevice_type());
-        int model_id = getModelId(bean.getDevice_name(),bean.getDevice_no());
-
-        int device_id = getDeviceId(manufacturer_id,deviceType_id,model_id);
-
-        int operation_id = getOperationId(bean.getOperation_name());
-        int command_type_id = getCommandTypeId(bean.getCommand_type());
-
-
-      String query1 = " SELECT max(revision_no) revision_no FROM command c WHERE c.id = "+bean.getCommand_id()+" && active='Y' ORDER BY revision_no DESC";
-      String query2 = " UPDATE command SET active=? WHERE id = ? && revision_no = ? ";
-      String query3 = " INSERT INTO command (id,command,starting_del,end_del,remark,command_type_id,revision_no,active,format,selection,input) VALUES (?,?,?,?,?,?,?,?,?,?,?) ";
-
-      int updateRowsAffected = 0;
-      try {
-           PreparedStatement ps=(PreparedStatement) connection.prepareStatement(query1);
-           ResultSet rs = ps.executeQuery();
-           if(rs.next()){
-           PreparedStatement pst = (PreparedStatement) connection.prepareStatement(query2);
-           pst.setString(1,  "N");
-           pst.setInt(2,bean.getCommand_id());
-           pst.setInt(3, rs.getInt("revision_no"));
-           updateRowsAffected = pst.executeUpdate();
-             if(updateRowsAffected >= 1){
-             int rev = rs.getInt("revision_no")+1;
-             PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3);
-             psmt.setInt(1,bean.getCommand_id());
-            // psmt.setInt(2,device_id);
-             psmt.setString(2,bean.getCommand());
-            // psmt.setInt(4,operation_id);
-             psmt.setString(3,bean.getStarting_del());
-             psmt.setString(4,bean.getEnd_del());
-             psmt.setString(5,bean.getRemark());
-             psmt.setInt(6,command_type_id);
-             psmt.setInt(7,rev);
-             psmt.setString(8,"Y");
-             psmt.setString(9, bean.getFormat());
-             psmt.setInt(10, bean.getSelection_no());
-             psmt.setInt(11, bean.getInput_no());
-
-             int a = psmt.executeUpdate();
-              if(a > 0)
-              status=true;
-             }
-           }
-          } catch (Exception e)
-             {
-              System.out.println("CommandModel reviseRecord() Error: " + e);
-             }
-      if (status) {
-             message = "Record updated successfully......";
-            msgBgColor = COLOR_OK;
-            System.out.println("Inserted");
-        } else {
-             message = "Record Not updated Some Error!";
-            msgBgColor = COLOR_ERROR;
-            System.out.println("not updated");
-        }
-
-       return status;
-
-    }
+//public boolean reviseRecords(CommandBean bean){
+//    boolean status=false;
+//    String query="";
+//    int rowsAffected=0;
+//        int manufacturer_id = getManufacturerId(bean.getManufacturer());
+//        int deviceType_id = getDeviceTypeId(bean.getDevice_type());
+//        int model_id = getModelId(bean.getDevice_name(),bean.getDevice_no());
+//
+//        int device_id = getDeviceId(manufacturer_id,deviceType_id,model_id);
+//
+//        int operation_id = getOperationId(bean.getOperation_name());
+//        int command_type_id = getCommandTypeId(bean.getCommand_type());
+//
+//
+//      String query1 = " SELECT max(revision_no) revision_no FROM command c WHERE c.id = "+bean.getCommand_id()+" && active='Y' ORDER BY revision_no DESC";
+//      String query2 = " UPDATE command SET active=? WHERE id = ? && revision_no = ? ";
+//      String query3 = " INSERT INTO command (id,command,starting_del,end_del,remark,command_type_id,revision_no,active,format,selection,input) VALUES (?,?,?,?,?,?,?,?,?,?,?) ";
+//
+//      int updateRowsAffected = 0;
+//      try {
+//           PreparedStatement ps=(PreparedStatement) connection.prepareStatement(query1);
+//           ResultSet rs = ps.executeQuery();
+//           if(rs.next()){
+//           PreparedStatement pst = (PreparedStatement) connection.prepareStatement(query2);
+//           pst.setString(1,  "N");
+//           pst.setInt(2,bean.getCommand_id());
+//           pst.setInt(3, rs.getInt("revision_no"));
+//           updateRowsAffected = pst.executeUpdate();
+//             if(updateRowsAffected >= 1){
+//             int rev = rs.getInt("revision_no")+1;
+//             PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3);
+//             psmt.setInt(1,bean.getCommand_id());
+//            // psmt.setInt(2,device_id);
+//             psmt.setString(2,bean.getCommand());
+//            // psmt.setInt(4,operation_id);
+//             psmt.setString(3,bean.getStarting_del());
+//             psmt.setString(4,bean.getEnd_del());
+//             psmt.setString(5,bean.getRemark());
+//             psmt.setInt(6,command_type_id);
+//             psmt.setInt(7,rev);
+//             psmt.setString(8,"Y");
+//             psmt.setString(9, bean.getFormat());
+//             psmt.setInt(10, bean.getSelection_no());
+//             psmt.setInt(11, bean.getInput_no());
+//
+//             int a = psmt.executeUpdate();
+//              if(a > 0)
+//              status=true;
+//             }
+//           }
+//          } catch (Exception e)
+//             {
+//              System.out.println("CommandModel reviseRecord() Error: " + e);
+//             }
+//      if (status) {
+//             message = "Record updated successfully......";
+//            msgBgColor = COLOR_OK;
+//            System.out.println("Inserted");
+//        } else {
+//             message = "Record Not updated Some Error!";
+//            msgBgColor = COLOR_ERROR;
+//            System.out.println("not updated");
+//        }
+//
+//       return status;
+//
+//    }
 public boolean updateRecords(CommandBean bean){
     boolean status=false;
  
@@ -329,7 +329,7 @@ public boolean updateRecords(CommandBean bean){
           
            
          
-             psmt.setInt(1,bean.getCommand_id());
+             psmt.setInt(1,id);
             // psmt.setInt(2,device_id);
              psmt.setString(2,bean.getCommand());
             // psmt.setInt(4,operation_id);
@@ -595,6 +595,31 @@ public boolean updateRecords(CommandBean bean){
                 String operation_name = rset.getString("operation_name");
                 if (operation_name.toUpperCase().startsWith(q.toUpperCase())) {
                     list.add(operation_name);
+                    count++;
+                }
+            }
+            if (count == 0) {
+                list.add("No such Operation Name exists.......");
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR inside CommandModel - " + e);
+            message = "Something going wrong";
+            //messageBGColor = "red";
+        }
+        return list;
+    }
+   public List<String> getCommandParameter(String q) {
+        List<String> list = new ArrayList<String>();
+        String query = "select parameter_name from parameter ct group by parameter_name order by parameter_name desc ";
+        try {
+            ResultSet rset = connection.prepareStatement(query).executeQuery();
+            int count = 0;
+            q = q.trim();
+            while (rset.next()) {    // move cursor from BOR to valid record.
+               
+                String parameter_name = rset.getString("parameter_name");
+                if (parameter_name.toUpperCase().startsWith(q.toUpperCase())) {
+                    list.add(parameter_name);
                     count++;
                 }
             }

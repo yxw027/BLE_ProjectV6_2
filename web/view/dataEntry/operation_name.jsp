@@ -50,6 +50,7 @@
         document.getElementById("operation_name").disabled = false;
         document.getElementById("parent_operation").disabled = false;
         document.getElementById("remark").disabled = false;
+        document.getElementById("is_super_child").disabled = false;
 
         document.getElementById("save").disabled = false;
 //        document.getElementById("revise").disabled =false;
@@ -126,7 +127,7 @@
     }
     function fillColumns(id) {
         var noOfRowsTraversed = document.getElementById("noOfRowsTraversed").value;
-        var noOfColumns = 5;
+        var noOfColumns = 6;
         var columnId = id;
         <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
         columnId = columnId.substring(3, id.length);
@@ -147,7 +148,8 @@
         document.getElementById("operation_name_id").value = document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
         document.getElementById("operation_name").value = document.getElementById(t1id + (lowerLimit + 2)).innerHTML;
         document.getElementById("parent_operation").value = document.getElementById(t1id + (lowerLimit + 3)).innerHTML;
-        document.getElementById("remark").value = document.getElementById(t1id + (lowerLimit + 4)).innerHTML;
+        document.getElementById("remark").value = document.getElementById(t1id + (lowerLimit + 5)).innerHTML;
+//           document.getElementById("is_super_child").value = document.getElementById(t1id + (lowerLimit + 5)).innerHTML;
 
         //       var b=  document.getElementById(t1id +(lowerLimit+8)).innerHTML;
         // alert(b);
@@ -283,7 +285,11 @@
                                                 <th class="heading">S.No.</th>
                                                 <th class="heading">Operation Name</th>
                                                 <th class="heading">Parent Operation</th>
+                                                 
                                                 <th class="heading">Is Super Child</th>
+<!--                                                 <th class="heading">Is Super Parent</th>-->
+<!--                                                  <th class="heading">No Child</th>-->
+                                                  <th class="heading">Remark</th>
                                             </tr>
                                             <!---below is the code to show all values on jsp page fetched from trafficTypeList of TrafficController     --->
                                             <c:forEach var="divisionTypeBean" items="${requestScope['divisionTypeList']}"  varStatus="loopCounter">
@@ -296,7 +302,10 @@
                                                     <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">${lowerLimit - noOfRowsTraversed + loopCounter.count}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.operation_name}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.parent_operation}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.remark}</td>
+                                                   
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.is_super_child}</td>
+
+                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.remark}</td>
 
                                                 </tr>
                                             </c:forEach>
@@ -361,26 +370,36 @@
 
                                                 <td><input class="input" type="text" id="operation_name" name="operation_name" value="" size="40" disabled>
                                                     <input class="input" type="hidden" id="operation_name_id" name="operation_name_id" value="" ></td>
+                                              
                                             </tr>
                                             <tr>
                                                 <th class="heading1">Parent Operation Name</th>
                                                 <td><input class="input" type="text" id="parent_operation" name="parent_operation" value="${searchOperationName}" size="40" disabled></td>
+                                             
                                             </tr>
-                                            <tr id="mainTable">
+<!--                                            <tr id="mainTable">
                                                  <td>
                                     <div id="tableDiv" class="divtab"></div>
                                 </td>
-                            </tr>
+                            </tr>-->
+                            <tr> <th class="heading1">Is Super Child</th>
+                                                
+                                                    <td><input type="checkbox" id="is_super_child" name="is_super_child"></td>
+<!--                                                     <th class="heading1">Is Super Parent</th>
+                                                     <td><input type="checkbox" id="IsSuperParent" name="IsSuperParent"></td>-->
+<!--                                                      <th class="heading1">No Child</th>
+                                                     <td><input type="checkbox" id="noChild" name="noChild"></td>-->
+                                               </tr>
                                             <tr>
-                                                <th class="heading1">Is Super Child</th>
-<!--                                                <td><input class="input" type="text" id="remark" name="remark" value="" size="40" disabled></td>-->
-                                                <td> <select name="remark" id="remark">
+                                                <th class="heading1">Remark</th>
+                                                <td><input class="input" type="text" id="remark" name="remark" value="" size="40" disabled></td>
+<!--                                                <td> <select name="remark" id="remark">
                                                         <option value="">--select--</option>
                                                         <option value="yes">yes</option>
                                                         <option value="no">no</option>
                                                        
-                                                    </select>
-                                                    <input class="button"  type="button"  id="add" name="addChild" value="Add" onclick="generate_table(id)"></td>
+                                                    </select>-->
+<!--                                                    <input class="button"  type="button"  id="add" name="addChild" value="Add" onclick="generate_table(id)"></td>-->
                                                     
                                             </tr>
 

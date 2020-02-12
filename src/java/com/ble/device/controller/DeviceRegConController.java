@@ -46,6 +46,11 @@ public class DeviceRegConController extends HttpServlet {
         deviceModel.setDb_username(ctx.getInitParameter("db_username"));
         deviceModel.setDb_password(ctx.getInitParameter("db_password"));
         deviceModel.setConnection();
+        int device_id=0;
+        String manu_name="";
+        String device_type="";
+        String device_name="";
+        String device_no="";
 
         String task = request.getParameter("task");
          try {
@@ -81,11 +86,15 @@ public class DeviceRegConController extends HttpServlet {
             task = "";
         } 
          if(task.equalsIgnoreCase("connection")){
-         String manu_name = request.getParameter("manufacturer_name");
-           String device_type = request.getParameter("device_type_name");
-            String device_name = request.getParameter("device_name");
-          String device_no = request.getParameter("device_no");             
-         String status = deviceModel.saveDeviceReg(device_type,manu_name,device_name,device_no);
+         manu_name = request.getParameter("manufacturer_name");
+          device_type = request.getParameter("device_type_name");
+           device_name = request.getParameter("device_name");
+           device_no = request.getParameter("device_no");   
+          int manufacture_id=deviceModel.getManufactureId(manu_name);
+          int device_type_id = deviceModel.getDeviceTypeId(device_type);
+        int model_id = deviceModel.getModelId(device_name,device_no);
+         device_id = deviceModel.getDeviceId(manufacture_id,device_type_id,model_id);          
+         //String status = deviceModel.saveDeviceReg(device_type,manu_name,device_name,device_no);
          }
          
          if(task.equalsIgnoreCase("send")){
@@ -93,7 +102,11 @@ public class DeviceRegConController extends HttpServlet {
              String[] idsToModel = request.getParameterValues("isCheck");
              String[] idsToOperation = request.getParameterValues("isCheckOperation");
              String[] idsToCommand = request.getParameterValues("isCheckCommand");
-             String check = deviceModel.sendToShweta(idsToModel,idsToOperation,idsToCommand);
+            // String check = deviceModel.sendToShweta(idsToModel,idsToOperation,idsToCommand);
+             String check = deviceModel.sendToShwetaTesting(idsToModel,idsToOperation,idsToCommand,device_id);
+             
+             
+//             String[] idsToModel = request.getParameterValues("isCheck");
 //            for (int i = 0; i < idsToModel.length; i++) {
 //                int model_id =  Integer.parseInt(idsToModel[i]);
 //                String[] idsToOperation = request.getParameterValues("isCheckOperation");
@@ -108,19 +121,20 @@ public class DeviceRegConController extends HttpServlet {
 //               }
          }
          
-          List<DeviceRegistrationBean> commandTypeList = deviceModel.showData();
+          List<DeviceRegistrationBean> commandTypeList = deviceModel.showData(device_id);
          
 
         System.out.println("color is :" + deviceModel.getMsgBgColor());
-        request.setAttribute("manufacturer", request.getParameter("manufacturer"));
-        request.setAttribute("device_type", request.getParameter("device_type"));
-        request.setAttribute("deviceName", request.getParameter("device_name"));
-        request.setAttribute("device_no", request.getParameter("device_no"));
+        request.setAttribute("manufacturer", manu_name);
+        request.setAttribute("device_type", device_type);
+        request.setAttribute("deviceName", device_name);
+        request.setAttribute("device_no", device_no);
         request.setAttribute("divisionTypeList", commandTypeList);
         request.setAttribute("IDGenerator", new UniqueIDGenerator());        
         request.setAttribute("message", deviceModel.getMessage());
         request.setAttribute("msgBgColor", deviceModel.getMsgBgColor());
         request.getRequestDispatcher("/deviceRegConnPage").forward(request, response);
+   
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

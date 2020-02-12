@@ -90,7 +90,13 @@
                 }
             }
         });
-
+      $("#command_parameter").autocomplete("CommandCont.do", {
+            extraParams: {
+                action1: function () {
+                    return "getCommandParameter"
+                }
+            }
+        });
 
 //        $('#btnDialog').click(function ()
 //{
@@ -342,6 +348,17 @@
         document.forms['redirectByte'].submit();
 
     }
+    function ph(value)
+    {
+       
+      var para=  document.getElementById('command_parameter').value;
+      var para1=  document.getElementById("command").value;
+      var para2=para1+para;
+       para1.value = para2; 
+          
+          $("#command").val(para2); 
+     
+    }
 
 </script>
 <style>
@@ -494,7 +511,9 @@ a:hover{
                                             </tr>
                                             <tr>
                                                 <th class="heading1">Command</th>
-                                                <td><input class="input" type="text" id="command" name="command" value="" size="40" disabled>
+<!--                                                <td><input class="input" type="text" id="command" name="command" value="" size="40" onchange="ph(value)" disabled>-->
+                                                    <td><input class="input" type="text" id="command" name="command" value="" size="40" onchange="ph(value)" disabled>
+                                                    <input class="input" type="text" id="command_parameter" name="command_parameter" placeholder="Select Parameter" value="" size="20"  >
                                                 <input class="input" type="hidden" id="command_id" name="command_id" value="" size="40"></td>
                                             </tr>
 

@@ -70,6 +70,7 @@ public class CommandController extends HttpServlet {
                 } else if (JQstring.equals("getCommandType")) {
                     list = commandModel.getCommandType(q);
                 }
+              
 //                else if (JQstring.equals("getSearchCommandName")) {
 //                    list = commandModel.getSearchCommandName(q);
 //                }
@@ -81,6 +82,11 @@ public class CommandController extends HttpServlet {
                     list = commandModel.getSearchDeviceType(q);
                 } else if (JQstring.equals("getSearchDeviceName")) {
                     list = commandModel.getSearchDeviceName(q);
+                }
+                   else if (JQstring.equals("getCommandParameter")) {
+              
+                    list = commandModel.getCommandParameter(q);
+                 
                 }
                 Iterator<String> iter = list.iterator();
                 while (iter.hasNext()) {

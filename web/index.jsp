@@ -109,6 +109,7 @@ a:hover{
                                     <button class="button" style="vertical-align:middle" type="button" value="device_registration_connection" name="device_registration_connection" onclick="goToDeviceMap3()" ><span> Device Registration Connection </span></button>
                                 </td>
                             </tr>
+                             
                         </table>
                     </DIV>
                 </td>

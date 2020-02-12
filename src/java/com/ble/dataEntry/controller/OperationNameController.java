@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -42,8 +42,13 @@ public class OperationNameController extends HttpServlet {
         operationNameModel.setDb_username(ctx.getInitParameter("db_username"));
         operationNameModel.setDb_password(ctx.getInitParameter("db_password"));
         operationNameModel.setConnection();
-
+  String IsSuperChild="";
+//  String IsSuperParent="";
+//  String NoChild="";
         String task = request.getParameter("task");
+         IsSuperChild = request.getParameter("IsSuperChild");
+//          IsSuperParent = request.getParameter("IsSuperParent");
+//          NoChild = request.getParameter("noChild");
          try {
             String JQstring = request.getParameter("action1");
             String q = request.getParameter("q");
@@ -101,6 +106,10 @@ public class OperationNameController extends HttpServlet {
             operationNameBean.setOperation_name(request.getParameter("operation_name"));
              operationNameBean.setParent_operation(request.getParameter("parent_operation"));
             operationNameBean.setRemark(request.getParameter("remark"));
+            operationNameBean.setIs_super_child(request.getParameter("is_super_child"));
+//            operationNameBean.setIs_super_parent(request.getParameter("IsSuperParent"));
+//            operationNameBean.setNo_child(request.getParameter("NoChild"));
+            
 
             if (operation_name_id == 0) {
                 System.out.println("Inserting values by model......");

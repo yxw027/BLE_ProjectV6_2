@@ -7,6 +7,7 @@ package com.ble.device.model;
 
 import com.ble.device.bean.DeviceBean;
 import com.ble.device.bean.DeviceRegistrationBean;
+import com.ble.webService.controller.BLEWebServicesController;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -349,12 +350,12 @@ public class DeviceRegConModel {
         return list;
     }
   
-  public List<DeviceRegistrationBean> showData() {
+   public List<DeviceRegistrationBean> showData(int device_id) {
         List<DeviceRegistrationBean> list = new ArrayList<DeviceRegistrationBean>();                       
         List<DeviceRegistrationBean> list1 = null;                       
-       //String query2= " select id,device_name from model where active='Y'";                     
-       String query2= " select m.id,d.id as device_id,m.device_name from device_map as map,device as d , model as m "
-               + "  where map.finished_device_id=31 and map.module_device_id = d.id and d.model_id = m.id and d.active='Y' and map.active='Y' and m.active='Y'";                     
+     //  String query2= " select id,device_name from model where active='Y'";
+       String query2= " select m.id,d.id as device_id,m.device_name,dt.id as device_type_id,dt.type as device_type from device_map as map,device as d , model as m , device_type as dt"
+               + "  where map.finished_device_id='"+ device_id +"' and map.module_device_id = d.id and d.model_id = m.id and d.device_type_id = dt.id and dt.active='Y' and d.active='Y' and map.active='Y' and m.active='Y'";  
         try {
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);         
             ResultSet rset = pstmt.executeQuery();
@@ -362,20 +363,11 @@ public class DeviceRegConModel {
                 DeviceRegistrationBean deviceBean = new DeviceRegistrationBean(); 
                 int id = rset.getInt("device_id");
                 deviceBean.setDevice_registration_id(rset.getInt("id"));                
+                deviceBean.setDevice_type_id(rset.getInt("device_type_id"));                
                 deviceBean.setDevice_name(rset.getString("device_name"));
                 List<DeviceRegistrationBean> operationList = showOffenceData(id);                
                 deviceBean.setDeviceregBean(operationList);
                 
-//                 Iterator<DeviceRegistrationBean> itr = operationList.iterator();
-//                if (itr.hasNext()) {
-//                    int op_id =itr.next().getOperation_id(); 
-//                List<DeviceRegistrationBean> commandList = showOffenceData1(op_id);
-//                deviceBean.setCommandListBean(commandList);   
-//                 list.add(deviceBean);
-//                }
-//                else{
-//                list.add(deviceBean);
-//                }
                 list.add(deviceBean);
             }
         } catch (Exception e) {
@@ -386,7 +378,7 @@ public class DeviceRegConModel {
         return list;
     }
   
- public List<DeviceRegistrationBean> showOffenceData(int model_id) {
+  public List<DeviceRegistrationBean> showOffenceData(int model_id) {
         List<DeviceRegistrationBean> list = new ArrayList<DeviceRegistrationBean>();
         String query;
         try {
@@ -397,7 +389,7 @@ public class DeviceRegConModel {
                 + " dcm.device_id,dcm.remark,dcm.delay,opn.operation_name,mf.name,m.device_name,m.device_no,dt.type"
                 + " from device_command_map dcm,device d,operation_name opn ,manufacturer mf,model m,device_type dt "
                 + " where dcm.device_id=d.id  and dcm.operation_id=opn.id  and mf.id=d.manufacture_id and d.model_id=m.id and d.device_type_id=dt.id and d.id='" + model_id + "'"
-		+ " and dcm.active='Y' and d.active='Y' and opn.active='Y' and mf.active='Y' and m.active='Y' and dt.active='Y' limit 1";
+		+ " and dcm.active='Y' and d.active='Y' and opn.active='Y' and mf.active='Y' and m.active='Y' and dt.active='Y' group by (opn.operation_name) order by (opn.id) asc";
             PreparedStatement pstmt = connection.prepareStatement(query);
             ResultSet rset = pstmt.executeQuery();
             while (rset.next()) {
@@ -424,7 +416,7 @@ public class DeviceRegConModel {
                      " dcm.device_id,dcm.remark,dcm.order_no,dcm.delay,opn.operation_name,c.command,mf.name,m.device_name,m.device_no,dt.type" +
                      " from device_command_map dcm,device d,operation_name opn,command c ,manufacturer mf,model m,device_type dt " +
                      " where dcm.device_id=d.id  and dcm.operation_id=opn.id and c.id=dcm.command_id  and mf.id=d.manufacture_id and d.model_id=m.id and d.device_type_id=dt.id and d.id='" + device_id + "' and opn.id='" + operation_id + "'" +
-                     " and dcm.active='Y' and d.active='Y' and opn.active='Y' and c.active='Y' and mf.active='Y' and m.active='Y' and dt.active='Y';";
+                     " and dcm.active='Y' and d.active='Y' and opn.active='Y' and c.active='Y' and mf.active='Y' and m.active='Y' and dt.active='Y'";
             PreparedStatement pstmt = connection.prepareStatement(query);
             ResultSet rset = pstmt.executeQuery();
             while (rset.next()) {
@@ -432,6 +424,8 @@ public class DeviceRegConModel {
                 int id = rset.getInt("id");
                 drb.setCommand_id(rset.getInt("id"));
                 drb.setCommand(rset.getString("command"));                  
+                drb.setOrder_no(rset.getString("order_no"));                  
+                drb.setDelay(rset.getString("delay"));                  
                 list.add(drb);
             }
         } catch (Exception e) {
@@ -475,6 +469,157 @@ public class DeviceRegConModel {
                //isOperationArr = arr;
                 return status;
   }
+  
+  public String sendToShwetaTesting(String arr[],String arrOperation[],String arrCommand[],int finished_id) throws InterruptedException{
+  String status = "check";
+  boolean user = true;
+  boolean user1 = true;
+  BLEWebServicesController ble = new BLEWebServicesController();
+  int j  = 0;
+  int k = 0;
+  int a = 0;
+  
+              try {       
+                  while(user1 == true){
+                isModuleOperation = "$$$$,07,D_2,01,startpacket,12,####";
+                 String startpacket=ble.deviceResponse;
+                 if(startpacket==null){
+                    startpacket = "";
+                   }else{
+                     System.out.println("mayank packet data .. " +startpacket );    
+                int x1 = startpacket.indexOf('$');
+                if(x1 >= 0){
+                startpacket =  startpacket.split(",")[4]; 
+                } 
+                 }
+                String startpacket1 =  isModuleOperation.split(",")[4]; 
+                if(startpacket.equalsIgnoreCase(startpacket1)){
+                user = false;
+                isModuleOperation = "end of file";
+                ble.deviceResponse = null;
+                }
+                 if(user == false){ 
+                  
+  
+                for (int i = 0; i < arr.length; i++) {
+                isModuleOperation = "end of file";
+                int model_id =  Integer.parseInt(arr[i].split(",")[0]);
+                int device_type_id =  Integer.parseInt(arr[i].split(",")[1]);
+                String[] idsToOperation = arrOperation;                
+                for ( j = 0; j < idsToOperation.length; j++) {                    
+                 int model_id1 = Integer.parseInt(idsToOperation[j].split(",")[1]);
+                 if(model_id1 == model_id){
+                    for(k=0; k < arrCommand.length ; k++){
+                        int op_id = Integer.parseInt(idsToOperation[j].split(",")[0]);
+                        int command_id1 = Integer.parseInt(arrCommand[k].split(",")[1]);                        
+                          if(command_id1 == op_id){
+                            long startTime = System.currentTimeMillis();
+                            while(true ||(System.currentTimeMillis()-startTime)<20000){
+                            String deviceResp =  ble.deviceResponse;                            
+                            String abc1="start";
+                            if(deviceResp==null){
+                            deviceResp = "";
+                            }else{
+                              
+                                int x = deviceResp.indexOf('$');
+                              if(x >= 0){
+                                  String  cmd = deviceResp.split(",")[1];
+                                  if(!cmd.equalsIgnoreCase("07")){
+                                    abc1 = deviceResp.split(",")[9];
+                                  }
+                              }
+                            }
+                           //  System.out.println("device resp ... "+deviceResp + "<br>");
+                              String abc="";
+                              String preSavedValue="";                               
+                             if(isModuleOperation==null || isModuleOperation.equalsIgnoreCase("end of file")){
+                            isModuleOperation = "end of file";
+                            }else{
+                                 preSavedValue=isModuleOperation;
+                              abc = isModuleOperation.split(",")[9];
+                             }
+                            
+                            if(abc1.equalsIgnoreCase(abc)){
+                           // isModuleOperation = "$$$$,05,D_2,06,"+device_type_id+","+idsToOperation[j].split(",")[0]+","+arrCommand[k].split(",")[2]+","+arrCommand[k].split(",")[3]+",123,{"+arrCommand[k].split(",")[0]+"},00,####";
+                            
+                            int re = insertDeviceConfigurationStatus(finished_id,model_id,Integer.parseInt(idsToOperation[j].split(",")[0]),Integer.parseInt(arrCommand[k].split(",")[2]),arrCommand[k].split(",")[0]);
+                            System.out.println(" matched  and  curent value is .. " +isModuleOperation+" and record updated status is ..."+re ); 
+                            isModuleOperation = null;
+                            //Thread.sleep(2 * 1000);
+                            //a = 0;
+                            break;
+                            }
+                            else{
+                             if(k == (arrCommand.length) -1){
+                             isModuleOperation = isModuleOperation;
+                             } else{ 
+                            
+                            isModuleOperation = "$$$$,05,D_2,06,"+device_type_id+","+idsToOperation[j].split(",")[0]+","+Integer.parseInt(arrCommand[k].split(",")[2])+","+Integer.parseInt(arrCommand[k].split(",")[3])+",123,{"+arrCommand[k].split(",")[0]+"},00,####";
+                            //isModuleOperation = isModuleOperation;
+                            System.out.println("previous value .. " +isModuleOperation );      
+                            //Thread.sleep(2 * 1000); 
+                            a = 0;
+                             }
+                             //a = 0;
+                           // break;
+                          }
+                            
+                            }
+                           //Thread.sleep(4 * 1000);
+                                                    
+                        }
+                        
+                    
+                    } 
+    	           k=0;
+//                 isModuleOperation = "$$$$,05,23,5,"+model_id+","+idsToOperation[j].split(",")[0]+",1,2,123,robinsingh,23,####";
+//                 System.out.println(isModuleOperation + "<br>");
+                 }
+               //  Thread.sleep(10 * 1000);
+                }
+                 j=0;                 	        
+               }
+                user1 = false;
+              } 
+                  //user1 = false;
+              }
+                 // user1 = false;
+              }
+              catch (Exception e){
+              System.out.println("some error .... "+ e);
+              }
+                isModuleOperation = "end of file";
+               //isOperationArr = arr;
+                return status;
+  }
+  
+  public int insertDeviceConfigurationStatus(int finished_id,int model_id , int op_id, int order_no, String command) {
+                
+        String query = " insert into deviceconfigstatus(finished_device_id,model_id,operation_id,order_no,command,status) "
+                       +" values(?,?,?,?,?,?) ";
+        int rowsAffected = 0;
+        try {
+            java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setInt(1, finished_id);
+            pstmt.setInt(2, model_id);
+            pstmt.setInt(3, op_id);            
+            pstmt.setInt(4, order_no);
+            pstmt.setString(5, command);
+            pstmt.setString(6, "yes");
+            rowsAffected = pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error while inserting record...." + e);
+        }
+        if (rowsAffected > 0) {
+            message = "Record saved successfully.";
+            msgBgColor = COLOR_OK;
+        } else {
+            message = "Cannot save the record, some error.";
+            msgBgColor = COLOR_ERROR;
+        }
+        return rowsAffected;
+
+    }
   
    public void closeConnection() {
         try {

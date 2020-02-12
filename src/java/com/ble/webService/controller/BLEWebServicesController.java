@@ -30,7 +30,7 @@ import org.json.simple.JSONObject;
 
 @Path("/")
 public class BLEWebServicesController {
-
+     public static String deviceResponse;
     @Resource
     WebServiceContext wsContext;  
     
@@ -101,12 +101,51 @@ public class BLEWebServicesController {
     }    
 
     @POST
+    @Path("/deviceRegRecords")
+    @Produces(MediaType.APPLICATION_JSON)//http://192.168.1.15:8084/BLE_Project/resources/getAllTableRecords
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String saveDeviceRegRecord(String dataString) {
+        String status = "some error";
+        String dataString1[] = dataString.split(",");
+        String manu_name = dataString1[0];
+        String device_type = dataString1[1];
+        String model_name = dataString1[2];
+        String model_no = dataString1[3];
+         BLEWebServicesModel bLEWebServicesModel = new BLEWebServicesModel();
+        try{       
+       bLEWebServicesModel.setConnection();
+       String devID_regNo_pass =  bLEWebServicesModel.saveDeviceReg(device_type,manu_name,model_name,model_no);
+       String devId= devID_regNo_pass.split(",")[0];
+       String regNo= devID_regNo_pass.split(",")[1];
+       String pass= devID_regNo_pass.split(",")[2];
+       status = "$$$$,04,0,6,"+regNo+","+pass+",120.138.10.146,8060,45.114.142.35,8060,12,####";
+        
+        }catch(Exception e){
+            System.out.println("Error in BLEWebServices 'requestData' url calling getWardData()..."+e);
+        }
+        return status;
+    }
+    
+    @POST
+    @Path("/checkDeviceResponse")
+    @Produces(MediaType.APPLICATION_JSON)//http://192.168.1.15:8084/BLE_Project/resources/getAllTableRecords
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void checkDeviceResponse(String dataString) {
+        String status = dataString.split(",")[0];
+        if(status.equalsIgnoreCase("$$$$")){
+            System.out.println("success");
+        }       
+    }
+    
+    
+     @POST
     @Path("/sendRequest")
     @Produces(MediaType.APPLICATION_JSON)//http://192.168.1.15:8084/BLE_Project/resources/getAllTableRecords
     @Consumes(MediaType.APPLICATION_JSON)
     public String  sendConfigurationReq(String dataString) {
         String status = "not ready";
-        System.out.println("shweta req data"+dataString);
+        deviceResponse = dataString;
+        System.out.println("mayank req data...   "+dataString);
         DeviceRegConModel drc = new DeviceRegConModel();
         String arr = drc.isModuleOperation;
         if(arr != null){

@@ -1,7 +1,7 @@
 <%-- 
     Document   : deviceRegConnPage
-    Created on : Dec 10, 2019, 4:06:06 PM
-    Author     : Administrator
+    Created on : Dec 5, 2019, 11:45:28 AM
+    Author     : rituk
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -17,11 +17,11 @@
 
 <link type="text/css" href="style/menu.css" rel="stylesheet"/>
 <script type="text/javascript" language="javascript">
-   $(document).ready(function () {
-     $(function () {
-         document.getElementById("td3").style.display = "none";
-     });
- });
+//   $(document).ready(function () {
+//     $(function () {
+//         document.getElementById("td3").style.display = "none";
+//     });
+// });
 
     jQuery(function() {
 $("#manufacturer_name").autocomplete("DeviceRegistrationCont.do", {
@@ -79,27 +79,25 @@ $("#manufacturer_name").autocomplete("DeviceRegistrationCont.do", {
     }
 
     function checkmethod(name,no){
-        alert(name+" and "+no);
-     //   document.getElementById("td"+no).style.display = "block";
-   // alert(document.getElementById("isCheck").value);
-    if(document.getElementById("isCheck").checked){
-       var check_value = document.getElementById("isCheck").value;
+       //alert(name+" and "+no);
+     //   document.getElementById("td"+no).style.display = "block";   
+    if(document.getElementById("isCheck").checked){    
         document.getElementById("td"+no).style.display = "block";
     }
-    else{
-         document.getElementById("td"+no).style.display = "none";
+    else{      
+          //document.getElementById("td"+no).style.display = "none";
+          document.getElementById("td"+no).style.display = "block";
     }
 
     }
 
-    function checkmethod1(name,no){
-        alert(name+" and "+no);
+    function checkmethod1(name,no){       
     if(document.getElementById("isCheckOperation").checked){
-       var check_value = document.getElementById("isCheckOperation").value;
         document.getElementById("tdC"+no).style.display = "block";
     }
     else{
-         document.getElementById("tdC"+no).style.display = "none";
+        // document.getElementById("tdC"+no).style.display = "none";
+         document.getElementById("td"+no).style.display = "block";
     }
         
     }
@@ -127,7 +125,7 @@ a:hover{
                 <tr><td>
                         <table align="center">
                             <tr>
-                                <td align="center" class="header_table" width="100%">Device Registration Connection</td>
+                                <td align="center" class="header_table" width="100%">Device Registration/Configuration Connection</td>
 
                             </tr>
                         </table>
@@ -141,20 +139,20 @@ a:hover{
 
                                     <tr>
                                         <th class="heading1">Manufacturer Name </th>
-                                        <td><input class="input" type="text" id="manufacturer_name" name="manufacturer_name" value="" size="40" disabled>                                           
+                                        <td><input class="input" type="text" id="manufacturer_name" name="manufacturer_name" value="${manufacturer}" size="40" >
                                     </tr>
 
                                     <tr>
                                         <th class="heading1">Device Type</th>
-                                        <td><input class="input" type="text" id="device_type_name" name="device_type_name" value="" size="40" disabled></td>
+                                        <td><input class="input" type="text" id="device_type_name" name="device_type_name" value="${device_type}" size="40" ></td>
                                     </tr>
                                     <tr>
                                         <th class="heading1">Model Name</th>
-                                        <td><input class="input" type="text" id="device_name" name="device_name" value="" size="40" disabled></td>
+                                        <td><input class="input" type="text" id="device_name" name="device_name" value="${deviceName}" size="40"></td>
                                     </tr>
                                     <tr>
                                         <th class="heading1">Model No.</th>
-                                        <td><input class="input" type="text" id="device_no" name="device_no" value="" size="40" disabled></td>
+                                        <td><input class="input" type="text" id="device_no" name="device_no" value="${device_no}" size="40" ></td>
                                     </tr>
 
                                     <tr>
@@ -183,7 +181,7 @@ a:hover{
                                     <!---below is the code to show all values on jsp page fetched from trafficTypeList of TrafficController     --->
                                     <c:forEach var="divisionTypeBean" items="${requestScope['divisionTypeList']}"  varStatus="loopCounter">
                                         <tr  class="${loopCounter.index % 2 == 0 ? 'even': 'odd'}">                                  
-                                            <td><input type="checkbox" id="isCheck" name="isCheck" value ="${divisionTypeBean.device_registration_id}" onclick="checkmethod('${divisionTypeBean.device_name}','${loopCounter.index}')"/>${divisionTypeBean.device_name}</td>
+                                            <td><input type="checkbox" id="isCheck" name="isCheck" value ="${divisionTypeBean.device_registration_id},${divisionTypeBean.device_type_id}" onclick="checkmethod('${divisionTypeBean.device_name}','${loopCounter.index}')"/>${divisionTypeBean.device_name}</td>
                                         <tr>
                                             <td  id="td${loopCounter.index}" align="center" style="display:none">
                                                 <DIV class="content_div">
@@ -194,7 +192,7 @@ a:hover{
                                                         <c:forEach var="typebean" items="${divisionTypeBean.deviceregBean}"  varStatus="loopCounter1">
                                                             <tr>
 <!--                                                                    <td  style="display:none"><input type="checkbox" name="name1" />${typebean.operation_id}</td>-->
-                                                                <td><input type="checkbox" id="isCheckOperation" name="isCheckOperation" value ="${typebean.operation_name},${divisionTypeBean.device_registration_id}"  onclick="checkmethod1('${divisionTypeBean.device_name}','${loopCounter1.index}')"/>${typebean.operation_name}</td>
+                                                                <td><input type="checkbox" id="isCheckOperation" name="isCheckOperation" value ="${typebean.operation_id},${divisionTypeBean.device_registration_id}"  onclick="checkmethod1('${divisionTypeBean.device_name}','${loopCounter1.index}')"/>${typebean.operation_name}</td>
 
                                                                 <!--          test for command    -->
 
@@ -207,7 +205,7 @@ a:hover{
                                                                             </tr>
                                                                             <c:forEach var="typebean1" items="${typebean.commandListBean}"  varStatus="loopCounter">
                                                                                 <tr>
-                                                                                     <td><input type="checkbox" id="isCheckCommand" name="isCheckCommand" value ="${typebean1.command},${typebean.operation_id}" checked="checked"/>${typebean1.command}</td>
+                                                                                    <td><input type="checkbox" id="isCheckCommand" name="isCheckCommand" value ="${typebean1.command},${typebean.operation_id},${typebean1.order_no},${typebean1.delay}" checked="checked"/>${typebean1.command}</td>
                                                                                 </tr>
                                                                             </c:forEach>
                                                                         </table>   </DIV>

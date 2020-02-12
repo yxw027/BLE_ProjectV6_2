@@ -13,14 +13,16 @@ import java.util.List;
  */
 public class DeviceRegistrationBean {
     int device_registration_id;
-    //int device_registration_id;
     int operation_id;
     int command_id;
-    String manufacture_name,device_type_name,device_name,device_no,registration_no,manufacture_date,sale_date,remark;
+    int device_type_id;
+    String manufacture_name,device_type_name,device_name,device_no,registration_no,manufacture_date,sale_date,remark,imei_no,password,field1,field2,field3,field4;
+    String command;
+    String operation_name;
+    String order_no;
+    String delay;
     List<DeviceRegistrationBean> deviceregBean;
     List<DeviceRegistrationBean> commandListBean;
-    String operation_name;
-    String command;
 
     public String getDevice_name() {
         return device_name;
@@ -94,6 +96,54 @@ public class DeviceRegistrationBean {
         this.sale_date = sale_date;
     }
 
+    public String getImei_no() {
+        return imei_no;
+    }
+
+    public void setImei_no(String imei_no) {
+        this.imei_no = imei_no;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getField1() {
+        return field1;
+    }
+
+    public void setField1(String field1) {
+        this.field1 = field1;
+    }
+
+    public String getField2() {
+        return field2;
+    }
+
+    public void setField2(String field2) {
+        this.field2 = field2;
+    }
+
+    public String getField3() {
+        return field3;
+    }
+
+    public void setField3(String field3) {
+        this.field3 = field3;
+    }
+
+    public String getField4() {
+        return field4;
+    }
+
+    public void setField4(String field4) {
+        this.field4 = field4;
+    }
+
     public int getOperation_id() {
         return operation_id;
     }
@@ -108,6 +158,22 @@ public class DeviceRegistrationBean {
 
     public void setCommand_id(int command_id) {
         this.command_id = command_id;
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
+    }
+
+    public String getOperation_name() {
+        return operation_name;
+    }
+
+    public void setOperation_name(String operation_name) {
+        this.operation_name = operation_name;
     }
 
     public List<DeviceRegistrationBean> getDeviceregBean() {
@@ -126,20 +192,28 @@ public class DeviceRegistrationBean {
         this.commandListBean = commandListBean;
     }
 
-    public String getOperation_name() {
-        return operation_name;
+    public String getOrder_no() {
+        return order_no;
     }
 
-    public void setOperation_name(String operation_name) {
-        this.operation_name = operation_name;
+    public void setOrder_no(String order_no) {
+        this.order_no = order_no;
     }
 
-    public String getCommand() {
-        return command;
+    public String getDelay() {
+        return delay;
     }
 
-    public void setCommand(String command) {
-        this.command = command;
+    public void setDelay(String delay) {
+        this.delay = delay;
+    }
+
+    public int getDevice_type_id() {
+        return device_type_id;
+    }
+
+    public void setDevice_type_id(int device_type_id) {
+        this.device_type_id = device_type_id;
     }
 
     
