@@ -158,8 +158,8 @@ public class SelectionController extends HttpServlet {
             int count = Integer.parseInt(request.getParameter("count"));
             selection_id = Integer.parseInt(request.getParameter("selection_id" + count));
             int selection_value_no = Integer.parseInt(request.getParameter("selection_value_no" + count));
-            selection_no = request.getParameter("selection_no");
-            command_id = request.getParameter("command_id");
+            selection_no = request.getParameter("selection_no1");
+            command_id = request.getParameter("command_id1");
             String command_name = request.getParameter("command_name" + count);
             String parameter = request.getParameter("parameter" + count);
             String parameter_type = request.getParameter("parameter_type" + count);
