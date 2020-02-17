@@ -146,8 +146,14 @@ public class ModelController extends HttpServlet {
 
          noOfRowsInTable = model.getNoOfRows(searchDeviceName);
 
-         if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
+         if (buttonAction.equals("Next")){
+             searchDeviceName=request.getParameter("manname");
+            noOfRowsInTable = model.getNoOfRows(searchDeviceName);
+             
+         } // lowerLimit already has value such that it shows forward records, so do nothing here.
          else if (buttonAction.equals("Previous")) {
+              searchDeviceName=request.getParameter("manname");
+            noOfRowsInTable = model.getNoOfRows(searchDeviceName);
             int temp = lowerLimit - noOfRowsToDisplay - noOfRowsTraversed;
             if (temp < 0) {
                 noOfRowsToDisplay = lowerLimit - noOfRowsTraversed;
@@ -156,8 +162,11 @@ public class ModelController extends HttpServlet {
                 lowerLimit = temp;
             }
         } else if (buttonAction.equals("First")) {
+              searchDeviceName=request.getParameter("manname");
             lowerLimit = 0;
         } else if (buttonAction.equals("Last")) {
+             searchDeviceName=request.getParameter("manname");
+            noOfRowsInTable = model.getNoOfRows(searchDeviceName);
             lowerLimit = noOfRowsInTable - noOfRowsToDisplay;
             if (lowerLimit < 0) {
                 lowerLimit = 0;
@@ -191,7 +200,7 @@ public class ModelController extends HttpServlet {
         request.setAttribute("device_type", request.getParameter("device_type"));
         request.setAttribute("deviceName", request.getParameter("device_name"));
         request.setAttribute("device_no", request.getParameter("device_no"));
-
+ request.setAttribute("manname", searchDeviceName);
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("searchDeviceName",searchDeviceName );
         request.setAttribute("message", model.getMessage());

@@ -134,13 +134,15 @@ public class DeviceMapController extends HttpServlet {
 
         String searchManufacturerName = "";
         String searchDeviceTypeName = "";
-
+        String searchModelName = "";
         searchManufacturerName = request.getParameter("searchManufactureName");
         searchDeviceTypeName = request.getParameter("searchDeviceType");
+         searchModelName = request.getParameter("searchModelName");
          try {
             if (searchManufacturerName == null || searchDeviceTypeName == null) {
                 searchManufacturerName="";
                 searchDeviceTypeName="";
+                searchModelName="";
             }
         } catch (Exception e) {
             System.out.println("Exception while searching in controller" + e);
@@ -159,10 +161,18 @@ public class DeviceMapController extends HttpServlet {
         System.out.println("searching.......... " + searchManufacturerName);
         System.out.println("searching.......... " + searchDeviceTypeName);
 
-         noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName);
+         noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName,searchModelName);
 
-         if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
+         if (buttonAction.equals("Next")){
+             searchManufacturerName=request.getParameter("manname");
+             searchDeviceTypeName=request.getParameter("dname");
+            // noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName);
+             
+         } // lowerLimit already has value such that it shows forward records, so do nothing here.
          else if (buttonAction.equals("Previous")) {
+             searchManufacturerName=request.getParameter("manname");
+             searchDeviceTypeName=request.getParameter("dname");
+             //noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName);
             int temp = lowerLimit - noOfRowsToDisplay - noOfRowsTraversed;
             if (temp < 0) {
                 noOfRowsToDisplay = lowerLimit - noOfRowsTraversed;
@@ -171,8 +181,14 @@ public class DeviceMapController extends HttpServlet {
                 lowerLimit = temp;
             }
         } else if (buttonAction.equals("First")) {
+            searchManufacturerName=request.getParameter("manname");
+             searchDeviceTypeName=request.getParameter("dname");
+            
             lowerLimit = 0;
         } else if (buttonAction.equals("Last")) {
+            searchManufacturerName=request.getParameter("manname");
+             searchDeviceTypeName=request.getParameter("dname");
+            // noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName);
             lowerLimit = noOfRowsInTable - noOfRowsToDisplay;
             if (lowerLimit < 0) {
                 lowerLimit = 0;
@@ -207,7 +223,9 @@ public class DeviceMapController extends HttpServlet {
         request.setAttribute("device_type", request.getParameter("device_type"));
         request.setAttribute("deviceName", request.getParameter("device_name"));
         request.setAttribute("device_no", request.getParameter("device_no"));
-
+request.setAttribute("manname", searchManufacturerName);
+request.setAttribute("dname", searchDeviceTypeName);
+  
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("searchManufacturerName",searchManufacturerName );
         request.setAttribute("searchDeviceTypeName",searchDeviceTypeName );

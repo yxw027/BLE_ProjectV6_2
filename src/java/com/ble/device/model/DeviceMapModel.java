@@ -279,7 +279,7 @@ public class DeviceMapModel {
         return status;
     }
 
-    public int getNoOfRows(String searchManufacturerName, String searchDeviceTypeName) {
+    public int getNoOfRows(String searchManufacturerName, String searchDeviceTypeName,String searchModelName) {
         String query1 = "SELECT count(*)"
                 + " FROM device_map dm, device d, device d1, device d2, manufacturer m, model mo, device_type dt,"
                 + " manufacturer m1, model mo1, device_type dt1, manufacturer m2, model mo2, device_type dt2"
@@ -292,6 +292,7 @@ public class DeviceMapModel {
                 + " and d1.active = 'Y' and m1.active = 'Y' and dt1.active = 'Y' and mo1.active = 'Y'"
                 + " and d2.active = 'Y' and m2.active = 'Y' and dt2.active = 'Y' and mo2.active = 'Y'"
                 + " AND IF('" + searchManufacturerName + "' = '', m.name LIKE '%%',m.name =?) "
+                 + " AND IF('" + searchModelName + "' = '', mo1.device_name LIKE '%%',mo1.device_name =?) "
                 + " AND IF('" + searchDeviceTypeName + "' = '', dt.type LIKE '%%',dt.type =?) ";
 
         int noOfRows = 0;
@@ -299,7 +300,8 @@ public class DeviceMapModel {
             PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
 
             stmt.setString(1, searchManufacturerName);
-            stmt.setString(2, searchDeviceTypeName);
+             stmt.setString(2, searchModelName);
+            stmt.setString(3, searchDeviceTypeName);
 
             ResultSet rs = stmt.executeQuery();
             rs.next();
@@ -336,6 +338,7 @@ public class DeviceMapModel {
                 + " and dm.active = 'Y' and d.active = 'Y' and m.active = 'Y' and dt.active = 'Y' and mo.active = 'Y' and d1.active = 'Y' and m1.active = 'Y' and dt1.active = 'Y' and mo1.active = 'Y' "
                 + " AND IF('" + searchManufacturerName + "' = '', m.name LIKE '%%',m.name =?) "
                 + " AND IF('" + searchDeviceTypeName + "' = '', dt.type LIKE '%%',dt.type =?) "
+//                  + " AND IF('" + searchModelName + "' = '', mo1.device_name LIKE '%%',mo1.device_name =?) "
                 + addQuery;
 
         try {

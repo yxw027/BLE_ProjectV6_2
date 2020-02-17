@@ -175,6 +175,7 @@
     }
     
     function goToDevice() {
+        
         window.location.href="ModelTypeCont.do";
     }
 
@@ -284,6 +285,8 @@ a:hover{
                                                     </c:choose>
                                                 </td>
                                             </tr>
+                                            
+                                              <input type="hidden" name="manname" value="${manname}">
                                             <!--- These hidden fields "lowerLimit", and "noOfRowsTraversed" belong to form1 of table1. -->
                                             <input type="hidden" name="lowerLimit" value="${lowerLimit}">
                                             <input type="hidden" id="noOfRowsTraversed" name="noOfRowsTraversed" value="${noOfRowsTraversed}">
@@ -330,6 +333,7 @@ a:hover{
                                             <%-- These hidden fields "lowerLimit", "noOfRowsTraversed", and "clickedButton" belong to form2 of table2. --%>
                                             <input type="hidden" name="active" id="active" value="">
                                             <input type="hidden" name="lowerLimit" value="${lowerLimit}">
+                                           
                                             <input type="hidden" name="noOfRowsTraversed" value="${noOfRowsTraversed}">
                                             <input type="hidden" id="clickedButton" value="">
                                             <input type="hidden"  name="searchCityType" value="${searchCityType}" >

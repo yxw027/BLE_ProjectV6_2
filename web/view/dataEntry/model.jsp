@@ -315,6 +315,8 @@ a:hover{
                                                 </td>
                                             </tr>
                                             <!--- These hidden fields "lowerLimit", and "noOfRowsTraversed" belong to form1 of table1. -->
+                                            
+                                            <input type="hidden" name="manname" value="${manname}">
                                             <input type="hidden" name="lowerLimit" value="${lowerLimit}">
                                             <input type="hidden" id="noOfRowsTraversed" name="noOfRowsTraversed" value="${noOfRowsTraversed}">
 <!--                                            <input  type="hidden" id="searchCityType" name="searchCityType" value="${searchCityType}" >-->

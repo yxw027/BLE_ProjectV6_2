@@ -159,8 +159,14 @@ public class CharachtristicsController extends HttpServlet {
 
          noOfRowsInTable = charachtristicsModel.getNoOfRows(searchDeviceType);
 
-         if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
+         if (buttonAction.equals("Next")){
+             searchDeviceType=request.getParameter("manname");
+               noOfRowsInTable = charachtristicsModel.getNoOfRows(searchDeviceType);
+             
+         }  // lowerLimit already has value such that it shows forward records, so do nothing here.
          else if (buttonAction.equals("Previous")) {
+               searchDeviceType=request.getParameter("manname");
+               noOfRowsInTable = charachtristicsModel.getNoOfRows(searchDeviceType);
             int temp = lowerLimit - noOfRowsToDisplay - noOfRowsTraversed;
             if (temp < 0) {
                 noOfRowsToDisplay = lowerLimit - noOfRowsTraversed;
@@ -169,8 +175,11 @@ public class CharachtristicsController extends HttpServlet {
                 lowerLimit = temp;
             }
         } else if (buttonAction.equals("First")) {
+             searchDeviceType=request.getParameter("manname");
             lowerLimit = 0;
         } else if (buttonAction.equals("Last")) {
+              searchDeviceType=request.getParameter("manname");
+               noOfRowsInTable = charachtristicsModel.getNoOfRows(searchDeviceType);
             lowerLimit = noOfRowsInTable - noOfRowsToDisplay;
             if (lowerLimit < 0) {
                 lowerLimit = 0;
@@ -204,7 +213,7 @@ public class CharachtristicsController extends HttpServlet {
         request.setAttribute("service_name", request.getParameter("service_name"));
         request.setAttribute("service_uuid", request.getParameter("service_uuid"));
         request.setAttribute("uuid", request.getParameter("uuid"));
-
+        request.setAttribute("manname", searchDeviceType);
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("searchDeviceType",searchDeviceType );
         request.setAttribute("message", charachtristicsModel.getMessage());
