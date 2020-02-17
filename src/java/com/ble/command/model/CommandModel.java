@@ -462,7 +462,8 @@ public boolean updateRecords(CommandBean bean){
 
   public int deleteRecord(int command_id) {
 
-      String query = "update command set active='N' where id=" + command_id;
+//      String query = "update command set active='N' where id=" + command_id;
+       String query = " delete command where id=" + command_id;
         int rowsAffected = 0;
         try {
             rowsAffected = connection.prepareStatement(query).executeUpdate();

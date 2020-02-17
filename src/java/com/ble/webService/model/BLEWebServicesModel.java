@@ -805,7 +805,53 @@ public int getLastdeviceRegistrationId() {
         return device_id;
     }
 
+    public JSONArray getCrcTypeRecords()
+        {
+        JSONArray rowData = new JSONArray();
+        String query = null;
+        query = "select crc_type_id,crc_type,remark "
+                +" from crc_type ct "
+                +" where ct.active='Y' ";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            ResultSet rset = pstmt.executeQuery();
+            while (rset.next()) {
+                JSONObject obj = new JSONObject();
+                 obj.put("crc_type_id",rset.getInt("crc_type_id"));
+                 obj.put("crc_type",rset.getString("crc_type"));
+                 obj.put("remark",rset.getString("remark"));
 
+                 rowData.add(obj);
+           }
+        } catch (Exception e) {
+            System.out.println("Error inside show data of crc type table: " + e);
+        }
+        return rowData;
+    }
+ public JSONArray getCommandCrcMappingRecords()
+        {
+        JSONArray rowData = new JSONArray();
+        String query = null;
+        query = "select command_crc_mapping_id,command_id,crc_type_id,remark "
+                +" from command_crc_mapping ccm "
+                +" where ccm.active='Y' ";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            ResultSet rset = pstmt.executeQuery();
+            while (rset.next()) {
+                JSONObject obj = new JSONObject();
+                 obj.put("command_crc_mapping_id",rset.getInt("command_crc_mapping_id"));
+                 obj.put("command_id",rset.getInt("command_id"));
+                 obj.put("crc_type_id",rset.getInt("crc_type_id"));
+                 obj.put("remark",rset.getString("remark"));
+
+                 rowData.add(obj);
+           }
+        } catch (Exception e) {
+            System.out.println("Error inside show data of crc Command Mapping: " + e);
+        }
+        return rowData;
+    }
 
 
 

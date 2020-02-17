@@ -94,6 +94,11 @@ public class BLEWebServicesController {
          obj.put("sub_division_selection", json);
          json = bLEWebServicesModel.getDeviceMapRecords();
          obj.put("device_map", json);
+         
+          json = bLEWebServicesModel.getCrcTypeRecords();
+         obj.put("crc_type", json);
+          json = bLEWebServicesModel.getCommandCrcMappingRecords();
+         obj.put("command_crc_mapping", json);
         }catch(Exception e){
             System.out.println("Error in BLEWebServices 'requestData' url calling getWardData()..."+e);
         }
