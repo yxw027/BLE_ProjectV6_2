@@ -63,6 +63,28 @@ public class SelectionValueModel {
         return noOfRows;
     }
     
+    
+     public int getNoOfRowscount(int sel_id,int selection_no) {
+
+        String query1 = "select  count(*) from selection_value s, selection c where s.selection_id=c.selection_id and s.active='Y' and c.active='Y' and s.selection_id =?";
+
+        int noOfRows = 0;
+        try {
+            PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
+          
+             stmt.setInt(1, sel_id);
+            //stmt.setString(3, searchManufacturerName);
+            //stmt.setString(4, searchDeviceType);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            noOfRows = rs.getInt(1);
+        } catch (Exception e) {
+            System.out.println("Error inside getNoOfRows SelectionModel" + e);
+        }
+        System.out.println("No of Rows in Table for search is" + noOfRows);
+        return noOfRows;
+    }
+    
     public int getSelectionValueId() {
         int selection_value_id = 0;
          String query1 = "select Max(selection_value_id) as selection_value_id "

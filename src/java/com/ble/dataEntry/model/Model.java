@@ -187,7 +187,7 @@ public boolean reviseRecords(ModelBean modelBean){
 //                     +" and m.active='Y'"
 //                     +addQuery;
 //
-       String query2="select m.id,device_name,device_no,warranty_period,type,m.remark,m.device_address "
+       String query2="select m.id,device_name,device_no,warranty_period,type,m.remark,m.device_address,m.no_of_module "
                       +" from model m,modal_type mt "
                       +" where IF('" + searchDeviceName + "' = '', device_name LIKE '%%',device_name =?) "
                       +" and m.model_type_id = mt.id "
@@ -207,6 +207,7 @@ public boolean reviseRecords(ModelBean modelBean){
                 modelBean.setModel_type(rset.getString("type"));
                  modelBean.setRemark(rset.getString("remark"));
                  modelBean.setDevice_address(rset.getString("device_address"));
+                   modelBean.setNo_of_module(rset.getInt("no_of_module"));
                 list.add(modelBean);
             }
         } catch (Exception e) {

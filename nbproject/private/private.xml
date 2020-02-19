@@ -2,14 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/E:/BLE%20FINAL%20VERSION/BLE_Project/src/java/com/ble/dataEntry/controller/DeviceOprtnChartstcMapController.java</file>
-            <file>file:/E:/BLE%20FINAL%20VERSION/BLE_Project/src/java/com/ble/command/controller/DeviceOperationCommandController.java</file>
-            <file>file:/E:/BLE%20FINAL%20VERSION/BLE_Project/src/java/com/ble/dataEntry/model/DeviceOprtnChartstcMapModel.java</file>
-            <file>file:/E:/BLE%20FINAL%20VERSION/BLE_Project/src/java/com/ble/device/controller/DeviceMapController.java</file>
-            <file>file:/E:/BLE%20FINAL%20VERSION/BLE_Project/src/java/com/ble/command/model/DeviceOperationCommandModel.java</file>
-            <file>file:/E:/BLE%20FINAL%20VERSION/BLE_Project/web/view/dataEntry/device_map.jsp</file>
-            <file>file:/E:/BLE%20FINAL%20VERSION/BLE_Project/src/java/com/ble/device/model/DeviceMapModel.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

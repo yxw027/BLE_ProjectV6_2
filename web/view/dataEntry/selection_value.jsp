@@ -71,7 +71,8 @@
                                     </tr>
                                 </c:forEach>
 
-                            <input  type="hidden" name="selection_value_no" value="${selection_value_no}">
+                            <input  type="hidden" id="selection_value_no" name="selection_value_no" value="${selection_value_no}">
+                             <input  type="hidden" id="rowno" name="rowno" value="${rowno}">
                             <input  type="hidden" name="parameter" value="${parameter}">
                             <input  type="hidden" name="display_value" value="${display_value}" >
                              <input  type="hidden" name="byte_value" value="${byte_value}" >
@@ -81,7 +82,7 @@
                             </tbody>
                         </table>
                             <div style="padding-top: 10px;" align="center">
-                                <input class="button" type="submit" id="save" name="task" value="Save">
+                                <input class="button" type="submit" id="save" name="task" value="Save" onclick="disableButton()">
                             </div>
 
                     </form>
@@ -133,7 +134,7 @@
                     element2.type = "text";
                     element2.name = "parameter" + i;
                     element2.id = "parameter" + i;
-                    element2.size = 10;
+                    element2.size = 20;
                     element2.maxLength = 50;
                     element2.value = parameter;
                     cell2.appendChild(element2);
@@ -143,7 +144,7 @@
                     element2.type = "text";
                     element2.name = "display_value" + i;
                     element2.id = "display_value" + i;
-                    element2.size = 10;
+                    element2.size = 20;
                     element2.maxLength = 50;
                     element2.value = "";
                     cell3.appendChild(element2);
@@ -153,7 +154,7 @@
                     element2.type = "text";
                     element2.name = "byte_value" + i;
                     element2.id = "byte_value" + i;
-                    element2.size = 10;
+                    element2.size = 20;
                     element2.maxLength = 60;
                     element2.value = "";
                     cell3.appendChild(element2);
@@ -163,7 +164,7 @@
                     element2.type = "text";
                     element2.name = "remark" + i;
                     element2.id = "remark" + i;
-                    element2.size = 5;
+                    element2.size = 15;
                     element2.maxLength = 50;
                     element2.value = "";
                     cell4.appendChild(element2);
@@ -222,7 +223,15 @@
 
             }
 
-
+    function disableButton(){
+     var no=document.getElementById("selection_value_no").value;
+       var rowno=document.getElementById("rowno").value;
+       alert(no+"vvvvvvvvvvvv"+rowno);
+       if(no===rowno){
+           	document.getElementById("save").disabled = true;
+       }
+   
+	}
 
 
 

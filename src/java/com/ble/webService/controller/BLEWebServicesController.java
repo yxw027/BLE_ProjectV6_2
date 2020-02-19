@@ -30,7 +30,7 @@ import org.json.simple.JSONObject;
 
 @Path("/")
 public class BLEWebServicesController {
-     public static String deviceResponse;
+     public static String deviceResponse="A";
     @Resource
     WebServiceContext wsContext;  
     

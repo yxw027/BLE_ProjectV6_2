@@ -259,7 +259,7 @@ a:hover{
                                                           <input type="hidden" id="status_type_id${loopCounter.count}" value="${statusTypeBean.status_type_id}">${lowerLimit - noOfRowsTraversed + loopCounter.count}
                                                           <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">${lowerLimit - noOfRowsTraversed + loopCounter.count}</td>
                                                       </td> --%>
-                                                    <td id="t1c${IDGenerator.uniqueID}" style="display:none" onclick="fillColumns(id)">${input.input_id}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}" style="display:none"  size="20" onclick="fillColumns(id)">${input.input_id}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">${lowerLimit - noOfRowsTraversed + loopCounter.count}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${input.command_name}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${input.parameter}</td>

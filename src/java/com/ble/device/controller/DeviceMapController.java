@@ -139,7 +139,7 @@ public class DeviceMapController extends HttpServlet {
         searchDeviceTypeName = request.getParameter("searchDeviceType");
          searchModelName = request.getParameter("searchModelName");
          try {
-            if (searchManufacturerName == null || searchDeviceTypeName == null) {
+            if (searchManufacturerName == null || searchDeviceTypeName == null || searchModelName == null) {
                 searchManufacturerName="";
                 searchDeviceTypeName="";
                 searchModelName="";
@@ -160,19 +160,22 @@ public class DeviceMapController extends HttpServlet {
         }
         System.out.println("searching.......... " + searchManufacturerName);
         System.out.println("searching.......... " + searchDeviceTypeName);
+        System.out.println("searching.......... " + searchModelName);
 
          noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName,searchModelName);
 
          if (buttonAction.equals("Next")){
-             searchManufacturerName=request.getParameter("manname");
-             searchDeviceTypeName=request.getParameter("dname");
-            // noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName);
+              searchManufacturerName=request.getParameter("manname");
+              searchDeviceTypeName=request.getParameter("dname");
+              searchModelName=request.getParameter("modelname");
+              noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName,searchModelName);
              
          } // lowerLimit already has value such that it shows forward records, so do nothing here.
-         else if (buttonAction.equals("Previous")) {
-             searchManufacturerName=request.getParameter("manname");
-             searchDeviceTypeName=request.getParameter("dname");
-             //noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName);
+         else if (buttonAction.equals("Previous")) { 
+              searchManufacturerName=request.getParameter("manname");
+              searchDeviceTypeName=request.getParameter("dname");
+              searchModelName=request.getParameter("modelname");
+              noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName,searchModelName);
             int temp = lowerLimit - noOfRowsToDisplay - noOfRowsTraversed;
             if (temp < 0) {
                 noOfRowsToDisplay = lowerLimit - noOfRowsTraversed;
@@ -181,14 +184,17 @@ public class DeviceMapController extends HttpServlet {
                 lowerLimit = temp;
             }
         } else if (buttonAction.equals("First")) {
-            searchManufacturerName=request.getParameter("manname");
-             searchDeviceTypeName=request.getParameter("dname");
+             searchManufacturerName=request.getParameter("manname");
+              searchDeviceTypeName=request.getParameter("dname");
+              searchModelName=request.getParameter("modelname");
+              //noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName,searchModelName);
             
             lowerLimit = 0;
         } else if (buttonAction.equals("Last")) {
             searchManufacturerName=request.getParameter("manname");
-             searchDeviceTypeName=request.getParameter("dname");
-            // noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName);
+              searchDeviceTypeName=request.getParameter("dname");
+              searchModelName=request.getParameter("modelname");
+              noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName,searchModelName);
             lowerLimit = noOfRowsInTable - noOfRowsToDisplay;
             if (lowerLimit < 0) {
                 lowerLimit = 0;
@@ -202,7 +208,7 @@ public class DeviceMapController extends HttpServlet {
 
         }
            // Logic to show data in the table.
-        List<DeviceMapBean> deviceMapList = deviceMapModel.showData(lowerLimit, noOfRowsToDisplay,searchManufacturerName,searchDeviceTypeName);
+        List<DeviceMapBean> deviceMapList = deviceMapModel.showData(lowerLimit, noOfRowsToDisplay,searchManufacturerName,searchDeviceTypeName,searchModelName);
         lowerLimit = lowerLimit + deviceMapList.size();
         noOfRowsTraversed = deviceMapList.size();
          // Now set request scoped attributes, and then forward the request to view.
@@ -223,12 +229,13 @@ public class DeviceMapController extends HttpServlet {
         request.setAttribute("device_type", request.getParameter("device_type"));
         request.setAttribute("deviceName", request.getParameter("device_name"));
         request.setAttribute("device_no", request.getParameter("device_no"));
-request.setAttribute("manname", searchManufacturerName);
-request.setAttribute("dname", searchDeviceTypeName);
-  
+        request.setAttribute("manname", searchManufacturerName);
+        request.setAttribute("dname", searchDeviceTypeName);
+        request.setAttribute("modelname", searchModelName);  
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("searchManufacturerName",searchManufacturerName );
         request.setAttribute("searchDeviceTypeName",searchDeviceTypeName );
+        request.setAttribute("searchModelName",searchModelName );
         request.setAttribute("message", deviceMapModel.getMessage());
         request.setAttribute("msgBgColor", deviceMapModel.getMsgBgColor());
         request.getRequestDispatcher("/device_map").forward(request, response);

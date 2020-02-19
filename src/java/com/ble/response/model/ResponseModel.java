@@ -108,14 +108,14 @@ public class ResponseModel {
     
     public List<String> getSearchCommand(String q) {
         List<String> list = new ArrayList<String>();
-        String query = " select command from command "
-                       +" where active='Y' group by command order by command desc ";
+        String query = " select remark from command "
+                       +" where active='Y' group by remark order by remark desc ";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
             q = q.trim();
             while (rset.next()) {    // move cursor from BOR to valid record.
-                String command = rset.getString("command");
+                String command = rset.getString("remark");
                 if (command.toUpperCase().startsWith(q.toUpperCase())) {
                     list.add(command);
                     count++;

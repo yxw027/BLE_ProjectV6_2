@@ -240,17 +240,7 @@ a:hover{
         <table align="center" cellpadding="0" cellspacing="0" class="main">
             <tr><td><%@include file="/layout/header.jsp" %></td></tr>
              <tr>
-                <td id="menu">
-                    <nav>
-                        <a href="WelcomeCont.do">Welcome</a> 
-                        <a href="DeviceMapCont.do">Device Map</a> 
-                        <a href="DeviceCont.do">Device</a> 
-                        <a href="ManufacturerCont.do">Manufacturer</a> 
-                        <a href="DeviceTypeCont.do">Device Type</a> 
-                        <a href="ModelCont.do">Model</a> 
-                        <a href="ModelTypeCont.do">Model Type</a>
-                    </nav>
-                </td>
+                <td><%@include file="/layout/menu.jsp" %> </td>
             </tr>
             <td>
                 <DIV id="body" class="maindiv" align="center" >

@@ -50,7 +50,7 @@ $("#manufacturer_name").autocomplete("DeviceRegistrationCont.do", {
                 }
             }
         });
-                             
+                              
     });
 
     

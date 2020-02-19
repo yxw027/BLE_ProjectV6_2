@@ -284,7 +284,7 @@ public class DeviceMapModel {
                 + " FROM device_map dm, device d, device d1, device d2, manufacturer m, model mo, device_type dt,"
                 + " manufacturer m1, model mo1, device_type dt1, manufacturer m2, model mo2, device_type dt2"
                 + " where dm.finished_device_id = d.id "
-                + " and dm.module_device_id = d1.id and dm.ble_device_id = d2.id"
+                + " and dm.module_device_id = d1.id and dm.finished_device_id = d2.id"
                 + " and d.manufacture_id = m.id and d.device_type_id = dt.id and d.model_id = mo.id"
                 + " and d1.manufacture_id = m1.id and d1.device_type_id = dt1.id and d1.model_id = mo1.id"
                 + " and d2.manufacture_id = m2.id and d2.device_type_id = dt2.id and d2.model_id = mo2.id and dm.active = 'Y'"
@@ -313,7 +313,7 @@ public class DeviceMapModel {
         return noOfRows;
     }
 
-    public List<DeviceMapBean> showData(int lowerLimit, int noOfRowsToDisplay, String searchManufacturerName, String searchDeviceTypeName) {
+    public List<DeviceMapBean> showData(int lowerLimit, int noOfRowsToDisplay, String searchManufacturerName, String searchDeviceTypeName,String searchModelName) {
         List<DeviceMapBean> list = new ArrayList<DeviceMapBean>();
         String addQuery = " LIMIT " + lowerLimit + ", " + noOfRowsToDisplay;
         if (lowerLimit == -1) {
@@ -338,13 +338,14 @@ public class DeviceMapModel {
                 + " and dm.active = 'Y' and d.active = 'Y' and m.active = 'Y' and dt.active = 'Y' and mo.active = 'Y' and d1.active = 'Y' and m1.active = 'Y' and dt1.active = 'Y' and mo1.active = 'Y' "
                 + " AND IF('" + searchManufacturerName + "' = '', m.name LIKE '%%',m.name =?) "
                 + " AND IF('" + searchDeviceTypeName + "' = '', dt.type LIKE '%%',dt.type =?) "
-//                  + " AND IF('" + searchModelName + "' = '', mo1.device_name LIKE '%%',mo1.device_name =?) "
+                 + " AND IF('" + searchModelName + "' = '', mo1.device_name LIKE '%%',mo1.device_name =?) "
                 + addQuery;
 
         try {
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);
             pstmt.setString(1, searchManufacturerName);
             pstmt.setString(2, searchDeviceTypeName);
+            pstmt.setString(3, searchModelName);
             ResultSet rset = pstmt.executeQuery();
             while (rset.next()) {
                 DeviceMapBean deviceBean = new DeviceMapBean();
@@ -513,12 +514,7 @@ public class DeviceMapModel {
 
     public List<String> getSearchManufactureName(String q) {
         List<String> list = new ArrayList<String>();
-        String query = "select m.name "
-                + " from device_registration dr,device d,manufacturer m "
-                + " where dr.device_id = d.id "
-                + " and d.manufacture_id = m.id "
-                + " and dr.active='Y' and d.active='Y' and m.active='Y' "
-                + " group by m.name ";
+        String query = "select m.name from manufacturer m  where m.active='Y' group by m.name ";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -543,12 +539,7 @@ public class DeviceMapModel {
 
     public List<String> getSearchDeviceType(String q) {
         List<String> list = new ArrayList<String>();
-        String query = " select dt.type "
-                + " from device_registration dr,device d,device_type dt "
-                + " where dr.device_id = d.id "
-                + " and d.device_type_id = dt.id "
-                + " and dr.active='Y' and d.active='Y' and dt.active='Y' "
-                + " group by dt.type ";
+        String query = "select dt.type from device_type dt where dt.active='Y' group by dt.type";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
@@ -573,10 +564,8 @@ public class DeviceMapModel {
      public List<String> getSearchModelName(String q) {
         List<String> list = new ArrayList<String>();
         String query = " select m.device_name "
-                + " from device_registration dr,device d,model m "
-                + " where dr.device_id = d.id "
-                + " and d.model_id = m.id "
-                + " and dr.active='Y' and d.active='Y' and m.active='Y' "
+                + " from model m "
+                + " where m.active='Y'"
                 + " group by m.device_name ";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();

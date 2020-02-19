@@ -310,7 +310,7 @@ a:hover{
                                             
                                             <tr>
 <!--                                                <td>Rule<input class="input" type="text" id="searchRule" name="searchRule" value="${searchRule}" size="20" ></td>-->
-                                                <td>Manufacturer Name<input class="input" type="text" id="searchManufactureName" name="searchManufactureName" value="${searchCommandName}" size="20" ></td>
+                                                <td>Manufacturer Name<input class="input" type="text" id="searchManufactureName" name="searchManufactureName" value="${searchManufactureName}" size="20" ></td>
                                                 <td>Device Type<input class="input" type="text" id="searchDeviceType" name="searchDeviceType" value="${searchDeviceType}" size="20" ></td>
                                                 <td>Model<input class="input" type="text" id="searchModelName" name="searchModelName" value="${searchModelName}" size="20" ></td>                                               
                                                 <td><input class="button" type="submit" name="task" id="searchIn" value="Search"></td>
@@ -338,7 +338,7 @@ a:hover{
                                                 <th class="heading">Manufacturer Name</th>
                                                 <th class="heading">Device Type</th>
                                                 <th class="heading">Model</th>
-<!--                                                <th class="heading">Manufacturer Name</th>
+<!--                                           <th class="heading">Manufacturer Name</th>
                                                 <th class="heading">Device Type</th>
                                                 <th class="heading">Model</th>-->
                                                <th class="heading">Manufacturer Name</th>
@@ -406,12 +406,12 @@ a:hover{
                                             
                                              <input type="hidden" name="manname" value="${manname}">
                                               <input type="hidden" name="dname" value="${dname}">
-                                              
+                                              <input type="hidden" name="modelname" value="${modelname}">
                                             <input type="hidden" name="lowerLimit" value="${lowerLimit}">
                                             <input type="hidden" id="noOfRowsTraversed" name="noOfRowsTraversed" value="${noOfRowsTraversed}">
-                                            <input  type="hidden" id="searchCommandName" name="searchCommandName" value="${searchCommandName}" >
+                                            <input  type="hidden" id="searchManufactureName" name="searchManufactureName" value="${searchManufactureName}" >
                                             <input type="hidden"  id="searchModelName" name="searchModelName" value="${searchModelName}" >
-                                            <input type="hidden"  id="searchDeviceType" name="searchDeviceType" value="${searchDeviceType}" >
+                                            <input type="hidden"  id="searchDeviceTypeName" name="searchDeviceTypeName" value="${searchDeviceTypeName}" >
                                         </table></DIV>
                                 </form>
                             </td>
@@ -490,9 +490,9 @@ a:hover{
                                             <input type="hidden" name="lowerLimit" value="${lowerLimit}">
                                             <input type="hidden" name="noOfRowsTraversed" value="${noOfRowsTraversed}">
                                             <input type="hidden" id="clickedButton" value="">
-                                            <input type="hidden"  name="searchCommandName" value="${searchCommandName}" >
+                                            <input type="hidden"  name="searchManufactureName" value="${searchManufactureName}" >
                                             <input type="hidden"  name="searchModelName" value="${searchModelName}" >
-                                            <input type="hidden"  name="searchDeviceType" value="${searchDeviceType}" >
+                                            <input type="hidden"  name="searchDeviceTypeName" value="${searchDeviceTypeName}" >
                                         </table>
                                     </form>
                                 </div>
