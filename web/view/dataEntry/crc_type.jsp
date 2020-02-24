@@ -1,160 +1,146 @@
 <%-- 
-    Document   : rule
-    Created on : Jan 7, 2019, 4:07:05 PM
-    Author     : jpss
+    Document   : crc_type
+    Created on : 12 Feb, 2020, 11:03:12 AM
+    Author     : DELL
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+    "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <link href="style/style1.css" type="text/css" rel="stylesheet" media="Screen"/>
 <link href="style/style.css" type="text/css" rel="stylesheet" media="Screen"/>
 <link href="style/Table_content.css" type="text/css" rel="stylesheet" media="Screen"/>
-
-  <link type="text/css" href="style/menu.css" rel="stylesheet"/>
+<link type="text/css" href="style/menu.css" rel="stylesheet"/>
 <script type="text/javascript" src="JS/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="JS/jquery.autocomplete.js"></script>
 
 
 <script type="text/javascript" language="javascript">
-    jQuery(function(){
-        $("#searchCommandName").autocomplete("ruleCont.do", {
+    jQuery(function () {
+        $("#searchcrctype").autocomplete("CrcTypeController", {
             extraParams: {
-                action1: function() { return "getCommandName"}
-            }
-        });
-//        $("#searchRule").autocomplete("ruleCont.do", {
-//            extraParams: {
-//                action1: function() { return "getRule"}
-//            }
-//        });
-        $("#command").autocomplete("ruleCont.do", {
-            extraParams: {
-                action1: function() { return "getCommand"}
+                action1: function () {
+                    return "getCrcType"
+                }
             }
         });
 
     });
-
+    
     function setDefaultColor(noOfRowsTraversed, noOfColumns) {
-        for(var i = 0; i < noOfRowsTraversed; i++) {
-            for(var j = 1; j <= noOfColumns; j++) {
+        for (var i = 0; i < noOfRowsTraversed; i++) {
+            for (var j = 1; j <= noOfColumns; j++) {
                 document.getElementById("t1c" + (i * noOfColumns + j)).bgColor = "";     // set the default color.
             }
         }
     }
     function makeEditable(id) {
 
-        document.getElementById("command").disabled = false;
-        document.getElementById("rule").disabled = false;
-         document.getElementById("remark").disabled = false;
-
+        document.getElementById("crc_type").disabled = false;  
+        document.getElementById("remark").disabled = false;
         document.getElementById("save").disabled = false;
-//        document.getElementById("revise").disabled =false;
-        document.getElementById("cancel").disabled =false;
-        document.getElementById("save_As").disabled =false;
+        document.getElementById("cancel").disabled = false;
+        document.getElementById("save_As").disabled = false;
         //document.getElementById("save").disabled = true;
-        if(id === 'new') {
-        //    document.getElementById("created_date").disabled = true;
-           // document.getElementById("active").value ='';
+        if (id === 'new') {
+     
             document.getElementById("message").innerHTML = "";      // Remove message
-            document.getElementById("command").focus();
+            document.getElementById("crc_type").focus();
             $("#message").html("");
-
-            //document.getElementById("revise").disabled = true;
             document.getElementById("cancel").disabled = true;
             document.getElementById("save_As").disabled = true;
             document.getElementById("save").disabled = false;
-
             setDefaultColor(document.getElementById("noOfRowsTraversed").value, 3);
-            document.getElementById("command").focus();
+
 
         }
-        if(id === 'edit'){
+        if (id === 'edit') {
 
             document.getElementById("save_As").disabled = false;
             document.getElementById("cancel").disabled = false;
         }
     }
     function setStatus(id) {
-        if(id == 'save'){
+        if (id == 'save') {
             document.getElementById("clickedButton").value = "Save";
-        }
-        else if(id == 'save_As'){
+        } else if (id == 'save_As') {
             document.getElementById("clickedButton").value = "Save AS New";
-        }
-        else if(id == 'revise'){
+        } else if (id == 'revise') {
             document.getElementById("clickedButton").value = "Revise";
-        }
-        else document.getElementById("clickedButton").value = "Delete";
+        } else
+            document.getElementById("clickedButton").value = "Delete";
     }
     function verify() {
         var result;
-        if(document.getElementById("clickedButton").value == 'Save' || document.getElementById("clickedButton").value == 'Save AS New' || document.getElementById("clickedButton").value == 'Revise'||document.getElementById("clickedButton").value == 'Delete') {
-            var division_name_m = document.getElementById("command").value;
-            var a=document.getElementById("active").value;
+        if (document.getElementById("clickedButton").value == 'Save' || document.getElementById("clickedButton").value == 'Save AS New' || document.getElementById("clickedButton").value == 'Revise' || document.getElementById("clickedButton").value == 'Delete') {
+            var division_name_m = document.getElementById("division_name_m").value;
+            var a = document.getElementById("active").value;
             //    alert(a);
-            if(myLeftTrim(division_name_m).length == 0) {
+            if (myLeftTrim(division_name_m).length == 0) {
 
                 // document.getElementById("message").innerHTML = "<td colspan='5' bgcolor='coral'><b>Organisation Type Name is required...</b></td>";
-                $("#message").html("<td colspan='5' bgcolor='coral'><b>command is required...</b></td>");
-                document.getElementById("command").focus();
+                $("#message").html("<td colspan='5' bgcolor='coral'><b>Ward No is required...</b></td>");
+                document.getElementById("division_name_m").focus();
                 return false; // code to stop from submitting the form2.
             }
 
-            if(document.getElementById("active").value =='Revised' || document.getElementById("active").value =='Cancelled')
+            if (document.getElementById("active").value == 'Revised' || document.getElementById("active").value == 'Cancelled')
             {
                 $("#message").html("<td colspan='5' bgcolor='coral'><b>You can not perform any operation on revised and cancelled record...</b></td>");
                 // document.getElementById("source_wattage"+i).focus();
                 return false; // code to stop from submitting the form2.
             }
-            if(result == false)    // if result has value false do nothing, so result will remain contain value false.
+            if (result == false)    // if result has value false do nothing, so result will remain contain value false.
             {
 
-            }
-            else{ result = true;
+            } else {
+                result = true;
             }
 
-            if(document.getElementById("clickedButton").value == 'Save AS New'){
+            if (document.getElementById("clickedButton").value == 'Save AS New') {
                 result = confirm("Are you sure you want to save it as New record?")
                 return result;
             }
-        } else result = confirm("Are you sure you want to cancel this record?")
+        } else
+            result = confirm("Are you sure you want to cancel this record?")
         return result;
     }
     function fillColumns(id) {
+        debugger;
         var noOfRowsTraversed = document.getElementById("noOfRowsTraversed").value;
-        var noOfColumns =5;
-        var columnId = id;                              <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
-        columnId = columnId.substring(3, id.length);    <%-- for e.g. suppose id is t1c3 we want characters after t1c i.e beginIndex = 3. --%>
+        var noOfColumns = 4;
+        var columnId = id;
+        <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
+        columnId = columnId.substring(3, id.length);
+        <%-- for e.g. suppose id is t1c3 we want characters after t1c i.e beginIndex = 3. --%>
         var lowerLimit, higherLimit;
 
-        for(var i = 0; i < noOfRowsTraversed; i++) {
+        for (var i = 0; i < noOfRowsTraversed; i++) {
             lowerLimit = i * noOfColumns + 1;       // e.g. 11 = (1 * 10 + 1)
             higherLimit = (i + 1) * noOfColumns;    // e.g. 20 = ((1 + 1) * 10)
 
-            if((columnId >= lowerLimit) && (columnId <= higherLimit)) break;
+            if ((columnId >= lowerLimit) && (columnId <= higherLimit))
+                break;
         }
 
-        setDefaultColor(noOfRowsTraversed, noOfColumns);        // set default color of rows (i.e. of multiple coloumns).
-        var t1id = "t1c";       // particular column id of table 1 e.g. t1c3.
-
-        document.getElementById("rule_id").value= document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
-        document.getElementById("command").value = document.getElementById(t1id +(lowerLimit+2)).innerHTML;
-        document.getElementById("rule").value = document.getElementById(t1id +(lowerLimit+3)).innerHTML;
-        document.getElementById("remark").value = document.getElementById(t1id +(lowerLimit+4)).innerHTML;
+        setDefaultColor(noOfRowsTraversed, noOfColumns);        
+        var t1id = "t1c";        
+        document.getElementById("crc_type_id").value = document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
+        document.getElementById("crc_type").value = document.getElementById(t1id + (lowerLimit + 2)).innerHTML;
+        document.getElementById("remark").value = document.getElementById(t1id + (lowerLimit + 3)).innerHTML;
+//           document.getElementById("is_super_child").value = document.getElementById(t1id + (lowerLimit + 5)).innerHTML;
 
         //       var b=  document.getElementById(t1id +(lowerLimit+8)).innerHTML;
         // alert(b);
-        for(var i = 0; i < noOfColumns; i++) {
+        for (var i = 0; i < noOfColumns; i++) {
             document.getElementById(t1id + (lowerLimit + i)).bgColor = "#d0dafd";        // set the background color of clicked row to yellow.
         }
-     //   makeEditable('');
+        //   makeEditable('');
 
         document.getElementById("edit").disabled = false;
-        if(!document.getElementById("save").disabled)   // if save button is already enabled, then make edit, and cancel button enabled too.
+        if (!document.getElementById("save").disabled)   // if save button is already enabled, then make edit, and cancel button enabled too.
         {
             document.getElementById("save_As").disabled = true;
             document.getElementById("cancel").disabled = false;
@@ -164,17 +150,18 @@
     }
     function myLeftTrim(str) {
         var beginIndex = 0;
-        for(var i = 0; i < str.length; i++) {
-            if(str.charAt(i) == ' ')
+        for (var i = 0; i < str.length; i++) {
+            if (str.charAt(i) == ' ')
                 beginIndex++;
-            else break;
+            else
+                break;
         }
         return str.substring(beginIndex, str.length);
     }
     var popupwin = null;
-    function displayMapList(){
-        var queryString = "task=generateMapReport" ;
-        var url = "divisionCont?"+queryString;
+    function displayMapList() {
+        var queryString = "task=generateMapReport";
+        var url = "divisionCont?" + queryString;
         popupwin = openPopUp(url, "Mounting Type Map Details", 500, 1000);
 
     }
@@ -186,23 +173,63 @@
 
         return window.open(url, window_name, window_features);
     }
+  function generate_table(id) {
+             
+              
+             debugger;
+                var elementHiddenl = document.createElement("input");
+                elementHiddenl.name = "columns";
+                elementHiddenl.value = "";
+                elementHiddenl.type = "hidden";
+               
+                    var row = document.createElement("tr");
+                 
+                    for (var j = 0; j < 1; j++) {
+                
+                        var cell = document.createElement("td");
+                         var cell1 = document.createElement("td");
+                          var cellText = document.createElement("td");  
+                        
+                              
+                         cellText = document.createTextNode("Child Name");
+                        
+                        cell1.appendChild(cellText);
+                        row.appendChild(cell1);
+                  
+                        var element1 = document.createElement("input");
+                        element1.type = "text";
+                        element1.id = "hp"+j;
+                        element1.name = "hp"+j;
+                        element1.value = "";
+                        element1.size = 30;
+                        cell.appendChild(element1);
+                        row.appendChild(cell);
+            }
+
+                debugger;
+                var p = document.getElementById("tableDiv");
+                p.appendChild(row);
+
+
+//   divl.setAttribute("class", "center");
+            }
 
 </script>
 <style>
-a:hover{
-  background-color: yellow;
-}</style>
+    a:hover{
+        background-color: yellow;
+    }</style>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Rule Page</title>
+        <title>Command Page</title>
         <meta charset="utf-8">
 
     </head>
     <body>
         <table align="center" cellpadding="0" cellspacing="0" class="main">
             <tr><td><%@include file="/layout/header.jsp" %></td></tr>
-             <tr>
+            <tr>
                 <td><%@include file="/layout/menu.jsp" %> </td>
             </tr>
             <td>
@@ -211,21 +238,25 @@ a:hover{
                         <tr><td>
                                 <table align="center">
                                     <tr>
-                                        <td align="center" class="header_table" width="100%">Set Rules</td>
+                                        <td align="center" class="header_table" width="100%">CRC Type</td>
 
                                     </tr>
                                 </table>
                             </td></tr>
                         <tr>
+                            
+                              
+                            
+                            
+                            
                             <td> <div align="center">
-                                    <form name="form0" method="POST" action="ruleCont.do">
+                                    <form name="form0" method="POST" action="CrcTypeController">
                                         <table align="center" class="heading1" width="600">
-                                            <tr>                                               
-<!--                                                <td>Rule<input class="input" type="text" id="searchRule" name="searchRule" value="${searchRule}" size="20" ></td>-->
-                                                <td>Command Name<input class="input" type="text" id="searchCommandName" name="searchCommandName" value="${searchCommandName}" size="20" ></td>
+                                            <tr>
+                                                <td>Crc Type<input class="input" type="text" id="searchcrctype" name="searchcrctype" value="${searchcrctype}" size="20" ></td>
                                                 <td><input class="button" type="submit" name="task" id="searchIn" value="Search"></td>
                                                 <td><input class="button" type="submit" name="task" id="showAllRecords" value="Show All Records"></td>
-<!--                                                <td><input type="button" class="pdf_button" id="viewPdf" name="viewPdf" value="" onclick="displayMapList()"></td>-->
+<!--                                           <td><input type="button" class="pdf_button" id="viewPdf" name="viewPdf" value="" onclick="displayMapList()"></td>-->
                                             </tr>
                                         </table>
                                     </form></div>
@@ -233,27 +264,23 @@ a:hover{
                         </tr>
                         <tr>
                             <td align="center">
-                                <form name="form1" method="POST" action="ruleCont.do">
+                                <form name="form1" method="POST" action="CrcTypeController">
                                     <DIV class="content_div">
                                         <table id="table1" width="600"  border="1"  align="center" class="content">
                                             <tr>
                                                 <th class="heading">S.No.</th>
-                                                <th class="heading">Command</th>
-                                                <th class="heading">Rule</th>
-                                                <th class="heading">Remark</th>
+                                                <th class="heading">CrcType</th>
+                                                 
+                                                  <th class="heading">Remark</th>
                                             </tr>
                                             <!---below is the code to show all values on jsp page fetched from trafficTypeList of TrafficController     --->
-                                            <c:forEach var="divisionTypeBean" items="${requestScope['divisionTypeList']}"  varStatus="loopCounter">
+                                            <c:forEach var="crctypebean" items="${requestScope['crcTypeList']}"  varStatus="loopCounter">
                                                 <tr  class="${loopCounter.index % 2 == 0 ? 'even': 'odd'}" >
-                                                    <%--  <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">
-                                                          <input type="hidden" id="status_type_id${loopCounter.count}" value="${statusTypeBean.status_type_id}">${lowerLimit - noOfRowsTraversed + loopCounter.count}
-                                                          <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">${lowerLimit - noOfRowsTraversed + loopCounter.count}</td>
-                                                      </td> --%>
-                                                    <td id="t1c${IDGenerator.uniqueID}" style="display:none" onclick="fillColumns(id)">${divisionTypeBean.rule_id}</td>
+                                                     
+                                                    <td id="t1c${IDGenerator.uniqueID}" style="display:none" onclick="fillColumns(id)">${crctypebean.crc_type_id}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">${lowerLimit - noOfRowsTraversed + loopCounter.count}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.command}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.description}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.remark}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${crctypebean.crc_type}</td>
+                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${crctypebean.remark}</td>
 
                                                 </tr>
                                             </c:forEach>
@@ -296,34 +323,39 @@ a:hover{
                                             <!--- These hidden fields "lowerLimit", and "noOfRowsTraversed" belong to form1 of table1. -->
                                             <input type="hidden" name="lowerLimit" value="${lowerLimit}">
                                             <input type="hidden" id="noOfRowsTraversed" name="noOfRowsTraversed" value="${noOfRowsTraversed}">
-                                            <input  type="hidden" id="searchCommandName" name="searchCommandName" value="${searchCommandName}" >                                          
+                                            <input  type="hidden" id="searchcrctype" name="searchcrctype" value="${searchcrctype}" >
+                                            
                                         </table></DIV>
                                 </form>
                             </td>
                         </tr>
 
                         <tr>
+                           
+                            
+                            
                             <td align="center">
                                 <div>
-                                    <form name="form2" method="POST" action="ruleCont.do" onsubmit="return verify()">
-                                        <table id="table2"  class="content" border="0"  align="center" width="600">
+                                    <form name="form2" id="form2" method="POST" action="CrcTypeController" onsubmit="return verify()">
+                                        <table id="table2"  class="content" border="0" name="tableChild" align="center" width="600">
                                             <tr id="message">
                                                 <c:if test="${not empty message}">
                                                     <td colspan="2" bgcolor="${msgBgColor}"><b>Result: ${message}</b></td>
                                                 </c:if>
                                             </tr>
                                             <tr>
-                                                <th class="heading1">Command</th>
-                                                <td><input class="input" type="text" id="command" name="command" value="" size="100" disabled></td>
+                                                <th class="heading1">CrcType </th>
+
+                                                <td><input class="input" type="text" id="crc_type" name="crc_type" value="" size="40" disabled>
+                                                    <input class="input" type="hidden" id="crc_type_id" name="crc_type_id" value="" ></td>
+                                              
                                             </tr>
-                                            <tr>
-                                                <th class="heading1">Rule </th>
-                                                <td><input class="input" type="text" id="rule" name="rule" value="" size="40" disabled>
-                                                <input class="input" type="hidden" id="rule_id" name="rule_id" value="" ></td>
-                                            </tr>
+                                             
                                             <tr>
                                                 <th class="heading1">Remark</th>
                                                 <td><input class="input" type="text" id="remark" name="remark" value="" size="40" disabled></td>
+ 
+                                                    
                                             </tr>
 
                                             <tr>
@@ -343,7 +375,7 @@ a:hover{
                                             <input type="hidden" name="lowerLimit" value="${lowerLimit}">
                                             <input type="hidden" name="noOfRowsTraversed" value="${noOfRowsTraversed}">
                                             <input type="hidden" id="clickedButton" value="">
-                                            <input type="hidden"  name="searchCommandName" value="${searchCommandName}" >
+ 
                                         </table>
                                     </form>
                                 </div>
@@ -361,4 +393,3 @@ a:hover{
 
     </body>
 </html>
-

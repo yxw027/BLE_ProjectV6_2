@@ -63,6 +63,8 @@
                                 <li><a href="CommandDescriptionCont.do">Command Description</a></li>
                                 <li><a href="OperationNameCont.do">Operation Name</a></li>
                                 <li><a href="ruleCont.do">Rules</a></li>
+                                  <li><a href="CrcTypeController">CrcType</a></li>
+                                    <li><a href="CommandCrcMapController">CommandCRCMap</a></li>
 <!--                                <li><a href="SelectionCont.do">Selection</a></li>
                                 <li><a href="InputCont.do">Input</a></li>-->
                                 <li><a href="ParameterCont.do">Parameter</a></li>

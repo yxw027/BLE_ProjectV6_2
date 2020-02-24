@@ -144,8 +144,16 @@ public class ModelTypeController extends HttpServlet {
 
          noOfRowsInTable = modelTypeModel.getNoOfRows(searchModelType);
 
-         if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
+         if (buttonAction.equals("Next"))
+{
+             searchModelType=request.getParameter("manname");
+              noOfRowsInTable = modelTypeModel.getNoOfRows(searchModelType);
+             
+         }         
+ 
          else if (buttonAction.equals("Previous")) {
+             searchModelType=request.getParameter("manname");
+              noOfRowsInTable = modelTypeModel.getNoOfRows(searchModelType);
             int temp = lowerLimit - noOfRowsToDisplay - noOfRowsTraversed;
             if (temp < 0) {
                 noOfRowsToDisplay = lowerLimit - noOfRowsTraversed;
@@ -154,8 +162,11 @@ public class ModelTypeController extends HttpServlet {
                 lowerLimit = temp;
             }
         } else if (buttonAction.equals("First")) {
+             searchModelType=request.getParameter("manname");
             lowerLimit = 0;
         } else if (buttonAction.equals("Last")) {
+             searchModelType=request.getParameter("manname");
+              noOfRowsInTable = modelTypeModel.getNoOfRows(searchModelType);
             lowerLimit = noOfRowsInTable - noOfRowsToDisplay;
             if (lowerLimit < 0) {
                 lowerLimit = 0;
@@ -189,7 +200,7 @@ public class ModelTypeController extends HttpServlet {
         request.setAttribute("device_type", request.getParameter("device_type"));
         request.setAttribute("deviceName", request.getParameter("device_name"));
         request.setAttribute("device_no", request.getParameter("device_no"));
-
+        request.setAttribute("manname", searchModelType);
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("searchModelType",searchModelType );
         request.setAttribute("message", modelTypeModel.getMessage());

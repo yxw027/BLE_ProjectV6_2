@@ -79,6 +79,7 @@ public class DeviceOprtnChartstcMapController extends HttpServlet {
                 }
                 else if(JQstring.equals("getModelName")) {
                     list = ruleModel.getModelName(q);
+                    System.out.println("");
                 }
                 else if(JQstring.equals("getDeviceType")) {
                     list = ruleModel.getDeviceTypeName(q);

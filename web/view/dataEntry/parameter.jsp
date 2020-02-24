@@ -308,7 +308,12 @@ a:hover{
                                             </tr>
                                             <tr>
                                                 <th class="heading1">Remark</th>
-                                                <td><input class="input" type="text" id="remark" name="remark" value="" size="40" disabled></td>
+                                                        <td><select type="text" id="remark" name="remark" value="">
+                                                                <option value="0">--Select--</option>
+                                                    <option value="1">little Indian</option>
+                                                    <option value="2">Normal</option>
+                                                    </select></td>
+       
                                             </tr>
 
                                             <tr>

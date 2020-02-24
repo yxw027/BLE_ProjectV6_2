@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-    
+    <servlet-mapping>
+        <servlet-name>CrcTypeController</servlet-name>
+        <url-pattern>/CrcTypeController</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -19,14 +22,23 @@
     </context-param>
     <context-param>
         <param-name>db_username</param-name>
+
 <!--        <param-value>root</param-value>-->
         <param-value>jpss_2</param-value>
+
+        <!--        <param-value>jpss_2</param-value>-->
+
     </context-param>
     <context-param>
         <description>	</description>
         <param-name>db_password</param-name>
+
         <param-value>jpss_1277</param-value>
 <!--<param-value>jpss</param-value>-->
+
+        <!--        <param-value>jpss_1277</param-value>-->
+       
+
     </context-param>
     <!--<ServletContainer mapping start>-->
     <servlet>
@@ -37,6 +49,29 @@
             <param-value>com.ble.webService.controller</param-value>
         </init-param>
     </servlet>
+    <servlet>
+        <servlet-name>CrcTypeController</servlet-name>
+        <servlet-class>com.ble.dataEntry.controller.CrcTypeController</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>crcjsp</servlet-name>
+        <jsp-file>/view/dataEntry/crc_type.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>crcjsp</servlet-name>
+        <url-pattern>/crcjsp</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>commandcrcmapping</servlet-name>
+        <jsp-file>/view/dataEntry/commandcrcmapping.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>commandcrcmapping</servlet-name>
+        <url-pattern>/commandcrcmapping</url-pattern>
+    </servlet-mapping>
     
     <servlet-mapping>
         <servlet-name>servlet Dispatcher</servlet-name>
@@ -47,7 +82,6 @@
         <servlet-class>com.ble.webService.controller.BLEWebServicesController</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    
     <servlet-mapping>
         <servlet-name>webServiceCont</servlet-name>
         <url-pattern>/webServiceCont</url-pattern>
@@ -56,13 +90,11 @@
     <servlet>
         <servlet-name>DeviceOperationCommandCont</servlet-name>
         <servlet-class>com.ble.command.controller.DeviceOperationCommandController</servlet-class>
-    </servlet>    
+    </servlet>
     <servlet-mapping>
         <servlet-name>DeviceOperationCommandCont</servlet-name>
         <url-pattern>/DeviceOperationCommandCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>device_operation_commandView</servlet-name>
         <jsp-file>/view/device_operation_command.jsp</jsp-file>
@@ -71,8 +103,6 @@
         <servlet-name>device_operation_commandView</servlet-name>
         <url-pattern>/device_operation_commandView</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>CommandController</servlet-name>
         <servlet-class>com.ble.command.controller.CommandController</servlet-class>
@@ -81,8 +111,6 @@
         <servlet-name>CommandController</servlet-name>
         <url-pattern>/CommandCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>CommandView</servlet-name>
         <jsp-file>/view/command.jsp</jsp-file>
@@ -91,8 +119,6 @@
         <servlet-name>CommandView</servlet-name>
         <url-pattern>/commandView</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>RuleController</servlet-name>
         <servlet-class>com.ble.command.controller.RuleController</servlet-class>
@@ -101,8 +127,6 @@
         <servlet-name>RuleController</servlet-name>
         <url-pattern>/ruleCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>rule</servlet-name>
         <jsp-file>/view/rule.jsp</jsp-file>
@@ -120,8 +144,6 @@
         <servlet-name>ManufacturerController</servlet-name>
         <url-pattern>/ManufacturerCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>Manufacturer</servlet-name>
         <jsp-file>/view/dataEntry/manufacturer.jsp</jsp-file>
@@ -130,8 +152,6 @@
         <servlet-name>Manufacturer</servlet-name>
         <url-pattern>/manufacturer</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>DeviceTypeController</servlet-name>
         <servlet-class>com.ble.dataEntry.controller.DeviceTypeController</servlet-class>
@@ -140,8 +160,6 @@
         <servlet-name>DeviceTypeController</servlet-name>
         <url-pattern>/DeviceTypeCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>DeviceType</servlet-name>
         <jsp-file>/view/dataEntry/device_type.jsp</jsp-file>
@@ -150,8 +168,6 @@
         <servlet-name>DeviceType</servlet-name>
         <url-pattern>/devicetype</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>ModelTypeController</servlet-name>
         <servlet-class>com.ble.dataEntry.controller.ModelTypeController</servlet-class>
@@ -160,8 +176,6 @@
         <servlet-name>ModelTypeController</servlet-name>
         <url-pattern>/ModelTypeCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>ModelType</servlet-name>
         <jsp-file>/view/dataEntry/model_type.jsp</jsp-file>
@@ -170,8 +184,6 @@
         <servlet-name>ModelType</servlet-name>
         <url-pattern>/modeltype</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>ModelController</servlet-name>
         <servlet-class>com.ble.dataEntry.controller.ModelController</servlet-class>
@@ -180,8 +192,6 @@
         <servlet-name>ModelController</servlet-name>
         <url-pattern>/ModelCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>Model</servlet-name>
         <jsp-file>/view/dataEntry/model.jsp</jsp-file>
@@ -190,8 +200,6 @@
         <servlet-name>Model</servlet-name>
         <url-pattern>/model</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>CommandTypeController</servlet-name>
         <servlet-class>com.ble.dataEntry.controller.CommandTypeController</servlet-class>
@@ -200,8 +208,6 @@
         <servlet-name>CommandTypeController</servlet-name>
         <url-pattern>/CommandTypeCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>CommandType</servlet-name>
         <jsp-file>/view/dataEntry/command_type.jsp</jsp-file>
@@ -210,8 +216,6 @@
         <servlet-name>CommandType</servlet-name>
         <url-pattern>/commandtype</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>OperationNameController</servlet-name>
         <servlet-class>com.ble.dataEntry.controller.OperationNameController</servlet-class>
@@ -220,8 +224,6 @@
         <servlet-name>OperationNameController</servlet-name>
         <url-pattern>/OperationNameCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>OperationName</servlet-name>
         <jsp-file>/view/dataEntry/operation_name.jsp</jsp-file>
@@ -230,8 +232,6 @@
         <servlet-name>OperationName</servlet-name>
         <url-pattern>/operationname</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>DeviceController</servlet-name>
         <servlet-class>com.ble.device.controller.DeviceController</servlet-class>
@@ -240,8 +240,6 @@
         <servlet-name>DeviceController</servlet-name>
         <url-pattern>/DeviceCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>Device</servlet-name>
         <jsp-file>/view/device/device.jsp</jsp-file>
@@ -250,8 +248,6 @@
         <servlet-name>Device</servlet-name>
         <url-pattern>/device</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>DeviceRegistrationController</servlet-name>
         <servlet-class>com.ble.device.controller.DeviceRegistrationController</servlet-class>
@@ -260,8 +256,6 @@
         <servlet-name>DeviceRegistrationController</servlet-name>
         <url-pattern>/DeviceRegistrationCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>DeviceRegistration</servlet-name>
         <jsp-file>/view/device/device_registration.jsp</jsp-file>
@@ -270,8 +264,6 @@
         <servlet-name>DeviceRegistration</servlet-name>
         <url-pattern>/deviceregistration</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>DeviceOprtnChartstcMapController</servlet-name>
         <servlet-class>com.ble.dataEntry.controller.DeviceOprtnChartstcMapController</servlet-class>
@@ -280,8 +272,6 @@
         <servlet-name>DeviceOprtnChartstcMapController</servlet-name>
         <url-pattern>/DeviceOprtnChartstcMapCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>device_oprtn_chartstc_map</servlet-name>
         <jsp-file>/view/dataEntry/device_oprtn_chartstc_map.jsp</jsp-file>
@@ -290,8 +280,6 @@
         <servlet-name>device_oprtn_chartstc_map</servlet-name>
         <url-pattern>/device_oprtn_chartstc_map</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>BleOperationNameController</servlet-name>
         <servlet-class>com.ble.dataEntry.controller.BleOperationNameController</servlet-class>
@@ -300,8 +288,6 @@
         <servlet-name>BleOperationNameController</servlet-name>
         <url-pattern>/BleOperationNameCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>ble_operation_name</servlet-name>
         <jsp-file>/view/dataEntry/ble_operation_name.jsp</jsp-file>
@@ -310,8 +296,6 @@
         <servlet-name>ble_operation_name</servlet-name>
         <url-pattern>/ble_operation_name</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>DeviceMapController</servlet-name>
         <servlet-class>com.ble.device.controller.DeviceMapController</servlet-class>
@@ -320,8 +304,6 @@
         <servlet-name>DeviceMapController</servlet-name>
         <url-pattern>/DeviceMapCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>DeviceMap</servlet-name>
         <jsp-file>/view/dataEntry/device_map.jsp</jsp-file>
@@ -330,8 +312,6 @@
         <servlet-name>DeviceMap</servlet-name>
         <url-pattern>/device_map</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>ServiceController</servlet-name>
         <servlet-class>com.ble.dataEntry.controller.ServiceController</servlet-class>
@@ -340,8 +320,6 @@
         <servlet-name>ServiceController</servlet-name>
         <url-pattern>/ServiceCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>ServiceView</servlet-name>
         <jsp-file>/view/dataEntry/serviceView.jsp</jsp-file>
@@ -350,8 +328,6 @@
         <servlet-name>ServiceView</servlet-name>
         <url-pattern>/serviceview</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>WelcomeController</servlet-name>
         <servlet-class>com.ble.device.controller.WelcomeController</servlet-class>
@@ -360,8 +336,6 @@
         <servlet-name>WelcomeController</servlet-name>
         <url-pattern>/WelcomeCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>Welcome</servlet-name>
         <jsp-file>/view/welcome.jsp</jsp-file>
@@ -370,8 +344,6 @@
         <servlet-name>Welcome</servlet-name>
         <url-pattern>/welcome</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>CharachtristicsController</servlet-name>
         <servlet-class>com.ble.dataEntry.controller.CharachtristicsController</servlet-class>
@@ -380,8 +352,6 @@
         <servlet-name>CharachtristicsController</servlet-name>
         <url-pattern>/CharachtristicsCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>charachteristicView</servlet-name>
         <jsp-file>/view/dataEntry/charateristics.jsp</jsp-file>
@@ -390,8 +360,6 @@
         <servlet-name>charachteristicView</servlet-name>
         <url-pattern>/charachteristic</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>SelectionController</servlet-name>
         <servlet-class>com.ble.command.controller.SelectionController</servlet-class>
@@ -400,8 +368,6 @@
         <servlet-name>SelectionController</servlet-name>
         <url-pattern>/SelectionCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>Selection</servlet-name>
         <jsp-file>/view/dataEntry/selection.jsp</jsp-file>
@@ -410,8 +376,6 @@
         <servlet-name>Selection</servlet-name>
         <url-pattern>/selection</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>SelectionCommand</servlet-name>
         <jsp-file>/view/dataEntry/selection_command.jsp</jsp-file>
@@ -420,8 +384,6 @@
         <servlet-name>SelectionCommand</servlet-name>
         <url-pattern>/selection_command</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>InputController</servlet-name>
         <servlet-class>com.ble.command.controller.InputController</servlet-class>
@@ -430,8 +392,6 @@
         <servlet-name>InputController</servlet-name>
         <url-pattern>/InputCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>Input</servlet-name>
         <jsp-file>/view/dataEntry/input.jsp</jsp-file>
@@ -440,8 +400,6 @@
         <servlet-name>Input</servlet-name>
         <url-pattern>/input</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>InputCommand</servlet-name>
         <jsp-file>/view/dataEntry/input_command.jsp</jsp-file>
@@ -450,8 +408,6 @@
         <servlet-name>InputCommand</servlet-name>
         <url-pattern>/input_command</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>ParameterController</servlet-name>
         <servlet-class>com.ble.command.controller.ParameterController</servlet-class>
@@ -460,8 +416,6 @@
         <servlet-name>ParameterController</servlet-name>
         <url-pattern>/ParameterCont.do</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>Parameter</servlet-name>
         <jsp-file>/view/dataEntry/parameter.jsp</jsp-file>
@@ -470,10 +424,7 @@
         <servlet-name>Parameter</servlet-name>
         <url-pattern>/parameter</url-pattern>
     </servlet-mapping>
-    
-    
     <!--<DataEntry mapping end>-->
-    
     <servlet>
         <servlet-name>ByteDataController</servlet-name>
         <servlet-class>com.ble.command.controller.ByteDataController</servlet-class>
@@ -482,8 +433,6 @@
         <servlet-name>ByteDataController</servlet-name>
         <url-pattern>/ByteDataController</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>SelectionValueController</servlet-name>
         <servlet-class>com.ble.command.controller.SelectionValueController</servlet-class>
@@ -492,8 +441,6 @@
         <servlet-name>SelectionValueController</servlet-name>
         <url-pattern>/SelectionValueController</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>selection_value</servlet-name>
         <jsp-file>/view/dataEntry/selection_value.jsp</jsp-file>
@@ -502,8 +449,6 @@
         <servlet-name>selection_value</servlet-name>
         <url-pattern>/selection_value</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>byte_data</servlet-name>
         <jsp-file>/view/dataEntry/byte_data.jsp</jsp-file>
@@ -512,8 +457,6 @@
         <servlet-name>byte_data</servlet-name>
         <url-pattern>/byte_data</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>sub_byte_division</servlet-name>
         <jsp-file>/view/dataEntry/sub_byte_division.jsp</jsp-file>
@@ -522,8 +465,6 @@
         <servlet-name>sub_byte_division</servlet-name>
         <url-pattern>/sub_byte_division</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>sub_division_selection</servlet-name>
         <jsp-file>/view/dataEntry/sub_division_selection.jsp</jsp-file>
@@ -532,8 +473,6 @@
         <servlet-name>sub_division_selection</servlet-name>
         <url-pattern>/sub_division_selection</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>SubDivisionSelectionController</servlet-name>
         <servlet-class>com.ble.command.controller.SubDivisionSelectionController</servlet-class>
@@ -546,33 +485,23 @@
         <servlet-name>SubByteDivisionController</servlet-name>
         <url-pattern>/SubByteDivisionController</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet-mapping>
         <servlet-name>SubDivisionSelectionController</servlet-name>
         <url-pattern>/SubDivisionSelectionController</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>Response</servlet-name>
         <servlet-class>com.ble.response.controller.ResponseController</servlet-class>
     </servlet>
-    
-    
     <servlet>
         <servlet-name>command_description</servlet-name>
         <jsp-file>/view/dataEntry/command_description.jsp</jsp-file>
     </servlet>
-    
-    
     <servlet-mapping>
         <servlet-name>command_description</servlet-name>
         <url-pattern>/command_description</url-pattern>
     </servlet-mapping>
-    
-    
-        <servlet>
+    <servlet>
         <servlet-name>CommandDescriptionController</servlet-name>
         <servlet-class>com.ble.command.controller.CommandDescriptionController</servlet-class>
     </servlet>
@@ -596,13 +525,11 @@
         <servlet-name>deviceRegConnPage</servlet-name>
         <url-pattern>/deviceRegConnPage</url-pattern>
     </servlet-mapping>
-
-
     <servlet-mapping>
         <servlet-name>Response</servlet-name>
         <url-pattern>/Response</url-pattern>
     </servlet-mapping>
-     <servlet>
+    <servlet>
         <servlet-name>response</servlet-name>
         <jsp-file>/view/response/response.jsp</jsp-file>
     </servlet>
@@ -610,7 +537,6 @@
         <servlet-name>response</servlet-name>
         <url-pattern>/response</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>FixedResponseController</servlet-name>
         <servlet-class>com.ble.response.controller.FixedResponseController</servlet-class>
@@ -619,7 +545,7 @@
         <servlet-name>FixedResponseController</servlet-name>
         <url-pattern>/FixedResponseCont</url-pattern>
     </servlet-mapping>
-         <servlet>
+    <servlet>
         <servlet-name>fixed_response</servlet-name>
         <jsp-file>/view/response/fixed_response.jsp</jsp-file>
     </servlet>
@@ -627,7 +553,7 @@
         <servlet-name>fixed_response</servlet-name>
         <url-pattern>/fixed_response</url-pattern>
     </servlet-mapping>
-       <servlet>
+    <servlet>
         <servlet-name>fixed_response_value</servlet-name>
         <jsp-file>/view/response/fixed_response_value.jsp</jsp-file>
     </servlet>
@@ -643,8 +569,6 @@
         <servlet-name>FixedResponseValueController</servlet-name>
         <url-pattern>/FixedResponseValueCont</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>VariableResponseController</servlet-name>
         <servlet-class>com.ble.response.controller.VariableResponseController</servlet-class>

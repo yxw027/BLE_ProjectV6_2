@@ -154,8 +154,16 @@ public class DeviceRegistrationController extends HttpServlet {
 
          noOfRowsInTable = deviceRegistrationModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName);
 
-         if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
+         if (buttonAction.equals("Next")){
+             searchManufacturerName=request.getParameter("manname");
+             searchDeviceTypeName=request.getParameter("dname");
+             noOfRowsInTable = deviceRegistrationModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName);
+             
+         }  // lowerLimit already has value such that it shows forward records, so do nothing here.
          else if (buttonAction.equals("Previous")) {
+              searchManufacturerName=request.getParameter("manname");
+             searchDeviceTypeName=request.getParameter("dname");
+             noOfRowsInTable = deviceRegistrationModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName);
             int temp = lowerLimit - noOfRowsToDisplay - noOfRowsTraversed;
             if (temp < 0) {
                 noOfRowsToDisplay = lowerLimit - noOfRowsTraversed;
@@ -164,8 +172,14 @@ public class DeviceRegistrationController extends HttpServlet {
                 lowerLimit = temp;
             }
         } else if (buttonAction.equals("First")) {
+             searchManufacturerName=request.getParameter("manname");
+             searchDeviceTypeName=request.getParameter("dname");
+            
             lowerLimit = 0;
         } else if (buttonAction.equals("Last")) {
+             searchManufacturerName=request.getParameter("manname");
+             searchDeviceTypeName=request.getParameter("dname");
+             noOfRowsInTable = deviceRegistrationModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName);
             lowerLimit = noOfRowsInTable - noOfRowsToDisplay;
             if (lowerLimit < 0) {
                 lowerLimit = 0;
@@ -200,7 +214,8 @@ public class DeviceRegistrationController extends HttpServlet {
         request.setAttribute("device_type", request.getParameter("device_type"));
         request.setAttribute("deviceName", request.getParameter("device_name"));
         request.setAttribute("device_no", request.getParameter("device_no"));
-
+request.setAttribute("manname", searchManufacturerName);
+request.setAttribute("dname", searchDeviceTypeName);
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("searchManufacturerName",searchManufacturerName );
         request.setAttribute("searchDeviceTypeName",searchDeviceTypeName );
