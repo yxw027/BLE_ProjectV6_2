@@ -11,10 +11,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
@@ -799,6 +802,7 @@ public class DeviceOperationCommandModel {
 
         int updateRowsAffected = 0;
         try {
+            connection.setAutoCommit(false);
             PreparedStatement ps = (PreparedStatement) connection.prepareStatement(query1);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -812,26 +816,33 @@ public class DeviceOperationCommandModel {
                     PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3);
                     psmt.setInt(1, device_command_id);
                     psmt.setInt(2, device_id);
-//                    psmt.setInt(3, command_id);
-                      psmt.setInt(3, command_type_id);
+                    psmt.setInt(3, command_type_id);
                     psmt.setInt(4, operation_id);
-
                     psmt.setString(5, commandBean.getRemark());
-
                     psmt.setInt(6, rev);
                     psmt.setString(7, "Y");
                     psmt.setString(8, commandBean.getOrder_no());
                     psmt.setString(9, commandBean.getDelay());
-                     psmt.setString(10, commandBean.getShort_name());
-
+                    psmt.setString(10, commandBean.getShort_name());
                     int a = psmt.executeUpdate();
                     if (a > 0) {
+                        connection.commit();
                         status = true;
+                    }else {
+                    connection.rollback();
                     }
                 }
             }
         } catch (Exception e) {
             System.out.println("CommandModel reviseRecord() Error: " + e);
+        }finally{
+        if(connection!=null){
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DeviceOperationCommandModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         }
         if (status) {
             message = "Record updated successfully......";

@@ -105,7 +105,7 @@ public class DeviceTypeController extends HttpServlet {
                 System.out.println("Inserting values by model......");
                 int numberOfRowsAffected = deviceTypeModel.insertRecord(deviceTypeBean);
                 if(numberOfRowsAffected > 0) {
-                    request.getRequestDispatcher("/ManufacturerCont.do?task=''").forward(request, response);
+                   // request.getRequestDispatcher("/ManufacturerCont.do?task=''").forward(request, response);
                 }
             } else {
                 System.out.println("Update values by model........");

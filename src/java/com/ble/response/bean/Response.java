@@ -12,7 +12,15 @@ package com.ble.response.bean;
 public class Response {
     
     int response_id,command_id,fixed_response,variable_response,bitwise_response;
-    String command,response,data_extract_type,format, remark;
+    String command,response,data_extract_type,format, remark,shorthand;
+
+    public String getShorthand() {
+        return shorthand;
+    }
+
+    public void setShorthand(String shorthand) {
+        this.shorthand = shorthand;
+    }
 
     public int getResponse_id() {
         return response_id;

@@ -10,8 +10,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -41,7 +44,6 @@ public class ManufacturerModel {
 
 
 public int insertRecord(ManufacturerBean manufacturerBean) {
-
         String query = " insert into manufacturer(name,remark) values(?,?) ";
         int rowsAffected = 0;
         try {
@@ -53,6 +55,12 @@ public int insertRecord(ManufacturerBean manufacturerBean) {
             rowsAffected = pstmt.executeUpdate();
         } catch (Exception e) {
             System.out.println("Error while inserting record...." + e);
+        }finally{
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ManufacturerModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         if (rowsAffected > 0) {
             message = "Record saved successfully.";

@@ -142,7 +142,7 @@
     function fillColumns(id) {
         debugger;
         var noOfRowsTraversed = document.getElementById("noOfRowsTraversed").value;
-        var noOfColumns = 10;
+        var noOfColumns = 11;
         var columnId = id;
     <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
         columnId = columnId.substring(3, id.length);
@@ -162,7 +162,7 @@
 
         
       
-        document.getElementById("command").value = document.getElementById(t1id + (lowerLimit + 2)).innerHTML;
+        document.getElementById("command").value = document.getElementById(t1id + (lowerLimit + 10)).innerHTML;
         document.getElementById("response").value = document.getElementById(t1id + (lowerLimit + 3)).innerHTML;
         document.getElementById("response_id").value = document.getElementById(t1id + (lowerLimit + 0)).innerHTML;        
         document.getElementById("fixed_response").value = document.getElementById(t1id + (lowerLimit + 4)).innerHTML.split(" ")[0];
@@ -339,6 +339,7 @@ a:hover{
                                                 <th class="heading">Data Extract Type</th>
                                                 <th class="heading">Format</th>
                                                 <th class="heading">Remark</th>
+                                                <th class="heading">ShortHand</th>
                                             </tr>
                                             <!---below is the code to show all values on jsp page fetched from trafficTypeList of TrafficController     --->
                                             <c:forEach var="response" items="${requestScope['responseList']}"  varStatus="loopCounter">
@@ -352,13 +353,15 @@ a:hover{
                                                     
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.command}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.response}</td>
-
+                               
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.fixed_response} <a href="#" onclick="fixed('${response.fixed_response}','${response.response}', '${response.response_id}');">(View Fixed Response)</a></td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.variable_response} <a href="#" onclick="inputPopup('VariableResponseCont',${response.variable_response},${response.response_id});return false" id="input_button">View Input</a></td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.bitwise_response} <a href="#" onclick="bits('${divisionTypeBean.bitwise}','${divisionTypeBean.command_id}');">View Bitwise</a></td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.data_extract_type} </td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.format}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.remark}</td>
+                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.shorthand}</td>
+                                                   
 
                                                 </tr>
                                             </c:forEach>
