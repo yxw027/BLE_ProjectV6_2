@@ -286,6 +286,8 @@ a:hover{
                                             </tr>
                                             <!--- These hidden fields "lowerLimit", and "noOfRowsTraversed" belong to form1 of table1. -->
                                             <input type="hidden" name="lowerLimit" value="${lowerLimit}">
+                                            
+                                            <input type="hidden" name="manname" value="${manname}">
                                             <input type="hidden" id="noOfRowsTraversed" name="noOfRowsTraversed" value="${noOfRowsTraversed}">
                                             <input  type="hidden" id="searchCommandName" name="searchCommandName" value="${searchCommandName}" >
                                         </table></DIV>

@@ -191,8 +191,18 @@ public class DeviceOprtnChartstcMapController extends HttpServlet {
     noOfRowsInTable = ruleModel.getNoOfRowsnew(searchCommandName,searchDeviceType,searchModelName);
        //  noOfRowsInTable = ruleModel.getNoOfRows(searchCommandName);
 
-         if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
+         if (buttonAction.equals("Next")){
+             searchCommandName=request.getParameter("manname");
+              searchDeviceType=request.getParameter("devicetype");
+               searchModelName=request.getParameter("modname");
+              noOfRowsInTable = ruleModel.getNoOfRowsnew(searchCommandName,searchDeviceType,searchModelName);
+             
+         } // lowerLimit already has value such that it shows forward records, so do nothing here.
          else if (buttonAction.equals("Previous")) {
+               searchCommandName=request.getParameter("manname");
+               searchDeviceType=request.getParameter("devicetype");
+               searchModelName=request.getParameter("modname");
+              noOfRowsInTable = ruleModel.getNoOfRowsnew(searchCommandName,searchDeviceType,searchModelName);
             int temp = lowerLimit - noOfRowsToDisplay - noOfRowsTraversed;
             if (temp < 0) {
                 noOfRowsToDisplay = lowerLimit - noOfRowsTraversed;
@@ -201,8 +211,16 @@ public class DeviceOprtnChartstcMapController extends HttpServlet {
                 lowerLimit = temp;
             }
         } else if (buttonAction.equals("First")) {
+              searchCommandName=request.getParameter("manname");
+              searchDeviceType=request.getParameter("devicetype");
+               searchModelName=request.getParameter("modname");
+             // noOfRowsInTable = ruleModel.getNoOfRowsnew(searchCommandName,searchDeviceType,searchModelName);
             lowerLimit = 0;
         } else if (buttonAction.equals("Last")) {
+              searchCommandName=request.getParameter("manname");
+              searchDeviceType=request.getParameter("devicetype");
+               searchModelName=request.getParameter("modname");
+              noOfRowsInTable = ruleModel.getNoOfRowsnew(searchCommandName,searchDeviceType,searchModelName);
             lowerLimit = noOfRowsInTable - noOfRowsToDisplay;
             if (lowerLimit < 0) {
                 lowerLimit = 0;
@@ -246,6 +264,11 @@ public class DeviceOprtnChartstcMapController extends HttpServlet {
         request.setAttribute("searchCommandName",searchCommandName );
         request.setAttribute("searchDeviceType",searchDeviceType );
         request.setAttribute("searchModelName",searchModelName );
+        
+         request.setAttribute("manname",searchCommandName );
+        request.setAttribute("devicetype",searchDeviceType );
+        request.setAttribute("modname",searchModelName);
+        
         request.setAttribute("message", ruleModel.getMessage());
         request.setAttribute("msgBgColor", ruleModel.getMsgBgColor());
         request.getRequestDispatcher("/device_oprtn_chartstc_map").forward(request, response);

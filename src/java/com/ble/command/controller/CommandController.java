@@ -200,8 +200,15 @@ try {
         System.out.println("searching.......... " + searchDeviceType);
         noOfRowsInTable = commandModel.getNoOfRows(searchCommandName, searchDeviceName, searchManufacturerName, searchDeviceType);
 
-        if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
+        if (buttonAction.equals("Next")){
+             searchManufacturerName=request.getParameter("manname");
+             noOfRowsInTable = commandModel.getNoOfRows(searchCommandName, searchDeviceName, searchManufacturerName, searchDeviceType);
+             
+         } // lowerLimit already has value such that it shows forward records, so do nothing here.
         else if (buttonAction.equals("Previous")) {
+              searchManufacturerName=request.getParameter("manname");
+             noOfRowsInTable = commandModel.getNoOfRows(searchCommandName, searchDeviceName, searchManufacturerName, searchDeviceType);
+             
             int temp = lowerLimit - noOfRowsToDisplay - noOfRowsTraversed;
             if (temp < 0) {
                 noOfRowsToDisplay = lowerLimit - noOfRowsTraversed;
@@ -210,8 +217,14 @@ try {
                 lowerLimit = temp;
             }
         } else if (buttonAction.equals("First")) {
+              searchManufacturerName=request.getParameter("manname");
+            // noOfRowsInTable = commandModel.getNoOfRows(searchCommandName, searchDeviceName, searchManufacturerName, searchDeviceType);
+             
             lowerLimit = 0;
         } else if (buttonAction.equals("Last")) {
+              searchManufacturerName=request.getParameter("manname");
+             noOfRowsInTable = commandModel.getNoOfRows(searchCommandName, searchDeviceName, searchManufacturerName, searchDeviceType);
+             
             lowerLimit = noOfRowsInTable - noOfRowsToDisplay;
             if (lowerLimit < 0) {
                 lowerLimit = 0;
@@ -249,7 +262,7 @@ try {
         request.setAttribute("device_no", request.getParameter("device_no"));
         //request.setAttribute("operationName", request.getParameter("operation_name"));
         //request.setAttribute("commandName", request.getParameter("command"));
-
+        request.setAttribute("manname", searchCommandName);
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("searchCommandName", searchCommandName);
         request.setAttribute("searchDeviceName", searchDeviceName);

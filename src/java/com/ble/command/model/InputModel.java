@@ -13,9 +13,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.DatatypeConverter;
 
 /**
@@ -49,6 +52,26 @@ public class InputModel {
         String query1 = "select count(*) "
                 + " from input i "
                 + " where i.active='Y' ";
+
+        int noOfRows = 0;
+        try {
+            PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
+
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            noOfRows = rs.getInt(1);
+        } catch (Exception e) {
+            System.out.println("Error inside getNoOfRows SelectionModel" + e);
+        }
+        System.out.println("No of Rows in Table for search is" + noOfRows);
+        return noOfRows;
+    }
+    
+    public int getNoOfRowscount(String command_id,String inputno) {
+
+        String query1 = "select count(*) "
+                + " from input i "
+                + " where i.active='Y' and i.command_id='"+command_id+"' ";
 
         int noOfRows = 0;
         try {
@@ -105,36 +128,46 @@ public class InputModel {
         String query1 = " SELECT max(revision_no) revision_no FROM input c WHERE c.input_id = " + bean.getInput_id() + " && active='Y' ORDER BY revision_no DESC";
         String query2 = " UPDATE input SET active=? WHERE input_id = ? && revision_no = ? ";
         String query3 = " INSERT INTO input (input_id,command_id,parameter_id,remark,revision_no,active) VALUES (?,?,?,?,?,?) ";
-
+ PreparedStatement ps=null;
         int updateRowsAffected = 0;
         try {
-            PreparedStatement ps = (PreparedStatement) connection.prepareStatement(query1);
+            connection.setAutoCommit(false);
+           ps = (PreparedStatement) connection.prepareStatement(query1);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                PreparedStatement pst = (PreparedStatement) connection.prepareStatement(query2);
-                pst.setString(1, "N");
-                pst.setInt(2, bean.getInput_id());
-                pst.setInt(3, rs.getInt("revision_no"));
-                updateRowsAffected = pst.executeUpdate();
+                 ps = (PreparedStatement) connection.prepareStatement(query2);
+                ps.setString(1, "N");
+                ps.setInt(2, bean.getInput_id());
+                ps.setInt(3, rs.getInt("revision_no"));
+                updateRowsAffected = ps.executeUpdate();
                 if (updateRowsAffected >= 1) {
                     int rev = rs.getInt("revision_no") + 1;
-                    PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3);
-                    psmt.setInt(1, bean.getInput_id());
-                    psmt.setInt(2, command_id);
-                    psmt.setInt(3, parameter_id);
-                    psmt.setString(4, bean.getRemark());
-                    psmt.setInt(5, rev);
-                    psmt.setString(6, "Y");
+                   ps = (PreparedStatement) connection.prepareStatement(query3);
+                    ps.setInt(1, bean.getInput_id());
+                    ps.setInt(2, command_id);
+                    ps.setInt(3, parameter_id);
+                    ps.setString(4, bean.getRemark());
+                    ps.setInt(5, rev);
+                    ps.setString(6, "Y");
 
-                    int a = psmt.executeUpdate();
+                    int a = ps.executeUpdate();
                     if (a > 0) {
+                        connection.commit();
                         status = true;
+                    }else {
+                    connection.rollback();
                     }
                 }
             }
         } catch (Exception e) {
             System.out.println("CommandModel reviseRecord() Error: " + e);
-        }
+        }finally{
+//        try {
+//            ps.close();
+//        } catch (SQLException ex) {
+//             
+//        }
+      }
         if (status) {
             message = "Record updated successfully......";
             msgBgColor = COLOR_OK;

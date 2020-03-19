@@ -9,8 +9,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author jpss
@@ -71,35 +74,36 @@ public boolean reviseRecords(DeviceOprtnChartstcMapBean ruleBean){
     boolean status=false;
     String query="";
     int rowsAffected=0;
-
+    int deviceType_id = ruleBean.getRead_characteristics_id();
+PreparedStatement pst=null;
       String query1 = " SELECT max(revision_no) revision_no FROM device_characteristic_ble_map c WHERE c.device_characteristic_ble_map_id = "+ruleBean.getDevice_characteristic_ble_map_id()+" && active='Y' ORDER BY revision_no DESC";
       String query2 = " UPDATE device_characteristic_ble_map SET active=? WHERE device_characteristic_ble_map_id = ? && revision_no = ? ";
       String query3 = " insert into device_characteristic_ble_map(device_characteristic_ble_map_id,device_id,read_characteristic_id,write_characteristic_id,ble_operation_name_id,order_no,remark,revision_no,active) values(?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 
       int updateRowsAffected = 0;
       try {
-           PreparedStatement ps=(PreparedStatement) connection.prepareStatement(query1);
-           ResultSet rs = ps.executeQuery();
+        pst=(PreparedStatement) connection.prepareStatement(query1);
+           ResultSet rs = pst.executeQuery();
            if(rs.next()){
-           PreparedStatement pst = (PreparedStatement) connection.prepareStatement(query2);
+           pst = (PreparedStatement) connection.prepareStatement(query2);
            pst.setString(1,  "N");
            pst.setInt(2,ruleBean.getDevice_characteristic_ble_map_id());
            pst.setInt(3, rs.getInt("revision_no"));
            updateRowsAffected = pst.executeUpdate();
              if(updateRowsAffected >= 1){
              int rev = rs.getInt("revision_no")+1;
-             PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3); 
-             psmt.setInt(1,ruleBean.getDevice_characteristic_ble_map_id());
-             psmt.setInt(2,ruleBean.getDevice_id());
-             psmt.setInt(3,ruleBean.getRead_characteristics_id());
-             psmt.setInt(4,ruleBean.getWrite_characteristics_id());
-             psmt.setInt(5,ruleBean.getBle_operation_name_id());
-             psmt.setInt(6,ruleBean.getOrder_no());
-             psmt.setString(7,ruleBean.getRemark());
-             psmt.setInt(8,rev);
-             psmt.setString(9,"Y");
+             pst = (PreparedStatement) connection.prepareStatement(query3); 
+             pst.setInt(1,ruleBean.getDevice_characteristic_ble_map_id());
+             pst.setInt(2,ruleBean.getDevice_id());
+             pst.setInt(3,ruleBean.getRead_characteristics_id());
+             pst.setInt(4,ruleBean.getWrite_characteristics_id());
+             pst.setInt(5,ruleBean.getBle_operation_name_id());
+             pst.setInt(6,ruleBean.getOrder_no());
+             pst.setString(7,ruleBean.getRemark());
+             pst.setInt(8,rev);
+             pst.setString(9,"Y");
 
-             int a = psmt.executeUpdate();
+             int a = pst.executeUpdate();
               if(a > 0)
               status=true;
              }
@@ -107,7 +111,13 @@ public boolean reviseRecords(DeviceOprtnChartstcMapBean ruleBean){
           } catch (Exception e)
              {
               System.out.println("CommandModel reviseRecord() Error: " + e);
-             }
+             }finally{
+//        try {
+//            pst.close();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DeviceOprtnChartstcMapModel.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+      }
       if (status) {
              message = "Record updated successfully......";
             msgBgColor = COLOR_OK;

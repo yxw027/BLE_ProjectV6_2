@@ -175,6 +175,7 @@ public boolean reviseRecords(DeviceRegistrationBean deviceRegistrationBean){
 
       int updateRowsAffected = 0;
       try {
+         connection.setAutoCommit(false);
            PreparedStatement ps=(PreparedStatement) connection.prepareStatement(query1);
            ResultSet rs = ps.executeQuery();
            if(rs.next()){
@@ -196,10 +197,14 @@ public boolean reviseRecords(DeviceRegistrationBean deviceRegistrationBean){
              psmt.setString(8,"Y");
 
              int a = psmt.executeUpdate();
-              if(a > 0)
-              status=true;
-             }
-           }
+               if (a > 0) {
+                        connection.commit();
+                        status = true;
+                    }else {
+                    connection.rollback();
+                    }
+                }
+            }
           } catch (Exception e)
              {
               System.out.println("CommandModel reviseRecord() Error: " + e);

@@ -56,11 +56,11 @@ public int insertRecord(ManufacturerBean manufacturerBean) {
         } catch (Exception e) {
             System.out.println("Error while inserting record...." + e);
         }finally{
-            try {
-                connection.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(ManufacturerModel.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try {
+//                //connection.close();
+//            } catch (SQLException ex) {
+//                Logger.getLogger(ManufacturerModel.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         }
         if (rowsAffected > 0) {
             message = "Record saved successfully.";
@@ -77,39 +77,52 @@ public boolean reviseRecords(ManufacturerBean manufacturerBean){
     boolean status=false;
     String query="";
     int rowsAffected=0;
-     
+      PreparedStatement ps=null;
       String query1 = " SELECT max(revision_no) revision_no FROM manufacturer c WHERE c.id = "+manufacturerBean.getManufacturer_id()+" && active='Y' ORDER BY revision_no DESC";
       String query2 = " UPDATE manufacturer SET active=? WHERE id = ? && revision_no = ? ";
       String query3 = " INSERT INTO manufacturer (id,name,remark,revision_no,active) VALUES (?,?,?,?,?) ";
 
       int updateRowsAffected = 0;
       try {
-           PreparedStatement ps=(PreparedStatement) connection.prepareStatement(query1);
+          connection.setAutoCommit(false);
+           ps=(PreparedStatement) connection.prepareStatement(query1);
            ResultSet rs = ps.executeQuery();
            if(rs.next()){
-           PreparedStatement pst = (PreparedStatement) connection.prepareStatement(query2);
-           pst.setString(1,  "N");
-           pst.setInt(2,manufacturerBean.getManufacturer_id());
-           pst.setInt(3, rs.getInt("revision_no"));
-           updateRowsAffected = pst.executeUpdate();
+             ps = (PreparedStatement) connection.prepareStatement(query2);
+           ps.setString(1,  "N");
+           ps.setInt(2,manufacturerBean.getManufacturer_id());
+           ps.setInt(3, rs.getInt("revision_no"));
+           updateRowsAffected = ps.executeUpdate();
              if(updateRowsAffected >= 1){
              int rev = rs.getInt("revision_no")+1;
-             PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3);
-             psmt.setInt(1,manufacturerBean.getManufacturer_id());
-             psmt.setString(2,manufacturerBean.getManufacturer_name());
-             psmt.setString(3,manufacturerBean.getRemark());
-             psmt.setInt(4,rev);
-             psmt.setString(5,"Y");
+            ps = (PreparedStatement) connection.prepareStatement(query3);
+             ps.setInt(1,manufacturerBean.getManufacturer_id());
+             ps.setString(2,manufacturerBean.getManufacturer_name());
+             ps.setString(3,manufacturerBean.getRemark());
+             ps.setInt(4,rev);
+             ps.setString(5,"Y");
 
-             int a = psmt.executeUpdate();
-              if(a > 0)
-              status=true;
+             int a = ps.executeUpdate();
+              if (a > 0) {
+                        connection.commit();
+                        status = true;
+                    }else {
+                    connection.rollback();
+                    }
              }
            }
           } catch (Exception e)
              {
               System.out.println("CommandModel reviseRecord() Error: " + e);
              }
+      finally{
+        try {
+            ps.close();
+          //  connection.setAutoCommit(true);
+        } catch (SQLException ex) {
+             
+        }
+      }
       if (status) {
              message = "Record updated successfully......";
             msgBgColor = COLOR_OK;

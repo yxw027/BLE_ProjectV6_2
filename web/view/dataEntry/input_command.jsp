@@ -20,7 +20,8 @@
         <script type="text/javascript" src="JS/jquery-1.4.2.min.js"></script>
         <script type="text/javascript" src="JS/jquery.autocomplete.js"></script>
         <script type="text/javascript" src="JS/jquery-ui.min.js"></script>
-
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript" src="project.js"></script>
     </head>
     <c:choose>        
         <c:when test="${fn:length(inputListById) > 0}">            
@@ -66,10 +67,12 @@
                                     </tr>
                                 </c:forEach>
 
-                            <input  type="hidden" name="input_no" value="${input_no}" >
+                            <input  type="hidden" name="input_no" id="input_no" value="${input_no}" >
                             <input  type="hidden" name="command" value="${command}" >
                             <input  type="hidden" name="command_id" value="${command_id}" >
-                            <input class="button" type="submit" id="save" name="task" value="Save" >
+                            <input  type="hidden" name="row_no" id="row_no" value="${row_no}" >
+                            <div id="savebutton"> <input class="button" type="submit" id="save" name="task" value="Save" onclick="disableButton()" ></div>
+                                                                   
                             </tbody>
                         </table>
 
@@ -78,6 +81,16 @@
             </tr>
         </table>
         <script type="text/javascript" language="javascript">
+  
+    function disableButton(){
+     var no=document.getElementById("input_no").value;
+       var rowno=document.getElementById("row_no").value;
+      // alert(no+"vvvvvvvvvvvv"+rowno);
+       if(rowno>=no){
+           	document.getElementById("save").disabled = true;
+       }
+   
+	}
 
 
 
@@ -115,12 +128,12 @@
 
             function addRow(tableID, input_no, command) {
                 debugger;
-                alert();
+                
 
                 $("#message").html("");
                 var table = document.getElementById(tableID);
 
-                  alert(input_no);
+                 
                 for (var i = 1; i <= input_no; i++) {
                     var row = table.insertRow(i);
 
