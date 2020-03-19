@@ -84,6 +84,8 @@ public class SelectionValueController extends HttpServlet {
         System.out.println("searching.......... " + searchSelectionName);
 
         noOfRowsInTable = selectionValueModel.getNoOfRows(searchSelectionName);
+        int sno=Integer.parseInt(selection_value_no);
+         int noOfRows = selectionValueModel.getNoOfRowscount(selection_id,sno);
 //        String buttonAction = request.getParameter("buttonAction"); // Holds the name of any of the four buttons: First, Previous, Next, Delete.
 //        if (buttonAction == null) {
 //            buttonAction = "none";
@@ -195,6 +197,7 @@ public class SelectionValueController extends HttpServlet {
         request.setAttribute("msgBgColor", selectionValueModel.getMsgBgColor());
         request.setAttribute("parameter", parameter);
         request.setAttribute("selection_id", selection_id);
+         request.setAttribute("rowno", noOfRows);
         request.setAttribute("selection_value_no", selection_value_no);
         request.setAttribute("parameter", parameter);
         request.setAttribute("selection_id", selection_id);

@@ -1,7 +1,7 @@
 <%-- 
     Document   : selection_command
     Created on : 19 Sep, 2019, 4:17:59 PM
-    Author     : apogee
+>    Author     : apogee
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -9,8 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
-
-
+ 
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
@@ -56,11 +55,11 @@
                                     <th class="heading">S.No.</th>
                                     <th class="heading">Response</th>
                                     <th class="heading">Parameter</th>                                    
-                                    <th class="heading" style="min-width:200px;">Fixed Response Value No</th>
+                                    <th class="heading" >Fixed Response Value No</th>
                                     <th class="heading">Start Pos</th>
                                     <th class="heading">No of Byte</th>
                                     <th class="heading">Remark</th>
-                                    <th class="heading">Action</th>
+                                     
                                     
                                 </tr>
                                 <c:forEach var="list" items="${requestScope['fixedResponseListById']}" varStatus="loopCounter">
@@ -176,7 +175,7 @@
                     element2.type = "text";
                     element2.name = "parameter" + i;
                     element2.id = "parameter" + i;
-                    element2.size = 5;
+                    element2.size = 15;
                     element2.maxLength = 8;
                     element2.value = "";
                     element2.setAttribute("onkeyup", 'autocompleteMethod("parameter",' + i + ')');
@@ -187,7 +186,7 @@
                     element2.type = "text";
                     element2.name = "fixed_response_value_no" + i;
                     element2.id = "fixed_response_value_no" + i;
-                    element2.size = 5;
+                    element2.size = 15;
                     element2.maxLength = 50;
                     element2.value = "";
                     cell4.appendChild(element2);
@@ -197,7 +196,7 @@
                     element2.type = "text";
                     element2.name = "start_pos" + i;
                     element2.id = "start_pos" + i;
-                    element2.size = 5;
+                    element2.size = 20;
                     element2.maxLength = 8;
                     element2.value = "";
                     element2.setAttribute("onkeyup", 'autocompleteMethod("parameter_type",' + i + ')');
@@ -208,7 +207,7 @@
                     element2.type = "text";
                     element2.name = "no_of_byte" + i;
                     element2.id = "no_of_byte" + i;
-                    element2.size = 5;
+                    element2.size = 15;
                     element2.maxLength = 8;
                     element2.value = "";
                     cell6.appendChild(element2);
@@ -218,7 +217,7 @@
                     element2.type = "text";
                     element2.name = "remark" + i;
                     element2.id = "remark" + i;
-                    element2.size = 5;
+                    element2.size = 15;
                     element2.maxLength = 8;
                     element2.value = "";
                     cell7.appendChild(element2);

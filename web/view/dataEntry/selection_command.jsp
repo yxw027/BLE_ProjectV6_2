@@ -59,17 +59,17 @@
                                     <th class="heading">Selection Value No</th>
                                     <th class="heading">Parameter Type</th>
                                     <th class="heading">Remark</th>
-                                    <th class="heading">Action</th>
+                                    
                                 </tr>
                                 <c:forEach var="list" items="${requestScope['selectionListById']}" varStatus="loopCounter">
                                     <tr>
-                                        <td><input type="text" name="s_no${loopCounter.count}" id="s_no${loopCounter.count}" size="5" value="${loopCounter.count}" readonly>
-                                        <input type="hidden" name="selection_id${loopCounter.count}" maxlength="8" size="5" id="selection_id${loopCounter.count}" value="${list.selection_id}">
+                                        <td><input type="text" name="s_no${loopCounter.count}" id="s_no${loopCounter.count}" size="20" value="${loopCounter.count}" readonly>
+                                        <input type="hidden" name="selection_id${loopCounter.count}" maxlength="8" size="20" id="selection_id${loopCounter.count}" value="${list.selection_id}">
                                         <input type="hidden" name="count" maxlength="8" size="5" id="count" value="${loopCounter.count}"></td>
                                         <td><input type="text" name="command_name${loopCounter.count}" maxlength="50" size="80" id="command_name${loopCounter.count}" value="${list.command_name}" readonly></td>
                                         <td><input type="text" name="parameter${loopCounter.count}" maxlength="8" size="15" id="parameter${loopCounter.count}" value="${list.parameter}" onkeyup="autocompleteMethod('parameter',${loopCounter.count}+1)"></td>
                                        
-                                        <td><input type="text" name="selection_value_no${loopCounter.count}" maxlength="50" size="5" id="selection_value_no${loopCounter.count}" value="${list.selection_value_no}" onkeyup="check(value)">                                         
+                                        <td><input type="text" name="selection_value_no${loopCounter.count}" maxlength="50" size="20" id="selection_value_no${loopCounter.count}" value="${list.selection_value_no}" onkeyup="check(value)">                                         
                                         <a href="#" onclick="inputPopup('SelectionValueController','${list.parameter}',${list.selection_value_no},${list.selection_id});return false" id="input_button">View Selection Value</a></td>
                                      
                                         <td><input type="text" name="parameter_type${loopCounter.count}" maxlength="8" size="10" id="parameter_type${loopCounter.count}" value="${list.parameter_type}" onkeyup="autocompleteMethod('parameter_type',${loopCounter.count}+1)"></td>
@@ -180,7 +180,7 @@
                     element2.type = "text";
                     element2.name = "command_name" + i;
                     element2.id = "command_name" + i;
-                    element2.size = 100;
+                    element2.size = 80;
                     element2.maxLength = 2;
                     element2.value = command;
                     element2.setAttribute("onkeyup", 'autocompleteMethod("command_name",' + i + ')');
@@ -191,7 +191,7 @@
                     element2.type = "text";
                     element2.name = "parameter" + i;
                     element2.id = "parameter" + i;
-                    element2.size = 5;
+                    element2.size = 15;
                     element2.maxLength = 8;
                     element2.value = "";
                     element2.setAttribute("onkeyup", 'autocompleteMethod("parameter",' + i + ')');
@@ -202,7 +202,7 @@
                     element2.type = "text";
                     element2.name = "selection_value_no" + i;
                     element2.id = "selection_value_no" + i;
-                    element2.size = 5;
+                    element2.size = 15;
                     element2.maxLength = 50;
                     element2.value = "";
                     cell4.appendChild(element2);
@@ -212,7 +212,7 @@
                     element2.type = "text";
                     element2.name = "parameter_type" + i;
                     element2.id = "parameter_type" + i;
-                    element2.size = 5;
+                    element2.size = 15;
                     element2.maxLength = 8;
                     element2.value = "";
                     element2.setAttribute("onkeyup", 'autocompleteMethod("parameter_type",' + i + ')');
@@ -223,7 +223,7 @@
                     element2.type = "text";
                     element2.name = "remark" + i;
                     element2.id = "remark" + i;
-                    element2.size = 5;
+                    element2.size = 15;
                     element2.maxLength = 8;
                     element2.value = "";
                     cell6.appendChild(element2);

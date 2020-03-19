@@ -51,6 +51,7 @@ public class DeviceRegConController extends HttpServlet {
         String device_type="";
         String device_name="";
         String device_no="";
+         String reg_no="";
 
         String task = request.getParameter("task");
          try {
@@ -93,7 +94,8 @@ public class DeviceRegConController extends HttpServlet {
           int manufacture_id=deviceModel.getManufactureId(manu_name);
           int device_type_id = deviceModel.getDeviceTypeId(device_type);
         int model_id = deviceModel.getModelId(device_name,device_no);
-         device_id = deviceModel.getDeviceId(manufacture_id,device_type_id,model_id);          
+         device_id = deviceModel.getDeviceId(manufacture_id,device_type_id,model_id); 
+         reg_no= deviceModel.getDeviceRegNo(device_id);      
          //String status = deviceModel.saveDeviceReg(device_type,manu_name,device_name,device_no);
          }
          
@@ -102,8 +104,11 @@ public class DeviceRegConController extends HttpServlet {
              String[] idsToModel = request.getParameterValues("isCheck");
              String[] idsToOperation = request.getParameterValues("isCheckOperation");
              String[] idsToCommand = request.getParameterValues("isCheckCommand");
+             device_id=Integer.parseInt(request.getParameter("d_id"));
+             reg_no= request.getParameter("reg_no1"); 
+            // device_id=31;
             // String check = deviceModel.sendToShweta(idsToModel,idsToOperation,idsToCommand);
-             String check = deviceModel.sendToShwetaTesting(idsToModel,idsToOperation,idsToCommand,device_id);
+             String check = deviceModel.sendToShwetaTesting(idsToModel,idsToOperation,idsToCommand,device_id,reg_no);
              
              
 //             String[] idsToModel = request.getParameterValues("isCheck");
@@ -129,6 +134,8 @@ public class DeviceRegConController extends HttpServlet {
         request.setAttribute("device_type", device_type);
         request.setAttribute("deviceName", device_name);
         request.setAttribute("device_no", device_no);
+         request.setAttribute("device_id", device_id);
+          request.setAttribute("reg_no1", reg_no);
         request.setAttribute("divisionTypeList", commandTypeList);
         request.setAttribute("IDGenerator", new UniqueIDGenerator());        
         request.setAttribute("message", deviceModel.getMessage());

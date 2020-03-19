@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <servlet>
+        <servlet-name>DeviceConfigStatusCont</servlet-name>
+        <servlet-class>com.ble.device.controller.DeviceConfigStatusCont</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CrcTypeController</servlet-name>
         <url-pattern>/CrcTypeController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeviceConfigStatusCont</servlet-name>
+        <url-pattern>/DeviceConfigStatusCont</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -22,23 +30,14 @@
     </context-param>
     <context-param>
         <param-name>db_username</param-name>
-
-<!--        <param-value>root</param-value>-->
+        <!--         <param-value>root</param-value>-->
         <param-value>jpss_2</param-value>
-
-        <!--        <param-value>jpss_2</param-value>-->
-
     </context-param>
     <context-param>
         <description>	</description>
         <param-name>db_password</param-name>
-
         <param-value>jpss_1277</param-value>
-<!--<param-value>jpss</param-value>-->
-
-        <!--        <param-value>jpss_1277</param-value>-->
-       
-
+        <!--<param-value>CXKyE2ZpT%HjbP!4c$</param-value>-->
     </context-param>
     <!--<ServletContainer mapping start>-->
     <servlet>
@@ -53,7 +52,6 @@
         <servlet-name>CrcTypeController</servlet-name>
         <servlet-class>com.ble.dataEntry.controller.CrcTypeController</servlet-class>
     </servlet>
-    
     <servlet>
         <servlet-name>crcjsp</servlet-name>
         <jsp-file>/view/dataEntry/crc_type.jsp</jsp-file>
@@ -62,8 +60,6 @@
         <servlet-name>crcjsp</servlet-name>
         <url-pattern>/crcjsp</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name>commandcrcmapping</servlet-name>
         <jsp-file>/view/dataEntry/commandcrcmapping.jsp</jsp-file>
@@ -72,7 +68,6 @@
         <servlet-name>commandcrcmapping</servlet-name>
         <url-pattern>/commandcrcmapping</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>servlet Dispatcher</servlet-name>
         <url-pattern>/resources/*</url-pattern>
@@ -584,5 +579,65 @@
     <servlet-mapping>
         <servlet-name>variable_response_input</servlet-name>
         <url-pattern>/variable_response_input</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>NtripBaseController</servlet-name>
+        <servlet-class>com.ble.dataEntry.controller.NtripBaseController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>NtripBaseController</servlet-name>
+        <url-pattern>/NtripBaseCont.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ntripbase</servlet-name>
+        <jsp-file>/view/dataEntry/ntripbase.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ntripbase</servlet-name>
+        <url-pattern>/ntripbase</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>NtripRoverController</servlet-name>
+        <servlet-class>com.ble.dataEntry.controller.NtripRoverController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>NtripRoverController</servlet-name>
+        <url-pattern>/NtripRoverCont.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ntriprover</servlet-name>
+        <jsp-file>/view/dataEntry/ntriprover.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ntriprover</servlet-name>
+        <url-pattern>/ntriprover</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>BaseRoverConfController</servlet-name>
+        <servlet-class>com.ble.device.controller.BaseRoverConfController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BaseRoverConfController</servlet-name>
+        <url-pattern>/BaseRoverConfCont.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>BaseRoverConfgPage</servlet-name>
+        <jsp-file>/view/device/BaseRoverConfgPage.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BaseRoverConfgPage</servlet-name>
+        <url-pattern>/BaseRoverConfgPage</url-pattern>
+    </servlet-mapping>
+    
+    
+    
+    
+      <servlet>
+        <servlet-name>deviceConfiguration_status</servlet-name>
+        <jsp-file>/view/dataEntry/deviceConfiguration_status.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deviceConfiguration_status</servlet-name>
+        <url-pattern>/deviceConfiguration_status</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -88,10 +88,10 @@
             </ul>
                     
                 <li><a href="Response">Response</a></li>
-                   
-                       
+               <li><a href="NtripBaseCont.do">Ntrip Base</a></li>    
+                       <li><a href="NtripRoverCont.do">Ntrip Rover</a></li>
                         
-                
+                   <li><a href="DeviceConfigStatusCont">Device Configuration Status</a></li>
             </ul>
         </div>
 

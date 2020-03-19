@@ -112,7 +112,7 @@ public class ModelController extends HttpServlet {
                 System.out.println("Inserting values by model......");
                 int numberOfRowsAffected = model.insertRecord(modelBean);
                 if(numberOfRowsAffected > 0) {
-                    request.getRequestDispatcher("/DeviceTypeCont.do?task=''").forward(request, response);
+                    //request.getRequestDispatcher("/DeviceTypeCont.do?task=''").forward(request, response);
                 }
             } else {
                 System.out.println("Update values by model........");
@@ -200,8 +200,7 @@ public class ModelController extends HttpServlet {
         request.setAttribute("device_type", request.getParameter("device_type"));
         request.setAttribute("deviceName", request.getParameter("device_name"));
         request.setAttribute("device_no", request.getParameter("device_no"));
- request.setAttribute("manname", searchDeviceName);
-        request.setAttribute("IDGenerator", new UniqueIDGenerator());
+request.setAttribute("manname", searchDeviceName);        request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("searchDeviceName",searchDeviceName );
         request.setAttribute("message", model.getMessage());
         request.setAttribute("msgBgColor", model.getMsgBgColor());

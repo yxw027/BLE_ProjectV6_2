@@ -5,24 +5,20 @@
 
 package com.ble.dataEntry.model;
 
-import com.ble.dataEntry.bean.ManufacturerBean;
+import com.ble.dataEntry.bean.ModelBean;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Shobha
  */
-public class ManufacturerModel {
-
-    private Connection connection;
+public class Model {
+private Connection connection;
     private String driverClass;
     private String connectionString;
     private String db_username;
@@ -42,25 +38,48 @@ public class ManufacturerModel {
         }
     }
 
+public int getModelTypeId(String ModelType) {
+      String query1="select id "
+                   +" from modal_type mt "
+                   +" where type=? "
+                   +" and mt.active='Y'";
 
-public int insertRecord(ManufacturerBean manufacturerBean) {
-        String query = " insert into manufacturer(name,remark) values(?,?) ";
+        int modal_type_id = 0;
+        try {
+            PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
+
+            stmt.setString(1, ModelType);
+
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            modal_type_id = rs.getInt("id");
+        } catch (Exception e) {
+            System.out.println("Error inside getNoOfRows CommandModel" + e);
+        }
+        System.out.println("No of Rows in Table for search is" + modal_type_id);
+        return modal_type_id;
+    }
+
+public int insertRecord(ModelBean modelBean) {
+
+    int model_type_id = getModelTypeId(modelBean.getModel_type());
+
+        String query = " insert into model(device_name,device_no,warranty_period,remark,model_type_id,device_address,no_of_module) "
+                       +" values(?,?,?,?,?,?,?) ";
         int rowsAffected = 0;
         try {
             java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
 
-            pstmt.setString(1, manufacturerBean.getManufacturer_name());
-            pstmt.setString(2, manufacturerBean.getRemark());
-
+            pstmt.setString(1, modelBean.getDevice_name());
+            pstmt.setString(2, modelBean.getDevice_no());
+            pstmt.setString(3, modelBean.getWarrenty_period());
+            pstmt.setString(4, modelBean.getRemark());
+            pstmt.setInt(5,model_type_id );
+            pstmt.setString(6, modelBean.getDevice_address());
+            pstmt.setInt(7, modelBean.getNo_of_module());
             rowsAffected = pstmt.executeUpdate();
         } catch (Exception e) {
             System.out.println("Error while inserting record...." + e);
-        }finally{
-            try {
-                connection.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(ManufacturerModel.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         if (rowsAffected > 0) {
             message = "Record saved successfully.";
@@ -73,14 +92,15 @@ public int insertRecord(ManufacturerBean manufacturerBean) {
 
     }
 
-public boolean reviseRecords(ManufacturerBean manufacturerBean){
+public boolean reviseRecords(ModelBean modelBean){
     boolean status=false;
     String query="";
     int rowsAffected=0;
-     
-      String query1 = " SELECT max(revision_no) revision_no FROM manufacturer c WHERE c.id = "+manufacturerBean.getManufacturer_id()+" && active='Y' ORDER BY revision_no DESC";
-      String query2 = " UPDATE manufacturer SET active=? WHERE id = ? && revision_no = ? ";
-      String query3 = " INSERT INTO manufacturer (id,name,remark,revision_no,active) VALUES (?,?,?,?,?) ";
+    int model_type_id=getModelTypeId(modelBean.getModel_type());
+
+      String query1 = " SELECT max(revision_no) revision_no FROM model c WHERE c.id = "+modelBean.getModel_id()+" && active='Y' ORDER BY revision_no DESC";
+      String query2 = " UPDATE model SET active=? WHERE id = ? && revision_no = ? ";
+      String query3 = " INSERT INTO model (id,device_name,device_no,warranty_period,model_type_id,remark,device_address,no_of_module,revision_no,active) VALUES (?,?,?,?,?,?,?,?,?,?) ";
 
       int updateRowsAffected = 0;
       try {
@@ -89,17 +109,23 @@ public boolean reviseRecords(ManufacturerBean manufacturerBean){
            if(rs.next()){
            PreparedStatement pst = (PreparedStatement) connection.prepareStatement(query2);
            pst.setString(1,  "N");
-           pst.setInt(2,manufacturerBean.getManufacturer_id());
+           pst.setInt(2,modelBean.getModel_id());
            pst.setInt(3, rs.getInt("revision_no"));
            updateRowsAffected = pst.executeUpdate();
              if(updateRowsAffected >= 1){
              int rev = rs.getInt("revision_no")+1;
              PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3);
-             psmt.setInt(1,manufacturerBean.getManufacturer_id());
-             psmt.setString(2,manufacturerBean.getManufacturer_name());
-             psmt.setString(3,manufacturerBean.getRemark());
-             psmt.setInt(4,rev);
-             psmt.setString(5,"Y");
+             psmt.setInt(1,modelBean.getModel_id());
+             psmt.setString(2,modelBean.getDevice_name());
+             psmt.setString(3,modelBean.getDevice_no());
+             psmt.setString(4,modelBean.getWarrenty_period());
+             psmt.setInt(5,model_type_id);
+
+             psmt.setString(6,modelBean.getRemark());
+             psmt.setString(7,modelBean.getDevice_address());
+               psmt.setInt(8,modelBean.getNo_of_module());
+             psmt.setInt(9,rev);
+             psmt.setString(10,"Y");
 
              int a = psmt.executeUpdate();
               if(a > 0)
@@ -122,18 +148,24 @@ public boolean reviseRecords(ManufacturerBean manufacturerBean){
 
        return status;
     }
-  public int getNoOfRows(String searchManufacturerName) {
+  public int getNoOfRows(String searchDeviceName) {
+//      String query1="select count(*) "
+//                    +" from modal_type mt "
+//                    +" where IF('" + searchModelType + "' = '', type LIKE '%%',type =?) "
+//                    +" and mt.active='Y'";
       String query1="select count(*) "
-                  +" from manufacturer m "
-                  +" where IF('" + searchManufacturerName + "' = '', name LIKE '%%',name =?) "
-                  +" and m.active='Y' ";
+                    +" from model m "
+                    +" where IF('" + searchDeviceName + "' = '', device_name LIKE '%%',device_name =?) "
+                    +" and m.active='Y'";
+
+
 
         int noOfRows = 0;
         try {
             PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
-            
-            stmt.setString(1, searchManufacturerName);
-            
+
+            stmt.setString(1, searchDeviceName);
+
             ResultSet rs = stmt.executeQuery();
             rs.next();
             noOfRows = rs.getInt(1);
@@ -144,27 +176,43 @@ public boolean reviseRecords(ManufacturerBean manufacturerBean){
         return noOfRows;
     }
 
-  public List<ManufacturerBean> showData(int lowerLimit, int noOfRowsToDisplay,String searchManufacturerName) {
-        List<ManufacturerBean> list = new ArrayList<ManufacturerBean>();
+  public List<ModelBean> showData(int lowerLimit, int noOfRowsToDisplay,String searchDeviceName) {
+        List<ModelBean> list = new ArrayList<ModelBean>();
          String addQuery = " LIMIT " + lowerLimit + ", " + noOfRowsToDisplay;
           if(lowerLimit == -1)
             addQuery = "";
-       String query2="select id,name,remark "
-                     +" from manufacturer m "
-                     +" where IF('" + searchManufacturerName + "' = '', name LIKE '%%',name =?) "
-                     +" and m.active='Y'"
-                     +addQuery;
+//       String query2="select id,type,remark "
+//                     +" from modal_type m "
+//                     +" where IF('" + searchModelType + "' = '', type LIKE '%%',type =?) "
+//                     +" and m.active='Y'"
+//                     +addQuery;
+//
+       String query2="select m.id,device_name,device_no,warranty_period,type,m.remark,m.device_address,m.no_of_module "
+                      +" from model m,modal_type mt "
+                      +" where IF('" + searchDeviceName + "' = '', device_name LIKE '%%',device_name =?) "
+                      +" and m.model_type_id = mt.id "
+                      +" and m.active='Y' and mt.active='Y'"
+                      + addQuery;
         try {
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);
-            pstmt.setString(1, searchManufacturerName);
+            pstmt.setString(1, searchDeviceName);
             ResultSet rset = pstmt.executeQuery();
             while (rset.next()) {
-                ManufacturerBean manufacturerBean = new ManufacturerBean();
+                ModelBean modelBean = new ModelBean();
 
-                manufacturerBean.setManufacturer_id(rset.getInt("id"));
-                manufacturerBean.setManufacturer_name(rset.getString("name"));
-                manufacturerBean.setRemark(rset.getString("remark"));
-                list.add(manufacturerBean);
+                modelBean.setModel_id(rset.getInt("id"));
+                modelBean.setDevice_name(rset.getString("device_name"));
+                modelBean.setDevice_no(rset.getString("device_no"));
+                modelBean.setWarrenty_period(rset.getString("warranty_period"));
+                modelBean.setModel_type(rset.getString("type"));
+                 modelBean.setRemark(rset.getString("remark"));
+                 modelBean.setDevice_address(rset.getString("device_address"));
+<<<<<<< HEAD
+                    modelBean.setNo_of_module(rset.getInt("no_of_module"));
+=======
+                   modelBean.setNo_of_module(rset.getInt("no_of_module"));
+>>>>>>> accf7f3c84098180c427bb90483ba4063db60523
+                list.add(modelBean);
             }
         } catch (Exception e) {
             System.out.println("Error: " + e);
@@ -172,9 +220,9 @@ public boolean reviseRecords(ManufacturerBean manufacturerBean){
         return list;
     }
 
-  public int deleteRecord(int manufacturer_id) {
+  public int deleteRecord(int model_type_id) {
 
-      String query = "update manufacturer set active='n' where id=" + manufacturer_id;
+      String query = "update model set active='N' where id=" + model_type_id;
         int rowsAffected = 0;
         try {
             rowsAffected = connection.prepareStatement(query).executeUpdate();
@@ -191,22 +239,46 @@ public boolean reviseRecords(ManufacturerBean manufacturerBean){
         return rowsAffected;
     }
 
-  public List<String> getManufacturer(String q) {
+  public List<String> getDeviceName(String q) {
         List<String> list = new ArrayList<String>();
-        String query = "select name from manufacturer where active='Y' group by name order by id desc";
+        String query = "select device_name from model where active='Y' group by device_name order by device_name desc";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
             q = q.trim();
             while (rset.next()) {
-                String name = rset.getString("name");
+                String name = rset.getString("device_name");
                 if (name.toUpperCase().startsWith(q.toUpperCase())) {
                     list.add(name);
                     count++;
                 }
             }
             if (count == 0) {
-                list.add("No such Manufacturer Name exists.......");
+                list.add("No such Device Name exists.......");
+            }
+        } catch (Exception e) {
+            System.out.println(" ERROR inside CommandModel - " + e);
+            message = "Something going wrong";
+            //messageBGColor = "red";
+        }
+        return list;
+    }
+    public List<String> getModelType(String q) {
+        List<String> list = new ArrayList<String>();
+        String query = "select type from modal_type where active='Y' group by type order by type desc";
+        try {
+            ResultSet rset = connection.prepareStatement(query).executeQuery();
+            int count = 0;
+            q = q.trim();
+            while (rset.next()) {
+                String type = rset.getString("type");
+                if (type.toUpperCase().startsWith(q.toUpperCase())) {
+                    list.add(type);
+                    count++;
+                }
+            }
+            if (count == 0) {
+                list.add("No such Model Type exists.......");
             }
         } catch (Exception e) {
             System.out.println(" ERROR inside CommandModel - " + e);

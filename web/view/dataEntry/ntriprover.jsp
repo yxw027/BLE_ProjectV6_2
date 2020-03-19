@@ -1,48 +1,33 @@
 <%-- 
-    Document   : input
-    Created on : 9 Sep, 2019, 2:06:19 PM
-    Author     : apogee
+    Document   : ntriprover
+    Created on : Mar 14, 2020, 4:29:29 PM
+    Author     : Administrator
 --%>
+
+
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+    "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <link href="style/style1.css" type="text/css" rel="stylesheet" media="Screen"/>
 <link href="style/style.css" type="text/css" rel="stylesheet" media="Screen"/>
 <link href="style/Table_content.css" type="text/css" rel="stylesheet" media="Screen"/>
+<link type="text/css" href="style/menu.css" rel="stylesheet"/>
 <script type="text/javascript" src="JS/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="JS/jquery.autocomplete.js"></script>
 
 
 <script type="text/javascript" language="javascript">
     jQuery(function(){
-        $("#searchCommandName").autocomplete("SelectionCont.do", {
+        $("#searchroverName").autocomplete("NtripRoverCont.do", {
             extraParams: {
-                action1: function() { return "getCommand"}
+                action1: function() { return "getRoverName"}
             }
         });
-//        $("#searchRule").autocomplete("ruleCont.do", {
-//            extraParams: {
-//                action1: function() { return "getRule"}
-//            }
-//        });
-        $("#command_name").autocomplete("SelectionCont.do", {
-            extraParams: {
-                action1: function() { return "getCommand"}
-            }
-        });
-        $("#parameter").autocomplete("SelectionCont.do", {
-            extraParams: {
-                action1: function() { return "getParameter"}
-            }
-        });
-        $("#parameter_type").autocomplete("SelectionCont.do", {
-            extraParams: {
-                action1: function() { return "getParameterType"}
-            }
-        });
+
     });
 
     function setDefaultColor(noOfRowsTraversed, noOfColumns) {
@@ -54,9 +39,8 @@
     }
     function makeEditable(id) {
 
-        document.getElementById("command_name").disabled = false;
-        document.getElementById("parameter").disabled = false;
-        document.getElementById("parameter_type").disabled = false;
+        document.getElementById("rover_name").disabled = false;
+         document.getElementById("rover_password").disabled = false;
          document.getElementById("remark").disabled = false;
 
         document.getElementById("save").disabled = false;
@@ -67,8 +51,9 @@
         if(id === 'new') {
         //    document.getElementById("created_date").disabled = true;
            // document.getElementById("active").value ='';
+          
             document.getElementById("message").innerHTML = "";      // Remove message
-            document.getElementById("command_name").focus();
+            document.getElementById("Rover_name").focus();
             $("#message").html("");
 
             //document.getElementById("revise").disabled = true;
@@ -77,7 +62,7 @@
             document.getElementById("save").disabled = false;
 
             setDefaultColor(document.getElementById("noOfRowsTraversed").value, 3);
-            document.getElementById("command_name").focus();
+            
 
         }
         if(id === 'edit'){
@@ -101,14 +86,14 @@
     function verify() {
         var result;
         if(document.getElementById("clickedButton").value == 'Save' || document.getElementById("clickedButton").value == 'Save AS New' || document.getElementById("clickedButton").value == 'Revise'||document.getElementById("clickedButton").value == 'Delete') {
-            var division_name_m = document.getElementById("command").value;
+            var division_name_m = document.getElementById("division_name_m").value;
             var a=document.getElementById("active").value;
             //    alert(a);
             if(myLeftTrim(division_name_m).length == 0) {
 
                 // document.getElementById("message").innerHTML = "<td colspan='5' bgcolor='coral'><b>Organisation Type Name is required...</b></td>";
-                $("#message").html("<td colspan='5' bgcolor='coral'><b>command is required...</b></td>");
-                document.getElementById("command").focus();
+                $("#message").html("<td colspan='5' bgcolor='coral'><b>Ward No is required...</b></td>");
+                document.getElementById("division_name_m").focus();
                 return false; // code to stop from submitting the form2.
             }
 
@@ -134,7 +119,7 @@
     }
     function fillColumns(id) {
         var noOfRowsTraversed = document.getElementById("noOfRowsTraversed").value;
-        var noOfColumns =6;
+        var noOfColumns =5;
         var columnId = id;                              <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
         columnId = columnId.substring(3, id.length);    <%-- for e.g. suppose id is t1c3 we want characters after t1c i.e beginIndex = 3. --%>
         var lowerLimit, higherLimit;
@@ -149,11 +134,10 @@
         setDefaultColor(noOfRowsTraversed, noOfColumns);        // set default color of rows (i.e. of multiple coloumns).
         var t1id = "t1c";       // particular column id of table 1 e.g. t1c3.
 
-        document.getElementById("input_id").value= document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
-        document.getElementById("command_name").value = document.getElementById(t1id +(lowerLimit+2)).innerHTML;
-        document.getElementById("parameter").value = document.getElementById(t1id +(lowerLimit+3)).innerHTML;
-        document.getElementById("parameter_type").value = document.getElementById(t1id +(lowerLimit+4)).innerHTML;
-        document.getElementById("remark").value = document.getElementById(t1id +(lowerLimit+5)).innerHTML;
+        document.getElementById("ntrip_rover_id").value= document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
+        document.getElementById("rover_name").value = document.getElementById(t1id +(lowerLimit+2)).innerHTML;
+        document.getElementById("rover_password").value = document.getElementById(t1id +(lowerLimit+3)).innerHTML;
+        document.getElementById("remark").value = document.getElementById(t1id +(lowerLimit+4)).innerHTML;
 
         //       var b=  document.getElementById(t1id +(lowerLimit+8)).innerHTML;
         // alert(b);
@@ -195,6 +179,10 @@
 
         return window.open(url, window_name, window_features);
     }
+    
+    function goToModel() {
+        window.location.href="ModelCont.do";
+    }
 
 </script>
 <style>
@@ -204,13 +192,13 @@ a:hover{
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Input Page</title>
+        <title>Command Page</title>
         <meta charset="utf-8">
 
     </head>
     <body>
         <table align="center" cellpadding="0" cellspacing="0" class="main">
-            <tr><td><%@include file="/layout/header.jsp" %></td></tr>
+         <tr><td><%@include file="/layout/header.jsp" %></td></tr>
             <tr>
                 <td><%@include file="/layout/menu.jsp" %> </td>
             </tr>
@@ -220,51 +208,50 @@ a:hover{
                         <tr><td>
                                 <table align="center">
                                     <tr>
-                                        <td align="center" class="header_table" width="100%">Input</td>
+                                        <td align="center" class="header_table" width="100%">Ntrip Base</td>
 
                                     </tr>
                                 </table>
                             </td></tr>
                         <tr>
                             <td> <div align="center">
-                                    <form name="form0" method="POST" action="InputCont.do">
+                                    <form name="form0" method="POST" action="NtripRoverCont.do">
                                         <table align="center" class="heading1" width="600">
-                                            <tr>                                               
-<!--                                                <td>Rule<input class="input" type="text" id="searchRule" name="searchRule" value="${searchRule}" size="20" ></td>-->
-                                                <td>Command Name<input class="input" type="text" id="searchCommandName" name="searchCommandName" value="${searchCommandName}" size="20" ></td>
+                                            <tr>
+                                                <td>Base Name<input class="input" type="text" id="searchroverName" name="searchroverName" value="${searchroverName}" size="20" ></td>
                                                 <td><input class="button" type="submit" name="task" id="searchIn" value="Search"></td>
                                                 <td><input class="button" type="submit" name="task" id="showAllRecords" value="Show All Records"></td>
-<!--                                                <td><input type="button" class="pdf_button" id="viewPdf" name="viewPdf" value="" onclick="displayMapList()"></td>-->
-                                            </tr>
+                                                
+                                                <td><input type="button" class="pdf_button" id="viewPdf" name="viewPdf" value="" onclick="displayMapList()"></td>
+                                               </tr>
                                         </table>
                                     </form></div>
                             </td>
                         </tr>
                         <tr>
                             <td align="center">
-                                <form name="form1" method="POST" action="InputCont.do">
+                                <form name="form1" method="POST" action="NtripRoverCont.do">
                                     <DIV class="content_div">
                                         <table id="table1" width="600"  border="1"  align="center" class="content">
                                             <tr>
                                                 <th class="heading">S.No.</th>
-                                                <th class="heading">Command</th>
-                                                <th class="heading">Parameter</th>
-                                                <th class="heading">Parameter Type</th>
+                                                <th class="heading">Rover Name</th>
+                                                <th class="heading">Rover Password</th>
+
                                                 <th class="heading">Remark</th>
                                             </tr>
                                             <!---below is the code to show all values on jsp page fetched from trafficTypeList of TrafficController     --->
-                                            <c:forEach var="input" items="${requestScope['inputList']}"  varStatus="loopCounter">
+                                            <c:forEach var="ntriproverBean" items="${requestScope['roverTypeList']}"  varStatus="loopCounter">
                                                 <tr  class="${loopCounter.index % 2 == 0 ? 'even': 'odd'}" >
                                                     <%--  <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">
                                                           <input type="hidden" id="status_type_id${loopCounter.count}" value="${statusTypeBean.status_type_id}">${lowerLimit - noOfRowsTraversed + loopCounter.count}
                                                           <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">${lowerLimit - noOfRowsTraversed + loopCounter.count}</td>
                                                       </td> --%>
-                                                    <td id="t1c${IDGenerator.uniqueID}" style="display:none"  size="20" onclick="fillColumns(id)">${input.input_id}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}" style="display:none" onclick="fillColumns(id)">${ntriproverBean.ntrip_rover_id}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">${lowerLimit - noOfRowsTraversed + loopCounter.count}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${input.command_name}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${input.parameter}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${input.parameter_type}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${input.remark}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${ntriproverBean.rover_name}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${ntriproverBean.rover_password}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${ntriproverBean.remark}</td>
 
                                                 </tr>
                                             </c:forEach>
@@ -305,9 +292,11 @@ a:hover{
                                                 </td>
                                             </tr>
                                             <!--- These hidden fields "lowerLimit", and "noOfRowsTraversed" belong to form1 of table1. -->
+                                             <input type="hidden" name="manname" value="${manname}">
                                             <input type="hidden" name="lowerLimit" value="${lowerLimit}">
                                             <input type="hidden" id="noOfRowsTraversed" name="noOfRowsTraversed" value="${noOfRowsTraversed}">
-                                            <input  type="hidden" id="searchCommandName" name="searchCommandName" value="${searchCommandName}" >                                          
+                                            
+                                           
                                         </table></DIV>
                                 </form>
                             </td>
@@ -316,7 +305,7 @@ a:hover{
                         <tr>
                             <td align="center">
                                 <div>
-                                    <form name="form2" method="POST" action="InputCont.do" onsubmit="return verify()">
+                                    <form name="form2" method="POST" action="NtripRoverCont.do" onsubmit="return verify()">
                                         <table id="table2"  class="content" border="0"  align="center" width="600">
                                             <tr id="message">
                                                 <c:if test="${not empty message}">
@@ -324,17 +313,16 @@ a:hover{
                                                 </c:if>
                                             </tr>
                                             <tr>
-                                                <th class="heading1">Command</th>
-                                                <td><input class="input" type="text" id="command_name" name="command_name" value="" size="40" disabled></td>
+                                                <th class="heading1">Rover Name</th>
+
+                                                <td><input class="input" type="text" id="rover_name" name="rover_name" value="" size="40" disabled>
+                                                <input class="input" type="hidden" id="ntrip_rover_id" name="ntrip_rover_id" value="" ></td>
                                             </tr>
-                                            <tr>
-                                                <th class="heading1">Parameter </th>
-                                                <td><input class="input" type="text" id="parameter" name="parameter" value="" size="40" disabled>
-                                                <input class="input" type="hidden" id="input_id" name="input_id" value="" ></td>
-                                            </tr>
-                                            <tr>
-                                                <th class="heading1">Parameter Type</th>
-                                                <td><input class="input" type="text" id="parameter_type" name="parameter_type" value="" size="40" disabled></td>
+                                                   <tr>
+                                                <th class="heading1">Rover Password</th>
+
+                                                <td><input class="input" type="text" id="rover_password" name="rover_password" value="" size="40" disabled>
+                                              
                                             </tr>
                                             <tr>
                                                 <th class="heading1">Remark</th>
@@ -358,7 +346,8 @@ a:hover{
                                             <input type="hidden" name="lowerLimit" value="${lowerLimit}">
                                             <input type="hidden" name="noOfRowsTraversed" value="${noOfRowsTraversed}">
                                             <input type="hidden" id="clickedButton" value="">
-                                            <input type="hidden"  name="searchCommandName" value="${searchCommandName}" >
+<!--                                            <input type="hidden"  name="searchCityType" value="${searchCityType}" >
+                                            <input type="hidden"  name="searchDivisionType" value="${searchDivisionType}" >-->
                                         </table>
                                     </form>
                                 </div>

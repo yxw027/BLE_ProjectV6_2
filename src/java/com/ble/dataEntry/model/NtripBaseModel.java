@@ -1,28 +1,25 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.ble.dataEntry.model;
 
-import com.ble.dataEntry.bean.ManufacturerBean;
+import com.ble.dataEntry.bean.NtripBaseBean;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
- * @author Shobha
+ * @author Administrator
  */
-public class ManufacturerModel {
-
-    private Connection connection;
+public class NtripBaseModel {
+    
+  private Connection connection;
     private String driverClass;
     private String connectionString;
     private String db_username;
@@ -43,24 +40,20 @@ public class ManufacturerModel {
     }
 
 
-public int insertRecord(ManufacturerBean manufacturerBean) {
-        String query = " insert into manufacturer(name,remark) values(?,?) ";
+public int insertRecord(NtripBaseBean ntripBaseBean) {
+
+        String query = " insert into ntrip_base(base_name,base_password,remark) values(?,?,?); ";
         int rowsAffected = 0;
         try {
             java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
 
-            pstmt.setString(1, manufacturerBean.getManufacturer_name());
-            pstmt.setString(2, manufacturerBean.getRemark());
+            pstmt.setString(1, ntripBaseBean.getBase_name());
+            pstmt.setString(2, ntripBaseBean.getBase_password());
+            pstmt.setString(3, ntripBaseBean.getRemark());
 
             rowsAffected = pstmt.executeUpdate();
         } catch (Exception e) {
             System.out.println("Error while inserting record...." + e);
-        }finally{
-            try {
-                connection.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(ManufacturerModel.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         if (rowsAffected > 0) {
             message = "Record saved successfully.";
@@ -73,14 +66,14 @@ public int insertRecord(ManufacturerBean manufacturerBean) {
 
     }
 
-public boolean reviseRecords(ManufacturerBean manufacturerBean){
+public boolean reviseRecords(NtripBaseBean ntripBaseBean){
     boolean status=false;
     String query="";
     int rowsAffected=0;
-     
-      String query1 = " SELECT max(revision_no) revision_no FROM manufacturer c WHERE c.id = "+manufacturerBean.getManufacturer_id()+" && active='Y' ORDER BY revision_no DESC";
-      String query2 = " UPDATE manufacturer SET active=? WHERE id = ? && revision_no = ? ";
-      String query3 = " INSERT INTO manufacturer (id,name,remark,revision_no,active) VALUES (?,?,?,?,?) ";
+
+      String query1 = " SELECT max(revision_no) revision_no FROM ntrip_base c WHERE c.ntrip_base_id = "+ntripBaseBean.getNtrip_base_id()+" && active='Y' ORDER BY revision_no DESC";
+      String query2 = " UPDATE ntrip_base SET active=? WHERE ntrip_base_id = ? && revision_no = ? ";
+      String query3 = " INSERT INTO ntrip_base (ntrip_base_id,base_name,base_password,remark,revision_no,active) VALUES (?,?,?,?,?,?) ";
 
       int updateRowsAffected = 0;
       try {
@@ -89,17 +82,18 @@ public boolean reviseRecords(ManufacturerBean manufacturerBean){
            if(rs.next()){
            PreparedStatement pst = (PreparedStatement) connection.prepareStatement(query2);
            pst.setString(1,  "N");
-           pst.setInt(2,manufacturerBean.getManufacturer_id());
+           pst.setInt(2,ntripBaseBean.getNtrip_base_id());
            pst.setInt(3, rs.getInt("revision_no"));
            updateRowsAffected = pst.executeUpdate();
              if(updateRowsAffected >= 1){
              int rev = rs.getInt("revision_no")+1;
              PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3);
-             psmt.setInt(1,manufacturerBean.getManufacturer_id());
-             psmt.setString(2,manufacturerBean.getManufacturer_name());
-             psmt.setString(3,manufacturerBean.getRemark());
-             psmt.setInt(4,rev);
-             psmt.setString(5,"Y");
+             psmt.setInt(1,ntripBaseBean.getNtrip_base_id());
+             psmt.setString(2,ntripBaseBean.getBase_name());
+              psmt.setString(3,ntripBaseBean.getBase_password());
+             psmt.setString(4,ntripBaseBean.getRemark());
+             psmt.setInt(5,rev);
+             psmt.setString(6,"Y");
 
              int a = psmt.executeUpdate();
               if(a > 0)
@@ -122,18 +116,18 @@ public boolean reviseRecords(ManufacturerBean manufacturerBean){
 
        return status;
     }
-  public int getNoOfRows(String searchManufacturerName) {
+  public int getNoOfRows(String searchbaseName) {
       String query1="select count(*) "
-                  +" from manufacturer m "
-                  +" where IF('" + searchManufacturerName + "' = '', name LIKE '%%',name =?) "
-                  +" and m.active='Y' ";
+                    +" from ntrip_base mt "
+                    +" where IF('" + searchbaseName + "' = '', base_name LIKE '%%',base_name =?) "
+                    +" and mt.active='Y'";
 
         int noOfRows = 0;
         try {
             PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
-            
-            stmt.setString(1, searchManufacturerName);
-            
+
+            stmt.setString(1, searchbaseName);
+
             ResultSet rs = stmt.executeQuery();
             rs.next();
             noOfRows = rs.getInt(1);
@@ -144,27 +138,28 @@ public boolean reviseRecords(ManufacturerBean manufacturerBean){
         return noOfRows;
     }
 
-  public List<ManufacturerBean> showData(int lowerLimit, int noOfRowsToDisplay,String searchManufacturerName) {
-        List<ManufacturerBean> list = new ArrayList<ManufacturerBean>();
+  public List<NtripBaseBean> showData(int lowerLimit, int noOfRowsToDisplay,String searchbaseName) {
+        List<NtripBaseBean> list = new ArrayList<NtripBaseBean>();
          String addQuery = " LIMIT " + lowerLimit + ", " + noOfRowsToDisplay;
           if(lowerLimit == -1)
             addQuery = "";
-       String query2="select id,name,remark "
-                     +" from manufacturer m "
-                     +" where IF('" + searchManufacturerName + "' = '', name LIKE '%%',name =?) "
+       String query2="select ntrip_base_id,base_name,base_password,remark "
+                     +" from ntrip_base m "
+                     +" where IF('" + searchbaseName + "' = '', base_name LIKE '%%',base_name =?) "
                      +" and m.active='Y'"
                      +addQuery;
         try {
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);
-            pstmt.setString(1, searchManufacturerName);
+            pstmt.setString(1, searchbaseName);
             ResultSet rset = pstmt.executeQuery();
             while (rset.next()) {
-                ManufacturerBean manufacturerBean = new ManufacturerBean();
+                NtripBaseBean ntripBaseBean = new NtripBaseBean();
 
-                manufacturerBean.setManufacturer_id(rset.getInt("id"));
-                manufacturerBean.setManufacturer_name(rset.getString("name"));
-                manufacturerBean.setRemark(rset.getString("remark"));
-                list.add(manufacturerBean);
+                ntripBaseBean.setNtrip_base_id(rset.getInt("ntrip_base_id"));
+                ntripBaseBean.setBase_name(rset.getString("base_name"));
+                 ntripBaseBean.setBase_password(rset.getString("base_password"));
+                ntripBaseBean.setRemark(rset.getString("remark"));
+                list.add(ntripBaseBean);
             }
         } catch (Exception e) {
             System.out.println("Error: " + e);
@@ -172,9 +167,9 @@ public boolean reviseRecords(ManufacturerBean manufacturerBean){
         return list;
     }
 
-  public int deleteRecord(int manufacturer_id) {
+  public int deleteRecord(int ntrip_base_id) {
 
-      String query = "update manufacturer set active='n' where id=" + manufacturer_id;
+      String query = "update ntrip_base set active='N' where ntrip_base_id=" + ntrip_base_id;
         int rowsAffected = 0;
         try {
             rowsAffected = connection.prepareStatement(query).executeUpdate();
@@ -191,22 +186,22 @@ public boolean reviseRecords(ManufacturerBean manufacturerBean){
         return rowsAffected;
     }
 
-  public List<String> getManufacturer(String q) {
+  public List<String> getBaseName(String q) {
         List<String> list = new ArrayList<String>();
-        String query = "select name from manufacturer where active='Y' group by name order by id desc";
+        String query = "select base_name from ntrip_base where active='Y' group by base_name order by ntrip_base_id desc";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
             q = q.trim();
             while (rset.next()) {
-                String name = rset.getString("name");
+                String name = rset.getString("base_name");
                 if (name.toUpperCase().startsWith(q.toUpperCase())) {
                     list.add(name);
                     count++;
                 }
             }
             if (count == 0) {
-                list.add("No such Manufacturer Name exists.......");
+                list.add("No such Base name exists.......");
             }
         } catch (Exception e) {
             System.out.println(" ERROR inside CommandModel - " + e);
@@ -276,3 +271,4 @@ public boolean reviseRecords(ManufacturerBean manufacturerBean){
     }
 
 }
+

@@ -1,12 +1,12 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.ble.dataEntry.controller;
 
-import com.ble.dataEntry.bean.DeviceTypeBean;
-import com.ble.dataEntry.model.DeviceTypeModel;
+import com.ble.dataEntry.bean.NtripRoverBean;
+import com.ble.dataEntry.model.NtripRoverModel;
 import com.ble.util.UniqueIDGenerator;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,17 +14,19 @@ import java.util.Iterator;
 import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Shobha
+ * @author Administrator
  */
-public class DeviceTypeController extends HttpServlet {
-   
-    /** 
+@WebServlet(name = "NtripRoverController", urlPatterns = {"/NtripRoverController"})
+public class NtripRoverController extends HttpServlet {
+
+   /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
@@ -36,12 +38,12 @@ public class DeviceTypeController extends HttpServlet {
         int lowerLimit, noOfRowsTraversed, noOfRowsToDisplay = 5, noOfRowsInTable;
         System.out.println("this is FUSE Controller....");
         ServletContext ctx = getServletContext();
-        DeviceTypeModel deviceTypeModel = new DeviceTypeModel();
-        deviceTypeModel.setDriverClass(ctx.getInitParameter("driverClass"));
-        deviceTypeModel.setConnectionString(ctx.getInitParameter("connectionString"));
-        deviceTypeModel.setDb_username(ctx.getInitParameter("db_username"));
-        deviceTypeModel.setDb_password(ctx.getInitParameter("db_password"));
-        deviceTypeModel.setConnection();
+        NtripRoverModel ntripRoverModel = new NtripRoverModel();
+        ntripRoverModel.setDriverClass(ctx.getInitParameter("driverClass"));
+        ntripRoverModel.setConnectionString(ctx.getInitParameter("connectionString"));
+        ntripRoverModel.setDb_username(ctx.getInitParameter("db_username"));
+        ntripRoverModel.setDb_password(ctx.getInitParameter("db_password"));
+        ntripRoverModel.setConnection();
 
         String task = request.getParameter("task");
          try {
@@ -51,8 +53,8 @@ public class DeviceTypeController extends HttpServlet {
                 PrintWriter out = response.getWriter();
                 List<String> list = null;
 
-                if(JQstring.equals("getDeviceType")) {
-                    list = deviceTypeModel.getDeviceType(q);
+                if(JQstring.equals("getRoverName")) {
+                    list = ntripRoverModel.getRoverName(q);
                 }
 
                 Iterator<String> iter = list.iterator();
@@ -60,7 +62,7 @@ public class DeviceTypeController extends HttpServlet {
                     String data = iter.next();
                         out.println(data);
                 }
-                deviceTypeModel.closeConnection();
+                ntripRoverModel.closeConnection();
                 return;
             }
         } catch (Exception e) {
@@ -84,42 +86,49 @@ public class DeviceTypeController extends HttpServlet {
 //                servletOutputStream.close();
 //                return;
 //            }
+//        if (task.equals("Next Page")) {
+//            response.sendRedirect("/model");
+//        }
+        
          if (task.equals("Cancel")) {
-            deviceTypeModel.deleteRecord(Integer.parseInt(request.getParameter("device_type_id")));  // Pretty sure that organisation_type_id will be available.
+            ntripRoverModel.deleteRecord(Integer.parseInt(request.getParameter("ntrip_rover_id")));  // Pretty sure that organisation_type_id will be available.
         } else if (task.equals("Save") || task.equals("Save AS New")) {
-            int device_type_id;
+            int ntrip_rover_id;
             try {
-                device_type_id = Integer.parseInt(request.getParameter("device_type_id"));
+                ntrip_rover_id = Integer.parseInt(request.getParameter("ntrip_rover_id"));
             } catch (Exception e) {
-                device_type_id = 0;
+                ntrip_rover_id = 0;
             }
             if (task.equals("Save AS New")) {
-                device_type_id = 0;
+                ntrip_rover_id = 0;
             }
-            DeviceTypeBean deviceTypeBean = new DeviceTypeBean();
-            deviceTypeBean.setDevice_type_id(device_type_id);
-            deviceTypeBean.setType(request.getParameter("device_type"));
-            deviceTypeBean.setRemark(request.getParameter("remark"));
+            NtripRoverBean ntripRoverBean = new NtripRoverBean();
+            ntripRoverBean.setNtrip_rover_id(ntrip_rover_id);
+            ntripRoverBean.setRover_name(request.getParameter("rover_name"));
+            ntripRoverBean.setRover_password(request.getParameter("rover_password"));
+            
+            ntripRoverBean.setRemark(request.getParameter("remark"));
 
-            if (device_type_id == 0) {
+            if (ntrip_rover_id == 0) {
                 System.out.println("Inserting values by model......");
-                int numberOfRowsAffected = deviceTypeModel.insertRecord(deviceTypeBean);
-                if(numberOfRowsAffected > 0) {
-                   // request.getRequestDispatcher("/ManufacturerCont.do?task=''").forward(request, response);
+                int numberOfRows = ntripRoverModel.insertRecord(ntripRoverBean);
+                if(numberOfRows > 0){      
+                 request.getRequestDispatcher("/ModelCont.do?task=''");
                 }
+                
             } else {
                 System.out.println("Update values by model........");
-                deviceTypeModel.reviseRecords(deviceTypeBean);
+                ntripRoverModel.reviseRecords(ntripRoverBean);
             }
         }
 
-        String searchDeviceType = "";
+        String searchroverName = "";
 
-        searchDeviceType = request.getParameter("searchDeviceType");
+        searchroverName = request.getParameter("searchroverName");
 
          try {
-            if (searchDeviceType == null) {
-                searchDeviceType="";
+            if (searchroverName == null) {
+                searchroverName="";
             }
         } catch (Exception e) {
             System.out.println("Exception while searching in controller" + e);
@@ -135,18 +144,20 @@ public class DeviceTypeController extends HttpServlet {
         if (buttonAction == null) {
             buttonAction = "none";
         }
-        System.out.println("searching.......... " + searchDeviceType);
+        System.out.println("searching.......... " + searchroverName);
 
-         noOfRowsInTable = deviceTypeModel.getNoOfRows(searchDeviceType);
+         noOfRowsInTable = ntripRoverModel.getNoOfRows(searchroverName);
 
-         if (buttonAction.equals("Next")){
-             searchDeviceType=request.getParameter("manname");
-               noOfRowsInTable = deviceTypeModel.getNoOfRows(searchDeviceType);
+         if (buttonAction.equals("Next"))
+{
+             searchroverName=request.getParameter("manname");
+              noOfRowsInTable = ntripRoverModel.getNoOfRows(searchroverName);
              
-         }
+         }         
+ 
          else if (buttonAction.equals("Previous")) {
-             searchDeviceType=request.getParameter("manname");
-               noOfRowsInTable = deviceTypeModel.getNoOfRows(searchDeviceType);
+             searchroverName=request.getParameter("manname");
+              noOfRowsInTable = ntripRoverModel.getNoOfRows(searchroverName);
             int temp = lowerLimit - noOfRowsToDisplay - noOfRowsTraversed;
             if (temp < 0) {
                 noOfRowsToDisplay = lowerLimit - noOfRowsTraversed;
@@ -155,11 +166,11 @@ public class DeviceTypeController extends HttpServlet {
                 lowerLimit = temp;
             }
         } else if (buttonAction.equals("First")) {
-            searchDeviceType=request.getParameter("manname");
+             searchroverName=request.getParameter("manname");
             lowerLimit = 0;
         } else if (buttonAction.equals("Last")) {
-            searchDeviceType=request.getParameter("manname");
-            noOfRowsInTable = deviceTypeModel.getNoOfRows(searchDeviceType);
+             searchroverName=request.getParameter("manname");
+              noOfRowsInTable = ntripRoverModel.getNoOfRows(searchroverName);
             lowerLimit = noOfRowsInTable - noOfRowsToDisplay;
             if (lowerLimit < 0) {
                 lowerLimit = 0;
@@ -168,17 +179,17 @@ public class DeviceTypeController extends HttpServlet {
         if (task.equals("Save") || task.equals("Cancel") || task.equals("Save AS New")) {
             lowerLimit = lowerLimit - noOfRowsTraversed;    // Here objective is to display the same view again, i.e. reset lowerLimit to its previous value.
         } else if (task.equals("Show All Records")) {
-            searchDeviceType="";
+            searchroverName="";
 
         }
            // Logic to show data in the table.
-        List<DeviceTypeBean> commandTypeList = deviceTypeModel.showData(lowerLimit, noOfRowsToDisplay,searchDeviceType);
-        lowerLimit = lowerLimit + commandTypeList.size();
-        noOfRowsTraversed = commandTypeList.size();
+        List<NtripRoverBean> roverTypeList = ntripRoverModel.showData(lowerLimit, noOfRowsToDisplay,searchroverName);
+        lowerLimit = lowerLimit + roverTypeList.size();
+        noOfRowsTraversed = roverTypeList.size();
          // Now set request scoped attributes, and then forward the request to view.
         request.setAttribute("lowerLimit", lowerLimit);
         request.setAttribute("noOfRowsTraversed", noOfRowsTraversed);
-        request.setAttribute("divisionTypeList", commandTypeList);
+        request.setAttribute("roverTypeList", roverTypeList);
          if ((lowerLimit - noOfRowsTraversed) == 0) {     // if this is the only data in the table or when viewing the data 1st time.
             request.setAttribute("showFirst", "false");
             request.setAttribute("showPrevious", "false");
@@ -188,17 +199,16 @@ public class DeviceTypeController extends HttpServlet {
             request.setAttribute("showLast", "false");
         }
 
-        System.out.println("color is :" + deviceTypeModel.getMsgBgColor());
-        request.setAttribute("manufacturer", request.getParameter("manufacturer"));
-        request.setAttribute("device_type", request.getParameter("device_type"));
-        request.setAttribute("deviceName", request.getParameter("device_name"));
-        request.setAttribute("device_no", request.getParameter("device_no"));
-        request.setAttribute("manname", searchDeviceType);
+        System.out.println("color is :" + ntripRoverModel.getMsgBgColor());
+        request.setAttribute("rover_name", request.getParameter("rover_name"));
+        request.setAttribute("rover_password", request.getParameter("rover_password"));
+       
+        request.setAttribute("manname", searchroverName);
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
-        request.setAttribute("searchDeviceType",searchDeviceType );
-        request.setAttribute("message", deviceTypeModel.getMessage());
-        request.setAttribute("msgBgColor", deviceTypeModel.getMsgBgColor());
-        request.getRequestDispatcher("/devicetype").forward(request, response);
+        request.setAttribute("searchroverName",searchroverName);
+        request.setAttribute("message", ntripRoverModel.getMessage());
+        request.setAttribute("msgBgColor", ntripRoverModel.getMsgBgColor());
+        request.getRequestDispatcher("/ntriprover").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

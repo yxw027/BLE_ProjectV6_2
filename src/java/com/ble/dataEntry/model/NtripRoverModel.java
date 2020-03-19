@@ -1,28 +1,25 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.ble.dataEntry.model;
 
-import com.ble.dataEntry.bean.ManufacturerBean;
+import com.ble.dataEntry.bean.NtripRoverBean;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
- * @author Shobha
+ * @author Administrator
  */
-public class ManufacturerModel {
-
-    private Connection connection;
+public class NtripRoverModel {
+    
+ private Connection connection;
     private String driverClass;
     private String connectionString;
     private String db_username;
@@ -43,24 +40,20 @@ public class ManufacturerModel {
     }
 
 
-public int insertRecord(ManufacturerBean manufacturerBean) {
-        String query = " insert into manufacturer(name,remark) values(?,?) ";
+public int insertRecord(NtripRoverBean ntripRoverBean) {
+
+        String query = " insert into ntrip_rover(rover_name,rover_password,remark) values(?,?,?) ";
         int rowsAffected = 0;
         try {
             java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
 
-            pstmt.setString(1, manufacturerBean.getManufacturer_name());
-            pstmt.setString(2, manufacturerBean.getRemark());
+            pstmt.setString(1, ntripRoverBean.getRover_name());
+            pstmt.setString(2, ntripRoverBean.getRover_password());
+            pstmt.setString(3, ntripRoverBean.getRemark());
 
             rowsAffected = pstmt.executeUpdate();
         } catch (Exception e) {
             System.out.println("Error while inserting record...." + e);
-        }finally{
-            try {
-                connection.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(ManufacturerModel.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         if (rowsAffected > 0) {
             message = "Record saved successfully.";
@@ -73,14 +66,14 @@ public int insertRecord(ManufacturerBean manufacturerBean) {
 
     }
 
-public boolean reviseRecords(ManufacturerBean manufacturerBean){
+public boolean reviseRecords(NtripRoverBean ntripRoverBean){
     boolean status=false;
     String query="";
     int rowsAffected=0;
-     
-      String query1 = " SELECT max(revision_no) revision_no FROM manufacturer c WHERE c.id = "+manufacturerBean.getManufacturer_id()+" && active='Y' ORDER BY revision_no DESC";
-      String query2 = " UPDATE manufacturer SET active=? WHERE id = ? && revision_no = ? ";
-      String query3 = " INSERT INTO manufacturer (id,name,remark,revision_no,active) VALUES (?,?,?,?,?) ";
+
+      String query1 = " SELECT max(revision_no) revision_no FROM ntrip_rover c WHERE c.ntrip_rover_id = "+ntripRoverBean.getNtrip_rover_id()+" && active='Y' ORDER BY revision_no DESC";
+      String query2 = " UPDATE ntrip_rover SET active=? WHERE ntrip_rover_id = ? && revision_no = ? ";
+      String query3 = " INSERT INTO ntrip_rover (ntrip_rover_id,rover_name,rover_password,remark,revision_no,active) VALUES (?,?,?,?,?,?) ";
 
       int updateRowsAffected = 0;
       try {
@@ -89,17 +82,18 @@ public boolean reviseRecords(ManufacturerBean manufacturerBean){
            if(rs.next()){
            PreparedStatement pst = (PreparedStatement) connection.prepareStatement(query2);
            pst.setString(1,  "N");
-           pst.setInt(2,manufacturerBean.getManufacturer_id());
+           pst.setInt(2,ntripRoverBean.getNtrip_rover_id());
            pst.setInt(3, rs.getInt("revision_no"));
            updateRowsAffected = pst.executeUpdate();
              if(updateRowsAffected >= 1){
              int rev = rs.getInt("revision_no")+1;
              PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3);
-             psmt.setInt(1,manufacturerBean.getManufacturer_id());
-             psmt.setString(2,manufacturerBean.getManufacturer_name());
-             psmt.setString(3,manufacturerBean.getRemark());
-             psmt.setInt(4,rev);
-             psmt.setString(5,"Y");
+             psmt.setInt(1,ntripRoverBean.getNtrip_rover_id());
+             psmt.setString(2,ntripRoverBean.getRover_name());
+              psmt.setString(3,ntripRoverBean.getRover_password());
+             psmt.setString(4,ntripRoverBean.getRemark());
+             psmt.setInt(5,rev);
+             psmt.setString(6,"Y");
 
              int a = psmt.executeUpdate();
               if(a > 0)
@@ -122,49 +116,50 @@ public boolean reviseRecords(ManufacturerBean manufacturerBean){
 
        return status;
     }
-  public int getNoOfRows(String searchManufacturerName) {
+  public int getNoOfRows(String searchroverName) {
       String query1="select count(*) "
-                  +" from manufacturer m "
-                  +" where IF('" + searchManufacturerName + "' = '', name LIKE '%%',name =?) "
-                  +" and m.active='Y' ";
+                    +" from ntrip_rover mt "
+                    +" where IF('" + searchroverName + "' = '', rover_name LIKE '%%',rover_name =?) "
+                    +" and mt.active='Y'";
 
         int noOfRows = 0;
         try {
             PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
-            
-            stmt.setString(1, searchManufacturerName);
-            
+
+            stmt.setString(1, searchroverName);
+
             ResultSet rs = stmt.executeQuery();
             rs.next();
             noOfRows = rs.getInt(1);
         } catch (Exception e) {
-            System.out.println("Error inside getNoOfRows CommandModel" + e);
+            System.out.println("Error inside getNoOfRows Model" + e);
         }
         System.out.println("No of Rows in Table for search is" + noOfRows);
         return noOfRows;
     }
 
-  public List<ManufacturerBean> showData(int lowerLimit, int noOfRowsToDisplay,String searchManufacturerName) {
-        List<ManufacturerBean> list = new ArrayList<ManufacturerBean>();
+  public List<NtripRoverBean> showData(int lowerLimit, int noOfRowsToDisplay,String searchroverName) {
+        List<NtripRoverBean> list = new ArrayList<NtripRoverBean>();
          String addQuery = " LIMIT " + lowerLimit + ", " + noOfRowsToDisplay;
           if(lowerLimit == -1)
             addQuery = "";
-       String query2="select id,name,remark "
-                     +" from manufacturer m "
-                     +" where IF('" + searchManufacturerName + "' = '', name LIKE '%%',name =?) "
+       String query2="select ntrip_rover_id,rover_name,rover_password,remark "
+                     +" from ntrip_rover m "
+                     +" where IF('" + searchroverName + "' = '', rover_name LIKE '%%',rover_name =?) "
                      +" and m.active='Y'"
                      +addQuery;
         try {
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);
-            pstmt.setString(1, searchManufacturerName);
+            pstmt.setString(1, searchroverName);
             ResultSet rset = pstmt.executeQuery();
             while (rset.next()) {
-                ManufacturerBean manufacturerBean = new ManufacturerBean();
+                NtripRoverBean ntripRoverBean = new NtripRoverBean();
 
-                manufacturerBean.setManufacturer_id(rset.getInt("id"));
-                manufacturerBean.setManufacturer_name(rset.getString("name"));
-                manufacturerBean.setRemark(rset.getString("remark"));
-                list.add(manufacturerBean);
+                ntripRoverBean.setNtrip_rover_id(rset.getInt("ntrip_rover_id"));
+                ntripRoverBean.setRover_name(rset.getString("rover_name"));
+                 ntripRoverBean.setRover_password(rset.getString("rover_password"));
+                ntripRoverBean.setRemark(rset.getString("remark"));
+                list.add(ntripRoverBean);
             }
         } catch (Exception e) {
             System.out.println("Error: " + e);
@@ -172,9 +167,9 @@ public boolean reviseRecords(ManufacturerBean manufacturerBean){
         return list;
     }
 
-  public int deleteRecord(int manufacturer_id) {
+  public int deleteRecord(int ntrip_rover_id) {
 
-      String query = "update manufacturer set active='n' where id=" + manufacturer_id;
+      String query = "update ntrip_rover set active='N' where ntrip_rover_id=" + ntrip_rover_id;
         int rowsAffected = 0;
         try {
             rowsAffected = connection.prepareStatement(query).executeUpdate();
@@ -191,25 +186,25 @@ public boolean reviseRecords(ManufacturerBean manufacturerBean){
         return rowsAffected;
     }
 
-  public List<String> getManufacturer(String q) {
+  public List<String> getRoverName(String q) {
         List<String> list = new ArrayList<String>();
-        String query = "select name from manufacturer where active='Y' group by name order by id desc";
+        String query = "select rover_name from ntrip_rover where active='Y' group by rover_name order by ntrip_rover_id desc";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
             q = q.trim();
             while (rset.next()) {
-                String name = rset.getString("name");
+                String name = rset.getString("rover_name");
                 if (name.toUpperCase().startsWith(q.toUpperCase())) {
                     list.add(name);
                     count++;
                 }
             }
             if (count == 0) {
-                list.add("No such Manufacturer Name exists.......");
+                list.add("No such Rover name exists.......");
             }
         } catch (Exception e) {
-            System.out.println(" ERROR inside CommandModel - " + e);
+            System.out.println(" ERROR inside Model - " + e);
             message = "Something going wrong";
             //messageBGColor = "red";
         }
@@ -276,3 +271,5 @@ public boolean reviseRecords(ManufacturerBean manufacturerBean){
     }
 
 }
+
+

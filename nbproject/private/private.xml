@@ -2,6 +2,28 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/src/java/com/ble/device/model/DeviceConfigStatusModel.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/src/java/com/ble/device/model/DeviceRegConModel.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/src/java/com/ble/device/controller/DeviceConfigStatusCont.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/web/view/device/BaseRoverConfgPage.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/src/java/com/ble/device/bean/DeviceMapBean.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/web/view/dataEntry/device_map.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/src/java/com/ble/command/controller/DeviceOperationCommandController.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/web/view/device/deviceRegConnPage.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/src/java/com/ble/device/controller/DeviceRegistrationController.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/src/java/com/ble/dataEntry/controller/NtripBaseController.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/web/view/dataEntry/model_type.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/src/java/com/ble/dataEntry/model/NtripBaseModel.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/src/java/com/ble/device/controller/DeviceRegConController.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/src/java/com/ble/device/bean/DeviceConfigStatusBean.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/src/java/com/ble/device/controller/BaseRoverConfController.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/web/view/dataEntry/ntripbase.jsp</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/src/java/com/ble/webService/controller/BLEWebServicesController.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/src/java/com/ble/command/model/DeviceOperationCommandModel.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/src/java/com/ble/device/controller/DeviceMapController.java</file>
+            <file>file:/C:/Users/Administrator/Desktop/Prachi/trafficSignal%20and%20Ble%20on%20Git/BLE_Project/web/view/dataEntry/deviceConfiguration_status.jsp</file>
+        </group>
     </open-files>
 </project-private>

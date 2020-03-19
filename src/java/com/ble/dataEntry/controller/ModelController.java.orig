@@ -1,14 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ble.device.controller;
 
-import com.ble.device.bean.DeviceMapBean;
-import com.ble.device.bean.DeviceRegistrationBean;
-import com.ble.device.model.DeviceMapModel;
-import com.ble.device.model.DeviceRegistrationModel;
+package com.ble.dataEntry.controller;
+
+import com.ble.dataEntry.bean.ModelBean;
+import com.ble.dataEntry.model.Model;
 import com.ble.util.UniqueIDGenerator;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,11 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author apogee
+ * @author Shobha
  */
-public class DeviceMapController extends HttpServlet {
+public class ModelController extends HttpServlet {
    
-    /**
+    /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
@@ -38,12 +36,12 @@ public class DeviceMapController extends HttpServlet {
         int lowerLimit, noOfRowsTraversed, noOfRowsToDisplay = 5, noOfRowsInTable;
         System.out.println("this is FUSE Controller....");
         ServletContext ctx = getServletContext();
-        DeviceMapModel deviceMapModel = new DeviceMapModel();
-        deviceMapModel.setDriverClass(ctx.getInitParameter("driverClass"));
-        deviceMapModel.setConnectionString(ctx.getInitParameter("connectionString"));
-        deviceMapModel.setDb_username(ctx.getInitParameter("db_username"));
-        deviceMapModel.setDb_password(ctx.getInitParameter("db_password"));
-        deviceMapModel.setConnection();
+        Model model = new Model();
+        model.setDriverClass(ctx.getInitParameter("driverClass"));
+        model.setConnectionString(ctx.getInitParameter("connectionString"));
+        model.setDb_username(ctx.getInitParameter("db_username"));
+        model.setDb_password(ctx.getInitParameter("db_password"));
+        model.setConnection();
 
         String task = request.getParameter("task");
          try {
@@ -53,28 +51,18 @@ public class DeviceMapController extends HttpServlet {
                 PrintWriter out = response.getWriter();
                 List<String> list = null;
 
-                if(JQstring.equals("getManufactureName")) {
-                    list = deviceMapModel.getManufactureName(q);
-                }else if(JQstring.equals("getDeviceTypeName")) {
-                    list = deviceMapModel.getDeviceTypeName(q,request.getParameter("action2"));
-                }else if(JQstring.equals("getDeviceName")) {
-                    list = deviceMapModel.getDeviceName(q);
-                }else if(JQstring.equals("getDeviceNo")) {
-                    list = deviceMapModel.getDeviceNo(q,request.getParameter("action2"));
-                }else if(JQstring.equals("getsearchManufactureName")) {
-                    list = deviceMapModel.getSearchManufactureName(q);
-                }else if(JQstring.equals("getsearchDeviceType")) {
-                    list = deviceMapModel.getSearchDeviceType(q);
+                if(JQstring.equals("getDeviceName")) {
+                    list = model.getDeviceName(q);
+                }else if(JQstring.equals("getModelType")) {
+                    list = model.getModelType(q);
                 }
-                else if(JQstring.equals("getsearchModelName")) {
-                    list = deviceMapModel.getSearchModelName(q);
-                }
+
                 Iterator<String> iter = list.iterator();
                 while (iter.hasNext()) {
                     String data = iter.next();
                         out.println(data);
                 }
-                deviceMapModel.closeConnection();
+                model.closeConnection();
                 return;
             }
         } catch (Exception e) {
@@ -99,50 +87,46 @@ public class DeviceMapController extends HttpServlet {
 //                return;
 //            }
          if (task.equals("Cancel")) {
-            deviceMapModel.deleteRecord(Integer.parseInt(request.getParameter("device_map_id")));  // Pretty sure that organisation_type_id will be available.
+            model.deleteRecord(Integer.parseInt(request.getParameter("model_id")));  // Pretty sure that organisation_type_id will be available.
         } else if (task.equals("Save") || task.equals("Save AS New")) {
-            int device_map_id;
+            int model_id;
             try {
-                device_map_id = Integer.parseInt(request.getParameter("device_map_id"));
+                model_id = Integer.parseInt(request.getParameter("model_id"));
             } catch (Exception e) {
-                device_map_id = 0;
+                model_id = 0;
             }
             if (task.equals("Save AS New")) {
-                device_map_id = 0;
+                model_id = 0;
             }
-            DeviceMapBean deviceMapBean = new DeviceMapBean();
-            deviceMapBean.setDevice_map_id(device_map_id);
-            deviceMapBean.setFinished_manufacture_name(request.getParameter("finished_manufacture_name"));
-            deviceMapBean.setFinished_device_type(request.getParameter("finished_device_type"));
-            deviceMapBean.setFinished_model_name(request.getParameter("finished_model_name"));
-            deviceMapBean.setModule_manufacture_name(request.getParameter("module_manufacture_name"));
-            deviceMapBean.setModule_device_type(request.getParameter("module_device_type"));
-            deviceMapBean.setModule_model_name(request.getParameter("module_model_name"));
-//            deviceMapBean.setBle_manufacture_name(request.getParameter("ble_manufacture_name"));
-//            deviceMapBean.setBle_device_type(request.getParameter("ble_device_type"));
-//            deviceMapBean.setBle_model_name(request.getParameter("ble_model_name"));
-            deviceMapBean.setRemark(request.getParameter("remark"));
+            ModelBean modelBean = new ModelBean();
+            modelBean.setModel_id(model_id);
+            modelBean.setModel_type(request.getParameter("model_type"));
+            modelBean.setDevice_name(request.getParameter("device_name"));
+            modelBean.setDevice_no(request.getParameter("device_no"));
+            modelBean.setWarrenty_period(request.getParameter("warranty_period"));
+            modelBean.setDevice_address(request.getParameter("device_address"));
+             modelBean.setNo_of_module(Integer.parseInt(request.getParameter("no_of_module")));
+            modelBean.setRemark(request.getParameter("remark"));
 
-            if (device_map_id == 0) {
+            if (model_id == 0) {
                 System.out.println("Inserting values by model......");
-                deviceMapModel.insertRecord(deviceMapBean);
+                int numberOfRowsAffected = model.insertRecord(modelBean);
+                if(numberOfRowsAffected > 0) {
+                    //request.getRequestDispatcher("/DeviceTypeCont.do?task=''").forward(request, response);
+                }
             } else {
                 System.out.println("Update values by model........");
-                deviceMapModel.reviseRecords(deviceMapBean);
+                model.reviseRecords(modelBean);
             }
         }
 
-        String searchManufacturerName = "";
-        String searchDeviceTypeName = "";
-        String searchModelName = "";
-        searchManufacturerName = request.getParameter("searchManufactureName");
-        searchDeviceTypeName = request.getParameter("searchDeviceType");
-         searchModelName = request.getParameter("searchModelName");
+        String searchDeviceName = "";
+
+        searchDeviceName = request.getParameter("searchDeviceName");
+
          try {
-            if (searchManufacturerName == null || searchDeviceTypeName == null || searchModelName == null) {
-                searchManufacturerName="";
-                searchDeviceTypeName="";
-                searchModelName="";
+            if (searchDeviceName == null) {
+                searchDeviceName="";
             }
         } catch (Exception e) {
             System.out.println("Exception while searching in controller" + e);
@@ -158,24 +142,18 @@ public class DeviceMapController extends HttpServlet {
         if (buttonAction == null) {
             buttonAction = "none";
         }
-        System.out.println("searching.......... " + searchManufacturerName);
-        System.out.println("searching.......... " + searchDeviceTypeName);
-        System.out.println("searching.......... " + searchModelName);
+        System.out.println("searching.......... " + searchDeviceName);
 
-         noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName,searchModelName);
+         noOfRowsInTable = model.getNoOfRows(searchDeviceName);
 
          if (buttonAction.equals("Next")){
-              searchManufacturerName=request.getParameter("manname");
-              searchDeviceTypeName=request.getParameter("dname");
-              searchModelName=request.getParameter("modelname");
-              noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName,searchModelName);
+             searchDeviceName=request.getParameter("manname");
+            noOfRowsInTable = model.getNoOfRows(searchDeviceName);
              
          } // lowerLimit already has value such that it shows forward records, so do nothing here.
          else if (buttonAction.equals("Previous")) {
-              searchManufacturerName=request.getParameter("manname");
-              searchDeviceTypeName=request.getParameter("dname");
-              searchModelName=request.getParameter("modelname");
-              noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName,searchModelName);
+              searchDeviceName=request.getParameter("manname");
+            noOfRowsInTable = model.getNoOfRows(searchDeviceName);
             int temp = lowerLimit - noOfRowsToDisplay - noOfRowsTraversed;
             if (temp < 0) {
                 noOfRowsToDisplay = lowerLimit - noOfRowsTraversed;
@@ -184,17 +162,11 @@ public class DeviceMapController extends HttpServlet {
                 lowerLimit = temp;
             }
         } else if (buttonAction.equals("First")) {
-             searchManufacturerName=request.getParameter("manname");
-              searchDeviceTypeName=request.getParameter("dname");
-              searchModelName=request.getParameter("modelname");
-              //noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName,searchModelName);
-           
+              searchDeviceName=request.getParameter("manname");
             lowerLimit = 0;
         } else if (buttonAction.equals("Last")) {
-            searchManufacturerName=request.getParameter("manname");
-              searchDeviceTypeName=request.getParameter("dname");
-              searchModelName=request.getParameter("modelname");
-              noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName,searchModelName);
+             searchDeviceName=request.getParameter("manname");
+            noOfRowsInTable = model.getNoOfRows(searchDeviceName);
             lowerLimit = noOfRowsInTable - noOfRowsToDisplay;
             if (lowerLimit < 0) {
                 lowerLimit = 0;
@@ -203,18 +175,17 @@ public class DeviceMapController extends HttpServlet {
         if (task.equals("Save") || task.equals("Cancel") || task.equals("Save AS New")) {
             lowerLimit = lowerLimit - noOfRowsTraversed;    // Here objective is to display the same view again, i.e. reset lowerLimit to its previous value.
         } else if (task.equals("Show All Records")) {
-            searchManufacturerName="";
-            searchDeviceTypeName="";
+            searchDeviceName="";
 
         }
            // Logic to show data in the table.
-        List<DeviceMapBean> deviceMapList = deviceMapModel.showData(lowerLimit, noOfRowsToDisplay,searchManufacturerName,searchDeviceTypeName,searchModelName);
-        lowerLimit = lowerLimit + deviceMapList.size();
-        noOfRowsTraversed = deviceMapList.size();
+        List<ModelBean> commandTypeList = model.showData(lowerLimit, noOfRowsToDisplay,searchDeviceName);
+        lowerLimit = lowerLimit + commandTypeList.size();
+        noOfRowsTraversed = commandTypeList.size();
          // Now set request scoped attributes, and then forward the request to view.
         request.setAttribute("lowerLimit", lowerLimit);
         request.setAttribute("noOfRowsTraversed", noOfRowsTraversed);
-        request.setAttribute("deviceMapList", deviceMapList);
+        request.setAttribute("divisionTypeList", commandTypeList);
          if ((lowerLimit - noOfRowsTraversed) == 0) {     // if this is the only data in the table or when viewing the data 1st time.
             request.setAttribute("showFirst", "false");
             request.setAttribute("showPrevious", "false");
@@ -224,25 +195,25 @@ public class DeviceMapController extends HttpServlet {
             request.setAttribute("showLast", "false");
         }
 
-        System.out.println("color is :" + deviceMapModel.getMsgBgColor());
+        System.out.println("color is :" + model.getMsgBgColor());
         request.setAttribute("manufacturer", request.getParameter("manufacturer"));
         request.setAttribute("device_type", request.getParameter("device_type"));
         request.setAttribute("deviceName", request.getParameter("device_name"));
         request.setAttribute("device_no", request.getParameter("device_no"));
-        request.setAttribute("manname", searchManufacturerName);
-        request.setAttribute("dname", searchDeviceTypeName);
-        request.setAttribute("modelname", searchModelName);  
+<<<<<<< HEAD
+ request.setAttribute("manname", searchDeviceName);
+=======
+        request.setAttribute("manname", searchDeviceName);
+>>>>>>> accf7f3c84098180c427bb90483ba4063db60523
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
-        request.setAttribute("searchManufacturerName",searchManufacturerName );
-        request.setAttribute("searchDeviceTypeName",searchDeviceTypeName );
-        request.setAttribute("searchModelName",searchModelName );
-        request.setAttribute("message", deviceMapModel.getMessage());
-        request.setAttribute("msgBgColor", deviceMapModel.getMsgBgColor());
-        request.getRequestDispatcher("/device_map").forward(request, response);
-    }
+        request.setAttribute("searchDeviceName",searchDeviceName );
+        request.setAttribute("message", model.getMessage());
+        request.setAttribute("msgBgColor", model.getMsgBgColor());
+        request.getRequestDispatcher("/model").forward(request, response);
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
      * @param response servlet response
@@ -253,9 +224,9 @@ public class DeviceMapController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
-    }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
      * @param request servlet request
      * @param response servlet response
@@ -268,7 +239,7 @@ public class DeviceMapController extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
      * @return a String containing servlet description
      */

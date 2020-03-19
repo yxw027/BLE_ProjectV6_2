@@ -58,11 +58,11 @@
                                 <c:forEach var="list" items="${requestScope['inputListById']}" varStatus="loopCounter">
                                     <tr>
                                         <td><input type="text" name="s_no${loopCounter.count}" id="s_no${loopCounter.count}" size="5" value="${loopCounter.count}" readonly>
-                                            <input type="hidden" name="selection_id${loopCounter.count}" maxlength="8" size="5" id="selection_id${loopCounter.count}" value="${list.input_id}"></td>
+                                            <input type="hidden" name="selection_id${loopCounter.count}" maxlength="8" size="20" id="selection_id${loopCounter.count}" value="${list.input_id}"></td>
                                         <td><input type="text" name="command_name${loopCounter.count}" maxlength="50" size="20" id="command_name${loopCounter.count}" value="${list.command_name}" readonly></td>
-                                        <td><input type="text" name="parameter${loopCounter.count}" maxlength="8" size="5" id="parameter${loopCounter.count}" value="${list.parameter}" onkeyup="autocompleteMethod('parameter',${loopCounter.count})"></td>
-                                        <td><input type="text" name="parameter_type${loopCounter.count}" maxlength="8" size="5" id="parameter_type${loopCounter.count}" value="${list.parameter_type}" onkeyup="autocompleteMethod('parameter_type',${loopCounter.count})"></td>
-                                        <td><input type="text" name="remark{loopCounter.count}" maxlength="8" size="5" id="remark{loopCounter.count}" value="${list.remark}" ></td>
+                                        <td><input type="text" name="parameter${loopCounter.count}" maxlength="8" size="20" id="parameter${loopCounter.count}" value="${list.parameter}" onkeyup="autocompleteMethod('parameter',${loopCounter.count})"></td>
+                                        <td><input type="text" name="parameter_type${loopCounter.count}" maxlength="8" size="20" id="parameter_type${loopCounter.count}" value="${list.parameter_type}" onkeyup="autocompleteMethod('parameter_type',${loopCounter.count})"></td>
+                                        <td><input type="text" name="remark{loopCounter.count}" maxlength="8" size="20" id="remark{loopCounter.count}" value="${list.remark}" ></td>
                                     </tr>
                                 </c:forEach>
 
@@ -131,7 +131,7 @@
                     element1.id = "s_no" + i;
                     element1.name = "s_no" + i;
                     element1.value = i;
-                    element1.size = 3;
+                    element1.size = 5;
                     cell1.appendChild(element1);
 
                     var cell2 = row.insertCell(1);
@@ -150,7 +150,7 @@
                     element2.type = "text";
                     element2.name = "parameter" + i;
                     element2.id = "parameter" + i;
-                    element2.size = 5;
+                    element2.size = 20;
                     element2.maxLength = 8;
                     element2.value = "";
                     element2.setAttribute("onkeyup", 'autocompleteMethod("parameter",' + i + ')');
@@ -163,7 +163,7 @@
                     element2.type = "text";
                     element2.name = "parameter_type" + i;
                     element2.id = "parameter_type" + i;
-                    element2.size = 5;
+                    element2.size = 20;
                     element2.maxLength = 8;
                     element2.value = "";
                     element2.setAttribute("onkeyup", 'autocompleteMethod("parameter_type",' + i + ')');
@@ -174,7 +174,7 @@
                     element2.type = "text";
                     element2.name = "remark" + i;
                     element2.id = "remark" + i;
-                    element2.size = 5;
+                    element2.size = 20;
                     element2.maxLength = 8;
                     element2.value = "";
                     cell5.appendChild(element2);

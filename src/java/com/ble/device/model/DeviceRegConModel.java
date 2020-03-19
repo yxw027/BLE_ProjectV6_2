@@ -470,7 +470,137 @@ public class DeviceRegConModel {
                 return status;
   }
   
-  public String sendToShwetaTesting(String arr[],String arrOperation[],String arrCommand[],int finished_id) throws InterruptedException{
+//  public String sendToShwetaTesting(String arr[],String arrOperation[],String arrCommand[],int finished_id) throws InterruptedException{
+//  String status = "check";
+//  boolean user = true;
+//  boolean user1 = true;
+//  BLEWebServicesController ble = new BLEWebServicesController();
+//  int j  = 0;
+//  int k = 0;
+//  int a = 0;
+//  
+//              try {       
+//                  while(user1 == true){
+//                isModuleOperation = "$$$$,07,D_1,01,startpacket,12,####";
+//                 String startpacket=ble.deviceResponse;
+//                 if(startpacket==null){
+//                    startpacket = "";
+//                   }else{
+//                     System.out.println("mayank packet data .. " +startpacket );    
+//                int x1 = startpacket.indexOf('$');
+//                if(x1 >= 0){
+//                startpacket =  startpacket.split(",")[4]; 
+//                } 
+//                 }
+//                String startpacket1 =  isModuleOperation.split(",")[4]; 
+//                if(startpacket.equalsIgnoreCase(startpacket1)){
+//                user = false;
+//                isModuleOperation = "end of file";
+//                ble.deviceResponse = null;
+//                }
+//                 if(user == false){ 
+//                  
+//  
+//                for (int i = 0; i < arr.length; i++) {
+//                isModuleOperation = "end of file";
+//                int model_id =  Integer.parseInt(arr[i].split(",")[0]);
+//                int device_type_id =  Integer.parseInt(arr[i].split(",")[1]);
+//                String[] idsToOperation = arrOperation;                
+//                for ( j = 0; j < idsToOperation.length; j++) {                    
+//                 int model_id1 = Integer.parseInt(idsToOperation[j].split(",")[1]);
+//                 if(model_id1 == model_id){
+//                    for(k=0; k < arrCommand.length ; k++){
+//                        int op_id = Integer.parseInt(idsToOperation[j].split(",")[0]);
+//                        int command_id1 = Integer.parseInt(arrCommand[k].split(",")[1]);                        
+//                          if(command_id1 == op_id){
+//                            long startTime = System.currentTimeMillis();
+//                      //     while(true ||(System.currentTimeMillis()-startTime)<20000){
+//                         while(true && (((System.currentTimeMillis() - startTime) / 1000 ) < 10)){          //300 in sec
+//                            String deviceResp =  ble.deviceResponse;                            
+//                            String abc1="start";
+//                            if(deviceResp==null){
+//                            deviceResp = "";
+//                            }else{
+//                              
+//                                int x = deviceResp.indexOf('$');
+//                              if(x >= 0){
+//                                  String  cmd = deviceResp.split(",")[1];
+//                                  if(!cmd.equalsIgnoreCase("07")){
+//                                    abc1 = deviceResp.split(",")[9];
+//                                  }
+//                              }
+//                            }
+//                           //  System.out.println("device resp ... "+deviceResp + "<br>");
+//                              String abc="";
+//                              String preSavedValue="";                               
+//                             if(isModuleOperation==null || isModuleOperation.equalsIgnoreCase("end of file")){
+//                            isModuleOperation = "end of file";
+//                            }else{
+//                                
+//                                 preSavedValue=isModuleOperation;
+//                              abc = isModuleOperation.split(",")[9];
+//                             }
+//                            
+//                            if(abc1.equalsIgnoreCase(abc)){
+//                           // isModuleOperation = "$$$$,05,D_2,06,"+device_type_id+","+idsToOperation[j].split(",")[0]+","+arrCommand[k].split(",")[2]+","+arrCommand[k].split(",")[3]+",123,{"+arrCommand[k].split(",")[0]+"},00,####";
+//                            
+//                            int re = insertDeviceConfigurationStatus(finished_id,model_id,Integer.parseInt(idsToOperation[j].split(",")[0]),Integer.parseInt(arrCommand[k].split(",")[2]),arrCommand[k].split(",")[0]);
+//                            System.out.println(" matched  and  curent value is .. " +isModuleOperation+" and record updated status is ..."+re ); 
+//                            isModuleOperation = null;
+//                            //Thread.sleep(2 * 1000);
+//                            //a = 0;
+//                            break;
+//                            }
+//                            else{
+//                             if(k == (arrCommand.length) -1){
+//                             isModuleOperation = isModuleOperation;
+//                             } else{ 
+//                            
+//                            
+//                                 isModuleOperation = "$$$$,05,D_1,06,"+device_type_id+","+idsToOperation[j].split(",")[0]+","+Integer.parseInt(arrCommand[k].split(",")[2])+","+Integer.parseInt(arrCommand[k].split(",")[3])+",123,{"+arrCommand[k].split(",")[0]+"},00,####";
+//                            //isModuleOperation = isModuleOperation;
+//                            System.out.println("previous value .. " +isModuleOperation );      
+//                            //Thread.sleep(2 * 1000); 
+//                            a = 0;
+//                             }
+//                             //a = 0;
+//                           // break;
+//                          }
+//                            
+//                            }
+//                           //Thread.sleep(4 * 1000);
+//                                                    
+//                        }
+//                        
+//                    
+//                    } 
+//    	           k=0;
+////                 isModuleOperation = "$$$$,05,23,5,"+model_id+","+idsToOperation[j].split(",")[0]+",1,2,123,robinsingh,23,####";
+////                 System.out.println(isModuleOperation + "<br>");
+//                 }
+//               //  Thread.sleep(10 * 1000);
+//                }
+//                 j=0;                 	        
+//               }
+//                user1 = false;
+//              } 
+//                  //user1 = false;
+//              }
+//                 // user1 = false;
+//              }
+//              catch (Exception e){
+//              System.out.println("some error .... "+ e);
+//              }
+//                isModuleOperation = "end of file";
+//               //isOperationArr = arr;
+//                return status;
+//  }
+//  
+  
+  
+  
+  
+  public String sendToShwetaTesting(String arr[],String arrOperation[],String arrCommand[],int finished_id,String reg_no) throws InterruptedException{
   String status = "check";
   boolean user = true;
   boolean user1 = true;
@@ -478,10 +608,11 @@ public class DeviceRegConModel {
   int j  = 0;
   int k = 0;
   int a = 0;
-  
-              try {       
+ 
+              try {      
                   while(user1 == true){
-                isModuleOperation = "$$$$,07,D_2,01,startpacket,12,####";
+//                isModuleOperation = "$$$$,07,D_2,01,startpacket,12,####";
+                   isModuleOperation = "$$$$,07,"+reg_no+",01,startpacket,12,####";
                  String startpacket=ble.deviceResponse;
                  if(startpacket==null){
                     startpacket = "";
@@ -489,18 +620,18 @@ public class DeviceRegConModel {
                      System.out.println("mayank packet data .. " +startpacket );    
                 int x1 = startpacket.indexOf('$');
                 if(x1 >= 0){
-                startpacket =  startpacket.split(",")[4]; 
-                } 
+                startpacket =  startpacket.split(",")[4];
+                }
                  }
-                String startpacket1 =  isModuleOperation.split(",")[4]; 
+                String startpacket1 =  isModuleOperation.split(",")[4];
                 if(startpacket.equalsIgnoreCase(startpacket1)){
                 user = false;
                 isModuleOperation = "end of file";
                 ble.deviceResponse = null;
                 }
-                 if(user == false){ 
-                  
-  
+     //            if(user == false){
+                 
+ 
                 for (int i = 0; i < arr.length; i++) {
                 isModuleOperation = "end of file";
                 int model_id =  Integer.parseInt(arr[i].split(",")[0]);
@@ -514,13 +645,14 @@ public class DeviceRegConModel {
                         int command_id1 = Integer.parseInt(arrCommand[k].split(",")[1]);                        
                           if(command_id1 == op_id){
                             long startTime = System.currentTimeMillis();
-                            while(true ||(System.currentTimeMillis()-startTime)<20000){
+    //                        while(true && (System.currentTimeMillis()-startTime)<20000){
+                         while(true && (((System.currentTimeMillis() - startTime) / 1000 ) < 100)){      // 300 in seconds
                             String deviceResp =  ble.deviceResponse;                            
                             String abc1="start";
                             if(deviceResp==null){
                             deviceResp = "";
                             }else{
-                              
+                             
                                 int x = deviceResp.indexOf('$');
                               if(x >= 0){
                                   String  cmd = deviceResp.split(",")[1];
@@ -531,19 +663,23 @@ public class DeviceRegConModel {
                             }
                            //  System.out.println("device resp ... "+deviceResp + "<br>");
                               String abc="";
-                              String preSavedValue="";                               
+                              String preSavedValue="";                              
                              if(isModuleOperation==null || isModuleOperation.equalsIgnoreCase("end of file")){
                             isModuleOperation = "end of file";
                             }else{
                                  preSavedValue=isModuleOperation;
                               abc = isModuleOperation.split(",")[9];
                              }
-                            
+                           
                             if(abc1.equalsIgnoreCase(abc)){
                            // isModuleOperation = "$$$$,05,D_2,06,"+device_type_id+","+idsToOperation[j].split(",")[0]+","+arrCommand[k].split(",")[2]+","+arrCommand[k].split(",")[3]+",123,{"+arrCommand[k].split(",")[0]+"},00,####";
+                           
+//                            int re = insertDeviceConfigurationStatus(finished_id,model_id,Integer.parseInt(idsToOperation[j].split(",")[0]),Integer.parseInt(arrCommand[k].split(",")[2]),arrCommand[k].split(",")[0]);
+                            //change in configuration table replace finished_device_id by reg_no
+                            int re = insertDeviceConfigurationStatus(reg_no,finished_id,model_id,Integer.parseInt(idsToOperation[j].split(",")[0]),Integer.parseInt(arrCommand[k].split(",")[2]),arrCommand[k].split(",")[0]);
+                            ////
                             
-                            int re = insertDeviceConfigurationStatus(finished_id,model_id,Integer.parseInt(idsToOperation[j].split(",")[0]),Integer.parseInt(arrCommand[k].split(",")[2]),arrCommand[k].split(",")[0]);
-                            System.out.println(" matched  and  curent value is .. " +isModuleOperation+" and record updated status is ..."+re ); 
+                            System.out.println(" matched  and  curent value is .. " +isModuleOperation+" and record updated status is ..."+re );
                             isModuleOperation = null;
                             //Thread.sleep(2 * 1000);
                             //a = 0;
@@ -552,35 +688,37 @@ public class DeviceRegConModel {
                             else{
                              if(k == (arrCommand.length) -1){
                              isModuleOperation = isModuleOperation;
-                             } else{ 
+                             } else{
+                           
+//                            isModuleOperation = "$$$$,05,D_2,06,"+device_type_id+","+idsToOperation[j].split(",")[0]+","+Integer.parseInt(arrCommand[k].split(",")[2])+","+Integer.parseInt(arrCommand[k].split(",")[3])+",123,{"+arrCommand[k].split(",")[0]+"},00,####";
+                                             isModuleOperation = "$$$$,05,"+reg_no+",06,"+device_type_id+","+idsToOperation[j].split(",")[0]+","+Integer.parseInt(arrCommand[k].split(",")[2])+","+Integer.parseInt(arrCommand[k].split(",")[3])+",123,{"+arrCommand[k].split(",")[0]+"},00,####";
                             
-                            isModuleOperation = "$$$$,05,D_2,06,"+device_type_id+","+idsToOperation[j].split(",")[0]+","+Integer.parseInt(arrCommand[k].split(",")[2])+","+Integer.parseInt(arrCommand[k].split(",")[3])+",123,{"+arrCommand[k].split(",")[0]+"},00,####";
-                            //isModuleOperation = isModuleOperation;
+                              //isModuleOperation = isModuleOperation;
                             System.out.println("previous value .. " +isModuleOperation );      
-                            //Thread.sleep(2 * 1000); 
+                            //Thread.sleep(2 * 1000);
                             a = 0;
                              }
                              //a = 0;
                            // break;
                           }
-                            
+                           
                             }
                            //Thread.sleep(4 * 1000);
-                                                    
+                                                   
                         }
-                        
-                    
-                    } 
-    	           k=0;
+                       
+                   
+                    }
+              k=0;
 //                 isModuleOperation = "$$$$,05,23,5,"+model_id+","+idsToOperation[j].split(",")[0]+",1,2,123,robinsingh,23,####";
 //                 System.out.println(isModuleOperation + "<br>");
                  }
                //  Thread.sleep(10 * 1000);
                 }
-                 j=0;                 	        
+                 j=0;                        
                }
                 user1 = false;
-              } 
+   //           }
                   //user1 = false;
               }
                  // user1 = false;
@@ -592,20 +730,22 @@ public class DeviceRegConModel {
                //isOperationArr = arr;
                 return status;
   }
-  
-  public int insertDeviceConfigurationStatus(int finished_id,int model_id , int op_id, int order_no, String command) {
+  public int insertDeviceConfigurationStatus(String reg_no,int finished_id,int model_id , int op_id, int order_no, String command) {
                 
-        String query = " insert into deviceconfigstatus(finished_device_id,model_id,operation_id,order_no,command,status) "
-                       +" values(?,?,?,?,?,?) ";
+//        String query = " insert into deviceconfigstatus(finished_device_id,model_id,operation_id,order_no,command,status) "
+//                       +" values(?,?,?,?,?,?) ";
+ String query = " insert into deviceconfigstatus( finished_device_id,reg_no,model_id,operation_id,order_no,command,status) "
+                       +" values(?,?,?,?,?,?,?) ";
         int rowsAffected = 0;
         try {
             java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1, finished_id);
-            pstmt.setInt(2, model_id);
-            pstmt.setInt(3, op_id);            
-            pstmt.setInt(4, order_no);
-            pstmt.setString(5, command);
-            pstmt.setString(6, "yes");
+          pstmt.setInt(1, finished_id);
+            pstmt.setString(2, reg_no);
+            pstmt.setInt(3, model_id);
+            pstmt.setInt(4, op_id);            
+            pstmt.setInt(5, order_no);
+            pstmt.setString(6, command);
+            pstmt.setString(7, "yes");
             rowsAffected = pstmt.executeUpdate();
         } catch (Exception e) {
             System.out.println("Error while inserting record...." + e);
@@ -620,6 +760,27 @@ public class DeviceRegConModel {
         return rowsAffected;
 
     }
+  public String getDeviceRegNo(int device_id){
+      String reg_no="";
+          String query ="select id,reg_no from device_registration "
+                  + " where device_id="+device_id+" and created_at=(select max(created_at) from device_registration where device_id="+device_id+")";
+          int rowsAffected = 0;
+           
+     
+          try{
+              // PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query);
+           PreparedStatement stmt =(PreparedStatement)connection.prepareStatement(query);
+           ResultSet rest = stmt.executeQuery();
+           rest.next();
+           reg_no=rest.getString("reg_no");
+          
+          }catch(Exception e){
+          System.out.println("Exception"+e);
+          }
+         
+          
+          return reg_no;
+  }
   
    public void closeConnection() {
         try {

@@ -1,12 +1,12 @@
-<%-- 
-    Document   : input
-    Created on : 9 Sep, 2019, 2:06:19 PM
-    Author     : apogee
+<%--
+    Document   : manufacturer
+    Created on : Jan 7, 2019, 12:52:04 PM
+    Author     : Shobha
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+    "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <link href="style/style1.css" type="text/css" rel="stylesheet" media="Screen"/>
@@ -15,34 +15,41 @@
 <script type="text/javascript" src="JS/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="JS/jquery.autocomplete.js"></script>
 
-
+  <link type="text/css" href="style/menu.css" rel="stylesheet"/>
 <script type="text/javascript" language="javascript">
     jQuery(function(){
-        $("#searchCommandName").autocomplete("SelectionCont.do", {
+        $("#manufacturer_name").autocomplete("DeviceCont.do", {
             extraParams: {
-                action1: function() { return "getCommand"}
+                action1: function() { return "getManufactureName"}
             }
         });
-//        $("#searchRule").autocomplete("ruleCont.do", {
-//            extraParams: {
-//                action1: function() { return "getRule"}
-//            }
-//        });
-        $("#command_name").autocomplete("SelectionCont.do", {
+        $("#device_type_name").autocomplete("DeviceCont.do", {
             extraParams: {
-                action1: function() { return "getCommand"}
+                action1: function() { return "getDeviceTypeName"}
             }
         });
-        $("#parameter").autocomplete("SelectionCont.do", {
+        $("#device_name").autocomplete("DeviceCont.do", {
             extraParams: {
-                action1: function() { return "getParameter"}
+                action1: function() { return "getDeviceName"}
             }
         });
-        $("#parameter_type").autocomplete("SelectionCont.do", {
+        $("#device_no").autocomplete("DeviceCont.do", {
             extraParams: {
-                action1: function() { return "getParameterType"}
+                action1: function() { return "getDeviceNo"},
+                action2: function() { return  $("#device_name").val();}
             }
         });
+        $("#searchManufactureName").autocomplete("DeviceCont.do", {
+            extraParams: {
+                action1: function() { return "getSearchManufactureName"}
+            }
+        });
+        $("#searchDeviceType").autocomplete("DeviceCont.do", {
+            extraParams: {
+                action1: function() { return "getSearchDeviceType"}
+            }
+        });
+
     });
 
     function setDefaultColor(noOfRowsTraversed, noOfColumns) {
@@ -54,10 +61,12 @@
     }
     function makeEditable(id) {
 
-        document.getElementById("command_name").disabled = false;
-        document.getElementById("parameter").disabled = false;
-        document.getElementById("parameter_type").disabled = false;
+        document.getElementById("manufacturer_name").disabled = false;
+         document.getElementById("device_type_name").disabled = false;
+         document.getElementById("device_name").disabled = false;
+         document.getElementById("device_no").disabled = false;
          document.getElementById("remark").disabled = false;
+
 
         document.getElementById("save").disabled = false;
 //        document.getElementById("revise").disabled =false;
@@ -67,8 +76,9 @@
         if(id === 'new') {
         //    document.getElementById("created_date").disabled = true;
            // document.getElementById("active").value ='';
+
             document.getElementById("message").innerHTML = "";      // Remove message
-            document.getElementById("command_name").focus();
+            document.getElementById("manufacturer_name").focus();
             $("#message").html("");
 
             //document.getElementById("revise").disabled = true;
@@ -77,7 +87,7 @@
             document.getElementById("save").disabled = false;
 
             setDefaultColor(document.getElementById("noOfRowsTraversed").value, 3);
-            document.getElementById("command_name").focus();
+
 
         }
         if(id === 'edit'){
@@ -101,14 +111,14 @@
     function verify() {
         var result;
         if(document.getElementById("clickedButton").value == 'Save' || document.getElementById("clickedButton").value == 'Save AS New' || document.getElementById("clickedButton").value == 'Revise'||document.getElementById("clickedButton").value == 'Delete') {
-            var division_name_m = document.getElementById("command").value;
+            var division_name_m = document.getElementById("division_name_m").value;
             var a=document.getElementById("active").value;
             //    alert(a);
             if(myLeftTrim(division_name_m).length == 0) {
 
                 // document.getElementById("message").innerHTML = "<td colspan='5' bgcolor='coral'><b>Organisation Type Name is required...</b></td>";
-                $("#message").html("<td colspan='5' bgcolor='coral'><b>command is required...</b></td>");
-                document.getElementById("command").focus();
+                $("#message").html("<td colspan='5' bgcolor='coral'><b>Ward No is required...</b></td>");
+                document.getElementById("division_name_m").focus();
                 return false; // code to stop from submitting the form2.
             }
 
@@ -134,7 +144,7 @@
     }
     function fillColumns(id) {
         var noOfRowsTraversed = document.getElementById("noOfRowsTraversed").value;
-        var noOfColumns =6;
+        var noOfColumns =7;
         var columnId = id;                              <%-- holds the id of the column being clicked, excluding the prefix t1c e.g. t1c3 (column 3 of table 1). --%>
         columnId = columnId.substring(3, id.length);    <%-- for e.g. suppose id is t1c3 we want characters after t1c i.e beginIndex = 3. --%>
         var lowerLimit, higherLimit;
@@ -149,11 +159,12 @@
         setDefaultColor(noOfRowsTraversed, noOfColumns);        // set default color of rows (i.e. of multiple coloumns).
         var t1id = "t1c";       // particular column id of table 1 e.g. t1c3.
 
-        document.getElementById("input_id").value= document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
-        document.getElementById("command_name").value = document.getElementById(t1id +(lowerLimit+2)).innerHTML;
-        document.getElementById("parameter").value = document.getElementById(t1id +(lowerLimit+3)).innerHTML;
-        document.getElementById("parameter_type").value = document.getElementById(t1id +(lowerLimit+4)).innerHTML;
-        document.getElementById("remark").value = document.getElementById(t1id +(lowerLimit+5)).innerHTML;
+        document.getElementById("device_id").value= document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
+        document.getElementById("manufacturer_name").value = document.getElementById(t1id +(lowerLimit+2)).innerHTML;
+        document.getElementById("device_type_name").value = document.getElementById(t1id +(lowerLimit+3)).innerHTML;
+        document.getElementById("device_name").value = document.getElementById(t1id +(lowerLimit+4)).innerHTML;
+        document.getElementById("device_no").value = document.getElementById(t1id +(lowerLimit+5)).innerHTML;
+        document.getElementById("remark").value = document.getElementById(t1id +(lowerLimit+6)).innerHTML;
 
         //       var b=  document.getElementById(t1id +(lowerLimit+8)).innerHTML;
         // alert(b);
@@ -195,6 +206,22 @@
 
         return window.open(url, window_name, window_features);
     }
+    
+    function goTo(type) {
+        if(type === "manufacturer") {
+            window.location.href = "ManufacturerCont.do";
+        }
+        if(type === "device_type") {
+            window.location.href = "DeviceTypeCont.do";
+        }
+        if(type === "device_name") {
+            window.location.href = "ModelCont.do";
+        }
+    }
+    
+    function goToDeviceMap() {
+        window.location.href="DeviceMapCont.do";
+    }
 
 </script>
 <style>
@@ -204,14 +231,19 @@ a:hover{
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Input Page</title>
+        <title>Command Page</title>
         <meta charset="utf-8">
 
     </head>
     <body>
+        
         <table align="center" cellpadding="0" cellspacing="0" class="main">
             <tr><td><%@include file="/layout/header.jsp" %></td></tr>
+<<<<<<< HEAD
             <tr>
+=======
+             <tr>
+>>>>>>> accf7f3c84098180c427bb90483ba4063db60523
                 <td><%@include file="/layout/menu.jsp" %> </td>
             </tr>
             <td>
@@ -220,21 +252,22 @@ a:hover{
                         <tr><td>
                                 <table align="center">
                                     <tr>
-                                        <td align="center" class="header_table" width="100%">Input</td>
+                                        <td align="center" class="header_table" width="100%">Device</td>
 
                                     </tr>
                                 </table>
                             </td></tr>
                         <tr>
                             <td> <div align="center">
-                                    <form name="form0" method="POST" action="InputCont.do">
+                                    <form name="form0" method="POST" action="DeviceCont.do">
                                         <table align="center" class="heading1" width="600">
-                                            <tr>                                               
-<!--                                                <td>Rule<input class="input" type="text" id="searchRule" name="searchRule" value="${searchRule}" size="20" ></td>-->
-                                                <td>Command Name<input class="input" type="text" id="searchCommandName" name="searchCommandName" value="${searchCommandName}" size="20" ></td>
-                                                <td><input class="button" type="submit" name="task" id="searchIn" value="Search"></td>
+                                            <tr>
+                                                <td>Manufacture Name<input class="input" type="text" id="searchManufactureName" name="searchManufactureName" value="${searchManufacturerName}" size="20" ></td>
+                                                <td>Device Type<input class="input" type="text" id="searchDeviceType" name="searchDeviceType" value="${searchDeviceTypeName}" size="20" ></td>
+                                               <td><input class="button" type="submit" name="task" id="searchIn" value="Search"></td>
                                                 <td><input class="button" type="submit" name="task" id="showAllRecords" value="Show All Records"></td>
-<!--                                                <td><input type="button" class="pdf_button" id="viewPdf" name="viewPdf" value="" onclick="displayMapList()"></td>-->
+                                                  <td><input class="button" type="button" name="task" id="nextPage" value="Next Page" onclick="goToDeviceMap()"></input></td>
+                                                <td><input type="button" class="pdf_button" id="viewPdf" name="viewPdf" value="" onclick="displayMapList()"></td>
                                             </tr>
                                         </table>
                                     </form></div>
@@ -242,29 +275,33 @@ a:hover{
                         </tr>
                         <tr>
                             <td align="center">
-                                <form name="form1" method="POST" action="InputCont.do">
+                                <form name="form1" method="POST" action="DeviceCont.do">
                                     <DIV class="content_div">
                                         <table id="table1" width="600"  border="1"  align="center" class="content">
                                             <tr>
                                                 <th class="heading">S.No.</th>
-                                                <th class="heading">Command</th>
-                                                <th class="heading">Parameter</th>
-                                                <th class="heading">Parameter Type</th>
+                                                <th class="heading">Manufacturer Name</th>
+                                                <th class="heading">Device Type</th>
+                                                <th class="heading">Model Name</th>
+                                                <th class="heading">Model No.</th>
+
                                                 <th class="heading">Remark</th>
                                             </tr>
                                             <!---below is the code to show all values on jsp page fetched from trafficTypeList of TrafficController     --->
-                                            <c:forEach var="input" items="${requestScope['inputList']}"  varStatus="loopCounter">
+                                            <c:forEach var="divisionTypeBean" items="${requestScope['divisionTypeList']}"  varStatus="loopCounter">
                                                 <tr  class="${loopCounter.index % 2 == 0 ? 'even': 'odd'}" >
                                                     <%--  <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">
                                                           <input type="hidden" id="status_type_id${loopCounter.count}" value="${statusTypeBean.status_type_id}">${lowerLimit - noOfRowsTraversed + loopCounter.count}
                                                           <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">${lowerLimit - noOfRowsTraversed + loopCounter.count}</td>
                                                       </td> --%>
-                                                    <td id="t1c${IDGenerator.uniqueID}" style="display:none"  size="20" onclick="fillColumns(id)">${input.input_id}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}" style="display:none" onclick="fillColumns(id)">${divisionTypeBean.device_id}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">${lowerLimit - noOfRowsTraversed + loopCounter.count}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${input.command_name}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${input.parameter}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${input.parameter_type}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${input.remark}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.manufacture_name}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.device_type_name}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.device_name}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.device_no}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${divisionTypeBean.remark}</td>
+
 
                                                 </tr>
                                             </c:forEach>
@@ -305,9 +342,12 @@ a:hover{
                                                 </td>
                                             </tr>
                                             <!--- These hidden fields "lowerLimit", and "noOfRowsTraversed" belong to form1 of table1. -->
+                                           <input type="hidden" name="manname" value="${manname}">
+                                            <input type="hidden" name="dname" value="${dname}">
                                             <input type="hidden" name="lowerLimit" value="${lowerLimit}">
                                             <input type="hidden" id="noOfRowsTraversed" name="noOfRowsTraversed" value="${noOfRowsTraversed}">
-                                            <input  type="hidden" id="searchCommandName" name="searchCommandName" value="${searchCommandName}" >                                          
+                                            <input  type="hidden" id="searchCityType" name="searchCityType" value="${searchCityType}" >
+                                            <input  type="hidden"  name="searchOperationName" value="${searchOperationName}" >
                                         </table></DIV>
                                 </form>
                             </td>
@@ -316,26 +356,37 @@ a:hover{
                         <tr>
                             <td align="center">
                                 <div>
-                                    <form name="form2" method="POST" action="InputCont.do" onsubmit="return verify()">
+                                    <form name="form2" method="POST" action="DeviceCont.do" onsubmit="return verify()">
                                         <table id="table2"  class="content" border="0"  align="center" width="600">
                                             <tr id="message">
                                                 <c:if test="${not empty message}">
                                                     <td colspan="2" bgcolor="${msgBgColor}"><b>Result: ${message}</b></td>
                                                 </c:if>
+                                                    
                                             </tr>
                                             <tr>
-                                                <th class="heading1">Command</th>
-                                                <td><input class="input" type="text" id="command_name" name="command_name" value="" size="40" disabled></td>
+                                                <th class="heading1">Manufacturer Name </th>
+
+                                                <td><input class="input" type="text" id="manufacturer_name" name="manufacturer_name" value="" size="40" disabled>
+                                                    <input  type="button"  name="create_new_manufacturer" value="Add" onclick="goTo('manufacturer')">
+                                                <input class="input" type="hidden" id="device_id" name="device_id" value="" ></td>
+                                            </tr>
+
+                                            <tr>
+                                                <th class="heading1">Device Type</th>
+                                                <td><input class="input" type="text" id="device_type_name" name="device_type_name" value="" size="40" disabled>
+                                                <input  type="button"  name="create_new_device_type" value="Add" onclick="goTo('device_type')"></td>
                                             </tr>
                                             <tr>
-                                                <th class="heading1">Parameter </th>
-                                                <td><input class="input" type="text" id="parameter" name="parameter" value="" size="40" disabled>
-                                                <input class="input" type="hidden" id="input_id" name="input_id" value="" ></td>
+                                                <th class="heading1">Model Name</th>
+                                                <td><input class="input" type="text" id="device_name" name="device_name" value="" size="40" disabled>
+                                                <input  type="button"  name="create_new_device_name" value="Add" onclick="goTo('device_name')"></td>
                                             </tr>
                                             <tr>
-                                                <th class="heading1">Parameter Type</th>
-                                                <td><input class="input" type="text" id="parameter_type" name="parameter_type" value="" size="40" disabled></td>
+                                                <th class="heading1">Model No.</th>
+                                                <td><input class="input" type="text" id="device_no" name="device_no" value="" size="40" disabled></td>
                                             </tr>
+
                                             <tr>
                                                 <th class="heading1">Remark</th>
                                                 <td><input class="input" type="text" id="remark" name="remark" value="" size="40" disabled></td>
@@ -358,7 +409,8 @@ a:hover{
                                             <input type="hidden" name="lowerLimit" value="${lowerLimit}">
                                             <input type="hidden" name="noOfRowsTraversed" value="${noOfRowsTraversed}">
                                             <input type="hidden" id="clickedButton" value="">
-                                            <input type="hidden"  name="searchCommandName" value="${searchCommandName}" >
+                                            <input type="hidden"  name="searchCityType" value="${searchCityType}" >
+                                            <input type="hidden"  name="searchOperationName" value="${searchOperationName}" >
                                         </table>
                                     </form>
                                 </div>
@@ -369,6 +421,17 @@ a:hover{
                 </DIV>
             </td>
             <tr><td><%@include file="/layout/footer.jsp" %></td> </tr>
+            <c:if test="${not empty confirmation}">
+                <script> 
+                    alert
+                    var confirmation = confirm("Do you want to add more devices");
+                    if(confirmation === true) {
+                        window.location.href="ModelTypeCont.do";
+                    } else {
+                        window.location.href = "DeviceMapCont.do";
+                    }
+                </script>
+            </c:if>
         </table>
 
 
@@ -376,5 +439,3 @@ a:hover{
 
     </body>
 </html>
-
-

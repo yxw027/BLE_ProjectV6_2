@@ -106,7 +106,7 @@ public class ManufacturerController extends HttpServlet {
                 System.out.println("Inserting values by model......");
                 int noOfRecordsAdded = manufacturerModel.insertRecord(manufacturerBean);
                 if(noOfRecordsAdded > 0){      
-                 request.getRequestDispatcher("/DeviceCont.do?task=''").forward(request, response);
+               //  request.getRequestDispatcher("/DeviceCont.do?task=''").forward(request, response);
                 }
             } else {
                 System.out.println("Update values by model........");

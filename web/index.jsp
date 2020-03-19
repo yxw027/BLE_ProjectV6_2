@@ -15,6 +15,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <script>
+            function goToDeviceMap4() {
+                window.location = "BaseRoverConfCont.do";
+            }
             function goToDeviceMap() {
                 window.location = "ModelTypeCont.do";
             }
@@ -109,11 +112,18 @@ a:hover{
                                     <button class="button" style="vertical-align:middle" type="button" value="device_registration_connection" name="device_registration_connection" onclick="goToDeviceMap3()" ><span> Device Registration Connection </span></button>
                                 </td>
                             </tr>
-                             
+                            
+                            
+                             <tr>
+                                <td align="center">
+                                    <button class="button" style="vertical-align:middle" type="button" value="base_rover_configuration" name="base_rover_configuration" onclick="goToDeviceMap4()" ><span> Base/Rover Configuration </span></button>
+                                </td>
+                            </tr>
                         </table>
                     </DIV>
                 </td>
             </tr>
+           
             <tr>
                 <td><%@include file="/layout/footer.jsp" %></td>
             </tr>

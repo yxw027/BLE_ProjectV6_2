@@ -207,8 +207,7 @@ public boolean reviseRecords(ModelBean modelBean){
                 modelBean.setModel_type(rset.getString("type"));
                  modelBean.setRemark(rset.getString("remark"));
                  modelBean.setDevice_address(rset.getString("device_address"));
-                    modelBean.setNo_of_module(rset.getInt("no_of_module"));
-                list.add(modelBean);
+modelBean.setNo_of_module(rset.getInt("no_of_module"));                list.add(modelBean);
             }
         } catch (Exception e) {
             System.out.println("Error: " + e);

@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DeviceMapController extends HttpServlet {
    
-    /**
+    /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
@@ -165,17 +165,29 @@ public class DeviceMapController extends HttpServlet {
          noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName,searchModelName);
 
          if (buttonAction.equals("Next")){
+<<<<<<< HEAD
+             searchManufacturerName=request.getParameter("manname");
+             searchDeviceTypeName=request.getParameter("dname");
+            // noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName);
+             
+         } // lowerLimit already has value such that it shows forward records, so do nothing here.
+         else if (buttonAction.equals("Previous")) {
+             searchManufacturerName=request.getParameter("manname");
+             searchDeviceTypeName=request.getParameter("dname");
+             //noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName);
+=======
               searchManufacturerName=request.getParameter("manname");
               searchDeviceTypeName=request.getParameter("dname");
               searchModelName=request.getParameter("modelname");
               noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName,searchModelName);
              
          } // lowerLimit already has value such that it shows forward records, so do nothing here.
-         else if (buttonAction.equals("Previous")) {
+         else if (buttonAction.equals("Previous")) { 
               searchManufacturerName=request.getParameter("manname");
               searchDeviceTypeName=request.getParameter("dname");
               searchModelName=request.getParameter("modelname");
               noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName,searchModelName);
+>>>>>>> accf7f3c84098180c427bb90483ba4063db60523
             int temp = lowerLimit - noOfRowsToDisplay - noOfRowsTraversed;
             if (temp < 0) {
                 noOfRowsToDisplay = lowerLimit - noOfRowsTraversed;
@@ -184,17 +196,27 @@ public class DeviceMapController extends HttpServlet {
                 lowerLimit = temp;
             }
         } else if (buttonAction.equals("First")) {
+<<<<<<< HEAD
+            searchManufacturerName=request.getParameter("manname");
+             searchDeviceTypeName=request.getParameter("dname");
+=======
              searchManufacturerName=request.getParameter("manname");
               searchDeviceTypeName=request.getParameter("dname");
               searchModelName=request.getParameter("modelname");
               //noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName,searchModelName);
-           
+>>>>>>> accf7f3c84098180c427bb90483ba4063db60523
+            
             lowerLimit = 0;
         } else if (buttonAction.equals("Last")) {
             searchManufacturerName=request.getParameter("manname");
+<<<<<<< HEAD
+             searchDeviceTypeName=request.getParameter("dname");
+            // noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName);
+=======
               searchDeviceTypeName=request.getParameter("dname");
               searchModelName=request.getParameter("modelname");
               noOfRowsInTable = deviceMapModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName,searchModelName);
+>>>>>>> accf7f3c84098180c427bb90483ba4063db60523
             lowerLimit = noOfRowsInTable - noOfRowsToDisplay;
             if (lowerLimit < 0) {
                 lowerLimit = 0;
@@ -229,9 +251,15 @@ public class DeviceMapController extends HttpServlet {
         request.setAttribute("device_type", request.getParameter("device_type"));
         request.setAttribute("deviceName", request.getParameter("device_name"));
         request.setAttribute("device_no", request.getParameter("device_no"));
+<<<<<<< HEAD
+request.setAttribute("manname", searchManufacturerName);
+request.setAttribute("dname", searchDeviceTypeName);
+  
+=======
         request.setAttribute("manname", searchManufacturerName);
         request.setAttribute("dname", searchDeviceTypeName);
         request.setAttribute("modelname", searchModelName);  
+>>>>>>> accf7f3c84098180c427bb90483ba4063db60523
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("searchManufacturerName",searchManufacturerName );
         request.setAttribute("searchDeviceTypeName",searchDeviceTypeName );
@@ -239,10 +267,10 @@ public class DeviceMapController extends HttpServlet {
         request.setAttribute("message", deviceMapModel.getMessage());
         request.setAttribute("msgBgColor", deviceMapModel.getMsgBgColor());
         request.getRequestDispatcher("/device_map").forward(request, response);
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
      * @param response servlet response
@@ -253,9 +281,9 @@ public class DeviceMapController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
-    }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
      * @param request servlet request
      * @param response servlet response
@@ -268,7 +296,7 @@ public class DeviceMapController extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
      * @return a String containing servlet description
      */

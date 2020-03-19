@@ -108,14 +108,14 @@ public class ResponseModel {
     
     public List<String> getSearchCommand(String q) {
         List<String> list = new ArrayList<String>();
-        String query = " select command from command "
-                       +" where active='Y' group by command order by command desc ";
+        String query = " select remark from command "
+                       +" where active='Y' group by remark order by remark desc ";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
             q = q.trim();
             while (rset.next()) {    // move cursor from BOR to valid record.
-                String command = rset.getString("command");
+                String command = rset.getString("remark");
                 if (command.toUpperCase().startsWith(q.toUpperCase())) {
                     list.add(command);
                     count++;
@@ -270,7 +270,7 @@ public class ResponseModel {
     }
     
     public int getCommandId(String command_type) {
-        String query = " select ct.id from command ct where ct.command='"+command_type+"'";
+        String query = " select ct.id from command ct where ct.remark='"+command_type+"'";
         int operation_name_id = 0;
         try {
             PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query);
@@ -319,7 +319,7 @@ public class ResponseModel {
 
 
        String query2="select c.id as command_id,c.command, "
-        +" r.response,r.response_id,r.remark,r.fixed_response,r.format, r.variable_response, r.bitwise_response, r.data_extract_type "
+        +" r.response,r.response_id,r.remark,r.fixed_response,r.format, r.variable_response, r.bitwise_response, r.data_extract_type,c.remark "
         +" from command c,response r "
         +" where c.id = r.command_id "
         +" and IF('" + searchResponse + "' = '', response LIKE '%%',response =?) "
@@ -347,7 +347,8 @@ public class ResponseModel {
                 response.setVariable_response(rset.getInt("variable_response"));
                 response.setBitwise_response(rset.getInt("bitwise_response"));
                 response.setData_extract_type(rset.getString("data_extract_type"));
-
+                response.setShorthand(rset.getString("c.remark"));
+       
                 responseList.add(response);
             }
         } catch (Exception e) {

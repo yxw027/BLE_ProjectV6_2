@@ -226,6 +226,8 @@ a:hover{
                                     <tr>
                                         <td align='center' colspan="2">
                                             <input class="button" type="submit" name="task" id="send" value="send" onclick="setStatus(id)">
+                                             <input type="hidden" value="${device_id}" name="d_id">
+                                              <input type="hidden" value="${reg_no1}" name="reg_no1">
                                         </td>
                                     </tr>
 

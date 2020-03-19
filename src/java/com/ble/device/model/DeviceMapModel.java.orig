@@ -5,17 +5,13 @@
  */
 package com.ble.device.model;
 
-import com.ble.command.model.DeviceOperationCommandModel;
 import com.ble.device.bean.DeviceMapBean;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -28,7 +24,6 @@ public class DeviceMapModel {
     private String connectionString;
     private String db_username;
     private String db_password;
-   
     private String message;
     private String msgBgColor;
     private final String COLOR_OK = "yellow";
@@ -243,7 +238,6 @@ public class DeviceMapModel {
                 + " values(?,?,?,?,?,?) ";
         int updateRowsAffected = 0;
         try {
-             connection.setAutoCommit(false);
             PreparedStatement ps = (PreparedStatement) connection.prepareStatement(query1);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -264,19 +258,13 @@ public class DeviceMapModel {
                     psmt.setString(6, "Y");
 
                     int a = psmt.executeUpdate();
-                 if (a > 0) {
-                        connection.commit();
+                    if (a > 0) {
                         status = true;
-                    }else {
-                    connection.rollback();
                     }
                 }
             }
         } catch (Exception e) {
             System.out.println("CommandModel reviseRecord() Error: " + e);
-        }finally{
-         
-         
         }
         if (status) {
             message = "Record updated successfully......";
@@ -306,7 +294,7 @@ public class DeviceMapModel {
                 + " AND IF('" + searchManufacturerName + "' = '', m.name LIKE '%%',m.name =?) "
                  + " AND IF('" + searchModelName + "' = '', mo1.device_name LIKE '%%',mo1.device_name =?) "
                 + " AND IF('" + searchDeviceTypeName + "' = '', dt.type LIKE '%%',dt.type =?) ";
-        getConnection();
+
         int noOfRows = 0;
         try {
             PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
@@ -332,7 +320,7 @@ public class DeviceMapModel {
             addQuery = "";
         }
 
-//      
+//       
 //        String query2 = " SELECT dm.device_map_id as device_map_id, dm.finished_device_id as finished_device_id,m.name as finished_manufacturer_name, mo.device_name as finished_model_name, mo.device_no as finished_model_number, "
 //                + " dt.type as finished_device_type, dm.module_device_id as module_device_id,m1.name as module_manufacturer_name, mo1.device_name as module_model_name, mo1.device_no as module_model_number, dt1.type as module_device_type, dm.remark  FROM device_map dm, device d, device d1, device d2, manufacturer m, model mo, device_type dt, manufacturer m1, model mo1, device_type dt1, manufacturer m2, model mo2, device_type dt2 "
 //                + " where dm.finished_device_id = d.id "
@@ -350,7 +338,11 @@ public class DeviceMapModel {
                 + " and dm.active = 'Y' and d.active = 'Y' and m.active = 'Y' and dt.active = 'Y' and mo.active = 'Y' and d1.active = 'Y' and m1.active = 'Y' and dt1.active = 'Y' and mo1.active = 'Y' "
                 + " AND IF('" + searchManufacturerName + "' = '', m.name LIKE '%%',m.name =?) "
                 + " AND IF('" + searchDeviceTypeName + "' = '', dt.type LIKE '%%',dt.type =?) "
+<<<<<<< HEAD
+//                  + " AND IF('" + searchModelName + "' = '', mo1.device_name LIKE '%%',mo1.device_name =?) "
+=======
                  + " AND IF('" + searchModelName + "' = '', mo1.device_name LIKE '%%',mo1.device_name =?) "
+>>>>>>> accf7f3c84098180c427bb90483ba4063db60523
                 + addQuery;
 
         try {
