@@ -138,8 +138,14 @@ public class CommandTypeController extends HttpServlet {
 
          noOfRowsInTable = commandTypeModel.getNoOfRows(searchCommandType);
 
-         if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
+         if (buttonAction.equals("Next")){
+             searchCommandType=request.getParameter("manname");
+           noOfRowsInTable = commandTypeModel.getNoOfRows(searchCommandType);
+             
+         } // lowerLimit already has value such that it shows forward records, so do nothing here.
          else if (buttonAction.equals("Previous")) {
+              searchCommandType=request.getParameter("manname");
+           noOfRowsInTable = commandTypeModel.getNoOfRows(searchCommandType);
             int temp = lowerLimit - noOfRowsToDisplay - noOfRowsTraversed;
             if (temp < 0) {
                 noOfRowsToDisplay = lowerLimit - noOfRowsTraversed;
@@ -148,8 +154,12 @@ public class CommandTypeController extends HttpServlet {
                 lowerLimit = temp;
             }
         } else if (buttonAction.equals("First")) {
+             searchCommandType=request.getParameter("manname");
+           //noOfRowsInTable = commandTypeModel.getNoOfRows(searchCommandType);
             lowerLimit = 0;
         } else if (buttonAction.equals("Last")) {
+             searchCommandType=request.getParameter("manname");
+           noOfRowsInTable = commandTypeModel.getNoOfRows(searchCommandType);
             lowerLimit = noOfRowsInTable - noOfRowsToDisplay;
             if (lowerLimit < 0) {
                 lowerLimit = 0;
@@ -180,7 +190,7 @@ public class CommandTypeController extends HttpServlet {
 
         System.out.println("color is :" + commandTypeModel.getMsgBgColor());
       
-
+ request.setAttribute("manname", searchCommandType);
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("searchCommandType",searchCommandType );
         request.setAttribute("message", commandTypeModel.getMessage());

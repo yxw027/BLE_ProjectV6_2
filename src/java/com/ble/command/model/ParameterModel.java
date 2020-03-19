@@ -206,17 +206,18 @@ public class ParameterModel {
     
     public List<String> getParameterName(String q) {
         List<String> list = new ArrayList<String>();
-        String query = "select parameter_name from parameter where active='y' order by parameter_id desc;";
+        String query = "select distinct parameter_name from parameter where active='y' order by parameter_id desc;";
+        int count = 0;
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
-            int count = 0;
+          
             while (rset.next()) {    
                 String type = rset.getString("parameter_name");      
-                if (type.toUpperCase().startsWith(q.toUpperCase())) {
+               
                     list.add(type);
-                    count++;
-                }
-                         
+                       count++; 
+              
+                     
                 
             }
             if (count == 0) {

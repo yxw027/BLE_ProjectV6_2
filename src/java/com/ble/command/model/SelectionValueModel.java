@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -144,6 +145,7 @@ public class SelectionValueModel {
 
         int updateRowsAffected = 0;
         try {
+             connection.setAutoCommit(false);
             PreparedStatement ps = (PreparedStatement) connection.prepareStatement(query1);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -164,13 +166,20 @@ public class SelectionValueModel {
                     psmt.setString(7, "Y");
 
                     int a = psmt.executeUpdate();
-                    if (a > 0) {
+                     if (a > 0) {
+                        connection.commit();
                         status = true;
+                    }else {
+                    connection.rollback();
                     }
                 }
             }
         } catch (Exception e) {
             System.out.println("CommandValueModel reviseRecord() Error: " + e);
+        }finally{
+        if(connection!=null){
+           
+        }
         }
         if (status) {
             message = "Record updated successfully......";

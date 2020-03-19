@@ -570,6 +570,8 @@ a:hover{
                                             <input type="hidden" id="clickedButton" value="">
                                             <input type="hidden"  name="searchCityType" value="${searchCityType}" >
                                             <input type="hidden"  name="searchDivisionType" value="${searchDivisionType}" >
+                                            
+                                            <input type="hidden" name="manname" value="${manname}">
                                         </table>
                                     </form>
                                 </div>

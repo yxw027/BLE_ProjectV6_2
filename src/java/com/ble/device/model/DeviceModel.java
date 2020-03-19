@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,7 +131,7 @@ public boolean reviseRecords(DeviceBean deviceBean){
     int manufacture_id=getManufactureId(deviceBean.getManufacture_name());
     int device_type_id = getDeviceTypeId(deviceBean.getDevice_type_name());
     int model_id = getModelId(deviceBean.getDevice_name(),deviceBean.getDevice_no());
-
+PreparedStatement ps=null;
 
       String query1 = " SELECT max(revision_no) revision_no FROM device c WHERE c.id = "+deviceBean.getDevice_id()+" && active='Y' ORDER BY revision_no DESC";
       String query2 = " UPDATE device SET active=? WHERE id = ? && revision_no = ? ";
@@ -138,34 +139,47 @@ public boolean reviseRecords(DeviceBean deviceBean){
 
       int updateRowsAffected = 0;
       try {
-           PreparedStatement ps=(PreparedStatement) connection.prepareStatement(query1);
+          connection.setAutoCommit(false);
+          ps=(PreparedStatement) connection.prepareStatement(query1);
            ResultSet rs = ps.executeQuery();
            if(rs.next()){
-           PreparedStatement pst = (PreparedStatement) connection.prepareStatement(query2);
-           pst.setString(1,  "N");
-           pst.setInt(2,deviceBean.getDevice_id());
-           pst.setInt(3, rs.getInt("revision_no"));
-           updateRowsAffected = pst.executeUpdate();
+            ps = (PreparedStatement) connection.prepareStatement(query2);
+           ps.setString(1,  "N");
+           ps.setInt(2,deviceBean.getDevice_id());
+           ps.setInt(3, rs.getInt("revision_no"));
+           updateRowsAffected = ps.executeUpdate();
              if(updateRowsAffected >= 1){
              int rev = rs.getInt("revision_no")+1;
-             PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3);
-             psmt.setInt(1,deviceBean.getDevice_id());
-             psmt.setInt(2,manufacture_id);
-             psmt.setInt(3,device_type_id);
-             psmt.setInt(4,model_id);
-             psmt.setString(5,deviceBean.getRemark());
-             psmt.setInt(6,rev);
-             psmt.setString(7,"Y");
+              ps = (PreparedStatement) connection.prepareStatement(query3);
+             ps.setInt(1,deviceBean.getDevice_id());
+             ps.setInt(2,manufacture_id);
+             ps.setInt(3,device_type_id);
+             ps.setInt(4,model_id);
+             ps.setString(5,deviceBean.getRemark());
+             ps.setInt(6,rev);
+             ps.setString(7,"Y");
 
-             int a = psmt.executeUpdate();
-              if(a > 0)
-              status=true;
+             int a = ps.executeUpdate();
+               if (a > 0) {
+                        connection.commit();
+                        status = true;
+                    }else {
+                    connection.rollback();
+                    }
              }
            }
           } catch (Exception e)
              {
               System.out.println("CommandModel reviseRecord() Error: " + e);
              }
+      finally{
+        try {
+            ps.close();
+          //  connection.setAutoCommit(true);
+        } catch (SQLException ex) {
+             
+        }
+      }
       if (status) {
              message = "Record updated successfully......";
             msgBgColor = COLOR_OK;

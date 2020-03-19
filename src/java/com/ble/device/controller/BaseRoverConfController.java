@@ -60,7 +60,7 @@ public class BaseRoverConfController extends HttpServlet {
         String device_name="";
         String DGPS_operation="";
         String device_no="";
-         List<String> list = null;
+        List<String> list = null;
         List<String> commandlist=null;
         List<String> finalcmdlist=null;
         String task = request.getParameter("task");
@@ -259,7 +259,7 @@ public class BaseRoverConfController extends HttpServlet {
              
              //NEW FINAL LIST
               
-             List<String>  cmdlist= new ArrayList<>(finalcmdlist.size() + opnbean.size());
+               List<String>  cmdlist= new ArrayList<>(finalcmdlist.size() + opnbean.size());
                cmdlist.addAll(finalcmdlist);
                cmdlist.addAll(opnbean);
              System.out.println("size"+cmdlist.size());

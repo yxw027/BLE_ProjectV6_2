@@ -90,6 +90,7 @@
             </tr>
         </table>
         <script type="text/javascript" language="javascript">
+ 
 
 
 
@@ -110,7 +111,7 @@
 
             function addRow(tableID, selection_value_no,parameter,selection_id) {
                 debugger;
-
+ 
                 $("#message").html("");
                 var table = document.getElementById(tableID);
 
@@ -226,16 +227,13 @@
     function disableButton(){
      var no=document.getElementById("selection_value_no").value;
        var rowno=document.getElementById("rowno").value;
-       alert(no+"vvvvvvvvvvvv"+rowno);
-       if(no===rowno){
+      // alert(no+"vvvvvvvvvvvv"+rowno);
+       if(rowno>=no){
            	document.getElementById("save").disabled = true;
        }
    
 	}
-
-
-
-
+ 
         </script>
 <style>
 a:hover{

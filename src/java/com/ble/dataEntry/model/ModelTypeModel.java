@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,39 +69,50 @@ public boolean reviseRecords(ModelTypeBean modelTypeBean){
     boolean status=false;
     String query="";
     int rowsAffected=0;
-
+        PreparedStatement ps=null;
       String query1 = " SELECT max(revision_no) revision_no FROM modal_type c WHERE c.id = "+modelTypeBean.getModel_type_id()+" && active='Y' ORDER BY revision_no DESC";
       String query2 = " UPDATE modal_type SET active=? WHERE id = ? && revision_no = ? ";
       String query3 = " INSERT INTO modal_type (id,type,remark,revision_no,active) VALUES (?,?,?,?,?) ";
 
       int updateRowsAffected = 0;
       try {
-           PreparedStatement ps=(PreparedStatement) connection.prepareStatement(query1);
+          connection.setAutoCommit(false);
+           ps=(PreparedStatement) connection.prepareStatement(query1);
            ResultSet rs = ps.executeQuery();
            if(rs.next()){
-           PreparedStatement pst = (PreparedStatement) connection.prepareStatement(query2);
-           pst.setString(1,  "N");
-           pst.setInt(2,modelTypeBean.getModel_type_id());
-           pst.setInt(3, rs.getInt("revision_no"));
-           updateRowsAffected = pst.executeUpdate();
+       ps= (PreparedStatement) connection.prepareStatement(query2);
+           ps.setString(1,  "N");
+           ps.setInt(2,modelTypeBean.getModel_type_id());
+           ps.setInt(3, rs.getInt("revision_no"));
+           updateRowsAffected = ps.executeUpdate();
              if(updateRowsAffected >= 1){
              int rev = rs.getInt("revision_no")+1;
-             PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3);
-             psmt.setInt(1,modelTypeBean.getModel_type_id());
-             psmt.setString(2,modelTypeBean.getType());
-             psmt.setString(3,modelTypeBean.getRemark());
-             psmt.setInt(4,rev);
-             psmt.setString(5,"Y");
+            ps = (PreparedStatement) connection.prepareStatement(query3);
+             ps.setInt(1,modelTypeBean.getModel_type_id());
+             ps.setString(2,modelTypeBean.getType());
+             ps.setString(3,modelTypeBean.getRemark());
+             ps.setInt(4,rev);
+             ps.setString(5,"Y");
 
-             int a = psmt.executeUpdate();
-              if(a > 0)
-              status=true;
+             int a = ps.executeUpdate();
+             if (a > 0) {
+                        connection.commit();
+                        status = true;
+                    }else {
+                    connection.rollback();
+                    }
              }
            }
           } catch (Exception e)
              {
               System.out.println("CommandModel reviseRecord() Error: " + e);
-             }
+             }finally{
+        try {
+            ps.close();
+        } catch (SQLException ex) {
+             
+        }
+      }
       if (status) {
              message = "Record updated successfully......";
             msgBgColor = COLOR_OK;

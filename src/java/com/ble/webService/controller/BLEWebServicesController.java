@@ -30,7 +30,7 @@ import org.json.simple.JSONObject;
 
 @Path("/")
 public class BLEWebServicesController {
-     public static String deviceResponse="A";
+     public static String deviceResponse="startpacket";
     @Resource
     WebServiceContext wsContext;  
     
@@ -100,6 +100,45 @@ public class BLEWebServicesController {
         return obj;
     }    
 
+     @POST
+    @Path("/getdeviceRecords")
+    @Produces(MediaType.APPLICATION_JSON)//http://192.168.1.15:8084/BLE_Project/resources/getdeviceRecords
+    @Consumes(MediaType.APPLICATION_JSON)
+    public JSONObject sendRecords(String dataString) {
+        JSONObject obj = new JSONObject();
+        BLEWebServicesModel bLEWebServicesModel = new BLEWebServicesModel();
+        try{
+       
+        bLEWebServicesModel.setConnection();
+        //JSONObject obj = new JSONObject();
+        JSONArray json = null;
+
+       
+        json = bLEWebServicesModel.getModelTypedata();
+         obj.put("modal_type", json);
+         json = bLEWebServicesModel.getModeldata();
+         obj.put("model", json);
+       
+         json = bLEWebServicesModel.getDevicedata();
+         obj.put("device", json);
+          
+         json = bLEWebServicesModel.getService();
+         obj.put("servicies", json);
+         json = bLEWebServicesModel.getCharachtersticdata();
+         obj.put("charachtristics", json);
+         
+         json = bLEWebServicesModel.getBleOperationNamedata();
+         obj.put("ble_operation_map", json);
+         
+        }catch(Exception e){
+            System.out.println("Error in BLEWebServices 'requestData' url calling getWardData()..."+e);
+        }
+        return obj;
+    }    
+
+    
+    
+    
     @POST
     @Path("/deviceRegRecords")
     @Produces(MediaType.APPLICATION_JSON)//http://192.168.1.15:8084/BLE_Project/resources/getAllTableRecords

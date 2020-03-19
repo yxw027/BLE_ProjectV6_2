@@ -214,8 +214,8 @@ public class DeviceRegistrationController extends HttpServlet {
         request.setAttribute("device_type", request.getParameter("device_type"));
         request.setAttribute("deviceName", request.getParameter("device_name"));
         request.setAttribute("device_no", request.getParameter("device_no"));
-request.setAttribute("manname", searchManufacturerName);
-request.setAttribute("dname", searchDeviceTypeName);
+        request.setAttribute("manname", searchManufacturerName);
+        request.setAttribute("dname", searchDeviceTypeName);
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("searchManufacturerName",searchManufacturerName );
         request.setAttribute("searchDeviceTypeName",searchDeviceTypeName );

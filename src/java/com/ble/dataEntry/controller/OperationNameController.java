@@ -146,8 +146,14 @@ public class OperationNameController extends HttpServlet {
 
          noOfRowsInTable = operationNameModel.getNoOfRows(searchOperationName);
 
-         if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
+         if (buttonAction.equals("Next")){
+             searchOperationName=request.getParameter("manname");
+             
+             noOfRowsInTable = operationNameModel.getNoOfRows(searchOperationName);
+         }// lowerLimit already has value such that it shows forward records, so do nothing here.
          else if (buttonAction.equals("Previous")) {
+               searchOperationName=request.getParameter("manname");
+              noOfRowsInTable = operationNameModel.getNoOfRows(searchOperationName);
             int temp = lowerLimit - noOfRowsToDisplay - noOfRowsTraversed;
             if (temp < 0) {
                 noOfRowsToDisplay = lowerLimit - noOfRowsTraversed;
@@ -156,8 +162,13 @@ public class OperationNameController extends HttpServlet {
                 lowerLimit = temp;
             }
         } else if (buttonAction.equals("First")) {
+              searchOperationName=request.getParameter("manname");
+              
+             // noOfRowsInTable = operationNameModel.getNoOfRows(searchOperationName);
             lowerLimit = 0;
         } else if (buttonAction.equals("Last")) {
+              searchOperationName=request.getParameter("manname");
+               noOfRowsInTable = operationNameModel.getNoOfRows(searchOperationName);
             lowerLimit = noOfRowsInTable - noOfRowsToDisplay;
             if (lowerLimit < 0) {
                 lowerLimit = 0;
@@ -191,7 +202,7 @@ public class OperationNameController extends HttpServlet {
         request.setAttribute("device_type", request.getParameter("device_type"));
         request.setAttribute("deviceName", request.getParameter("device_name"));
         request.setAttribute("device_no", request.getParameter("device_no"));
-
+        request.setAttribute("manname", searchOperationName);
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("searchOperationName",searchOperationName );
         request.setAttribute("message", operationNameModel.getMessage());

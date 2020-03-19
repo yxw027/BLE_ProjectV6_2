@@ -85,7 +85,7 @@ public class SelectionValueController extends HttpServlet {
 
         noOfRowsInTable = selectionValueModel.getNoOfRows(searchSelectionName);
         int sno=Integer.parseInt(selection_value_no);
-         int noOfRows = selectionValueModel.getNoOfRowscount(selection_id,sno);
+        int noOfRows = 0;
 //        String buttonAction = request.getParameter("buttonAction"); // Holds the name of any of the four buttons: First, Previous, Next, Delete.
 //        if (buttonAction == null) {
 //            buttonAction = "none";
@@ -141,6 +141,7 @@ public class SelectionValueController extends HttpServlet {
                     if (selection_value_id == 0) {
                         System.out.println("Inserting values by model......");
                         selectionValueModel.insertRecord(selectionValuebean);
+                         noOfRows = selectionValueModel.getNoOfRowscount(selection_id,sno);
                     } else {
                         System.out.println("Update values by model........");
                         selectionValueModel.reviseRecords(selectionValuebean);

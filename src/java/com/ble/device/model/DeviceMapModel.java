@@ -5,13 +5,17 @@
  */
 package com.ble.device.model;
 
+import com.ble.command.model.DeviceOperationCommandModel;
 import com.ble.device.bean.DeviceMapBean;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,6 +28,7 @@ public class DeviceMapModel {
     private String connectionString;
     private String db_username;
     private String db_password;
+    
     private String message;
     private String msgBgColor;
     private final String COLOR_OK = "yellow";
@@ -225,7 +230,7 @@ public class DeviceMapModel {
         boolean status = false;
         String query = "";
         int rowsAffected = 0;
-
+PreparedStatement ps =null;
         int finished_device_id = getFinishedDeviceId(deviceMapBean.getFinished_manufacture_name(), deviceMapBean.getFinished_device_type(), deviceMapBean.getFinished_model_name());
         int module_device_id = getModuleDeviceId(deviceMapBean.getModule_manufacture_name(), deviceMapBean.getModule_device_type(), deviceMapBean.getModule_model_name());
 //        int ble_device_id = getBleDeviceId(deviceMapBean.getBle_manufacture_name(),deviceMapBean.getBle_device_type(), deviceMapBean.getBle_model_name());
@@ -238,34 +243,47 @@ public class DeviceMapModel {
                 + " values(?,?,?,?,?,?) ";
         int updateRowsAffected = 0;
         try {
-            PreparedStatement ps = (PreparedStatement) connection.prepareStatement(query1);
+             connection.setAutoCommit(false);
+             
+         ps = (PreparedStatement) connection.prepareStatement(query1);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                PreparedStatement pst = (PreparedStatement) connection.prepareStatement(query2);
-                pst.setString(1, "N");
-                pst.setInt(2, deviceMapBean.getDevice_map_id());
-                pst.setInt(3, rs.getInt("revision_no"));
-                updateRowsAffected = pst.executeUpdate();
+                 ps = (PreparedStatement) connection.prepareStatement(query2);
+                ps.setString(1, "N");
+                ps.setInt(2, deviceMapBean.getDevice_map_id());
+                ps.setInt(3, rs.getInt("revision_no"));
+                updateRowsAffected = ps.executeUpdate();
                 if (updateRowsAffected >= 1) {
                     int rev = rs.getInt("revision_no") + 1;
-                    PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3);
-                    psmt.setInt(1, deviceMapBean.getDevice_map_id());
-                    psmt.setInt(2, finished_device_id);
-                    psmt.setInt(3, module_device_id);
+                     ps = (PreparedStatement) connection.prepareStatement(query3);
+                    ps.setInt(1, deviceMapBean.getDevice_map_id());
+                    ps.setInt(2, finished_device_id);
+                    ps.setInt(3, module_device_id);
 //                    psmt.setInt(4, ble_device_id);
-                    psmt.setString(4, deviceMapBean.getRemark());
-                    psmt.setInt(5, rev);
-                    psmt.setString(6, "Y");
+                    ps.setString(4, deviceMapBean.getRemark());
+                    ps.setInt(5, rev);
+                    ps.setString(6, "Y");
 
-                    int a = psmt.executeUpdate();
-                    if (a > 0) {
+                    int a = ps.executeUpdate();
+                 if (a > 0) {
+                        connection.commit();
                         status = true;
+                    }else {
+                    connection.rollback();
                     }
                 }
             }
         } catch (Exception e) {
             System.out.println("CommandModel reviseRecord() Error: " + e);
+        }finally{
+           try {
+            ps.close();
+          //  connection.setAutoCommit(true);
+        } catch (SQLException ex) {
+             
         }
+         
+        } 
         if (status) {
             message = "Record updated successfully......";
             msgBgColor = COLOR_OK;
@@ -294,7 +312,7 @@ public class DeviceMapModel {
                 + " AND IF('" + searchManufacturerName + "' = '', m.name LIKE '%%',m.name =?) "
                  + " AND IF('" + searchModelName + "' = '', mo1.device_name LIKE '%%',mo1.device_name =?) "
                 + " AND IF('" + searchDeviceTypeName + "' = '', dt.type LIKE '%%',dt.type =?) ";
-
+        getConnection();
         int noOfRows = 0;
         try {
             PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);

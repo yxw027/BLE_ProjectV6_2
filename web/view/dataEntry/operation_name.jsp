@@ -350,6 +350,7 @@
                                             <input type="hidden" id="noOfRowsTraversed" name="noOfRowsTraversed" value="${noOfRowsTraversed}">
                                             <input  type="hidden" id="searchCityType" name="searchCityType" value="${searchCityType}" >
                                             <input  type="hidden"  name="searchOperationName" value="${searchOperationName}" >
+                                             <input type="hidden" name="manname" value="${manname}">
                                         </table></DIV>
                                 </form>
                             </td>
@@ -402,7 +403,7 @@
 <!--                                                    <input class="button"  type="button"  id="add" name="addChild" value="Add" onclick="generate_table(id)"></td>-->
                                                     
                                             </tr>
-
+  
                                             <tr>
                                                 <td align='center' colspan="2">
                                                     <input class="button" type="button" name="edit" id="edit" value="Edit" onclick="makeEditable(id)" disabled>
@@ -419,9 +420,11 @@
                                             <input type="hidden" name="active" id="active" value="">
                                             <input type="hidden" name="lowerLimit" value="${lowerLimit}">
                                             <input type="hidden" name="noOfRowsTraversed" value="${noOfRowsTraversed}">
+                                           
                                             <input type="hidden" id="clickedButton" value="">
                                             <input type="hidden"  name="searchCityType" value="${searchCityType}" >
                                             <input type="hidden"  name="searchOperationName" value="${searchOperationName}" >
+                                           
                                         </table>
                                     </form>
                                 </div>

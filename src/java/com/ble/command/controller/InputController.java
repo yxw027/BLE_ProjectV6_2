@@ -71,14 +71,14 @@ public class InputController extends HttpServlet {
         System.out.println("searching.......... " + searchCommandName);
 
          noOfRowsInTable = inputModel.getNoOfRows(searchCommandName);
-        
+      
         try {
             lowerLimit = Integer.parseInt(request.getParameter("lowerLimit"));
             noOfRowsTraversed = Integer.parseInt(request.getParameter("noOfRowsTraversed"));
         } catch (Exception e) {
             lowerLimit = noOfRowsTraversed = 0;
         }
-        
+        int noofrow=0;
         List<InputBean> inputList = inputModel.showData(lowerLimit, noOfRowsToDisplay,searchCommandName);
         lowerLimit = lowerLimit + inputList.size();
         noOfRowsTraversed = inputList.size();
@@ -130,7 +130,9 @@ public class InputController extends HttpServlet {
                     bean.setRemark(request.getParameter("remark"+i));
                     if (input_id == 0) {
                         System.out.println("Inserting values by model......");
-                        inputModel.insertRecord(bean);
+                        inputModel.insertRecord(bean); 
+                        noofrow=inputModel.getNoOfRowscount(command_id,input_no);
+                        
                     } else {
                         System.out.println("Update values by model........");
                         inputModel.reviseRecords(bean);
@@ -146,6 +148,7 @@ public class InputController extends HttpServlet {
                 if (input_id == 0) {
                     System.out.println("Inserting values by model......");
                     inputModel.insertRecord(bean);
+                   
                 } else {
                     System.out.println("Update values by model........");
                     inputModel.reviseRecords(bean);
@@ -195,12 +198,15 @@ public class InputController extends HttpServlet {
 
         System.out.println("color is :" + inputModel.getMsgBgColor());
         
-        
+         
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("message", inputModel.getMessage());
         request.setAttribute("msgBgColor", inputModel.getMsgBgColor());
         if (input_no != null) {
             request.setAttribute("input_no", input_no);
+             request.setAttribute("row_no", noofrow);
+            
+            
             String command = inputModel.getCommandNameByCommand_id(Integer.parseInt(command_id));
             int length = command.length();
             request.setAttribute("command", command);

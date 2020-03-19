@@ -130,8 +130,14 @@ public class ParameterController extends HttpServlet {
 
         noOfRowsInTable = parameterModel.getNoOfRows(searchCommandName);
 
-        if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
+        if (buttonAction.equals("Next")){
+             searchCommandName=request.getParameter("manname");
+              noOfRowsInTable = parameterModel.getNoOfRows(searchCommandName);
+             
+         } // lowerLimit already has value such that it shows forward records, so do nothing here.
         else if (buttonAction.equals("Previous")) {
+             searchCommandName=request.getParameter("manname");
+              noOfRowsInTable = parameterModel.getNoOfRows(searchCommandName);
             int temp = lowerLimit - noOfRowsToDisplay - noOfRowsTraversed;
             if (temp < 0) {
                 noOfRowsToDisplay = lowerLimit - noOfRowsTraversed;
@@ -140,8 +146,12 @@ public class ParameterController extends HttpServlet {
                 lowerLimit = temp;
             }
         } else if (buttonAction.equals("First")) {
+             searchCommandName=request.getParameter("manname");
+              
             lowerLimit = 0;
         } else if (buttonAction.equals("Last")) {
+             searchCommandName=request.getParameter("manname");
+              noOfRowsInTable = parameterModel.getNoOfRows(searchCommandName);
             lowerLimit = noOfRowsInTable - noOfRowsToDisplay;
             if (lowerLimit < 0) {
                 lowerLimit = 0;
@@ -177,7 +187,7 @@ public class ParameterController extends HttpServlet {
         request.setAttribute("device_no", request.getParameter("device_no"));
         //request.setAttribute("operationName", request.getParameter("operation_name"));
         //request.setAttribute("commandName", request.getParameter("command"));
-
+request.setAttribute("manname", searchCommandName);
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("searchCommandName", searchCommandName);
         request.setAttribute("message", parameterModel.getMessage());

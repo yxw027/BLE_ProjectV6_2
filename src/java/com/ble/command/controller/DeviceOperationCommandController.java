@@ -265,10 +265,26 @@ public class DeviceOperationCommandController extends HttpServlet {
         System.out.println("searching.......... " + searchManufacturerName);
         System.out.println("searching.......... " + searchDeviceTypeName);
         System.out.println("searching.......... " + searchOperationName);
-        noOfRowsInTable = DeviceOperationCommandModel.getNoOfRows(searchCommandName, searchDeviceName, searchOperationName);
+        
+        
+        noOfRowsInTable = DeviceOperationCommandModel.getNoOfRows(searchCommandName, searchDeviceName, searchOperationName,searchDeviceTypeName);
 
-        if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
+        if (buttonAction.equals("Next")){
+             searchCommandName=request.getParameter("cmdname");
+              searchDeviceName=request.getParameter("modname");
+               searchOperationName=request.getParameter("opname");
+                searchDeviceTypeName=request.getParameter("dtypename");
+                
+        noOfRowsInTable = DeviceOperationCommandModel.getNoOfRows(searchCommandName, searchDeviceName, searchOperationName,searchDeviceTypeName); 
+             
+         }  // lowerLimit already has value such that it shows forward records, so do nothing here.
         else if (buttonAction.equals("Previous")) {
+             searchCommandName=request.getParameter("cmdname");
+              searchDeviceName=request.getParameter("modname");
+               searchOperationName=request.getParameter("opname");
+                searchDeviceTypeName=request.getParameter("dtypename");
+                
+        noOfRowsInTable = DeviceOperationCommandModel.getNoOfRows(searchCommandName, searchDeviceName, searchOperationName,searchDeviceTypeName); 
             int temp = lowerLimit - noOfRowsToDisplay - noOfRowsTraversed;
             if (temp < 0) {
                 noOfRowsToDisplay = lowerLimit - noOfRowsTraversed;
@@ -277,8 +293,20 @@ public class DeviceOperationCommandController extends HttpServlet {
                 lowerLimit = temp;
             }
         } else if (buttonAction.equals("First")) {
+             searchCommandName=request.getParameter("cmdname");
+              searchDeviceName=request.getParameter("modname");
+               searchOperationName=request.getParameter("opname");
+                searchDeviceTypeName=request.getParameter("dtypename");
+                
+      //  noOfRowsInTable = DeviceOperationCommandModel.getNoOfRows(searchCommandName, searchDeviceName, searchOperationName,searchDeviceTypeName); 
             lowerLimit = 0;
         } else if (buttonAction.equals("Last")) {
+             searchCommandName=request.getParameter("cmdname");
+              searchDeviceName=request.getParameter("modname");
+               searchOperationName=request.getParameter("opname");
+                searchDeviceTypeName=request.getParameter("dtypename");
+                
+        noOfRowsInTable = DeviceOperationCommandModel.getNoOfRows(searchCommandName, searchDeviceName, searchOperationName,searchDeviceTypeName); 
             lowerLimit = noOfRowsInTable - noOfRowsToDisplay;
             if (lowerLimit < 0) {
                 lowerLimit = 0;
@@ -321,10 +349,18 @@ public class DeviceOperationCommandController extends HttpServlet {
 
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("searchOperationName", searchOperationName);
-
-        request.setAttribute("searchCommandName", searchCommandName);
+          request.setAttribute("searchCommandName", searchCommandName);
         request.setAttribute("searchOperationName", searchOperationName);
         request.setAttribute("searchDeviceName", searchDeviceName);
+        
+    
+         request.setAttribute("opname", searchOperationName);
+          request.setAttribute("cmdname", searchCommandName);
+        request.setAttribute("dtypename", searchDeviceTypeName);
+        request.setAttribute("modname", searchDeviceName);
+        
+        
+        
         request.setAttribute("searchManufacturerName", searchManufacturerName);
         request.setAttribute("searchDeviceType", searchDeviceTypeName);
         request.setAttribute("message", commandModel.getMessage());

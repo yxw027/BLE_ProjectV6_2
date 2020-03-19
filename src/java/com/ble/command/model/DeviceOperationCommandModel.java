@@ -784,7 +784,7 @@ public class DeviceOperationCommandModel {
         boolean status = false;
         String query = "";
         int rowsAffected = 0;
-
+ PreparedStatement ps =null;
 //        int device_id = getDeviceTypeId(commandBean.getDevice_type());
 //        int operation_id = getOperationId(commandBean.getOperation_name());
 //        int command_id = getCommandId(commandBean.getCommand());
@@ -803,7 +803,7 @@ public class DeviceOperationCommandModel {
         int updateRowsAffected = 0;
         try {
             connection.setAutoCommit(false);
-            PreparedStatement ps = (PreparedStatement) connection.prepareStatement(query1);
+              ps = (PreparedStatement) connection.prepareStatement(query1);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 PreparedStatement pst = (PreparedStatement) connection.prepareStatement(query2);
@@ -813,18 +813,18 @@ public class DeviceOperationCommandModel {
                 updateRowsAffected = pst.executeUpdate();
                 if (updateRowsAffected >= 1) {
                     int rev = rs.getInt("revision_no") + 1;
-                    PreparedStatement psmt = (PreparedStatement) connection.prepareStatement(query3);
-                    psmt.setInt(1, device_command_id);
-                    psmt.setInt(2, device_id);
-                    psmt.setInt(3, command_type_id);
-                    psmt.setInt(4, operation_id);
-                    psmt.setString(5, commandBean.getRemark());
-                    psmt.setInt(6, rev);
-                    psmt.setString(7, "Y");
-                    psmt.setString(8, commandBean.getOrder_no());
-                    psmt.setString(9, commandBean.getDelay());
-                    psmt.setString(10, commandBean.getShort_name());
-                    int a = psmt.executeUpdate();
+                    ps = (PreparedStatement) connection.prepareStatement(query3);
+                    ps.setInt(1, device_command_id);
+                    ps.setInt(2, device_id);
+                    ps.setInt(3, command_type_id);
+                    ps.setInt(4, operation_id);
+                    ps.setString(5, commandBean.getRemark());
+                    ps.setInt(6, rev);
+                    ps.setString(7, "Y");
+                    ps.setString(8, commandBean.getOrder_no());
+                    ps.setString(9, commandBean.getDelay());
+                    ps.setString(10, commandBean.getShort_name());
+                    int a = ps.executeUpdate();
                     if (a > 0) {
                         connection.commit();
                         status = true;
@@ -835,14 +835,12 @@ public class DeviceOperationCommandModel {
             }
         } catch (Exception e) {
             System.out.println("CommandModel reviseRecord() Error: " + e);
-        }finally{
-        if(connection!=null){
+        } finally{
             try {
-                connection.close();
+                ps.close();
             } catch (SQLException ex) {
                 Logger.getLogger(DeviceOperationCommandModel.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
         }
         if (status) {
             message = "Record updated successfully......";
@@ -857,14 +855,26 @@ public class DeviceOperationCommandModel {
         return status;
 
     }
-    public static int getNoOfRows(String searchCommandName, String searchDeviceName, String searchOperationName) {
-        String query1 = " select count(*)"
-                + " from device_command_map dcm,device d,command c,operation_name opn"
-                + " where dcm.device_id = d.id and dcm.command_id = c.id and dcm.operation_id = opn.id and dcm.active='Y' and d.active='Y' and c.active='Y' and opn.active='Y'";
-
+    public static int getNoOfRows(String searchCommandName, String searchDeviceName, String searchOperationName, String searchDeviceTypeName ) {
+//        String query1 = " select count(*)"
+//                + " from device_command_map dcm,device d,command c,operation_name opn"
+//                + " where dcm.device_id = d.id and dcm.command_id = c.id and dcm.operation_id = opn.id and dcm.active='Y' and d.active='Y' and c.active='Y' and opn.active='Y'";
+ String query1 = "  select distinct count(*)"
+                + " from device_command_map dcm,device d,operation_name opn,command c ,manufacturer mf,model m,device_type dt "
+                + " where dcm.device_id=d.id  and dcm.operation_id=opn.id and c.id=dcm.command_id  and mf.id=d.manufacture_id and d.model_id=m.id and d.device_type_id=dt.id "
+                + "  and dcm.active='Y' and d.active='Y' and opn.active='Y' and c.active='Y' and mf.active='Y' and m.active='Y' and dt.active='Y'  "
+                + " and IF('" + searchCommandName + "' = '', dcm.short_name LIKE '%%',dcm.short_name =?) "
+                + " and IF('" + searchDeviceName + "' = '', m.device_name LIKE '%%',m.device_name =?) "
+                + " and IF('" + searchOperationName + "'='',opn.operation_name LIKE '%%',opn.operation_name=?)"
+                + " and IF('" + searchDeviceTypeName + "'='',dt.type LIKE '%%',dt.type=?)";
+              
         int noOfRows = 0;
         try {
             PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query1);
+             stmt.setString(1, searchCommandName);
+            stmt.setString(2, searchDeviceName);
+            stmt.setString(3, searchOperationName);
+             stmt.setString(4, searchDeviceTypeName);
             ResultSet rs = stmt.executeQuery();
             rs.next();
             noOfRows = rs.getInt(1);
@@ -875,7 +885,7 @@ public class DeviceOperationCommandModel {
         return noOfRows;
     }
 
-    public static List<DeviceOperationCommand> showData(int lowerLimit, int noOfRowsToDisplay, String searchCommandName, String searchDeviceName, String searchOperationName) {
+    public static List<DeviceOperationCommand> showData(int lowerLimit, int noOfRowsToDisplay, String searchCommandName, String searchDeviceName, String searchOperationName, String searchDeviceTypeName) {
         List<DeviceOperationCommand> list = new ArrayList<DeviceOperationCommand>();
         String addQuery = " LIMIT " + lowerLimit + ", " + noOfRowsToDisplay;
         if (lowerLimit == -1) {
@@ -900,6 +910,7 @@ public class DeviceOperationCommandModel {
                 + " and IF('" + searchCommandName + "' = '', c.command LIKE '%%',c.command =?) "
                 + " and IF('" + searchDeviceName + "' = '', m.device_name LIKE '%%',m.device_name =?) "
                 + " and iF('" + searchOperationName + "'='',opn.operation_name LIKE '%%',opn.operation_name=?)"
+                 + " and iF('" + searchDeviceTypeName + "'='',dt.type LIKE '%%',dt.type=?)"
                 + addQuery;
         try {
 
@@ -907,6 +918,7 @@ public class DeviceOperationCommandModel {
             pstmt.setString(1, searchCommandName);
             pstmt.setString(2, searchDeviceName);
             pstmt.setString(3, searchOperationName);
+             pstmt.setString(4, searchDeviceTypeName);
 
             ResultSet rset = pstmt.executeQuery();
             while (rset.next()) {
@@ -952,7 +964,7 @@ public class DeviceOperationCommandModel {
             addQuery = "";
         }
  
-        String query3 = " select dcm.device_command_id, "
+        String query3 = "  select distinct dcm.device_command_id, "
                 + " dcm.device_id,dcm.remark,dcm.order_no,dcm.delay,opn.operation_name,c.command,mf.name,m.device_name,m.device_no,dt.type,dcm.short_name "
                 + " from device_command_map dcm,device d,operation_name opn,command c ,manufacturer mf,model m,device_type dt "
                 + " where dcm.device_id=d.id  and dcm.operation_id=opn.id and c.id=dcm.command_id  and mf.id=d.manufacture_id and d.model_id=m.id and d.device_type_id=dt.id "

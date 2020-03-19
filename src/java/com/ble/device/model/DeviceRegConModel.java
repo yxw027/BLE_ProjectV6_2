@@ -481,7 +481,7 @@ public class DeviceRegConModel {
   
               try {       
                   while(user1 == true){
-                isModuleOperation = "$$$$,07,D_2,01,startpacket,12,####";
+                isModuleOperation = "$$$$,07,D_1,01,startpacket,12,####";
                  String startpacket=ble.deviceResponse;
                  if(startpacket==null){
                     startpacket = "";
@@ -514,7 +514,10 @@ public class DeviceRegConModel {
                         int command_id1 = Integer.parseInt(arrCommand[k].split(",")[1]);                        
                           if(command_id1 == op_id){
                             long startTime = System.currentTimeMillis();
-                            while(true ||(System.currentTimeMillis()-startTime)<20000){
+                        //    while(true ||(System.currentTimeMillis()-startTime)<20000)
+                        
+                        while(true && (((System.currentTimeMillis() - startTime) / 1000 ) < 300))  //300 In Seconds
+                        {
                             String deviceResp =  ble.deviceResponse;                            
                             String abc1="start";
                             if(deviceResp==null){
@@ -554,7 +557,7 @@ public class DeviceRegConModel {
                              isModuleOperation = isModuleOperation;
                              } else{ 
                             
-                            isModuleOperation = "$$$$,05,D_2,06,"+device_type_id+","+idsToOperation[j].split(",")[0]+","+Integer.parseInt(arrCommand[k].split(",")[2])+","+Integer.parseInt(arrCommand[k].split(",")[3])+",123,{"+arrCommand[k].split(",")[0]+"},00,####";
+                            isModuleOperation = "$$$$,05,D_1,06,"+device_type_id+","+idsToOperation[j].split(",")[0]+","+Integer.parseInt(arrCommand[k].split(",")[2])+","+Integer.parseInt(arrCommand[k].split(",")[3])+",123,{"+arrCommand[k].split(",")[0]+"},00,####";
                             //isModuleOperation = isModuleOperation;
                             System.out.println("previous value .. " +isModuleOperation );      
                             //Thread.sleep(2 * 1000); 

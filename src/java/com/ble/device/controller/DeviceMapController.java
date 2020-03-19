@@ -233,8 +233,8 @@ public class DeviceMapController extends HttpServlet {
         request.setAttribute("dname", searchDeviceTypeName);
         request.setAttribute("modelname", searchModelName);  
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
-        request.setAttribute("searchManufacturerName",searchManufacturerName );
-        request.setAttribute("searchDeviceTypeName",searchDeviceTypeName );
+        request.setAttribute("searchManufactureName",searchManufacturerName );
+        request.setAttribute("searchDeviceType",searchDeviceTypeName );
         request.setAttribute("searchModelName",searchModelName );
         request.setAttribute("message", deviceMapModel.getMessage());
         request.setAttribute("msgBgColor", deviceMapModel.getMsgBgColor());

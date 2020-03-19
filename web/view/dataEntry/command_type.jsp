@@ -286,6 +286,8 @@ a:hover{
                                         <input type="hidden" id="noOfRowsTraversed" name="noOfRowsTraversed" value="${noOfRowsTraversed}">
                                         <input  type="hidden" id="searchCityType" name="searchCityType" value="${searchCityType}" >
                                         <input  type="hidden" id="searchDivisionType" name="searchDivisionType" value="${searchDivisionType}" >
+                                        
+                                        <input type="hidden" name="manname" value="${manname}">
                                      </table></DIV>
                                 </form>
                             </td>
