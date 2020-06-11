@@ -964,7 +964,7 @@ public class DeviceOperationCommandModel {
             addQuery = "";
         }
  
-<<<<<<< HEAD
+
 //        String query3 = " select dcm.device_command_id, "
 //                + " dcm.device_id,dcm.remark,dcm.order_no,dcm.delay,opn.operation_name,c.command,mf.name,m.device_name,m.device_no,dt.type,dcm.short_name "
 //                + " from device_command_map dcm,device d,operation_name opn,command c ,manufacturer mf,model m,device_type dt "
@@ -976,10 +976,9 @@ public class DeviceOperationCommandModel {
 //                + " and IF('" + searchDeviceTypeName + "'='',dt.type LIKE '%%',dt.type=?)"
 //                + " ORDER BY dcm.order_no ASC "
 //                + addQuery;
-String query3 = "  select distinct dcm.device_command_id, "
-=======
+
         String query3 = "  select distinct dcm.device_command_id, "
->>>>>>> 3952a8125a3a0fe02edc835bfcb722e7a6de2925
+
                 + " dcm.device_id,dcm.remark,dcm.order_no,dcm.delay,opn.operation_name,c.command,mf.name,m.device_name,m.device_no,dt.type,dcm.short_name "
                 + " from device_command_map dcm,device d,operation_name opn,command c ,manufacturer mf,model m,device_type dt "
                 + " where dcm.device_id=d.id  and dcm.operation_id=opn.id and c.id=dcm.command_id  and mf.id=d.manufacture_id and d.model_id=m.id and d.device_type_id=dt.id "

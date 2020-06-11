@@ -92,191 +92,8 @@ public class BLEWebServicesModel {
         }
         return rowData;
     }
-<<<<<<< HEAD
 
     public JSONArray getModelRecords() {
-=======
-    
-     public JSONArray getModelTypedata()
-        {
-        JSONArray rowData = new JSONArray();
-        String query = null;
-        query = "select id,type,active,remark,Created_at,revision_no "
-                +" from modal_type mt "
-                +" where mt.active='Y'";
-        try {
-            PreparedStatement pstmt = connection.prepareStatement(query);
-            ResultSet rset = pstmt.executeQuery();
-            while (rset.next()) {
-                JSONObject obj = new JSONObject();
-                 obj.put("id",rset.getInt("id"));
-                 obj.put("type",rset.getString("type"));
-                 obj.put("active",rset.getString("active"));
-                  obj.put("remark",rset.getString("remark"));
-                 obj.put("Created_at",rset.getString("Created_at"));
-               
-                 obj.put("revision_no",rset.getInt("revision_no"));
-                 rowData.add(obj);
-           }
-        } catch (Exception e) {
-            System.out.println("Error inside show data of survey: " + e);
-        }
-        return rowData;
-    }
-     
-     
-     public JSONArray getModeldata()
-        {
-        JSONArray rowData = new JSONArray();
-        String query = null;
-        query = "select id,device_name,device_no,warranty_period,remark,model_type_id,device_address,no_of_module,active"
-                + " ,created_at "
-                +" from model m "
-                +" where m.active='Y'";
-        try {
-            PreparedStatement pstmt = connection.prepareStatement(query);
-            ResultSet rset = pstmt.executeQuery();
-            while (rset.next()) {
-                JSONObject obj = new JSONObject();
-                 obj.put("id",rset.getInt("id"));
-                 obj.put("device_name",rset.getString("device_name"));
-                 obj.put("device_no",rset.getString("device_no"));
-                 obj.put("warranty_period",rset.getString("warranty_period"));
-                 obj.put("remark",rset.getString("remark"));
-                
-                 obj.put("model_type_id",rset.getInt("model_type_id"));
-                   obj.put("device_address",rset.getString("device_address"));
-                 obj.put("no_of_module",rset.getInt("no_of_module"));
-                
-                 obj.put("active",rset.getString("active"));
-               obj.put("created_at",rset.getString("created_at"));
-              
-
-                 rowData.add(obj);
-           }
-        } catch (Exception e) {
-            System.out.println("Error inside show data of survey: " + e);
-        }
-        return rowData;
-    }
-     
-      public JSONArray getDevicedata()
-        {
-        JSONArray rowData = new JSONArray();
-        String query = null;
-        query = "select id,device_type_id,model_id,remark,active,revision_no,created_at,created_by "
-                +" from device d "
-                +" where d.active='Y'";
-        try {
-            PreparedStatement pstmt = connection.prepareStatement(query);
-            ResultSet rset = pstmt.executeQuery();
-            while (rset.next()) {
-                JSONObject obj = new JSONObject();
-                 obj.put("id",rset.getInt("id"));
-                  
-                 obj.put("device_type_id",rset.getInt("device_type_id"));
-                 obj.put("model_id",rset.getInt("model_id"));
-                 obj.put("remark",rset.getString("remark"));
-                   obj.put("revision_no",rset.getInt("revision_no"));
-                 obj.put("active",rset.getString("active"));
-                  obj.put("created_at",rset.getString("created_at"));
-                    obj.put("created_by",rset.getString("created_by"));
-                 rowData.add(obj);
-           }
-        } catch (Exception e) {
-            System.out.println("Error inside show data of survey: " + e);
-        }
-        return rowData;
-    }
-      public JSONArray getService()
-        {
-        JSONArray rowData = new JSONArray();
-        String query = null;
-        query = "select id,service_name,service_uuid,device_id,remark,active,created_at,revision_no "
-                +" from servicies s "
-                +" where s.active='Y'";
-        try {
-            PreparedStatement pstmt = connection.prepareStatement(query);
-            ResultSet rset = pstmt.executeQuery();
-            while (rset.next()) {
-                JSONObject obj = new JSONObject();
-                 obj.put("id",rset.getInt("id"));
-                 obj.put("service_name",rset.getString("service_name"));
-                 obj.put("service_uuid",rset.getString("service_uuid"));
-                 obj.put("device_id",rset.getString("device_id"));
-                 obj.put("remark",rset.getString("remark"));
-                  obj.put("active",rset.getString("active"));
-                 obj.put("created_at",rset.getString("created_at"));
-                 obj.put("revision_no",rset.getInt("revision_no"));
-                 rowData.add(obj);
-           }
-        } catch (Exception e) {
-            System.out.println("Error inside show data of survey: " + e);
-        }
-        return rowData;
-    }
-     
-     public JSONArray getCharachtersticdata()
-        {
-        JSONArray rowData = new JSONArray();
-        String query = null;
-        query = "select id,name,active,remark,created_at,revision_no,service_id "
-                +" from charachtristics c "
-                +" where c.active='Y'";
-        try {
-            PreparedStatement pstmt = connection.prepareStatement(query);
-            ResultSet rset = pstmt.executeQuery();
-            while (rset.next()) {
-                JSONObject obj = new JSONObject();
-                 obj.put("id",rset.getInt("id"));
-                 obj.put("name",rset.getString("name"));
-                  obj.put("active",rset.getString("active"));
-                 obj.put("remark",rset.getString("remark"));
-                  obj.put("revision_no",rset.getInt("revision_no"));
-                 obj.put("created_at",rset.getString("created_at"));
-                    obj.put("service_id",rset.getInt("service_id"));
-                 rowData.add(obj);
-           }
-        } catch (Exception e) {
-            System.out.println("Error inside show data of survey: " + e);
-        }
-        return rowData;
-    }
-    
-      public JSONArray getBleOperationNamedata()
-        {
-        JSONArray rowData = new JSONArray();
-        String query = null;
-        query = " select device_characteristic_ble_map_id,device_id,read_characteristic_id,write_characteristic_id,ble_operation_name_id,"
-                + " order_no,remark "
-                +" from device_characteristic_ble_map bop "
-                +" where bop.active='Y' ";
-        try {
-            PreparedStatement pstmt = connection.prepareStatement(query);
-            ResultSet rset = pstmt.executeQuery();
-            while (rset.next()) {
-                JSONObject obj = new JSONObject();
-                 obj.put("device_characteristic_ble_map_id",rset.getInt("device_characteristic_ble_map_id"));
-                  obj.put("device_id",rset.getInt("device_id"));
-                   obj.put("read_characteristic_id",rset.getInt("read_characteristic_id"));
-                    obj.put("write_characteristic_id",rset.getInt("write_characteristic_id"));
-                 obj.put("ble_operation_name_id",rset.getInt("ble_operation_name_id"));
-                    obj.put("order_no",rset.getInt("order_no"));
-                  
-                 obj.put("remark",rset.getString("remark"));
-
-                 rowData.add(obj);
-           }
-        } catch (Exception e) {
-            System.out.println("Error inside show data of survey: " + e);
-        }
-        return rowData;
-    }
-     
-     
-    public JSONArray getModelRecords()
-        {
->>>>>>> 3952a8125a3a0fe02edc835bfcb722e7a6de2925
         JSONArray rowData = new JSONArray();
         String query = null;
         query = "select id,device_name,device_no,warranty_period,remark,model_type_id,device_address,no_of_module "
@@ -900,9 +717,11 @@ public class BLEWebServicesModel {
     }
 
     public String getLatestRegNo() {
-        String query1 = "select reg_no from device_registration m "
-                + " where m.active='Y'"
-                + " order by reg_no desc limit 1";
+//        String query1 = "select reg_no from device_registration m "
+//                + " where m.active='Y'"
+//                + " order by reg_no desc limit 1";
+String query1="select reg_no,created_at from device_registration m  where " +
+                  "  created_at=(select max(created_at) from device_registration where active='Y')";
 
         String reg_no = "D_0";
         try {
@@ -1300,12 +1119,9 @@ public class BLEWebServicesModel {
         try {
             System.out.println("hii inside setConnection() method");
             Class.forName("com.mysql.jdbc.Driver");
-<<<<<<< HEAD
-         // connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ble_database6", "root", "CXKyE2ZpT%HjbP!4c$");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ble_database6", "jpss_2", "jpss_1277");
-=======
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ble_database6", "root", "root");
->>>>>>> 3952a8125a3a0fe02edc835bfcb722e7a6de2925
+          connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ble_database6", "root", "CXKyE2ZpT%HjbP!4c$");
+           // connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ble_database6", "jpss_2", "jpss_1277");
+//            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ble_database7", "root", "root");
         } catch (Exception e) {
             System.out.println("BLEWebServicesModel setConnection() Error: " + e);
         }

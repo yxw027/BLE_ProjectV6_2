@@ -28,11 +28,7 @@ public class DeviceMapModel {
     private String connectionString;
     private String db_username;
     private String db_password;
-<<<<<<< HEAD
-   
-=======
-    
->>>>>>> 3952a8125a3a0fe02edc835bfcb722e7a6de2925
+
     private String message;
     private String msgBgColor;
     private final String COLOR_OK = "yellow";
@@ -248,12 +244,12 @@ PreparedStatement ps =null;
         int updateRowsAffected = 0;
         try {
              connection.setAutoCommit(false);
-<<<<<<< HEAD
-            PreparedStatement ps = (PreparedStatement) connection.prepareStatement(query1);
-=======
+//<<<<<<< HEAD
+//            PreparedStatement ps = (PreparedStatement) connection.prepareStatement(query1);
+//=======
              
          ps = (PreparedStatement) connection.prepareStatement(query1);
->>>>>>> 3952a8125a3a0fe02edc835bfcb722e7a6de2925
+
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                  ps = (PreparedStatement) connection.prepareStatement(query2);
@@ -272,11 +268,11 @@ PreparedStatement ps =null;
                     ps.setInt(5, rev);
                     ps.setString(6, "Y");
 
-<<<<<<< HEAD
-                    int a = psmt.executeUpdate();
-=======
+//<<<<<<< HEAD
+//                    int a = psmt.executeUpdate();
+//=======
                     int a = ps.executeUpdate();
->>>>>>> 3952a8125a3a0fe02edc835bfcb722e7a6de2925
+
                  if (a > 0) {
                         connection.commit();
                         status = true;
@@ -288,16 +284,12 @@ PreparedStatement ps =null;
         } catch (Exception e) {
             System.out.println("CommandModel reviseRecord() Error: " + e);
         }finally{
-<<<<<<< HEAD
-         
-         
-=======
+
            try {
             ps.close();
           //  connection.setAutoCommit(true);
         } catch (SQLException ex) {
-             
->>>>>>> 3952a8125a3a0fe02edc835bfcb722e7a6de2925
+  
         }
          
         } 
