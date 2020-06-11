@@ -611,12 +611,8 @@ public class DeviceRegConModel {
  
               try {      
                   while(user1 == true){
-<<<<<<< HEAD
 //                isModuleOperation = "$$$$,07,D_2,01,startpacket,12,####";
                    isModuleOperation = "$$$$,07,"+reg_no+",01,startpacket,12,####";
-=======
-                isModuleOperation = "$$$$,07,D_1,01,startpacket,12,####";
->>>>>>> 3952a8125a3a0fe02edc835bfcb722e7a6de2925
                  String startpacket=ble.deviceResponse;
                  if(startpacket==null){
                     startpacket = "";
@@ -649,15 +645,8 @@ public class DeviceRegConModel {
                         int command_id1 = Integer.parseInt(arrCommand[k].split(",")[1]);                        
                           if(command_id1 == op_id){
                             long startTime = System.currentTimeMillis();
-<<<<<<< HEAD
     //                        while(true && (System.currentTimeMillis()-startTime)<20000){
                          while(true && (((System.currentTimeMillis() - startTime) / 1000 ) < 100)){      // 300 in seconds
-=======
-                        //    while(true ||(System.currentTimeMillis()-startTime)<20000)
-                        
-                        while(true && (((System.currentTimeMillis() - startTime) / 1000 ) < 300))  //300 In Seconds
-                        {
->>>>>>> 3952a8125a3a0fe02edc835bfcb722e7a6de2925
                             String deviceResp =  ble.deviceResponse;                            
                             String abc1="start";
                             if(deviceResp==null){
@@ -704,12 +693,7 @@ public class DeviceRegConModel {
 //                            isModuleOperation = "$$$$,05,D_2,06,"+device_type_id+","+idsToOperation[j].split(",")[0]+","+Integer.parseInt(arrCommand[k].split(",")[2])+","+Integer.parseInt(arrCommand[k].split(",")[3])+",123,{"+arrCommand[k].split(",")[0]+"},00,####";
                                              isModuleOperation = "$$$$,05,"+reg_no+",06,"+device_type_id+","+idsToOperation[j].split(",")[0]+","+Integer.parseInt(arrCommand[k].split(",")[2])+","+Integer.parseInt(arrCommand[k].split(",")[3])+",123,{"+arrCommand[k].split(",")[0]+"},00,####";
                             
-<<<<<<< HEAD
                               //isModuleOperation = isModuleOperation;
-=======
-                            isModuleOperation = "$$$$,05,D_1,06,"+device_type_id+","+idsToOperation[j].split(",")[0]+","+Integer.parseInt(arrCommand[k].split(",")[2])+","+Integer.parseInt(arrCommand[k].split(",")[3])+",123,{"+arrCommand[k].split(",")[0]+"},00,####";
-                            //isModuleOperation = isModuleOperation;
->>>>>>> 3952a8125a3a0fe02edc835bfcb722e7a6de2925
                             System.out.println("previous value .. " +isModuleOperation );      
                             //Thread.sleep(2 * 1000);
                             a = 0;

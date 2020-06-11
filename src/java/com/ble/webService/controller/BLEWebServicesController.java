@@ -30,7 +30,7 @@ import org.json.simple.JSONObject;
 
 @Path("/")
 public class BLEWebServicesController {
-     public static String deviceResponse="startpacket";
+     public static String deviceResponse="A";
     @Resource
     WebServiceContext wsContext;  
     
@@ -105,45 +105,6 @@ public class BLEWebServicesController {
         return obj;
     }    
 
-     @POST
-    @Path("/getdeviceRecords")
-    @Produces(MediaType.APPLICATION_JSON)//http://192.168.1.15:8084/BLE_Project/resources/getdeviceRecords
-    @Consumes(MediaType.APPLICATION_JSON)
-    public JSONObject sendRecords(String dataString) {
-        JSONObject obj = new JSONObject();
-        BLEWebServicesModel bLEWebServicesModel = new BLEWebServicesModel();
-        try{
-       
-        bLEWebServicesModel.setConnection();
-        //JSONObject obj = new JSONObject();
-        JSONArray json = null;
-
-       
-        json = bLEWebServicesModel.getModelTypedata();
-         obj.put("modal_type", json);
-         json = bLEWebServicesModel.getModeldata();
-         obj.put("model", json);
-       
-         json = bLEWebServicesModel.getDevicedata();
-         obj.put("device", json);
-          
-         json = bLEWebServicesModel.getService();
-         obj.put("servicies", json);
-         json = bLEWebServicesModel.getCharachtersticdata();
-         obj.put("charachtristics", json);
-         
-         json = bLEWebServicesModel.getBleOperationNamedata();
-         obj.put("ble_operation_map", json);
-         
-        }catch(Exception e){
-            System.out.println("Error in BLEWebServices 'requestData' url calling getWardData()..."+e);
-        }
-        return obj;
-    }    
-
-    
-    
-    
     @POST
     @Path("/deviceRegRecords")
     @Produces(MediaType.APPLICATION_JSON)//http://192.168.1.15:8084/BLE_Project/resources/getAllTableRecords
@@ -162,13 +123,50 @@ public class BLEWebServicesController {
        String devId= devID_regNo_pass.split(",")[0];
        String regNo= devID_regNo_pass.split(",")[1];
        String pass= devID_regNo_pass.split(",")[2];
-       status = "$$$$,04,0,6,"+regNo+","+pass+",120.138.10.146,8060,45.114.142.35,8060,12,####";
-        
+       //status = "$$$$,04,0,6,"+regNo+","+pass+",120.138.10.146,8060,45.114.142.35,8060,12,####";
+        status = "$$$$,04,0,"+devId+","+regNo+","+pass+",120.138.10.146,8060,45.114.142.35,8060,12,####";
         }catch(Exception e){
             System.out.println("Error in BLEWebServices 'requestData' url calling getWardData()..."+e);
         }
         return status;
     }
+      
+       @POST
+    @Path("/deviceRegRecordsConformation")
+    @Produces(MediaType.APPLICATION_JSON)//http://192.168.1.15:8084/BLE_Project/resources/getAllTableRecords
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String saveDeviceRegRecordConformation(String dataString) {
+        String status = "some error try again";
+         BLEWebServicesModel bLEWebServicesModelcheck = new BLEWebServicesModel();
+        String dataString1[] = dataString.split(",");
+        String device_id = dataString1[0];
+        int device_idcheck=Integer.parseInt(device_id);
+        String reg_no = dataString1[1];
+        String password = dataString1[2];
+//        String model_no = dataString1[3];
+//         BLEWebServicesModel bLEWebServicesModel = new BLEWebServicesModel();
+        try{       
+       bLEWebServicesModelcheck.setConnection();
+       int device_id25= bLEWebServicesModelcheck.device_id25;
+        String reg_no25= bLEWebServicesModelcheck.reg_no25;
+         String pass25= bLEWebServicesModelcheck.pass25;
+
+       if(device_idcheck == device_id25 && reg_no.equals(reg_no25) && password.equals(pass25))
+       {
+       
+       String devID_regNo_pass =  bLEWebServicesModelcheck.saveDeviceRegConformation(device_id,reg_no,password);
+       String devId= devID_regNo_pass.split(",")[0];
+       String regNo= devID_regNo_pass.split(",")[1];
+       String pass= devID_regNo_pass.split(",")[2];
+      // status = "$$$$,04,0,"+devId+","+regNo+","+pass+",120.138.10.146,8060,45.114.142.35,8060,12,####";
+          status = "Registration Complete";
+       }
+        }catch(Exception e){
+            System.out.println("Error in BLEWebServices 'requestData' url calling getWardData()..."+e);
+        }
+        return status;
+    }
+    
     
     @POST
     @Path("/checkDeviceResponse")

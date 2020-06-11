@@ -122,6 +122,7 @@
                             }
                         }
                     });
+                    debugger;
                 } else if (id === "parameter_name") {
                     $("#parameter_name" + count).autocomplete("ByteDataController", {
                         extraParams: {
@@ -134,6 +135,19 @@
                 }
 
             }
+                jQuery(function(id, count){
+        $("#parameter_name"+ count).autocomplete("ByteDataController", {
+            extraParams: {
+                action1: function() { return "getParameter_name"}
+            }
+        });
+//        $("#searchRule").autocomplete("ruleCont.do", {
+//            extraParams: {
+//                action1: function() { return "getRule"}
+//            }
+//        });       
+
+    });
 
             function addRow(tableID, bitwise, command_name) {
                 debugger;
@@ -173,7 +187,7 @@
                     element2.size = 20;
                     element2.maxLength = 8;
                     element2.value = "";
-                    //element2.setAttribute("onkeyup", 'autocompleteMethod("parameter_name",' + i + ')');
+                    element2.setAttribute("onkeyup", 'autocompleteMethod("parameter_name",' + i + ')');
                     cell3.appendChild(element2);
 
                     var cell4 = row.insertCell(3);

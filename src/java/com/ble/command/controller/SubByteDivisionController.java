@@ -52,7 +52,7 @@ public class SubByteDivisionController extends HttpServlet {
             PrintWriter out = response.getWriter();
             List<String> list = null;
 
-            if (action1.equals("getParameter")) {
+             if (action1.equals("getParameter")) {
                 list = subByteDivisionModel.getParameterName();
             }
         
@@ -108,7 +108,7 @@ public class SubByteDivisionController extends HttpServlet {
                     SubByteDivisionBean bean = new SubByteDivisionBean();
                     bean.setSub_byte_division_id(sub_byte_division_id);
                     bean.setParameter_name_byte(request.getParameter("byte_parameter_name" + i));
-                    bean.setParameter_name(request.getParameter("parameter_name" + i));
+                    bean.setParameter_name(request.getParameter("parameter_name2" + i));
                     bean.setSub_division_no(Integer.parseInt(request.getParameter("sub_division_no" + i)));
                     bean.setStart_pos(Integer.parseInt(request.getParameter("start_pos" + i)));
                     bean.setNo_of_bit(Integer.parseInt(request.getParameter("no_of_bit" + i)));
@@ -130,8 +130,8 @@ public class SubByteDivisionController extends HttpServlet {
             SubByteDivisionBean bean = new  SubByteDivisionBean();
             bean.setSub_byte_division_id(sub_byte_division_id);
             bean.setNo_of_bit(Integer.parseInt(request.getParameter("no_of_bit"+count)));
-            bean.setParameter_name_byte(request.getParameter("byte_parameter_name"+count));
-            bean.setParameter_name(request.getParameter("parameter_name"+count));
+            bean.setParameter_name_byte(request.getParameter("byte_parameter_name2"+count));
+            bean.setParameter_name(request.getParameter("parameter_name2"+count));
             bean.setStart_pos(Integer.parseInt(request.getParameter("start_pos"+count)));
             bean.setSub_division_no(Integer.parseInt(request.getParameter("sub_division_no"+count)));
             System.out.println("Update values by model........");

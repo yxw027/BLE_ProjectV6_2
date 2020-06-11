@@ -54,7 +54,10 @@ public class ByteDataController extends HttpServlet {
 
             if (action1.equals("getCommand")) {
                 list = byteDataModel.getCommandName();
+            }else  if (action1.equals("getParameter_name")) {
+                list = byteDataModel.getParameterName();
             }
+           
 
             Iterator<String> iter = list.iterator();
             while (iter.hasNext()) {

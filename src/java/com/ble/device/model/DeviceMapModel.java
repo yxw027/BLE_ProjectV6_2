@@ -28,11 +28,7 @@ public class DeviceMapModel {
     private String connectionString;
     private String db_username;
     private String db_password;
-<<<<<<< HEAD
-   
-=======
-    
->>>>>>> 3952a8125a3a0fe02edc835bfcb722e7a6de2925
+
     private String message;
     private String msgBgColor;
     private final String COLOR_OK = "yellow";
@@ -248,12 +244,12 @@ PreparedStatement ps =null;
         int updateRowsAffected = 0;
         try {
              connection.setAutoCommit(false);
-<<<<<<< HEAD
-            PreparedStatement ps = (PreparedStatement) connection.prepareStatement(query1);
-=======
+
+        ps = (PreparedStatement) connection.prepareStatement(query1);
+
              
-         ps = (PreparedStatement) connection.prepareStatement(query1);
->>>>>>> 3952a8125a3a0fe02edc835bfcb722e7a6de2925
+         //ps = (PreparedStatement) connection.prepareStatement(query1);
+
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                  ps = (PreparedStatement) connection.prepareStatement(query2);
@@ -272,11 +268,11 @@ PreparedStatement ps =null;
                     ps.setInt(5, rev);
                     ps.setString(6, "Y");
 
-<<<<<<< HEAD
-                    int a = psmt.executeUpdate();
-=======
+
+                
+
                     int a = ps.executeUpdate();
->>>>>>> 3952a8125a3a0fe02edc835bfcb722e7a6de2925
+
                  if (a > 0) {
                         connection.commit();
                         status = true;
@@ -288,16 +284,13 @@ PreparedStatement ps =null;
         } catch (Exception e) {
             System.out.println("CommandModel reviseRecord() Error: " + e);
         }finally{
-<<<<<<< HEAD
-         
-         
-=======
+
            try {
             ps.close();
           //  connection.setAutoCommit(true);
         } catch (SQLException ex) {
              
->>>>>>> 3952a8125a3a0fe02edc835bfcb722e7a6de2925
+
         }
          
         } 
@@ -373,14 +366,16 @@ PreparedStatement ps =null;
                 + " and dm.active = 'Y' and d.active = 'Y' and m.active = 'Y' and dt.active = 'Y' and mo.active = 'Y' and d1.active = 'Y' and m1.active = 'Y' and dt1.active = 'Y' and mo1.active = 'Y' "
                 + " AND IF('" + searchManufacturerName + "' = '', m.name LIKE '%%',m.name =?) "
                 + " AND IF('" + searchDeviceTypeName + "' = '', dt.type LIKE '%%',dt.type =?) "
+
                  + " AND IF('" + searchModelName + "' = '', mo1.device_name LIKE '%%',mo1.device_name =?) "
+
                 + addQuery;
 
         try {
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);
             pstmt.setString(1, searchManufacturerName);
             pstmt.setString(2, searchDeviceTypeName);
-            pstmt.setString(3, searchModelName);
+//            pstmt.setString(3, searchModelName);
             ResultSet rset = pstmt.executeQuery();
             while (rset.next()) {
                 DeviceMapBean deviceBean = new DeviceMapBean();
