@@ -5,9 +5,10 @@
  */
 package com.ble.response.controller;
 
-
-import com.ble.response.bean.Response;
-import com.ble.response.model.ResponseModel;
+import com.ble.dataEntry.bean.CommandCrcMapBean;
+import com.ble.dataEntry.model.CommandCrcMapModel;
+import com.ble.response.bean.ResponseCrcMappingBean;
+import com.ble.response.model.ResponseCrcMappingModel;
 import com.ble.util.UniqueIDGenerator;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,11 +22,11 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author DELL
+ * @author user
  */
-public class ResponseController extends HttpServlet {
+public class ResponseCrcTypeMapping extends HttpServlet {
 
-    /**
+     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -36,110 +37,104 @@ public class ResponseController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         int lowerLimit, noOfRowsTraversed, noOfRowsToDisplay = 5, noOfRowsInTable;
         System.out.println("this is FUSE Controller....");
         ServletContext ctx = getServletContext();
-        ResponseModel responseModel = new ResponseModel();
-        responseModel.setDriverClass(ctx.getInitParameter("driverClass"));
-        responseModel.setConnectionString(ctx.getInitParameter("connectionString"));
-        responseModel.setDb_username(ctx.getInitParameter("db_username"));
-        responseModel.setDb_password(ctx.getInitParameter("db_password"));
-        responseModel.setConnection();
-        
-        String task = request.getParameter("task");
-        try {
+        ResponseCrcMappingModel comcrcModel = new ResponseCrcMappingModel();
+        comcrcModel.setDriverClass(ctx.getInitParameter("driverClass"));
+        comcrcModel.setConnectionString(ctx.getInitParameter("connectionString"));
+        comcrcModel.setDb_username(ctx.getInitParameter("db_username"));
+        comcrcModel.setDb_password(ctx.getInitParameter("db_password"));
+        comcrcModel.setConnection();
 
+        String task = request.getParameter("task");
+         try {
             String JQstring = request.getParameter("action1");
             String q = request.getParameter("q");
             if (JQstring != null) {
                 PrintWriter out = response.getWriter();
                 List<String> list = null;
-               
-                if (JQstring.equals("getSearchCommand")) {
-                    list = responseModel.getSearchCommand(q);
-                } else if (JQstring.equals("getSearchResponse")) {
-                    list = responseModel.getSearchResponse(q);
+
+                if(JQstring.equals("getResponse")) {
+                    list = comcrcModel.getResponse(q);
+                    System.out.println("hello");
+                } 
+                else if(JQstring.equals("getCrcType")) {
+                    list = comcrcModel.getCrcType(q);
                 }
                 Iterator<String> iter = list.iterator();
                 while (iter.hasNext()) {
                     String data = iter.next();
-                    out.println(data);
+                        out.println(data);
                 }
-                responseModel.closeConnection();
+                comcrcModel.closeConnection();
                 return;
             }
         } catch (Exception e) {
             System.out.println("\n Error --ClientPersonMapController get JQuery Parameters Part-" + e);
         }
-        if (task == null) {
+         if (task == null) {
             task = "";
         }
-        
-        if (task.equals("Cancel")) {
-            responseModel.deleteRecord(Integer.parseInt(request.getParameter("response_id")));  // Pretty sure that organisation_type_id will be available.
+ 
+         if (task.equals("Cancel")) {
+            comcrcModel.deleteRecord(Integer.parseInt(request.getParameter("response_crcmap_id")));  // Pretty sure that organisation_type_id will be available.
         } else if (task.equals("Save") || task.equals("Save AS New")) {
-            int response_id;
+            int response_crcmap_id;
             try {
-                response_id = Integer.parseInt(request.getParameter("response_id"));
+                response_crcmap_id = Integer.parseInt(request.getParameter("response_crcmap_id"));
             } catch (Exception e) {
-                response_id = 0;
+                response_crcmap_id = 0;
             }
             if (task.equals("Save AS New")) {
-                response_id = 0;
+                response_crcmap_id = 0;
             }
-            Response responseBean = new Response();
+             ResponseCrcMappingBean cmdcrcmapbean = new ResponseCrcMappingBean();
+            cmdcrcmapbean.setResponse_crc_map_id(response_crcmap_id);
+            cmdcrcmapbean.setResponse(request.getParameter("response"));
+            cmdcrcmapbean.setCrc_type(request.getParameter("crctype"));
+            cmdcrcmapbean.setRemark(request.getParameter("remark"));
 
-            responseBean.setCommand(request.getParameter("command"));
-            responseBean.setResponse(request.getParameter("response"));
-            responseBean.setFixed_response(Integer.parseInt(request.getParameter("fixed_response")));
-            responseBean.setVariable_response(Integer.parseInt(request.getParameter("variable_response")));
-            responseBean.setBitwise_response(Integer.parseInt(request.getParameter("bitwise_response")));
-            responseBean.setData_extract_type(request.getParameter("data_extract_type"));
-            responseBean.setFormat(request.getParameter("format"));//          
-            responseBean.setRemark(request.getParameter("remark"));
-
-         
-            if (response_id == 0) {
+            if (response_crcmap_id == 0) {
                 System.out.println("Inserting values by model......");
-                responseModel.insertRecord(responseBean);
+                comcrcModel.insertRecord(cmdcrcmapbean);
             } else {
                 System.out.println("Update values by model........");
-                responseModel.reviseRecords(responseBean);
+                comcrcModel.reviseRecords(cmdcrcmapbean);
             }
         }
-        
-        String searchCommandName = "";
-        String searchResponse = "";
 
-        searchCommandName = request.getParameter("searchCommandName");
+        String searchResponse = "";
+        String searchCrctype = "";
+
         searchResponse = request.getParameter("searchResponse");
-        
-        try {
-            if (searchCommandName == null | searchResponse == null) {
-                searchCommandName = "";
-                searchResponse = "";
+        searchCrctype = request.getParameter("searchCrctype");
+         try {
+            if (searchResponse == null || searchCrctype == null) {
+                searchResponse="";
+                searchCrctype="";
             }
         } catch (Exception e) {
             System.out.println("Exception while searching in controller" + e);
         }
 
-        try {
+         try {
             lowerLimit = Integer.parseInt(request.getParameter("lowerLimit"));
             noOfRowsTraversed = Integer.parseInt(request.getParameter("noOfRowsTraversed"));
         } catch (Exception e) {
             lowerLimit = noOfRowsTraversed = 0;
         }
-        String buttonAction = request.getParameter("buttonAction"); // Holds the name of any of the four buttons: First, Previous, Next, Delete.
+         String buttonAction = request.getParameter("buttonAction"); // Holds the name of any of the four buttons: First, Previous, Next, Delete.
         if (buttonAction == null) {
             buttonAction = "none";
         }
-        System.out.println("searching.......... " + searchCommandName);
         System.out.println("searching.......... " + searchResponse);
-        noOfRowsInTable = responseModel.getNoOfRows(searchResponse);
+        System.out.println("searching.......... " + searchCrctype);
 
-        if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
-        else if (buttonAction.equals("Previous")) {
+         noOfRowsInTable = comcrcModel.getNoOfRows(searchResponse,searchCrctype);
+
+         if (buttonAction.equals("Next")); // lowerLimit already has value such that it shows forward records, so do nothing here.
+         else if (buttonAction.equals("Previous")) {
             int temp = lowerLimit - noOfRowsToDisplay - noOfRowsTraversed;
             if (temp < 0) {
                 noOfRowsToDisplay = lowerLimit - noOfRowsTraversed;
@@ -158,18 +153,19 @@ public class ResponseController extends HttpServlet {
         if (task.equals("Save") || task.equals("Cancel") || task.equals("Save AS New")) {
             lowerLimit = lowerLimit - noOfRowsTraversed;    // Here objective is to display the same view again, i.e. reset lowerLimit to its previous value.
         } else if (task.equals("Show All Records")) {
-            searchCommandName = "";
-            searchResponse = "";
+            searchResponse="";
+            searchCrctype="";
+
         }
-        // Logic to show data in the table.
-        List<Response> responseList = responseModel.showData(lowerLimit, noOfRowsToDisplay, searchCommandName, searchResponse);
-        lowerLimit = lowerLimit + responseList.size();
-        noOfRowsTraversed = responseList.size();
-        // Now set request scoped attributes, and then forward the request to view.
+           // Logic to show data in the table.
+        List<ResponseCrcMappingBean> cmdmapList = comcrcModel.showData(lowerLimit, noOfRowsToDisplay,searchResponse,searchCrctype);
+        lowerLimit = lowerLimit + cmdmapList.size();
+        noOfRowsTraversed = cmdmapList.size();
+         // Now set request scoped attributes, and then forward the request to view.
         request.setAttribute("lowerLimit", lowerLimit);
         request.setAttribute("noOfRowsTraversed", noOfRowsTraversed);
-        request.setAttribute("responseList", responseList);
-        if ((lowerLimit - noOfRowsTraversed) == 0) {     // if this is the only data in the table or when viewing the data 1st time.
+        request.setAttribute("cmdmapList", cmdmapList);
+         if ((lowerLimit - noOfRowsTraversed) == 0) {     // if this is the only data in the table or when viewing the data 1st time.
             request.setAttribute("showFirst", "false");
             request.setAttribute("showPrevious", "false");
         }
@@ -178,22 +174,16 @@ public class ResponseController extends HttpServlet {
             request.setAttribute("showLast", "false");
         }
 
-        System.out.println("color is :" + responseModel.getMsgBgColor());
-        request.setAttribute("manufacturer", request.getParameter("manufacturer"));
-        request.setAttribute("device_type", request.getParameter("device_type"));
-        request.setAttribute("deviceName", request.getParameter("device_name"));
-        request.setAttribute("device_no", request.getParameter("device_no"));
-        //request.setAttribute("operationName", request.getParameter("operation_name"));
-        //request.setAttribute("commandName", request.getParameter("command"));
+        System.out.println("color is :" + comcrcModel.getMsgBgColor());
+ 
 
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
-        request.setAttribute("searchCommandName", searchCommandName);
-        request.setAttribute("searchResponse", searchResponse);
-        
-        request.setAttribute("message", responseModel.getMessage());
-        request.setAttribute("msgBgColor", responseModel.getMsgBgColor());
-        request.getRequestDispatcher("/response").forward(request, response);
-    }
+        request.setAttribute("searchResponse",searchResponse );
+        request.setAttribute("searchCrctype",searchCrctype );
+        request.setAttribute("message", comcrcModel.getMessage());
+        request.setAttribute("msgBgColor", comcrcModel.getMsgBgColor());
+        request.getRequestDispatcher("/response_crc_mapping").forward(request, response);
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

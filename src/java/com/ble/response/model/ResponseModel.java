@@ -333,7 +333,7 @@ public class ResponseModel {
             pstmt.setString(1, searchResponse);
            pstmt.setString(2, searchCommandName);
             ResultSet rset = pstmt.executeQuery();
-            while (rset.next()) {
+            while(rset.next()) {
                 Response response = new Response();
 
                 response.setCommand_id(rset.getInt("command_id"));

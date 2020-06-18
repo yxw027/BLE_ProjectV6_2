@@ -4,6 +4,16 @@
         <servlet-name>DeviceConfigStatusCont</servlet-name>
         <servlet-class>com.ble.device.controller.DeviceConfigStatusCont</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ResponseByteDataController</servlet-name>
+        <servlet-class>com.ble.response.controller.ResponseByteDataController</servlet-class>
+    </servlet>
+    
+    
+    <servlet>
+        <servlet-name>ResponseCrcTypeMapping</servlet-name>
+        <servlet-class>com.ble.response.controller.ResponseCrcTypeMapping</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CrcTypeController</servlet-name>
         <url-pattern>/CrcTypeController</url-pattern>
@@ -11,6 +21,16 @@
     <servlet-mapping>
         <servlet-name>DeviceConfigStatusCont</servlet-name>
         <url-pattern>/DeviceConfigStatusCont</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResponseByteDataController</servlet-name>
+        <url-pattern>/ResponseByteDataController</url-pattern>
+    </servlet-mapping>
+    
+   
+    <servlet-mapping>
+        <servlet-name>ResponseCrcTypeMapping</servlet-name>
+        <url-pattern>/ResponseCrcTypeMapping</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -26,28 +46,23 @@
     </context-param>
     <context-param>
         <param-name>connectionString</param-name>
-        <param-value>jdbc:mysql://localhost:3306/ble_database6</param-value>
+        <param-value>jdbc:mysql://localhost:3306/ble_database7</param-value>
     </context-param>
     <context-param>
         <param-name>db_username</param-name>
-
-<!--         <param-value>root</param-value>-->
-<!--           <param-value>root</param-value>-->
-<param-value>CXKyE2ZpT%HjbP!4c$</param-value>
         <!--         <param-value>root</param-value>-->
-<!--        <param-value>jpss_2</param-value>-->
-
+        <param-value>root</param-value>
+        <!--         <param-value>root</param-value>-->
+        <!--        <param-value>jpss_2</param-value>-->
     </context-param>
     <context-param>
         <description>	</description>
         <param-name>db_password</param-name>
-
-         <param-value>root</param-value>
-<!--<param-value>CXKyE2ZpT%HjbP!4c$</param-value>
+        <param-value>root</param-value>
+        <!--<param-value>CXKyE2ZpT%HjbP!4c$</param-value>
 
         <param-value>jpss_1277</param-value>-->
         <!--<param-value>CXKyE2ZpT%HjbP!4c$</param-value>-->
-
     </context-param>
     <!--<ServletContainer mapping start>-->
     <servlet>
@@ -638,16 +653,65 @@
         <servlet-name>BaseRoverConfgPage</servlet-name>
         <url-pattern>/BaseRoverConfgPage</url-pattern>
     </servlet-mapping>
-    
-    
-    
-    
-      <servlet>
+    <servlet>
         <servlet-name>deviceConfiguration_status</servlet-name>
         <jsp-file>/view/dataEntry/deviceConfiguration_status.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>deviceConfiguration_status</servlet-name>
         <url-pattern>/deviceConfiguration_status</url-pattern>
+    </servlet-mapping>
+    
+     <servlet>
+        <servlet-name>response_crc_mapping</servlet-name>
+        <jsp-file>/view/response/response_crc_mapping.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>response_crc_mapping</servlet-name>
+        <url-pattern>/response_crc_mapping</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>response_byte_data</servlet-name>
+        <jsp-file>/view/response/response_byte_data.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>response_byte_data</servlet-name>
+        <url-pattern>/response_byte_data</url-pattern>
+    </servlet-mapping>
+     <servlet>
+        <servlet-name>response_sub_byte_division</servlet-name>
+        <jsp-file>/view/response/response_sub_byte_division.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>response_sub_byte_division</servlet-name>
+        <url-pattern>/response_sub_byte_division</url-pattern>
+    </servlet-mapping>
+    
+     <servlet>
+        <servlet-name>response_sub_division_selection</servlet-name>
+        <jsp-file>/view/response/response_sub_division_selection.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>response_sub_division_selection</servlet-name>
+        <url-pattern>/response_sub_division_selection</url-pattern>
+    </servlet-mapping>
+     <servlet>
+        <servlet-name>ResponseSubByteDivisionController</servlet-name>
+        <servlet-class>com.ble.response.controller.ResponseSubByteDivisionController</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>ResponseSubByteDivisionController</servlet-name>
+        <url-pattern>/ResponseSubByteDivisionController</url-pattern>
+    </servlet-mapping>
+    
+       <servlet>
+        <servlet-name>ResponseSubDivisionSelectionController</servlet-name>
+        <servlet-class>com.ble.response.controller.ResponseSubDivisionSelectionController</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>ResponseSubDivisionSelectionController</servlet-name>
+        <url-pattern>/ResponseSubDivisionSelectionController</url-pattern>
     </servlet-mapping>
 </web-app>

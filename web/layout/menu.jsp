@@ -69,6 +69,7 @@
                                 <li><a href="InputCont.do">Input</a></li>-->
                                 <li><a href="ParameterCont.do">Parameter</a></li>
                                 <li><a href="DeviceOperationCommandCont.do">Operation Command Map</a></li>
+                                  <li><a href="ResponseCrcTypeMapping">Response Crc Mapping</a></li>
                             </ul>
                         </li>
                        
