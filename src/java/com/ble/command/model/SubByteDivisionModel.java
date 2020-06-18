@@ -243,7 +243,7 @@ public class SubByteDivisionModel {
     
     public List<String> getParameterName() {
         List<String> list = new ArrayList<String>();
-        String query = "select parameter_name from byte_data order by id desc;";
+        String query = "select parameter_name from byte_data order by byte_data_id desc;";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;

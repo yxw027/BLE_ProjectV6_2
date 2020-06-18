@@ -300,9 +300,37 @@ public class ByteDataModel {
             message = "Something going wrong";
             //messageBGColor = "red";
         }
-        return list;
+        return list;//getParameterName
     }
-    
+      
+    public List<String> getParameterName() {
+        List<String> list = new ArrayList<String>();
+        String query = "select parameter_name from parameter order by parameter_id desc";
+        try {
+            ResultSet rset = connection.prepareStatement(query).executeQuery();
+            int count = 0;
+            while (rset.next()) {    
+                String parameter_name = rset.getString("parameter_name");
+//                String commandReq = type.substring(1, type.length()-1);
+//                String[] commandByte = commandReq.split(", ");
+//                Byte[] b = new Byte[commandByte.length];
+//                for (int i = 0; i < commandByte.length; i++) {
+//                    b[i] = Byte.parseByte(commandByte[i]);                   
+//                }
+//                String hex = bytesToHex(b);
+                list.add(parameter_name);
+                count++;
+            }
+            if (count == 0) {
+                list.add("No such Parameter Name Name exists.......");
+            }
+        } catch (Exception e) {
+            System.out.println(" ERROR inside ParameterNameModel - " + e);
+            message = "Something going wrong";
+            //messageBGColor = "red";
+        }
+        return list;//getParameterName
+    }
 //    public List<SelectionBean> showData(int lowerLimit, int noOfRowsToDisplay,String searchManufacturerName) {
 //        List<SelectionBean> list = new ArrayList<SelectionBean>();
 //         String addQuery = " LIMIT " + lowerLimit + ", " + noOfRowsToDisplay;

@@ -16,7 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+//import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DELL
  */
-@WebServlet(name = "CommandCrcMapController", urlPatterns = {"/CommandCrcMapController"})
+//@WebServlet(name = "CommandCrcMapController", urlPatterns = {"/CommandCrcMapController"})
 public class CommandCrcMapController extends HttpServlet {
 
     /**
@@ -184,7 +184,7 @@ public class CommandCrcMapController extends HttpServlet {
         request.setAttribute("searchCrctype",searchCrctype );
         request.setAttribute("message", comcrcModel.getMessage());
         request.setAttribute("msgBgColor", comcrcModel.getMsgBgColor());
-        request.getRequestDispatcher("/commandcrcmapping").forward(request, response);
+        request.getRequestDispatcher("/view/dataEntry/commandcrcmapping.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -98,7 +98,7 @@
                             </tbody>
                         </table>
                         <input  type="hidden" name="sub_byte_division" value="${sub_byte_division}" >
-                        <input  type="hidden" name="parameter_name" id="bitwise" value="${parameter_name}" >
+                        <input  type="hidden" name="parameter_name" id="parameter_name1" value="${parameter_name}" >
                         <input  type="hidden" name="byte_data_id" id="byte_data_id" value="${byte_data_id}" >
                         <div style="padding-top: 10px;" align="center">
                             <input class="button" type="submit" id="save" name="task" value="Save">
@@ -114,18 +114,36 @@
 
             function autocompleteMethod(id, count) {
                 debugger;
-                if (id === "parameter") {
-                    $("#parameter" + count).autocomplete("SubByteDivision", {
-                        extraParams: {
-                            action1: function () {
-                                return "getParameter";
-                            }
-                        }
-                    });
-
-                }
+//              //  if (id === "parameter_name") {
+//                    $("#parameter_name2" + count).autocomplete("SubByteDivision", {
+//                        extraParams: {
+//                            action1: function () {
+//                                return "getParameter";
+//                            }
+//                        }
+//                    });
+//
+//               // }
+ $("#parameter_name2"+ count).autocomplete("SubByteDivisionController", {
+            extraParams: {
+                action1: function() { return "getParameter"}
+            }
+        });
 
             }
+//       jQuery(function(id, count){
+//        $("#parameter_name"+ count).autocomplete("SubByteDivision", {
+//            extraParams: {
+//                action1: function() { return "getParameter"}
+//            }
+//        });
+////        $("#searchRule").autocomplete("ruleCont.do", {
+////            extraParams: {
+////                action1: function() { return "getRule"}
+////            }
+////        });       
+//
+//    });
 
             function update1(sub_byte_division_id)
             {
@@ -180,11 +198,13 @@
                     var cell3 = row.insertCell(2);
                     var element2 = document.createElement("input");
                     element2.type = "text";
-                    element2.name = "parameter_name" + i;
-                    element2.id = "parameter_name" + i;
+                    element2.name = "parameter_name2" + i;
+                    element2.id = "parameter_name2" + i;
                     element2.size = 20;
                     element2.maxLength = 20;
                     element2.value = "";
+               
+                    element2.setAttribute("onkeyup", 'autocompleteMethod("parameter_name2",' + i + ')');
                     cell3.appendChild(element2);
 
                     var cell4 = row.insertCell(3);

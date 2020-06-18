@@ -257,7 +257,7 @@ a:hover{
                         <tr><td>
                                 <table align="center">
                                     <tr>
-                                        <td align="center" class="header_table" width="100%">Device Map</td>
+                                        <td align="center" class="header_table" width="100%">Command CRC Map</td>
 
                                     </tr>
                                 </table>
@@ -365,7 +365,7 @@ a:hover{
                                              <tr>
                                                 <th class="heading1">Command</th>
                                                 <td><input class="input" type="text" id="Command" name="Command" value="" size="40" disabled></td>
-                                                <td><input class="input" type="hidden" id="cmd_crcmap_id" name="cmd_crcmap_id" value="" ></td>
+                                                <input class="input" type="hidden" id="cmd_crcmap_id" name="cmd_crcmap_id" value="" >
                                             </tr>
                                             <tr>
                                                 <th class="heading1">CrcType</th>
