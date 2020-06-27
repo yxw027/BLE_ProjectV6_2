@@ -3,15 +3,22 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/BLEon%20git/BLE_Project/web/view/response/response_byte_data.jsp</file>
-            <file>file:/F:/BLEon%20git/BLE_Project/src/java/com/ble/response/controller/ResponseController.java</file>
-            <file>file:/F:/BLEon%20git/BLE_Project/web/WEB-INF/web.xml</file>
+            <file>file:/F:/BLEon%20git/BLE_Project/web/view/response/fixed_response_value.jsp</file>
+            <file>file:/F:/BLEon%20git/BLE_Project/web/view/dataEntry/byte_data.jsp</file>
+            <file>file:/F:/BLEon%20git/BLE_Project/web/view/response/response_sub_division_selection.jsp</file>
+            <file>file:/F:/BLEon%20git/BLE_Project/web/view/response/response_sub_byte_division.jsp</file>
+            <file>file:/F:/BLEon%20git/BLE_Project/web/view/dataEntry/sub_division_selection.jsp</file>
             <file>file:/F:/BLEon%20git/BLE_Project/web/view/response/response.jsp</file>
-            <file>file:/F:/BLEon%20git/BLE_Project/web/view/command.jsp</file>
+            <file>file:/F:/BLEon%20git/BLE_Project/web/view/response/fixed_response.jsp</file>
+            <file>file:/F:/BLEon%20git/BLE_Project/web/view/response/response_byte_data.jsp</file>
+            <file>file:/F:/BLEon%20git/BLE_Project/web/view/dataEntry/selection_value.jsp</file>
+            <file>file:/F:/BLEon%20git/BLE_Project/web/view/dataEntry/sub_byte_division.jsp</file>
+            <file>file:/F:/BLEon%20git/BLE_Project/web/view/dataEntry/input_command.jsp</file>
+            <file>file:/F:/BLEon%20git/BLE_Project/src/java/com/ble/response/model/ResponseSubByteDivisionModel.java</file>
             <file>file:/F:/BLEon%20git/BLE_Project/src/java/com/ble/response/controller/ResponseSubByteDivisionController.java</file>
-            <file>file:/F:/BLEon%20git/BLE_Project/src/java/com/ble/response/controller/ResponseByteDataController.java</file>
-            <file>file:/F:/BLEon%20git/BLE_Project/src/java/com/ble/response/model/ResponseByteDataModel.java</file>
-            <file>file:/F:/BLEon%20git/BLE_Project/src/java/com/ble/command/controller/SelectionController.java</file>
+            <file>file:/F:/BLEon%20git/BLE_Project/web/view/response/response_crc_mapping.jsp</file>
+            <file>file:/F:/BLEon%20git/BLE_Project/web/view/response/variable_response_input.jsp</file>
+            <file>file:/F:/BLEon%20git/BLE_Project/web/view/dataEntry/selection_command.jsp</file>
         </group>
     </open-files>
 </project-private>

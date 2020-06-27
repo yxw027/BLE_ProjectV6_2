@@ -67,7 +67,7 @@
                                     
 
                                     <th class="heading">Remark</th>
-                                    <th class="heading">Action</th>
+<!--                                    <th class="heading">Action</th>-->
                                 </tr>
                                 <c:forEach var="list" items="${requestScope['databyteListById']}" varStatus="loopCounter">
                                     <tr>
@@ -84,7 +84,7 @@
                                         
                                         <td><input type="text" name="remark${loopCounter.count}" maxlength="8" size="20" id="remark{loopCounter.count}" value="${list.remark}" ></td>
 
-                                        <td><input type="submit" class ="button" name="task"  value="update"></td>
+<!--                                        <td><input type="submit" class ="button" name="task"  value="update"></td>-->
 
                                     </tr>
 

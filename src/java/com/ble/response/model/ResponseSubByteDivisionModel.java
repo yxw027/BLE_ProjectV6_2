@@ -241,9 +241,11 @@ private Connection connection;
         return type;
     }
     
+    
     public List<String> getParameterName() {
         List<String> list = new ArrayList<String>();
-        String query = "select parameter_name from byte_data_response order by byte_data_response_id desc;";
+//        String query = "select parameter_name from byte_data_response order by byte_data_response_id desc;";
+  String query = "select parameter_name from parameter order by parameter_id desc;";
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
