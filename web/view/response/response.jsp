@@ -264,14 +264,20 @@
         document.forms['redirectFixedResponse'].submit();
 
     }
-       function variable(variable_response,response_id) {
+       function variable(bitwise_response,response_id) {
            debugger;
-        document.getElementById("variable_response2").value = variable_response;
+        document.getElementById("bitwise2").value = bitwise_response;
         document.getElementById("response_id2").value = response_id;
         document.forms['redirectByte'].submit();
 
     }
+  function bits(bitwise,response_id) {
+           debugger;
+        document.getElementById("bitwise2").value = bitwise;
+        document.getElementById("command_id2").value = response_id;
+        document.forms['redirectByte'].submit();
 
+    }
 </script>
 <style>
 a:hover{
@@ -356,7 +362,7 @@ a:hover{
                                
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.fixed_response} <a href="#" onclick="fixed('${response.fixed_response}','${response.response}', '${response.response_id}');">(View Fixed Response)</a></td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.variable_response} <a href="#" onclick="inputPopup('VariableResponseCont',${response.variable_response},${response.response_id});return false" id="input_button">View Input</a></td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.bitwise_response} <a href="#" onclick="bits('${divisionTypeBean.bitwise}','${divisionTypeBean.command_id}');">View Bitwise</a></td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.bitwise_response} <a href="#" onclick="variable('${response.bitwise_response}','${response.response_id}');">View Bitwise</a></td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.data_extract_type} </td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.format}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${response.remark}</td>
@@ -509,8 +515,8 @@ a:hover{
             <input type="hidden" id="response1" name="response1" value="">
             <input type="hidden" id="response_id1" name="response_id1" value="">
 </form>
-<form name="redirectByte" method="post" action="VariableResponseCont" target="_blank">
-            <input type="hidden" id="variable_response2" name="variable_response2" value="">
+<form name="redirectByte" method="post" action="ResponseByteDataController" target="_blank">
+            <input type="hidden" id="bitwise2" name="bitwise2" value="">
             <input type="hidden" id="response_id2" name="response_id2" value="">
 </form>
 

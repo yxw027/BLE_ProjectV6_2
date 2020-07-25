@@ -1,8 +1,9 @@
 <%-- 
-    Document   : selection_command
-    Created on : 19 Sep, 2019, 4:17:59 PM
-    Author     : apogee
+    Document   : response_sub_byte_division
+    Created on : Jun 15, 2020, 5:41:34 PM
+    Author     : user
 --%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -38,7 +39,7 @@
             </tr>
             <tr style="font-size:larger ;font-weight: 700;" align="center">
                 <td>
-                    "${parameter_name}" Byte Data Details
+                    "${parameter_name}" Response Byte Data Details
                 </td>
             </tr>
 
@@ -49,19 +50,19 @@
             </tr>
             <tr>
                 <td>
-                    <form name="form1" id ="form1" action="SubByteDivisionController" method="post" >
+                    <form name="form1" id ="form1" action="ResponseSubByteDivisionController" method="post" >
                         <table id="dataTable" style="border-collapse: collapse;" border="1" width="100%" align="center">
                             <tbody>
                                 <tr>
                                     <th class="heading">S.No.</th>
                                     <th class="heading">Byte Data Parameter</th> 
-                                    <th class="heading">Parameter</th>       
+                                    <th class="heading">Sub Byte Parameter</th>       
                                     <c:choose>        
                                         <c:when test="${fn:length(sub_byte_divisionListById) > 0}">            
                                             <th class="heading" colspan="2" style="min-width:267px;">Sub-Division Selection Number</th>
                                         </c:when>        
                                         <c:otherwise>
-                                            <th class="heading" >Sub-Division Selection Number</th>
+                                            <th class="heading" >Response Sub-Division Selection Number</th>
                                         </c:otherwise>
                                     </c:choose>
                                     
@@ -75,12 +76,12 @@
 
                                         <td><input type="text" name="s_no${loopCounter.count}" id="s_no${loopCounter.count}" size="10" value="${loopCounter.count}" readonly>
                                             <input type="hidden" name="count" maxlength="8" size="5" id="count" value="${loopCounter.count}">
-                                            <input type="hidden" name="sub_byte_division_id${loopCounter.count}" maxlength="8" size="20" id="sub_byte_division_id${loopCounter.count}" value="${list.sub_byte_division_id}"></td>
+                                            <input type="hidden" name="response_sub_byte_division_id${loopCounter.count}" maxlength="8" size="20" id="response_sub_byte_division_id${loopCounter.count}" value="${list.response_sub_byte_division_id}"></td>
                                         <td><input type="text" name="byte_parameter_name${loopCounter.count}" maxlength="8" size="20" id="byte_parameter_name${loopCounter.count}" value="${list.parameter_name_byte}" ></td>
                                         <td><input type="text" name="parameter_name${loopCounter.count}" maxlength="20" size="20" id="parameter_name${loopCounter.count}" value="${list.parameter_name}" ></td>
 
                                         <td><input type="text" name="sub_division_no${loopCounter.count}" maxlength="50" size="5" id="sub_division_no${loopCounter.count}" value="${list.sub_division_no}" onkeyup="check(value)"></td>
-                                        <td><a href="#" onclick="inputPopup('SubDivisionSelectionController', '${list.parameter_name}',${list.sub_division_no},${list.sub_byte_division_id});" id="input_button">View Sub Division Selection Value</a></td>
+                                        <td><a href="#" onclick="inputPopup('ResponseSubDivisionSelectionController', '${list.parameter_name}',${list.sub_division_no},${list.response_sub_byte_division_id});" id="input_button">View Response Sub Division Selection Value</a></td>
                                         <td><input type="text" name="start_pos${loopCounter.count}" maxlength="8" size="20" id="start_pos{loopCounter.count}" value="${list.start_pos}" ></td>
 
                                         <td><input type="text" name="no_of_bit${loopCounter.count}" maxlength="20" size="20" id="no_of_bit{loopCounter.count}" value="${list.no_of_bit}" ></td>
@@ -99,7 +100,7 @@
                         </table>
                         <input  type="hidden" name="sub_byte_division" value="${sub_byte_division}" >
                         <input  type="hidden" name="parameter_name" id="parameter_name1" value="${parameter_name}" >
-                        <input  type="hidden" name="byte_data_id" id="byte_data_id" value="${byte_data_id}" >
+                        <input  type="hidden" name="byte_data_response_id" id="byte_data_response_id" value="${byte_data_response_id}" >
                         <div style="padding-top: 10px;" align="center">
                             <input class="button" type="submit" id="save" name="task" value="Save">
                         </div>
@@ -124,7 +125,7 @@
 //                    });
 //
 //               // }
- $("#parameter_name2"+ count).autocomplete("SubByteDivisionController", {
+ $("#parameter_name2"+ count).autocomplete("ResponseSubByteDivisionController", {
             extraParams: {
                 action1: function() { return "getParameter"}
             }
@@ -145,16 +146,16 @@
 //
 //    });
 
-            function update1(sub_byte_division_id)
+            function update1(response_sub_byte_division_id)
             {
 
                 // var selection_value_no = document.getElementById('selection_update_value').value;
                 var sub_division_no = sub_division_no_update_value;
                 //alert(selection_update_value);
                 var bitwise = document.getElementById('bitwise').value;
-                var byte_id = document.getElementById('bit_id').value;
-                var queryString = "task=update&sub_byte_division_id=" + sub_byte_division_id + "&sub_division_no=" + sub_division_no + "&bitwise=" + bitwise + "&byte_id=" + byte_id;
-                var url = "SubByteDivision?" + queryString;
+                var res_byte_id = document.getElementById('bit_id').value;
+                var queryString = "task=update&response_sub_byte_division_id=" + response_sub_byte_division_id + "&sub_division_no=" + sub_division_no + "&bitwise=" + bitwise + "&res_byte_id=" + res_byte_id;
+                var url = "ResponseSubByteDivisionController?" + queryString;
                 //alert(url);
                 window.open(url);
             }
@@ -252,13 +253,13 @@
 
 
             }
-            function inputPopup(url, parameter, sub_division_no, sub_byte_division_id) {
+            function inputPopup(url, parameter, sub_division_no, response_sub_byte_division_id) {
                 debugger;
                 var popup_height = 580;
                 var popup_width = 900;
                 var popup_top_pos = (screen.availHeight / 2) - (popup_height / 2);
                 var popup_left_pos = (screen.availWidth / 2) - (popup_width / 2);
-                url = url + "?parameter_name=" + parameter + "&sub_division_no=" + sub_division_no + "&sub_byte_division_id=" + sub_byte_division_id;
+                url = url + "?parameter_name=" + parameter + "&sub_division_no=" + sub_division_no + "&response_sub_byte_division_id=" + response_sub_byte_division_id;
                 //alert(url);
                 var window_features = "left=" + popup_left_pos + ", top=" + popup_top_pos + ", width=" + popup_width + ", height=" + popup_height + ", resizable=no, scrollbars=yes, status=no, dialog=yes, dependent=yes";
                 popupWindow = window.open(url, 'Selection Window', window_features);
@@ -323,3 +324,4 @@
 
 </body>
 </html>
+

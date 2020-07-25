@@ -1,8 +1,9 @@
 <%-- 
-    Document   : selection_command
-    Created on : 19 Sep, 2019, 4:17:59 PM
-    Author     : apogee
+    Document   : response_byte_data
+    Created on : Jun 15, 2020, 3:52:49 PM
+    Author     : user
 --%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -27,7 +28,7 @@
             <body>
         </c:when>        
         <c:otherwise>
-            <body onload="addRow('dataTable',${bitwise}, '${command}')">
+            <body onload="addRow('dataTable',${bitwise}, '${response1}')">
         </c:otherwise>
     </c:choose>
 
@@ -38,7 +39,7 @@
             </tr>
             <tr style="font-size:larger ;font-weight: 700;" align="center">
                 <td>
-                    "${command}" Byte Details
+                    "${response1}" Response Byte Details
                 </td>
             </tr>
 
@@ -49,12 +50,12 @@
             </tr>
             <tr>
                 <td>
-                    <form name="form1" id ="form1" action="ByteDataController" method="post" >
+                    <form name="form1" id ="form1" action="ResponseByteDataController" method="post" >
                         <table id="dataTable" style="border-collapse: collapse;" border="1" width="100%" align="center">
                             <tbody>
                                 <tr>
                                     <th class="heading">S.No.</th>
-                                    <th class="heading">Command</th>
+                                    <th class="heading">Response</th>
                                     <th class="heading">Parameter Name</th>     
                                     <c:choose> 
                                         <c:when test="${fn:length(databyteListById) > 0}">            
@@ -72,14 +73,14 @@
                                 <c:forEach var="list" items="${requestScope['databyteListById']}" varStatus="loopCounter">
                                     <tr>
                                         <td><input type="text" name="s_no${loopCounter.count}" id="s_no${loopCounter.count}" size="5" value="${loopCounter.count}" readonly>
-                                            <input type="hidden" name="byte_data_id${loopCounter.count}" maxlength="8" size="5" id="byte_data_id${loopCounter.count}" value="${list.byte_data_id}">
+                                            <input type="hidden" name="byte_data_response_id${loopCounter.count}" maxlength="8" size="5" id="byte_data_response_id${loopCounter.count}" value="${list.byte_data_response_id}">
                                             <input type="hidden" name="count" maxlength="8" size="5" id="count" value="${loopCounter.count}"></td>
-                                        <td><input type="text" name="command_name${loopCounter.count}" maxlength="50" size="80" id="command_name${loopCounter.count}" value="${list.command_name}" readonly></td>
+                                        <td><input type="text" name="response_name${loopCounter.count}" maxlength="50" size="80" id="response_name${loopCounter.count}" value="${list.response_name}" readonly></td>
                                         <td><input type="text" name="parameter_name${loopCounter.count}" maxlength="8" size="20" id="parameter_name${loopCounter.count}" value="${list.parameter_name}"></td>
 
                                         <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >
                                             <input type="text" name="sub_byte_division${loopCounter.count}" maxlength="8" size="5" id="sub_byte_division${loopCounter.count}" value="${list.sub_byte_division}"></td> 
-                                        <td><a href="#" onclick="bits('${list.parameter_name}',${list.sub_byte_division},${list.byte_data_id});">(sub byte division)</a>
+                                        <td><a href="#" onclick="bits('${list.parameter_name}',${list.sub_byte_division},${list.byte_data_response_id});">(response sub byte division)</a>
                                         </td>
                                         
                                         <td><input type="text" name="remark${loopCounter.count}" maxlength="8" size="20" id="remark{loopCounter.count}" value="${list.remark}" ></td>
@@ -94,8 +95,8 @@
                             </tbody>
                         </table>
                         <input  type="hidden" name="bitwise2" id="bitwise2" value="${bitwise}" >
-                        <input  type="hidden" name="command_name2" id="command_name2" value="${command}" >
-                        <input  type="hidden" name="command_id2" id="command_id" value="${command_id}" >
+                        <input  type="hidden" name="response_name2" id="response_name2" value="${response1}" >
+                        <input  type="hidden" name="response_id2" id="command_id" value="${response_id}" >
                         <div style="padding-top: 10px;" align="center">
                             <input class="button" type="submit" id="save" name="task" value="Save">
                         </div>
@@ -114,17 +115,17 @@
 
             function autocompleteMethod(id, count) {
                 debugger;
-                if (id === "command_name") {
-                    $("#command_name" + count).autocomplete("ByteDataController", {
+                if (id === "response_name") {
+                    $("#response_name" + count).autocomplete("ResponseByteDataController", {
                         extraParams: {
                             action1: function () {
-                                return "getCommand";
+                                return "getResponse";
                             }
                         }
                     });
                     debugger;
                 } else if (id === "parameter_name") {
-                    $("#parameter_name" + count).autocomplete("ByteDataController", {
+                    $("#parameter_name" + count).autocomplete("ResponseByteDataController", {
                         extraParams: {
                             action1: function () {
                                 return "getParameter_name";
@@ -136,7 +137,7 @@
 
             }
                 jQuery(function(id, count){
-        $("#parameter_name"+ count).autocomplete("ByteDataController", {
+        $("#parameter_name"+ count).autocomplete("ResponseByteDataController", {
             extraParams: {
                 action1: function() { return "getParameter_name"}
             }
@@ -149,7 +150,7 @@
 
     });
 
-            function addRow(tableID, bitwise, command_name) {
+            function addRow(tableID, bitwise, response_name) {
                 debugger;
 
                 $("#message").html("");
@@ -171,11 +172,11 @@
                     var cell2 = row.insertCell(1);
                     var element2 = document.createElement("input");
                     element2.type = "text";
-                    element2.name = "command_name" + i;
-                    element2.id = "command_name" + i;
+                    element2.name = "response_name" + i;
+                    element2.id = "response_name" + i;
                     element2.size = 80;
                     element2.maxLength = 2;
-                    element2.value = command_name;
+                    element2.value = response_name;
                     //element2.setAttribute("onkeyup", 'autocompleteMethod("command_name",' + i + ')');
                     cell2.appendChild(element2);
 
@@ -214,13 +215,13 @@
 
 
             }
-            function inputPopup(url, parameter_name, sub_byte_division, byte_data_id) {
+            function inputPopup(url, parameter_name, sub_byte_division, byte_data_response_id) {
                 debugger;
                 var popup_height = 580;
                 var popup_width = 900;
                 var popup_top_pos = (screen.availHeight / 2) - (popup_height / 2);
                 var popup_left_pos = (screen.availWidth / 2) - (popup_width / 2);
-                url = url + "?parameter_name=" + parameter_name + "&sub_byte_division=" + sub_byte_division + "&byte_data_id=" + byte_data_id;
+                url = url + "?parameter_name=" + parameter_name + "&sub_byte_division=" + sub_byte_division + "&byte_data_response_id=" + byte_data_response_id;
                 alert(url);
                 var window_features = "left=" + popup_left_pos + ", top=" + popup_top_pos + ", width=" + popup_width + ", height=" + popup_height + ", resizable=no, scrollbars=yes, status=no, dialog=yes, dependent=yes";
                 popupWindow = window.open(url, 'Selection Window', window_features);
@@ -276,11 +277,11 @@
 
 
 
-            function bits(parameter_name, sub_byte_division, byte_data_id) {
+            function bits(parameter_name, sub_byte_division, byte_data_response_id) {
                 debugger;
                 document.getElementById("parameter_name").value = parameter_name;
                 document.getElementById("sub_byte_division").value = sub_byte_division;
-                document.getElementById("byte_data_id").value = byte_data_id;
+                document.getElementById("byte_data_response_id").value = byte_data_response_id;
                 document.forms['redirectBits'].submit();
 
             }
@@ -289,10 +290,10 @@
         a:hover{
             background-color: yellow;
         }</style>
-    <form name="redirectBits" method="post" action="SubByteDivisionController" target="_blank">
+    <form name="redirectBits" method="post" action="ResponseSubByteDivisionController" target="_blank">
         <input type="hidden" id="parameter_name" name="parameter_name" value="">
         <input type="hidden" id="sub_byte_division" name="sub_byte_division" value="">
-        <input type="hidden" id="byte_data_id" name="byte_data_id" value="">
+        <input type="hidden" id="byte_data_response_id" name="byte_data_response_id" value="">
     </form>
 </body>
 </html>

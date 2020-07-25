@@ -75,7 +75,7 @@
                                         <td><input type="text" name="start_pos${loopCounter.count}" maxlength="50" size="80" id="start_pos${loopCounter.count}" value="${list.start_pos}"></td>
                                         <td><input type="text" name="no_of_byte${loopCounter.count}" maxlength="50" size="80" id="no_of_byte${loopCounter.count}" value="${list.no_of_byte}"></td>
                                         <td><input type="text" name="remark${loopCounter.count}" maxlength="8" size="20" id="remark{loopCounter.count}" value="${list.remark}" ></td>
-                                           <td><input type="submit" class="button" name="task"  value="update"></td>
+<!--                                           <td><input type="submit" class="button" name="task"  value="update"></td>-->
 <!--                                      
                                         <td><input type="submit" class="button" name="task"  value="update" ></td>
 <!--                                                                        -->

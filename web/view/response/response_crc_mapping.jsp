@@ -1,14 +1,9 @@
 <%-- 
-    Document   : commandcrcmapping
-    Created on : 12 Feb, 2020, 3:25:10 PM
-    Author     : DELL
+    Document   : response_crc_mapping
+    Created on : Jun 16, 2020, 1:31:17 PM
+    Author     : user
 --%>
 
-<%-- 
-    Document   : device_oprtn_chartstc_map
-    Created on : Jan 8, 2019, 4:44:35 PM
-    Author     : jpss
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -26,23 +21,23 @@
  
 
 jQuery(function () {
-        $("#searchCommand").autocomplete("CommandCrcMapController", {
+        $("#searchResponse").autocomplete("ResponseCrcTypeMapping", {
             extraParams: {
                 action1: function () {
-                    return "getCommand"
+                    return "getResponse"
                 }
             }
         });
         
-         $("#Command").autocomplete("CommandCrcMapController", {
+         $("#response").autocomplete("ResponseCrcTypeMapping", {
             extraParams: {
                 action1: function () {
-                    return "getCommand"
+                    return "getResponse"
                 }
             }
         });
         
-         $("#searchCrctype").autocomplete("CommandCrcMapController", {
+         $("#searchCrctype").autocomplete("ResponseCrcTypeMapping", {
             extraParams: {
                 action1: function () {
                     return "getCrcType"
@@ -50,7 +45,7 @@ jQuery(function () {
             }
         });
         
-         $("#crctype").autocomplete("CommandCrcMapController", {
+         $("#crctype").autocomplete("ResponseCrcTypeMapping", {
             extraParams: {
                 action1: function () {
                     return "getCrcType"
@@ -70,7 +65,7 @@ jQuery(function () {
     function makeEditable(id) {
         debugger;
        
-        document.getElementById("Command").disabled = false;
+        document.getElementById("response").disabled = false;
         document.getElementById("crctype").disabled = false;   
         document.getElementById("remark").disabled = false; 
         document.getElementById("save").disabled = false;
@@ -81,14 +76,14 @@ jQuery(function () {
         if(id === 'new') {
        
             document.getElementById("message").innerHTML = "";      // Remove message
-            document.getElementById("Command").focus();
+            document.getElementById("response").focus();
             $("#message").html("");
             document.getElementById("cancel").disabled = true;
             document.getElementById("save_As").disabled = true;
             document.getElementById("save").disabled = false;
 
             setDefaultColor(document.getElementById("noOfRowsTraversed").value, 3);
-            document.getElementById("Command").focus();
+            document.getElementById("response").focus();
 
         }
         if(id === 'edit'){
@@ -163,8 +158,8 @@ jQuery(function () {
 
         setDefaultColor(noOfRowsTraversed, noOfColumns);        
         var t1id = "t1c";        
-        document.getElementById("cmd_crcmap_id").value = document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
-        document.getElementById("Command").value = document.getElementById(t1id + (lowerLimit + 2)).innerHTML;
+        document.getElementById("response_crcmap_id").value = document.getElementById(t1id + (lowerLimit + 0)).innerHTML;
+        document.getElementById("response").value = document.getElementById(t1id + (lowerLimit + 2)).innerHTML;
         document.getElementById("crctype").value = document.getElementById(t1id + (lowerLimit + 3)).innerHTML;
          document.getElementById("remark").value = document.getElementById(t1id + (lowerLimit + 4)).innerHTML;
 //           document.getElementById("is_super_child").value = document.getElementById(t1id + (lowerLimit + 5)).innerHTML;
@@ -257,19 +252,19 @@ a:hover{
                         <tr><td>
                                 <table align="center">
                                     <tr>
-                                        <td align="center" class="header_table" width="100%">Response Crc Map</td>
+                                        <td align="center" class="header_table" width="100%">Response CRC Map</td>
 
                                     </tr>
                                 </table>
                             </td></tr>
                         <tr>
                             <td> <div align="center">
-                                    <form name="form0" method="POST" action="CommandCrcMapController">
+                                    <form name="form0" method="POST" action="ResponseCrcTypeMapping">
                                         <table align="center" class="heading1" width="600">
                                             
                                             <tr>
                                               
-                                                <td>Command<input class="input" type="text" id="searchCommand" name="searchCommand" value="${searchCommand}" size="20" ></td>
+                                                <td>Response<input class="input" type="text" id="searchResponse" name="searchResponse" value="${searchResponse}" size="20" ></td>
                                                 <td>Crc Type<input class="input" type="text" id="searchCrctype" name="searchCrctype" value="${searchCrctype}" size="20" ></td>
 <!--                                                                                          -->
                                                 <td><input class="button" type="submit" name="task" id="searchIn" value="Search"></td>
@@ -282,13 +277,13 @@ a:hover{
                         </tr>
                         <tr>
                             <td align="center">
-                                <form name="form1" method="POST" action="CommandCrcMapController">
+                                <form name="form1" method="POST" action="ResponseCrcTypeMapping">
                                     <DIV class="content_div">
                                         <table id="table1" width="600"  border="1"  align="center" class="content">
                                             
                                             <tr>
                                                 <th class="heading">S.No.</th>
-                                                <th class="heading">Command Name</th>
+                                                <th class="heading">Response Name</th>
                                                 <th class="heading">CRC Type</th>
                                                 <th class="heading">Remark</th>
                                             </tr>
@@ -296,9 +291,9 @@ a:hover{
                                             <c:forEach var="crcmap" items="${requestScope['cmdmapList']}"  varStatus="loopCounter">
                                                 <tr  class="${loopCounter.index % 2 == 0 ? 'even': 'odd'}" >
                                                     
-                                                   <td id="t1c${IDGenerator.uniqueID}" style="display:none" onclick="fillColumns(id)">${crcmap.command_crc_map_id}</td>
+                                                   <td id="t1c${IDGenerator.uniqueID}" style="display:none" onclick="fillColumns(id)">${crcmap.response_crc_map_id}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}" onclick="fillColumns(id)" align="center">${lowerLimit - noOfRowsTraversed + loopCounter.count}</td>
-                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${crcmap.short_hand}</td>
+                                                    <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${crcmap.response}</td>
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${crcmap.crc_type}</td>
                                                     
                                                     <td id="t1c${IDGenerator.uniqueID}"  onclick="fillColumns(id)" >${crcmap.remark}</td> 
@@ -344,7 +339,7 @@ a:hover{
                                             <!--- These hidden fields "lowerLimit", and "noOfRowsTraversed" belong to form1 of table1. -->
                                             <input type="hidden" name="lowerLimit" value="${lowerLimit}">
                                             <input type="hidden" id="noOfRowsTraversed" name="noOfRowsTraversed" value="${noOfRowsTraversed}">
-                                            <input  type="hidden" id="searchCommand" name="searchCommand" value="${searchCommand}" >
+                                            <input  type="hidden" id="searchResponse" name="searchResponse" value="${searchResponse}" >
                       
                                             <input type="hidden"  id="searchCrctype" name="searchCrctype" value="${searchCrctype}" >
                                         </table></DIV>
@@ -355,7 +350,7 @@ a:hover{
                         <tr>
                             <td align="center">
                                 <div>
-                                    <form name="form2" method="POST" action="CommandCrcMapController" onsubmit="return verify()">
+                                    <form name="form2" method="POST" action="ResponseCrcTypeMapping" onsubmit="return verify()">
                                         <table id="table2"  class="content" border="0"  align="center" width="600">
                                             <tr id="message">
                                                 <c:if test="${not empty message}">
@@ -363,9 +358,9 @@ a:hover{
                                                 </c:if>
                                             </tr>
                                              <tr>
-                                                <th class="heading1">Command</th>
-                                                <td><input class="input" type="text" id="Command" name="Command" value="" size="40" disabled></td>
-                                                <td><input class="input" type="hidden" id="cmd_crcmap_id" name="cmd_crcmap_id" value="" ></td>
+                                                <th class="heading1">Response</th>
+                                                <td><input class="input" type="text" id="response" name="response" value="" size="40" disabled>
+                                                <input class="input" type="hidden" id="response_crcmap_id" name="response_crcmap_id" value="" ></td>
                                             </tr>
                                             <tr>
                                                 <th class="heading1">CrcType</th>
@@ -395,7 +390,7 @@ a:hover{
                                             <input type="hidden" name="lowerLimit" value="${lowerLimit}">
                                             <input type="hidden" name="noOfRowsTraversed" value="${noOfRowsTraversed}">
                                             <input type="hidden" id="clickedButton" value="">
-                                            <input type="hidden"  name="searchCommand" value="${searchCommand}" >
+                                            <input type="hidden"  name="searchResponse" value="${searchResponse}" >
  
                                             <input type="hidden"  name="searchCrctype" value="${searchCrctype}" >
                                         </table>
@@ -410,4 +405,5 @@ a:hover{
             <tr><td><%@include file="/layout/footer.jsp" %></td> </tr>
         </table>
     </body>
+
 

@@ -5,7 +5,7 @@
  */
 package com.ble.response.controller;
 
-import com.ble.command.bean.CommandBean;
+
 import com.ble.response.bean.Response;
 import com.ble.response.model.ResponseModel;
 import com.ble.util.UniqueIDGenerator;
