@@ -26,6 +26,9 @@ public class BLEWebServicesModel {
     private String msgBgColor;
     private final String COLOR_OK = "yellow";
     private final String COLOR_ERROR = "red";
+    public static String reg_no25;
+    public static String pass25;
+    public static int device_id25;
 
     public JSONArray getManufacturerRecords() {
         JSONArray rowData = new JSONArray();
@@ -618,28 +621,82 @@ public class BLEWebServicesModel {
         return rowData;
     }
 
-    public String saveDeviceReg(String device_type, String manu_name, String device_name, String device_no) {
+//    public String saveDeviceReg(String device_type, String manu_name, String device_name, String device_no) {
+//        String status = "";
+//        int device_registration_id = 0;
+//        int manufacture_id = getManufactureId(manu_name);
+//        int device_type_id = getDeviceTypeId(device_type);
+//        int model_id = getModelId(device_name, device_no);
+//        int device_id = getDeviceId(manufacture_id, device_type_id, model_id);
+//        String lat_re_no = getLatestRegNo();
+//        int update_reg_no = Integer.parseInt(lat_re_no.split("_")[1]) + 1;
+//        String reg_no1 = "D_" + update_reg_no;
+//        Random random = new Random();
+//        int rand_int1 = random.nextInt(100000);
+//        String pass = "P_" + rand_int1;
+//        String query = " insert into device_registration(device_id,reg_no,password,remark)"
+//                + " values(?,?,?,?) ";
+//        int rowsAffected = 0;
+//        try {
+//            // java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
+//            PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query);
+//            pstmt.setInt(1, device_id);
+//            pstmt.setString(2, reg_no1);
+//            pstmt.setString(3, pass);
+//            pstmt.setString(4, "");
+////            pstmt.setString(5,deviceRegistrationBean.getRemark());
+//            rowsAffected = pstmt.executeUpdate();
+////            ResultSet rs = pstmt.getGeneratedKeys();
+////           if(rs.next()){
+////               device_registration_id=rs.getInt(1);
+////           }
+//        } catch (Exception e) {
+//            System.out.println("Error while inserting record...." + e);
+//        }
+//        if (rowsAffected > 0) {
+//            saveDeviceAllocationStratus(device_registration_id);
+//            status = device_id + "," + reg_no1 + "," + pass;
+//            message = "Record saved successfully.";
+//            msgBgColor = COLOR_OK;
+//        } else {
+//            message = "Cannot save the record, some error.";
+//            msgBgColor = COLOR_ERROR;
+//        }
+//        return status;
+//    }
+     public String saveDeviceReg(String device_type, String manu_name, String device_name, String device_no) {
         String status = "";
         int device_registration_id = 0;
         int manufacture_id = getManufactureId(manu_name);
         int device_type_id = getDeviceTypeId(device_type);
         int model_id = getModelId(device_name, device_no);
-        int device_id = getDeviceId(manufacture_id, device_type_id, model_id);
+        device_id25 = getDeviceId(manufacture_id, device_type_id, model_id);
         String lat_re_no = getLatestRegNo();
         int update_reg_no = Integer.parseInt(lat_re_no.split("_")[1]) + 1;
-        String reg_no1 = "D_" + update_reg_no;
+         reg_no25 = "D_" + update_reg_no;
         Random random = new Random();
         int rand_int1 = random.nextInt(100000);
-        String pass = "P_" + rand_int1;
+        pass25 = "P_" + rand_int1;
+       
+            status = device_id25 + "," + reg_no25 + "," + pass25;
+         
+        return status;
+    }
+     public String saveDeviceRegConformation(String device_id, String reg_no, String password) {
+        String status = "";
+        int device_registration_id = 0;
+         int device_id1=0;
+        device_id1=Integer.parseInt((device_id).trim());
+      
         String query = " insert into device_registration(device_id,reg_no,password,remark)"
                 + " values(?,?,?,?) ";
         int rowsAffected = 0;
         try {
             // java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query);
-            pstmt.setInt(1, device_id);
-            pstmt.setString(2, reg_no1);
-            pstmt.setString(3, pass);
+            pstmt.setInt(1, device_id1);
+            pstmt.setString(2, reg_no);
+            pstmt.setString(3, password);
             pstmt.setString(4, "");
 //            pstmt.setString(5,deviceRegistrationBean.getRemark());
             rowsAffected = pstmt.executeUpdate();
@@ -652,7 +709,7 @@ public class BLEWebServicesModel {
         }
         if (rowsAffected > 0) {
             saveDeviceAllocationStratus(device_registration_id);
-            status = device_id + "," + reg_no1 + "," + pass;
+            status = device_id + "," + reg_no + "," + password;
             message = "Record saved successfully.";
             msgBgColor = COLOR_OK;
         } else {
@@ -1119,9 +1176,14 @@ String query1="select reg_no,created_at from device_registration m  where " +
         try {
             System.out.println("hii inside setConnection() method");
             Class.forName("com.mysql.jdbc.Driver");
+
           connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ble_database6", "root", "CXKyE2ZpT%HjbP!4c$");
            // connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ble_database6", "jpss_2", "jpss_1277");
 //            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ble_database7", "root", "root");
+
+         // connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ble_database6", "root", "CXKyE2ZpT%HjbP!4c$");
+           // connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ble_database6", "jpss_2", "jpss_1277");
+    
         } catch (Exception e) {
             System.out.println("BLEWebServicesModel setConnection() Error: " + e);
         }

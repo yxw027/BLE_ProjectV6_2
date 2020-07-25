@@ -244,11 +244,11 @@ PreparedStatement ps =null;
         int updateRowsAffected = 0;
         try {
              connection.setAutoCommit(false);
-//<<<<<<< HEAD
-//            PreparedStatement ps = (PreparedStatement) connection.prepareStatement(query1);
-//=======
+
+        ps = (PreparedStatement) connection.prepareStatement(query1);
+
              
-         ps = (PreparedStatement) connection.prepareStatement(query1);
+         //ps = (PreparedStatement) connection.prepareStatement(query1);
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -268,9 +268,9 @@ PreparedStatement ps =null;
                     ps.setInt(5, rev);
                     ps.setString(6, "Y");
 
-//<<<<<<< HEAD
-//                    int a = psmt.executeUpdate();
-//=======
+
+                
+
                     int a = ps.executeUpdate();
 
                  if (a > 0) {
@@ -289,7 +289,8 @@ PreparedStatement ps =null;
             ps.close();
           //  connection.setAutoCommit(true);
         } catch (SQLException ex) {
-  
+             
+
         }
          
         } 
@@ -365,14 +366,16 @@ PreparedStatement ps =null;
                 + " and dm.active = 'Y' and d.active = 'Y' and m.active = 'Y' and dt.active = 'Y' and mo.active = 'Y' and d1.active = 'Y' and m1.active = 'Y' and dt1.active = 'Y' and mo1.active = 'Y' "
                 + " AND IF('" + searchManufacturerName + "' = '', m.name LIKE '%%',m.name =?) "
                 + " AND IF('" + searchDeviceTypeName + "' = '', dt.type LIKE '%%',dt.type =?) "
+
                  + " AND IF('" + searchModelName + "' = '', mo1.device_name LIKE '%%',mo1.device_name =?) "
+
                 + addQuery;
 
         try {
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);
             pstmt.setString(1, searchManufacturerName);
             pstmt.setString(2, searchDeviceTypeName);
-            pstmt.setString(3, searchModelName);
+//            pstmt.setString(3, searchModelName);
             ResultSet rset = pstmt.executeQuery();
             while (rset.next()) {
                 DeviceMapBean deviceBean = new DeviceMapBean();

@@ -977,6 +977,7 @@ public class DeviceOperationCommandModel {
 //                + " ORDER BY dcm.order_no ASC "
 //                + addQuery;
 
+
         String query3 = "  select distinct dcm.device_command_id, "
 
                 + " dcm.device_id,dcm.remark,dcm.order_no,dcm.delay,opn.operation_name,c.command,mf.name,m.device_name,m.device_no,dt.type,dcm.short_name "
