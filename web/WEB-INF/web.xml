@@ -46,7 +46,7 @@
     </context-param>
     <context-param>
         <param-name>connectionString</param-name>
-        <param-value>jdbc:mysql://localhost:3306/ble_database6</param-value>
+        <param-value>jdbc:mysql://localhost:3306/ble_database7</param-value>
     </context-param>
     <context-param>
         <param-name>db_username</param-name>
