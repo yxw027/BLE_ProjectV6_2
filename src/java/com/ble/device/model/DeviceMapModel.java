@@ -375,7 +375,7 @@ PreparedStatement ps =null;
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query2);
             pstmt.setString(1, searchManufacturerName);
             pstmt.setString(2, searchDeviceTypeName);
-//            pstmt.setString(3, searchModelName);
+            pstmt.setString(3, searchModelName);
             ResultSet rset = pstmt.executeQuery();
             while (rset.next()) {
                 DeviceMapBean deviceBean = new DeviceMapBean();
