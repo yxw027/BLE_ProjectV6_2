@@ -34,7 +34,7 @@ public class DeviceRegistrationController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         int lowerLimit, noOfRowsTraversed, noOfRowsToDisplay = 5, noOfRowsInTable;
-        System.out.println("this is FUSE Controller....");
+        System.out.println("this is FUSE Controller....");        
         ServletContext ctx = getServletContext();
         DeviceRegistrationModel deviceRegistrationModel = new DeviceRegistrationModel();
         deviceRegistrationModel.setDriverClass(ctx.getInitParameter("driverClass"));
@@ -149,8 +149,6 @@ public class DeviceRegistrationController extends HttpServlet {
         if (buttonAction == null) {
             buttonAction = "none";
         }
-        System.out.println("searching.......... " + searchManufacturerName);
-        System.out.println("searching.......... " + searchDeviceTypeName);
 
          noOfRowsInTable = deviceRegistrationModel.getNoOfRows(searchManufacturerName,searchDeviceTypeName);
 
@@ -209,7 +207,6 @@ public class DeviceRegistrationController extends HttpServlet {
             request.setAttribute("showLast", "false");
         }
 
-        System.out.println("color is :" + deviceRegistrationModel.getMsgBgColor());
         request.setAttribute("manufacturer", request.getParameter("manufacturer"));
         request.setAttribute("device_type", request.getParameter("device_type"));
         request.setAttribute("deviceName", request.getParameter("device_name"));

@@ -38,7 +38,7 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>dash.jsp</welcome-file>
     </welcome-file-list>
     <context-param>
         <param-name>driverClass</param-name>
@@ -46,7 +46,7 @@
     </context-param>
     <context-param>
         <param-name>connectionString</param-name>
-        <param-value>jdbc:mysql://localhost:3306/ble_database7</param-value>
+        <param-value>jdbc:mysql://localhost:3306/ble2</param-value>
     </context-param>
     <context-param>
         <param-name>db_username</param-name>
@@ -59,19 +59,22 @@
         <description>	</description>
         <param-name>db_password</param-name>
         <param-value>CXKyE2ZpT%HjbP!4c$</param-value>
-        <!--<param-value>CXKyE2ZpT%HjbP!4c$</param-value>
-
-        <param-value>jpss_1277</param-value>-->
-        <!--<param-value>CXKyE2ZpT%HjbP!4c$</param-value>-->
+<!--        <param-value>root</param-value>-->
+        
     </context-param>
     <!--<ServletContainer mapping start>-->
     <servlet>
         <servlet-name>servlet Dispatcher</servlet-name>
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
         <init-param>
-            <param-name>jersey.config.server.provider.packages</param-name>
+<!--            <param-name>jersey.config.server.provider.packages</param-name>-->
+            <param-name>com.sun.jersey.config.property.packages</param-name>
             <param-value>com.ble.webService.controller</param-value>
         </init-param>
+        <init-param>
+        <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+        <param-value>true</param-value>
+    </init-param>
     </servlet>
     <servlet>
         <servlet-name>CrcTypeController</servlet-name>
@@ -714,4 +717,314 @@
         <servlet-name>ResponseSubDivisionSelectionController</servlet-name>
         <url-pattern>/ResponseSubDivisionSelectionController</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>DashboardController</servlet-name>
+        <servlet-class>com.ble.dashboard.DashboardController</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>DashboardController</servlet-name>
+        <url-pattern>/DashboardController</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>dashboardBle</servlet-name>
+        <jsp-file>/view/dashboard/dashboardBle.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dashboardBle</servlet-name>
+        <url-pattern>/dashboardBle</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>subModules</servlet-name>
+        <jsp-file>/view/dashboard/subModules.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>subModules</servlet-name>
+        <url-pattern>/subModules</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>AddModules</servlet-name>
+        <jsp-file>/view/dashboard/add_modules.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddModules</servlet-name>
+        <url-pattern>/AddModules</url-pattern>
+    </servlet-mapping>
+    
+     <servlet>
+        <servlet-name>AddDevices</servlet-name>
+        <jsp-file>/view/dashboard/addDevices.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddDevices</servlet-name>
+        <url-pattern>/AddDevices</url-pattern>
+    </servlet-mapping> 
+    
+    <servlet>
+        <servlet-name>operationName</servlet-name>
+        <jsp-file>/view/dashboard/operation_name.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>operationName</servlet-name>
+        <url-pattern>/operationName</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>commandType</servlet-name>
+        <jsp-file>/view/dashboard/command_type.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>commandType</servlet-name>
+        <url-pattern>/commandType</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>commandDetail</servlet-name>
+        <jsp-file>/view/dashboard/command_detail.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>commandDetail</servlet-name>
+        <url-pattern>/commandDetail</url-pattern>
+    </servlet-mapping>
+    
+    
+    
+    <servlet>
+        <servlet-name>AddDeviceController</servlet-name>
+        <servlet-class>com.ble.dashboard.device.AddDeviceController</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>AddDeviceController</servlet-name>
+        <url-pattern>/AddDeviceController</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>AddModulesController</servlet-name>
+        <servlet-class>com.ble.dashboard.module.AddModulesController</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>AddModulesController</servlet-name>
+        <url-pattern>/AddModulesController</url-pattern>
+    </servlet-mapping>
+    
+    
+    <!--    Work start as per suggested by Vinay Sir-->
+    
+    
+    <servlet>
+        <servlet-name>DeviceController</servlet-name>
+        <servlet-class>com.ble.dashboard.device.DeviceController</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>DeviceController</servlet-name>
+        <url-pattern>/DeviceController</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>devicesAdd</servlet-name>
+        <jsp-file>/view/dashboard/devices.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>devicesAdd</servlet-name>
+        <url-pattern>/devicesAdd</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>ManufacturerController</servlet-name>
+        <servlet-class>com.ble.dashboard.dataEntry.ManufacturerController</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>ManufacturerController</servlet-name>
+        <url-pattern>/ManufacturerController</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>manufacturer_detail</servlet-name>
+        <jsp-file>/view/dashboard/manufacturer_detail.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>manufacturer_detail</servlet-name>
+        <url-pattern>/manufacturer_detail</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>DeviceTypeController</servlet-name>
+        <servlet-class>com.ble.dashboard.dataEntry.DeviceTypeController</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>DeviceTypeController</servlet-name>
+        <url-pattern>/DeviceTypeController</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>device_type</servlet-name>
+        <jsp-file>/view/dashboard/device_type.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>device_type</servlet-name>
+        <url-pattern>/device_type</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ModelController</servlet-name>
+        <servlet-class>com.ble.dashboard.model.ModelController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ModelController</servlet-name>
+        <url-pattern>/ModelController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>modelsAdd</servlet-name>
+        <jsp-file>/view/dashboard/models.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>modelsAdd</servlet-name>
+        <url-pattern>/modelsAdd</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ModelTypeController</servlet-name>
+        <servlet-class>com.ble.dashboard.dataEntry.ModelTypeController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ModelTypeController</servlet-name>
+        <url-pattern>/ModelTypeController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>modelType</servlet-name>
+        <jsp-file>/view/dashboard/model_type.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>modelType</servlet-name>
+        <url-pattern>/modelType</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>DeviceMapController</servlet-name>
+        <servlet-class>com.ble.dashboard.dataEntry.DeviceMapController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeviceMapController</servlet-name>
+        <url-pattern>/DeviceMapController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>deviceMap</servlet-name>
+        <jsp-file>/view/dashboard/device_map.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deviceMap</servlet-name>
+        <url-pattern>/deviceMap</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>DevOpComMapController</servlet-name>
+        <servlet-class>com.ble.dashboard.Map.DevOpComMapController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DevOpComMapController</servlet-name>
+        <url-pattern>/DevOpComMapController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>devOpComMap</servlet-name>
+        <jsp-file>/view/dashboard/dev_ope_com_map.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>devOpComMap</servlet-name>
+        <url-pattern>/devOpComMap</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>OperationNameController</servlet-name>
+        <servlet-class>com.ble.dashboard.dataEntry.OperationNameController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OperationNameController</servlet-name>
+        <url-pattern>/OperationNameController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>operation_name</servlet-name>
+        <jsp-file>/view/dashboard/operation_name.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>operation_name</servlet-name>
+        <url-pattern>/operation_name</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>CommandController</servlet-name>
+        <servlet-class>com.ble.dashboard.dataEntry.CommandController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CommandController</servlet-name>
+        <url-pattern>/CommandController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>command_detail</servlet-name>
+        <jsp-file>/view/dashboard/command_detail.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>command_detail</servlet-name>
+        <url-pattern>/command_detail</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>ParameterNameController</servlet-name>
+        <servlet-class>com.ble.dashboard.dataEntry.ParameterNameController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ParameterNameController</servlet-name>
+        <url-pattern>/ParameterNameController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>parameter_name</servlet-name>
+        <jsp-file>/view/dashboard/parameter.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>parameter_name</servlet-name>
+        <url-pattern>/parameter_name</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>CommandTypeController</servlet-name>
+        <servlet-class>com.ble.dashboard.dataEntry.CommandTypeController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CommandTypeController</servlet-name>
+        <url-pattern>/CommandTypeController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>command_type</servlet-name>
+        <jsp-file>/view/dashboard/command_type.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>command_type</servlet-name>
+        <url-pattern>/command_type</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>DeviceConfigController</servlet-name>
+        <servlet-class>com.ble.dashboard.regConfig.DeviceConfigController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeviceConfigController</servlet-name>
+        <url-pattern>/DeviceConfigController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>device_configuration</servlet-name>
+        <jsp-file>/view/dashboard/device_configuration.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>device_configuration</servlet-name>
+        <url-pattern>/device_configuration</url-pattern>
+    </servlet-mapping>
+    
 </web-app>

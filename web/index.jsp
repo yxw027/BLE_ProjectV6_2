@@ -30,6 +30,9 @@
             function goToDeviceMap3() {
                 window.location = "deviceRegistrationCont.do";
             }
+            function goToDeviceMap5() {
+                window.location = "DashboardController";
+            }
         </script>
         <style>           .button {
   display: inline-block;
@@ -119,6 +122,13 @@ a:hover{
                                     <button class="button" style="vertical-align:middle" type="button" value="base_rover_configuration" name="base_rover_configuration" onclick="goToDeviceMap4()" ><span> Base/Rover Configuration </span></button>
                                 </td>
                             </tr>
+                            
+                            <tr>
+                                <td align="center">
+                                    <button class="button" style="vertical-align:middle" type="button" value="dashboard" name="dashboard" onclick="goToDeviceMap5()" ><span> Dashboard </span></button>
+                                </td>
+                            </tr>
+                            
                         </table>
                     </DIV>
                 </td>
