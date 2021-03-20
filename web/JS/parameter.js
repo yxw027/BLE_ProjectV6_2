@@ -12,9 +12,9 @@ function getParameterType(val) {
     $('#bitiwse_no_div').hide();
     $('#selection_div_start').hide();
     $('#bitwise_field_div').hide();
-    if (val == 'Selection') {
+    if (val == 'Selection' || val=='Fixed Response') {
         $('#sel_val_div').show();
-    } else if (val == 'Bitwise') {
+    } else if (val == 'Bitwise' || val=='Bitwise Response') {
         $('#bitiwse_no_div').show();
     }
 }
@@ -35,8 +35,7 @@ function getBitwiseNo(val) {
     $('#bitwise_field_div').show();
     var count = val;
     for (var i = 1; i <= 1; i++) {
-        //$('#bitwise_field_div').append('<div class="col-lg-12 bitwise_div_class" style="border:2px solid rgb(56, 165, 238, 0.5);padding:0px 0px 4px 0px" id="bitwise_div_class_' + i + '"><div class="col-lg-1" style="margin-top:5px;padding:0px 0px 0px 0px"><label style="font-size:16px;">' + i + '</label></div><div class="col-lg-5" style="margin-top:5px;padding:0px;margin-left: -15px;"></div><div class="col-lg-5" style="margin-top:5px"><label style="font-size:16px;">Sub Byte division</label></div><div class="col-lg-1" style="margin-top:5px;padding:0px;margin-left: -15px;"><input class="form-control" type="number" onchange="getSubByteDivValue(value,' + i + ');" id="sub_byte_division_' + i + '" name="sub_byte_division_' + i + '"/></div></div>');
-        $('#bitwise_field_div').append('<div class="col-lg-12 bitwise_div_class" style="border:2px solid rgb(56, 165, 238, 0.5);padding:0px 0px 4px 0px" id="bitwise_div_class_' + i + '"><div class="col-lg-1" style="margin-top:5px;padding:0px 0px 0px 0px"><label style="font-size:16px;">' + i + '</label></div><div class="col-lg-5" style="margin-top:5px;padding:0px;margin-left: -15px;"><input class="form-control myAutocompleteClass" type="text" id="bitwise_div_class_parameter_' + i + '" name="bitwise_div_class_parameter_' + i + '" placeholder="Enter Name"/></div><div class="col-lg-5" style="margin-top:5px"><label style="font-size:16px;">Sub Byte division</label></div><div class="col-lg-1" style="margin-top:5px;padding:0px;margin-left: -15px;"><input class="form-control" type="number" onchange="getSubByteDivValue(value,' + i + ');" id="sub_byte_division_' + i + '" name="sub_byte_division_' + i + '"/></div></div>');
+        $('#bitwise_field_div').append('<div class="col-lg-12 bitwise_div_class" style="border:2px solid rgb(56, 165, 238, 0.5);padding:0px 0px 4px 0px" id="bitwise_div_class_' + i + '"><div class="col-lg-1" style="margin-top:5px;padding:0px 0px 0px 0px"><label style="font-size:16px;">' + i + '</label></div><div class="col-lg-5" style="margin-top:5px;padding:0px;margin-left: -15px;"></div><div class="col-lg-5" style="margin-top:5px"><label style="font-size:16px;">Sub Byte division</label></div><div class="col-lg-1" style="margin-top:5px;padding:0px;margin-left: -15px;"><input class="form-control" type="number" onchange="getSubByteDivValue(value,' + i + ');" id="sub_byte_division_' + i + '" name="sub_byte_division_' + i + '"/></div></div>');
     }
 }
 

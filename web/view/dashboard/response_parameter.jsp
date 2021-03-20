@@ -1,6 +1,6 @@
 <%-- 
-    Document   : parameter
-    Created on : Feb 6, 2021, 9:18:45 AM
+    Document   : response_parameter
+    Created on : Mar 9, 2021, 9:18:45 AM
     Author     : saini
 --%>
 
@@ -16,7 +16,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta content="" name="description" />
         <meta content="webthemez" name="author" />
-        <title>Parameter</title>
+        <title>Response Parameter</title>
 
 
 
@@ -53,7 +53,7 @@
         <link href="css/common.css" rel="stylesheet" />
         <script src="JS/jquery.smartuploader.js"></script>
 
-        <script src="JS/parameter.js"></script>
+        <script src="JS/response_parameter.js"></script>
 
         <script type="text/javascript">
             function zoom() {
@@ -263,7 +263,7 @@
                 <div style="margin-top: -10px;">
                     <div class="col-sm-12">
                         <h2 style="color: white;font-size: 30px;margin-bottom: 13px;">
-                            <b>Parameter</b>
+                            <b>Response Parameter</b>
                         </h2>
                     </div>
                 </div>
@@ -312,7 +312,7 @@
 
 
             <div class="row" style="margin-top: 10px;margin-left: 10%;margin-right: 10%;font-size:14px ;padding:0px 15px 0px 15px" id="">
-                <form method="post" action="ParameterNameController" name="form1" style="background-color: white;">
+                <form method="post" action="ResponseParameterController" name="form1" style="background-color: white;">
 
                     <c:if test="${not empty message}">
                         <div style="font-size: 14px;width:30%;margin-left:2%;margin-top:2%;background-color: ${msgBgColor}"><b>Result: ${message}</b></div>
@@ -322,7 +322,7 @@
 
                     <div class="row">
                         <div class="col-lg-5 col_label" style="margin-top:35px">
-                            <label class="required" style="font-size:20px;">Parameter Name:</label>
+                            <label class="required" style="font-size:20px;">Response Parameter Name</label>
                         </div>
                         <div class="col-lg-5" style="margin-top:35px">                            
                             <input type="text" disabled name="parameter_name" id="parameter_name" class="form-control m-input" placeholder="Enter Parameter Name" required>
@@ -331,14 +331,11 @@
 
                     <div class="row">
                         <div class="col-lg-5 col_label">
-                            <label class="required" style="font-size:20px;">Parameter Type:</label>
+                            <label class="required" style="font-size:20px;">Response Parameter Type:</label>
                         </div>
                         <div class="col-lg-5">  
                             <select disabled id="parameter_type" name="parameter_type" class="form-control" onchange="getParameterType(this.value);">
                                 <option value="0">Select Parameter Type</option>
-                                <option value="Selection">Selection</option>
-                                <option value="Input">Input</option>
-                                <option value="Bitwise">Bitwise</option>
                                 <option value="Fixed Response">Fixed Response</option>
                                 <option value="Variable Response">Variable Response</option>
                                 <option value="Bitwise Response">Bitwise Response</option>
@@ -350,37 +347,19 @@
                         </div>                        
                     </div>
 
-                    <div class="row" id="sel_val_div" style="display:none;">
+                    <div class="row" id="fixed_sel_val_div" style="display:none;">
                         <div class="col-lg-5 col_label">
-                            <label class="required" style="font-size:20px;">Selection Value No:</label>
+                            <label class="required" style="font-size:20px;">Fixed Response Value No:</label>
                         </div>
                         <div class="col-lg-5">                            
-                            <input type="number" name="sel_val_no" id="sel_val_no" class="form-control" onchange="getSelectionValueNo(this.value);" placeholder="Enter Selection Value No">
+                            <input type="number" name="sel_val_no" id="sel_val_no" class="form-control" onchange="getFixedValueNo(this.value);" placeholder="Enter Selection Value No">
                         </div>                        
                     </div>
 
 
                     <div class="row" id="selection_div_start" style="display:none;margin-left: 15%;margin-right: 16%;">
                         <div class="col-lg-12">
-                            <div class="row" style="padding-bottom:10px;margin-left: 0px;margin-right: 0px;" id="selection_field_div">
-                                <!--                                <div class="col-lg-6" style="border:2px solid black">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-6">
-                                                                            <label>Display Value</label>
-                                                                        </div>
-                                                                        <div class="col-lg-6">
-                                                                            <label>Byte Value</label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row" style="margin-bottom: 10px;">
-                                                                        <div class="col-lg-6">
-                                                                            <input type="number" name="sel_val_no" id="sel_val_no" class="form-control" onchange="getSelectionValueNo(this.value);" placeholder="Enter Selection Value No">
-                                                                        </div>
-                                                                        <div class="col-lg-6">
-                                                                            <input type="number" name="sel_val_no" id="sel_val_no" class="form-control" onchange="getSelectionValueNo(this.value);" placeholder="Enter Selection Value No">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>-->
+                            <div class="row" style="padding-bottom:10px;margin-left: 0px;margin-right: 0px;" id="fixed_selection_field_div">
                             </div>
                         </div>                                
                     </div>

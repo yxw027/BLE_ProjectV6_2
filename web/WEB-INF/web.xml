@@ -58,8 +58,8 @@
     <context-param>
         <description>	</description>
         <param-name>db_password</param-name>
-        <param-value>CXKyE2ZpT%HjbP!4c$</param-value>
-<!--        <param-value>root</param-value>-->
+<!--        <param-value>CXKyE2ZpT%HjbP!4c$</param-value>-->
+        <param-value>root</param-value>
         
     </context-param>
     <!--<ServletContainer mapping start>-->
@@ -1025,6 +1025,42 @@
     <servlet-mapping>
         <servlet-name>device_configuration</servlet-name>
         <url-pattern>/device_configuration</url-pattern>
+    </servlet-mapping>
+    
+    
+     <servlet>
+        <servlet-name>ResponseDetailController</servlet-name>
+        <servlet-class>com.ble.dashboard.response.ResponseDetailController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResponseDetailController</servlet-name>
+        <url-pattern>/ResponseDetailController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>response_detail</servlet-name>
+        <jsp-file>/view/dashboard/response_detail.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>response_detail</servlet-name>
+        <url-pattern>/response_detail</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>ResponseParameterController</servlet-name>
+        <servlet-class>com.ble.dashboard.response.ResponseParameterController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResponseParameterController</servlet-name>
+        <url-pattern>/ResponseParameterController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>response_parameter</servlet-name>
+        <jsp-file>/view/dashboard/response_parameter.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>response_parameter</servlet-name>
+        <url-pattern>/response_parameter</url-pattern>
     </servlet-mapping>
     
 </web-app>

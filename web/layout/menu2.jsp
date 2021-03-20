@@ -36,12 +36,10 @@ crossorigin="anonymous"></script>
                         <div class="dropdown">
                             <ul>
                                 <li class="dropdown-link"><a href="AddModulesController">Add
-                                        Modules</a></li>
-                                <!--								<li class="dropdown-link"><a
-                                                                                                        href="">Shift Designation
-                                                                                                                Map</a></li>								-->
+                                        Modules</a></li>                                							-->
                             </ul>
-                        </div></li>
+                        </div>
+                    </li>
 
 
                     <li class="nav-link" style="-i: 1.1s"><a href="#">Devices<i
@@ -49,12 +47,10 @@ crossorigin="anonymous"></script>
                         <div class="dropdown">
                             <ul>
                                 <li class="dropdown-link"><a href="DeviceController">Add
-                                        Devices</a></li>
-                                <!--								<li class="dropdown-link"><a
-                                                                                                        href="">Shift Designation
-                                                                                                                Map</a></li>								-->
+                                        Devices</a></li>                                							-->
                             </ul>
-                        </div></li>
+                        </div>
+                    </li>
 
                     <li class="nav-link" style="-i: 1.1s"><a href="#">Data Entry<i
                                 class="fas fa-caret-down"></i></a>
@@ -81,54 +77,22 @@ crossorigin="anonymous"></script>
                                 <li class="dropdown-link"><a href="ParameterNameController">Parameter
                                     </a></li>
                             </ul>
-                        </div></li>
+                        </div>
+                    </li>
 
-                    <!--					<li class="nav-link" style="-i: .6s"><a href="dashboard.jsp">Dashboard</a>
-                                                            </li>
-                                                            <li class="nav-link" style="-i: .85s"><a
-                                                                    href="AttendanceController">Attendance<i
-                                                                            class="fas fa-caret-down"></i></a></li>
-                                                            <li class="nav-link" style="-i: 1.1s"><a href="#">Device
-                                                                            Registrations<i class="fas fa-caret-down"></i>
-                                                            </a>
-                                                                    <div class="dropdown">
-                                                                            <ul>
-                                                                                    <li class="dropdown-link"><a href="DeviceInfoRegController">Device
-                                                                                                    Info</a></li>
-                                                                                    <li class="dropdown-link"><a href="DeviceRegController">RFID
-                                                                                                    Allocation</a></li>
-                                                                                    <div class="arrow"></div>
-                                                                            </ul>
-                                                                    </div></li>
-                    
-                                                            <li class="nav-link" style="-i: 1.1s"><a href="#">Shift<i
-                                                                            class="fas fa-caret-down"></i></a>
-                                                                    <div class="dropdown">
-                                                                            <ul>
-                                                                                    <li class="dropdown-link"><a href="ShiftController">Shift
-                                                                                                    Type</a></li>
-                                                                                    <li class="dropdown-link"><a
-                                                                                            href="ShiftDesinationLocationController">Shift Designation
-                                                                                                    Map</a></li>
-                                                                                    <li class="dropdown-link"><a
-                                                                                            href="ShiftKeyPersonMapController">Shift Key Person Map</a></li>
-                                                                                    <li class="dropdown-link"><a href="ShiftTimeController">Shift
-                                                                                                    Time</a></li>
-                                                                                    <li class="dropdown-link"><a href="AttendenceController">Attendance</a></li>
-                                                                                    <li class="dropdown-link"><a
-                                                                                            href="AttendenceViewController">Shift Attendance detail</a></li>
-                                                                                    <li class="dropdown-link"><a href="shiftReasonCont.do">Shift
-                                                                                                    Reason</a></li>
-                                                                            </ul>
-                                                                    </div></li>
-                    
-                                                            <li class="nav-link" style="-i: 1.35s"><a
-                                                                    href="ims_home">Time Table</a></li>
-                                                            <li class="nav-link" style="-i: 1.35s"><a
-                                                                    href="TempDashController">Status</a></li>
-                                                            <li class="nav-link" style="-i: 1.35s"><a href="#">Policies</a>
-                                                            </li>
-                                                            <li class="nav-link" style="-i: 1.35s"><a href="#">About</a></li>-->
+                    <li class="nav-link" style="-i: 1.1s"><a href="#">Response<i
+                                class="fas fa-caret-down"></i></a>
+                        <div class="dropdown">
+                            <ul>
+                                <li class="dropdown-link"><a href="ResponseDetailController">Response
+                                        Detail</a></li>                                
+                            </ul>
+                            <ul>
+                                <li class="dropdown-link"><a href="ResponseParameterController">Response
+                                        Parameter</a></li>                                
+                            </ul>
+                        </div>
+                    </li>                   
                 </ul>
             </div>
 

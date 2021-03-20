@@ -301,6 +301,236 @@ public class ParameterNameModel {
         }
         return count;
     }
+    
+    
+    public int insertRecordForFixedResponse(ParameterNameBean bean, int selection_val, List<String> displayVal, List<String> byteVal) throws SQLException {
+        String query = "", query1 = "", query2 = "", query3 = "", query4 = "", query5 = "";
+        String parameter_id = "", fixed_response_id = "";
+        PreparedStatement psmt;
+        ResultSet rst;
+        int count = 0;
+        try {
+            connection.setAutoCommit(false);
+            query = " insert into parameter(parameter_name,parameter_type,remark) values(?,?,?)";
+            psmt = connection.prepareStatement(query);
+            psmt.setString(1, bean.getParameter_name());
+            psmt.setString(2, bean.getParameter_type());
+            psmt.setString(3, bean.getRemark());
+            count = psmt.executeUpdate();
+
+            if (count > 0) {
+                psmt = null;
+                rst = null;
+                count = 0;
+                query1 = " Select max(parameter_id) from parameter ";
+                psmt = connection.prepareStatement(query1);
+                rst = psmt.executeQuery();
+                while (rst.next()) {
+                    parameter_id = rst.getString(1);
+                }
+                if (parameter_id == null) {
+                    parameter_id = "1";
+                }
+
+                psmt = null;
+                rst = null;
+                query2 = " insert into fixed_response(parameter_id,fixed_response_value_no) "
+                        + " values(?,?) ";
+                psmt = connection.prepareStatement(query2);
+                psmt.setInt(1, Integer.parseInt(parameter_id));
+                psmt.setInt(2, selection_val);
+                count = psmt.executeUpdate();
+                if (count > 0) {
+                    psmt = null;
+                    rst = null;
+                    query3 = " select max(fixed_response_id) from fixed_response ";
+                    psmt = connection.prepareStatement(query3);
+                    rst = psmt.executeQuery();
+                    while (rst.next()) {
+                        fixed_response_id = rst.getString(1);
+                    }
+                    if (fixed_response_id == null) {
+                        fixed_response_id = "1";
+                    }
+
+                    for (int k = 0; k < displayVal.size(); k++) {
+                        count = 0;
+                        psmt = null;
+                        rst = null;
+                        String qry4 = " insert into fixed_response_value(display_value,select_value,fixed_response_id)"
+                                + " values(?,?,?) ";
+                        psmt = connection.prepareStatement(qry4);
+                        psmt.setString(1, displayVal.get(k));
+                        psmt.setString(2, byteVal.get(k));
+                        psmt.setString(3, fixed_response_id);
+                        count = psmt.executeUpdate();
+                    }
+                }
+            }
+
+            if (count > 0) {
+                connection.commit();
+                message = "Record Saved Successfully!";
+                msgBgColor = COLOR_OK;
+            } else {
+                connection.rollback();
+                message = "Cannot save the record, some error.";
+                msgBgColor = COLOR_ERROR;
+            }
+        } catch (Exception e) {
+            System.out.println("Error while inserting record in insertRecordForFixedResponse...." + e);
+        } finally {
+        }
+        return count;
+    }
+    
+    
+    public int insertRecordForBitwiseResponse(ParameterNameBean bean, int bitiwse_no, List<String> subByteDiv, List<String> subDivSelNo, List<String> startPos, List<String> noOfBit, List<String> bitDispVal, List<String> bitByteVal,List<String> subByteDivName) throws SQLException {
+        String query = "", query1 = "", query2 = "", query3 = "", query4 = "", query5 = "",query6="";
+        String parameter_id = "", byte_data_id = "",sub_byte_division_id="";
+        int a=0,b=0;
+        PreparedStatement psmt;
+        ResultSet rst;
+        int count = 0;
+        try {
+            connection.setAutoCommit(false);
+            query = " insert into parameter(parameter_name,parameter_type,remark) values(?,?,?)";
+            psmt = connection.prepareStatement(query);
+            psmt.setString(1, bean.getParameter_name());
+            psmt.setString(2, bean.getParameter_type());
+            psmt.setString(3, bean.getRemark());
+            count = psmt.executeUpdate();
+
+            if (count > 0) {
+                psmt = null;
+                rst = null;
+                count = 0;
+                query1 = " Select max(parameter_id) from parameter ";
+                psmt = connection.prepareStatement(query1);
+                rst = psmt.executeQuery();
+                while (rst.next()) {
+                    parameter_id = rst.getString(1);
+                }
+                if (parameter_id == null) {
+                    parameter_id = "1";
+                }
+
+                for (int i=0;i<1;i++ ) {
+                    psmt = null;
+                    rst = null;
+
+                    query2 = " insert into byte_data_response(sub_byte_division,parameter_id) "
+                            + " values(?,?) ";
+                    psmt = connection.prepareStatement(query2);
+                    psmt.setString(1, subByteDiv.get(i));
+                    psmt.setString(2, parameter_id);
+                    //psmt.setString(3, "1");
+                    count = psmt.executeUpdate();
+                    if(count>0){                        
+                        for(int k=0;k<Integer.parseInt(subByteDiv.get(i));k++){
+                            count=0;
+                            psmt=null;
+                            rst=null;
+                            query3=" select max(byte_data_response_id) from byte_data_response ";
+                            psmt=connection.prepareStatement(query3);
+                            rst=psmt.executeQuery();
+                            while(rst.next()){
+                                byte_data_id=rst.getString(1);
+                            }
+                            
+                            psmt=null;
+                            rst=null;
+                            query4=" insert into response_sub_byte_division(res_byte_id,start_pos,no_of_bit,sub_division_no) "
+                                    + " values(?,?,?,?) ";
+                            psmt=connection.prepareStatement(query4);
+                            psmt.setString(1, byte_data_id);
+                            psmt.setString(2, startPos.get(a));
+                            psmt.setString(3, noOfBit.get(a));
+                            psmt.setString(4, subDivSelNo.get(a));                            
+                            //psmt.setString(5, subByteDivName.get(i));                            
+                            count=psmt.executeUpdate();
+                            a++;
+                            
+                            if(count>0){
+                                psmt=null;
+                                rst=null;
+                                query5=" select max(response_sub_byte_division_id) from response_sub_byte_division ";
+                                psmt=connection.prepareStatement(query5);
+                                rst=psmt.executeQuery();
+                                while(rst.next()){
+                                    sub_byte_division_id=rst.getString(1);
+                                }
+                                
+                                for(int j=0;j<Integer.parseInt(subDivSelNo.get(k));j++){                                    
+                                    psmt=null;
+                                    rst=null;
+                                    query6=" insert into response_sub_division_selection(display_value,bit_value,response_sub_byte_division_id) "
+                                            + " values(?,?,?) ";
+                                    psmt=connection.prepareStatement(query6);
+                                    psmt.setString(1, bitDispVal.get(b));
+                                    psmt.setString(2, bitByteVal.get(b));
+                                    psmt.setString(3, sub_byte_division_id);
+                                    count=psmt.executeUpdate();
+                                    b++;
+                                }
+                                
+                                
+                            }
+                            
+                        }
+                    }
+
+                }
+
+            }
+
+            if (count > 0) {
+                connection.commit();
+                message = "Record Saved Successfully!";
+                msgBgColor = COLOR_OK;
+            } else {
+                connection.rollback();
+                message = "Cannot save the record, some error.";
+                msgBgColor = COLOR_ERROR;
+            }
+        } catch (Exception e) {
+            System.out.println("Error while inserting record in insertRecordForBitwiseResponse...." + e);
+        } finally {
+        }
+        return count;
+    }
+    
+    
+    public int insertRecordForVariableResponse(ParameterNameBean bean) throws SQLException {
+        String query = "";
+        String parameter_id = "", selection_id = "";
+        PreparedStatement psmt;
+        ResultSet rst;
+        int count = 0;
+        try {
+            connection.setAutoCommit(false);
+            query = " insert into parameter(parameter_name,parameter_type,remark) values(?,?,?)";
+            psmt = connection.prepareStatement(query);
+            psmt.setString(1, bean.getParameter_name());
+            psmt.setString(2, bean.getParameter_type());
+            psmt.setString(3, bean.getRemark());
+            count = psmt.executeUpdate();            
+
+            if (count > 0) {
+                connection.commit();
+                message = "Record Saved Successfully!";
+                msgBgColor = COLOR_OK;
+            } else {
+                connection.rollback();
+                message = "Cannot save the record, some error.";
+                msgBgColor = COLOR_ERROR;
+            }
+        } catch (Exception e) {
+            System.out.println("Error while inserting record in insertRecordForVariableResponse...." + e);
+        }
+        return count;
+    }
+    
 
     public void closeConnection() {
         try {

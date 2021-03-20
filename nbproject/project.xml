@@ -190,11 +190,11 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.mysql-connector-java-8.0.11.jar-2}</file>
+                    <file>${file.reference.poi-ooxml-3.10.1.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.poi-ooxml-3.10.1.jar}</file>
+                    <file>${file.reference.mysql-connector-java-8.0.13.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">

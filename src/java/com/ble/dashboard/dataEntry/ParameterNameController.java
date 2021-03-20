@@ -88,7 +88,7 @@ public class ParameterNameController extends HttpServlet {
             int selection_value = 0;
             List<String> displayVal = new ArrayList<>();
             List<String> byteVal = new ArrayList<>();
-            if (request.getParameter("parameter_type").equals("Selection")) {
+            if (request.getParameter("parameter_type").equals("Selection") || request.getParameter("parameter_type").equals("Fixed Response")) {
                 selection_value = Integer.parseInt(request.getParameter("sel_val_no"));
                 for (int i = 1; i <= selection_value; i++) {
                     displayVal.add(request.getParameter("diaplay_value_" + i));
@@ -106,7 +106,7 @@ public class ParameterNameController extends HttpServlet {
             List<String> noOfBit = new ArrayList<>();
             List<String> bitDispVal = new ArrayList<>();
             List<String> bitByteVal = new ArrayList<>();
-            if (request.getParameter("parameter_type").equals("Bitwise")) {
+            if (request.getParameter("parameter_type").equals("Bitwise") || request.getParameter("parameter_type").equals("Bitwise Response")) {
                 bitiwse_no = Integer.parseInt(request.getParameter("bitiwse_no"));
                 //for (int i = 0; i < bitiwse_no; i++) {  
                 //
@@ -125,7 +125,6 @@ public class ParameterNameController extends HttpServlet {
                 }
             }
 
-            // END when type equal to Selection
             try {
                 //model.insertRecord(bean);
                 if (request.getParameter("parameter_type").equals("Selection")) {
@@ -137,6 +136,20 @@ public class ParameterNameController extends HttpServlet {
                 if (request.getParameter("parameter_type").equals("Input")) {
                     model.insertRecordForOther(bean);
                 }
+                
+                // for response
+                
+                if (request.getParameter("parameter_type").equals("Fixed Response")) {
+                    model.insertRecordForFixedResponse(bean, selection_value, displayVal, byteVal);
+                }
+                if (request.getParameter("parameter_type").equals("Bitwise Response")) {
+                    model.insertRecordForBitwiseResponse(bean,bitiwse_no,subByteDiv,subDivSelNo,startPos,noOfBit,bitDispVal,bitByteVal,subByteDivName);
+                }
+                if (request.getParameter("parameter_type").equals("Variable Response")) {
+                    model.insertRecordForVariableResponse(bean);
+                }
+                
+                
             } catch (SQLException ex) {
                 Logger.getLogger(DeviceTypeController.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : parameter
-    Created on : Feb 6, 2021, 9:18:45 AM
+    Document   : response_detail
+    Created on : Mar 8, 2021, 2:33:53 PM
     Author     : saini
 --%>
 
@@ -16,7 +16,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta content="" name="description" />
         <meta content="webthemez" name="author" />
-        <title>Parameter</title>
+        <title>Response</title>
 
 
 
@@ -52,13 +52,16 @@
         <!--        <script src="assets/js/jquery-1.10.2.js"></script>-->
         <link href="css/common.css" rel="stylesheet" />
         <script src="JS/jquery.smartuploader.js"></script>
-
-        <script src="JS/parameter.js"></script>
+        <script src="JS/response_detail.js"></script>       
 
         <script type="text/javascript">
             function zoom() {
                 document.body.style.zoom = "90%"
             }
+
+            $(function () {
+
+            })
 
         </script>
 
@@ -132,7 +135,6 @@
             }
 
 
-
         </style>
 
         <script>
@@ -145,9 +147,7 @@
             }
 
             function getImgeIcon(image_path) {
-                //alert("image [athhh -" + image_path);
-                //$("#my_image").attr("src", "images/person_logo.jpg");
-                //http://localhost:8081/ContactLess_Management/VisitTempDetailsController?getImage='NewImage111'
+
                 $("#my_image")
                         .attr(
                                 "src",
@@ -158,14 +158,14 @@
 
             $(document).ready(
                     function () {
-                        $('#dataTables_Model_Type tbody').on(
+                        $('#dataTables_DevOPComMap tbody').on(
                                 'click',
                                 'tr',
                                 function () {
                                     if ($(this).hasClass('selected_row')) {
                                         $(this).removeClass('selected_row');
                                     } else {
-                                        $("#dataTables_Model_Type").DataTable().$(
+                                        $("#dataTables_DevOPComMap").DataTable().$(
                                                 'tr.selected_row').removeClass(
                                                 'selected_row');
                                         $(this).addClass('selected_row');
@@ -175,19 +175,19 @@
 
 
             $(function () {
-                $("#manufacturer_name").autocomplete({
+                $("#parameter").autocomplete({
                     source: function (request, response) {
-                        //alert(3321);
-                        var random = document.getElementById("manufacturer_name").value;
+                        var random = document.getElementById("parameter").value;
+                        var type = "Common";
                         $.ajax({
-                            url: "DeviceController",
+                            url: "ResponseDetailController",
                             dataType: "json",
                             data: {
-                                action1: "getManufacturerName",
-                                str: random
+                                action1: "getParameter",
+                                str: random,
+                                type: type
                             },
                             success: function (data) {
-                                //alert("data list -" + data.list);
                                 console.log(data);
                                 response(data.list);
                             },
@@ -199,16 +199,41 @@
                     },
                     select: function (events, ui) {
                         console.log(ui);
-                        $('#manufacturer_name').val(ui.item.label); // display the selected text
+                        $('#parameter').val(ui.item.label); // display the selected text
                         return false;
                     }
                 });
+
+                $("#command").autocomplete({
+                    source: function (request, response) {
+                        var random = document.getElementById("command").value;
+                        $.ajax({
+                            url: "ResponseDetailController",
+                            dataType: "json",
+                            data: {
+                                action1: "getCommand",
+                                str: random
+                            },
+                            success: function (data) {
+                                console.log(data);
+                                response(data.list);
+                            },
+                            error: function (error) {
+                                console.log(error.responseText);
+                                response(error.responseText);
+                            }
+                        });
+                    },
+                    select: function (events, ui) {
+                        console.log(ui);
+                        $('#command').val(ui.item.label); // display the selected text
+                        return false;
+                    }
+                });
+
             });
 
             function fillColumn(dev_id, count) {
-//                alert("dev idd --"+count);             
-//                alert("manf name --"+$("#" + count + '2').html());             
-                //var device_name = $("#" + id + '3').html();
                 $('#manufacturer_name').val($("#" + count + '2').html());
                 $('#device_type').val($("#" + count + '3').html());
                 $('#model_name').val($("#" + count + '4').html());
@@ -218,15 +243,21 @@
             }
 
             function makeEditable(id) {
-
-                document.getElementById("parameter_name").disabled = false;
-                document.getElementById("parameter_type").disabled = false;
+                document.getElementById("command").disabled = false;
+                document.getElementById("response").disabled = false;
+                //document.getElementById("parameter").disabled = false;                
+                document.getElementById("insert_param_btn").disabled = false;
+//                document.getElementById("fixed_response_no").disabled = false;
+//                document.getElementById("variable_response_no").disabled = false;
+//                document.getElementById("bitwise_response_no").disabled = false;
+                document.getElementById("data_extract_type").disabled = false;
+                document.getElementById("format").disabled = false;
                 document.getElementById("remark").disabled = false;
                 document.getElementById("save").disabled = false;
                 if (id === 'new') {
 
                     document.getElementById("message").innerHTML = "";      // Remove message
-                    document.getElementById("parameter_name").focus();
+                    document.getElementById("manufacturer_name").focus();
                     $("#message").html("");
 
                     document.getElementById("save").disabled = false;
@@ -250,6 +281,19 @@
                     document.getElementById("clickedButton").value = "Delete";
             }
 
+            function mergeParameter(value)
+            {
+                var para = document.getElementById('parameter').value;
+                var para1 = document.getElementById("command").value;
+                var para2 = para1 + para;
+                para1.value = para2;
+
+                $("#command").val(para2);
+            }
+
+
+
+
         </script>
 
 
@@ -263,7 +307,7 @@
                 <div style="margin-top: -10px;">
                     <div class="col-sm-12">
                         <h2 style="color: white;font-size: 30px;margin-bottom: 13px;">
-                            <b>Parameter</b>
+                            <b>Response Detail</b>
                         </h2>
                     </div>
                 </div>
@@ -274,28 +318,39 @@
                 <div class="col-md-12">
                     <!--                                 Advanced Tables -->
                     <div class="panel panel-default">
-                        <div class="panel-heading">Parameter Table</div>
+                        <div class="panel-heading">Response Detail Table</div>
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover"
-                                       id="dataTables_Model_Type" style="margin-bottom: 5px;">
+                                       id="dataTables_DevOPComMap" style="margin-bottom: 5px;">
                                     <thead>
                                         <tr>
                                             <th>S.No</th>
-                                            <th>Parameter Name</th>                                                                                   
-                                            <th>Parameter Type</th>                                            
-                                            <th>Remark</th>                                                                                        
+                                            <th>Command</th>                                                                                   
+                                            <th>Response</th>                                            
+                                            <th>Fixed Response Number</th>                                            
+                                            <th>Variable Response Number</th>                                            
+                                            <th>Bitwise Response Number</th>                                            
+                                            <th>Data Extract Type</th>                                            
+                                            <th>Format</th>                                            
+                                            <th>Remark</th>                                                                                                                                  
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <c:forEach var="model" items="${requestScope['list2']}"
+                                    <tbody>                                        
+                                        <c:forEach var="model" items="${requestScope['list']}"
                                                    varStatus="loopCounter">
                                             <tr
-                                                onclick="fillColumn('${model.id}', '${loopCounter.count }');">
-                                                <td>${loopCounter.count }</td>
-                                                <td id="${loopCounter.count }2">${model.parameter_name}</td>
-                                                <td id="${loopCounter.count }3">${model.parameter_type}</td>
-                                                <td id="${loopCounter.count }4">${model.remark}</td>                                                                                               
+                                                onclick="fillColumn('${model.response_id}', '${loopCounter.count }');">
+                                                <td>${loopCounter.count }</td>                                                
+                                                <td id="${loopCounter.count }2">${model.command}</td>
+                                                <td id="${loopCounter.count }3">${model.response}</td>
+                                                <td id="${loopCounter.count }4">${model.fixed_response} <a href="#" onclick="fixed('${model.fixed_response}', '${model.response}', '${model.response_id}');">(View Fixed Response)</a></td>
+                                                <td id="${loopCounter.count }5">${model.variable_response} <a href="#" onclick="inputPopup('VariableResponseCont',${model.variable_response},${model.response_id});
+                                                        return false" id="input_button">View Input</a></td>
+                                                <td id="${loopCounter.count }6">${model.bitwise_response} <a href="#" onclick="variable('${model.bitwise_response}', '${model.response_id}');">View Bitwise</a></td>
+                                                <td id="${loopCounter.count }7">${model.data_extract_type} </td>
+                                                <td id="${loopCounter.count }8">${model.format}</td>
+                                                <td id="${loopCounter.count }9">${model.remark}</td>                                                
                                             </tr>
                                         </c:forEach>
                                     </tbody>
@@ -312,93 +367,125 @@
 
 
             <div class="row" style="margin-top: 10px;margin-left: 10%;margin-right: 10%;font-size:14px ;padding:0px 15px 0px 15px" id="">
-                <form method="post" action="ParameterNameController" name="form1" style="background-color: white;">
+                <form method="post" action="ResponseDetailController" name="form1" style="background-color: white;">
 
                     <c:if test="${not empty message}">
                         <div style="font-size: 14px;width:30%;margin-left:2%;margin-top:2%;background-color: ${msgBgColor}"><b>Result: ${message}</b></div>
                     </c:if>
 
 
-
                     <div class="row">
-                        <div class="col-lg-5 col_label" style="margin-top:35px">
-                            <label class="required" style="font-size:20px;">Parameter Name:</label>
+                        <div class="col-lg-5 col_label"  style="margin-top:35px">
+                            <label class="required" style="font-size:20px;">Command</label>
                         </div>
                         <div class="col-lg-5" style="margin-top:35px">                            
-                            <input type="text" disabled name="parameter_name" id="parameter_name" class="form-control m-input" placeholder="Enter Parameter Name" required>
+                            <input type="text" disabled name="command" id="command" class="form-control" placeholder="Enter Command" autocomplete="off"> 
                         </div>                        
                     </div>
 
                     <div class="row">
                         <div class="col-lg-5 col_label">
-                            <label class="required" style="font-size:20px;">Parameter Type:</label>
+                            <label class="required" style="font-size:20px;">Response:</label>
                         </div>
-                        <div class="col-lg-5">  
-                            <select disabled id="parameter_type" name="parameter_type" class="form-control" onchange="getParameterType(this.value);">
-                                <option value="0">Select Parameter Type</option>
-                                <option value="Selection">Selection</option>
-                                <option value="Input">Input</option>
-                                <option value="Bitwise">Bitwise</option>
-                                <option value="Fixed Response">Fixed Response</option>
-                                <option value="Variable Response">Variable Response</option>
-                                <option value="Bitwise Response">Bitwise Response</option>
-                                <option value="Hex">Hex</option>
-                                <option value="String">String</option>
-                                <option value="Boolean">Boolean</option>
-                            </select>
-                            <!--                            <input type="text" disabled name="parameter_type" id="parameter_type" class="form-control m-input" onchange="getParameterType(value);" placeholder="Enter Parameter Type" required>-->
-                        </div>                        
+                        <div class="col-lg-4">                            
+                            <input type="text" disabled name="response" id="response" class="form-control" onchange="mergeParameter(value)" placeholder="Enter Response" required>
+                        </div>                                               
+                        <div class="col-lg-1">
+                            <button id="insert_param_btn" disabled type="button" onclick="enable_param();" class="btn btn-info" style="font-size:20px;"><b>Insert Parameter</b></button>
+                        </div>
                     </div>
 
-                    <div class="row" id="sel_val_div" style="display:none;">
+                    <div class="row">
                         <div class="col-lg-5 col_label">
-                            <label class="required" style="font-size:20px;">Selection Value No:</label>
+                            <label style="font-size:20px;">Response Parameter:</label>
+                        </div>
+                        <div class="col-lg-4">                            
+                            <input type="text" disabled name="parameter" id="parameter" class="form-control" placeholder="Select Response Parameter">
+                        </div>
+                        <div class="col-lg-1">
+                            <button id="insert_param_data" onclick="addParamValueToResponse();" type="button" class="btn btn-info" style="font-size:20px;"><b>Insert</b></button>
+                        </div>
+                        <div class="col-lg-1">
+                            <button id="" type="button" class="btn btn-info" style="font-size:20px;"><b><a href="ParameterNameController" target="_blank">Add</a></b></button>
+                        </div>
+                    </div>           
+
+
+                    <div class="row">
+                        <div class="col-lg-5 col_label">
+                            <label style="font-size:20px;">Fixed Response No:</label>
                         </div>
                         <div class="col-lg-5">                            
-                            <input type="number" name="sel_val_no" id="sel_val_no" class="form-control" onchange="getSelectionValueNo(this.value);" placeholder="Enter Selection Value No">
+                            <input type="number" disabled name="fixed_response_no" id="fixed_response_no" class="form-control" onchange="showSelectionValueFields(value);" autocomplete="off"> 
+                        </div>  
+                        <div class="col-lg-1">
+                            <button id="show_hide_btn" type="button" class="btn btn-info" onclick="showDivHide();" style="font-size:20px;display:none"><b>Hide</b></button>
                         </div>                        
                     </div>
 
-
-                    <div class="row" id="selection_div_start" style="display:none;margin-left: 15%;margin-right: 16%;">
+                    <div class="row" id="selection_div_start" style="display:none;margin-left: 0px;margin-right: 0px;">
                         <div class="col-lg-12">
                             <div class="row" style="padding-bottom:10px;margin-left: 0px;margin-right: 0px;" id="selection_field_div">
-                                <!--                                <div class="col-lg-6" style="border:2px solid black">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-6">
-                                                                            <label>Display Value</label>
-                                                                        </div>
-                                                                        <div class="col-lg-6">
-                                                                            <label>Byte Value</label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row" style="margin-bottom: 10px;">
-                                                                        <div class="col-lg-6">
-                                                                            <input type="number" name="sel_val_no" id="sel_val_no" class="form-control" onchange="getSelectionValueNo(this.value);" placeholder="Enter Selection Value No">
-                                                                        </div>
-                                                                        <div class="col-lg-6">
-                                                                            <input type="number" name="sel_val_no" id="sel_val_no" class="form-control" onchange="getSelectionValueNo(this.value);" placeholder="Enter Selection Value No">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>-->
                             </div>
                         </div>                                
                     </div>
 
-                    <div class="row" id="bitiwse_no_div" style="display:none;">
+
+                    <div class="row">
                         <div class="col-lg-5 col_label">
-                            <label class="required" style="font-size:20px;">Bitwise:</label>
+                            <label style="font-size:20px;">Variable Response No:</label>
                         </div>
                         <div class="col-lg-5">                            
-                            <input type="number" name="bitiwse_no" id="bitiwse_no" class="form-control" onchange="getBitwiseNo(this.value);" placeholder="Enter Bitwise No">
-                        </div>                        
+                            <input type="number" disabled name="variable_response_no" id="variable_response_no" class="form-control" onchange="showInputValueFields(value);" autocomplete="off"> 
+                        </div>    
+                        <div class="col-lg-1">
+                            <button id="input_show_hide_btn" type="button" class="btn btn-info" onclick="inputShowDivHide();" style="font-size:20px;display:none"><b>Hide</b></button>
+                        </div>  
                     </div>
 
-                    <div class="row" id="bitwise_div_start" style="display:none;margin-left: 15%;margin-right: 16%;">
+                    <div class="row" id="input_div_start" style="display:none;margin-left: 0px;margin-right: 0px;">
+                        <div class="col-lg-12">
+                            <div class="row" style="border:2px solid rgb(56, 165, 238, 0.5);padding:0px 0px 4px 0px;margin-left: 0px;margin-right: 0px;" id="input_field_div">
+                            </div>
+                        </div>                                
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-5 col_label">
+                            <label style="font-size:20px;">Bitwise Response No:</label>
+                        </div>
+                        <div class="col-lg-5">                            
+                            <input type="number" disabled name="bitwise_response_no" id="bitwise_response_no" class="form-control" onchange="showBitwiseValueFields(value);" autocomplete="off"> 
+                        </div>   
+                        <div class="col-lg-1">
+                            <button id="show_hide_btn_bitwise" type="button" class="btn btn-info" onclick="showDivHideBitwise();" style="font-size:20px;display:none"><b>Hide</b></button>
+                        </div>
+                    </div>
+
+                    <div class="row" id="bitwise_div_start" style="display:none;margin-left: 0px;margin-right: 0px;">
                         <div class="col-lg-12">
                             <div class="row" style="padding-bottom:10px;margin-left: 0px;margin-right: 0px;" id="bitwise_field_div">
                             </div>
                         </div>                                
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-lg-5 col_label">
+                            <label class="" style="font-size:20px;">Data Extract Type:</label>
+                        </div>
+                        <div class="col-lg-5">
+                            <input type="text" disabled name="data_extract_type" id="data_extract_type" class="form-control" placeholder="Enter Data Extract Type" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-5 col_label">
+                            <label class="" style="font-size:20px;">Format:</label>
+                        </div>
+                        <div class="col-lg-5">
+                            <input type="text" disabled name="format" id="format" class="form-control" placeholder="Enter Format" autocomplete="off">
+                        </div>
                     </div>
 
 
@@ -409,8 +496,7 @@
                         <div class="col-lg-5">
                             <input type="text" disabled name="remark" id="remark" class="form-control m-input" placeholder="Enter Remark" autocomplete="off">
                         </div>
-                    </div>
-
+                    </div>                    
 
                     <div class="row" style="margin-bottom:35px">
                         <input type="submit"  name="task" id="delete" value="Delete" onclick="showNewDevice();" style="margin:35px 35px 35px 0px;float:right" class="btn btn-danger" disabled/>
@@ -419,7 +505,9 @@
                         <input type="button"  name="task" id="new" value="New" onclick="makeEditable(id)" style="margin:35px 10px 35px 0px;float:right" class="btn btn-warning" />
                     </div>
 
-                </form>                
+                </form>
+
+
 
             </div>
 
@@ -453,7 +541,7 @@
                             $(document).ready(function () {
                                 /* $('#dataTables-example').dataTable();
                                  "pageLength": 25 */
-                                $('#dataTables_Model_Type').dataTable({
+                                $('#dataTables_DevOPComMap').dataTable({
                                     //"autoWidth": false,
                                     //"lengthChange": false,
                                     "pageLength": 5,
