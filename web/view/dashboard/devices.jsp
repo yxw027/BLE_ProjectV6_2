@@ -53,7 +53,7 @@
         <link href="css/common.css" rel="stylesheet" />
         <script src="JS/jquery.smartuploader.js"></script>
 
-        <!--                <script src="JS/dashJS.js"></script>-->
+        <script src="JS/devices.js"></script>
 
         <script type="text/javascript">
             function zoom() {
@@ -453,53 +453,53 @@
                 $("#no_of_module").change(function () {
                     $('.add_subModules').remove();
                     var count = $(this).val();
-                    if (count > '1') {
+                    if (count > '0') {
                         //alert("value greater than 1 -" + $(this).val());                        
                         for (var i = 0; i < count; i++) {
-                            $('#add_modules').append(' <div class="row add_subModules" style="font-size:14px ;padding:0px 15px 0px 15px;border-top:solid;" id="sub_modules"><div class="row"><div class="col-lg-5 col_label"><label class="required" style="font-size:20px;">Manufacturer Name:</label></div><div class="col-lg-5"><input type="text" name="manufacturer_name" id="manufacturer_name_module_' + i + '" class="form-control m-input ui-autocomplete-input dynamic_auto" placeholder="Select Manufacturer Name" autocomplete="off" required></div></div><div class="row"><div class="col-lg-5 col_label"><label class="required" style="font-size:20px;">Device Type:</label></div><div class="col-lg-5"><input type="text" name="device_type" id="device_type_module_' + i + '" class="form-control m-input dynamic_auto" placeholder="Select Device Type" autocomplete="off" required></div></div><div class="row"><div class="col-lg-5 col_label"><label class="required" style="font-size:20px;">Model Name:</label></div><div class="col-lg-5"><input type="text" name="model_name" id="model_name_module_' + i + '" class="form-control m-input dynamic_auto" placeholder="Select Model Name" autocomplete="off" required></div></div></div>');
+                            $('#add_modules').append(' <div class="row add_subModules" style="font-size:14px ;padding:0px 15px 0px 15px;border-top:solid;" id="sub_modules"><div class="row"><div class="col-lg-5 col_label"><label class="required" style="font-size:20px;">Manufacturer Name:</label></div><div class="col-lg-5"><input type="text" name="manufacturer_name" id="manufacturer_name_module_' + i + '" class="form-control myAutocompleteClass" placeholder="Select Manufacturer Name" autocomplete="off" required></div></div><div class="row"><div class="col-lg-5 col_label"><label class="required" style="font-size:20px;">Device Type:</label></div><div class="col-lg-5"><input type="text" name="device_type" id="device_type_module_' + i + '" class="form-control myAutocompleteClass" placeholder="Select Device Type" autocomplete="off" required></div></div><div class="row"><div class="col-lg-5 col_label"><label class="required" style="font-size:20px;">Model Name:</label></div><div class="col-lg-5"><input type="text" name="model_name" id="model_name_module_' + i + '" class="form-control myAutocompleteClass" placeholder="Select Model Name" autocomplete="off" required></div></div></div>');
                         }
 
                     }
 
-
-                    $(".dynamic_auto").autocomplete({
-                        autoFocus: true,
-                        source: function (request, response) {
-                            var id = $('.dynamic_auto:focus').attr('id');
-                            //debugger;
-                            //alert("id -"+id);
-                            var id_new = id.split('_')[0];
-                            if (id_new == 'manufacturer') {
-                                action = "getManufacturerNameModule";
-                            } else if (id_new == 'device') {
-                                action = "getDeviceTypeModule";
-                            } else if (id_new == 'model') {
-                                action = "getModelNameModule";
-                            }
-                            var random = document.getElementById(id).value;
-                            $.ajax({
-                                url: "DeviceController",
-                                dataType: "json",
-                                data: {
-                                    action1: action,
-                                    str: random
-                                },
-                                success: function (data) {
-                                    console.log(data);
-                                    response(data.list);
-                                },
-                                error: function (error) {
-                                    console.log(error.responseText);
-                                    response(error.responseText);
-                                }
-                            });
-                        },
-                        select: function (events, ui) {
-                            console.log(ui);
-                            $('#' + id).val(ui.item.label); // display the selected text
-                            return false;
-                        }
-                    });
+//
+//                    $(".dynamic_auto").autocomplete({
+//                        autoFocus: true,
+//                        source: function (request, response) {
+//                            var id = $('.dynamic_auto:focus').attr('id');
+//                            //debugger;
+//                            //alert("id -"+id);
+//                            var id_new = id.split('_')[0];
+//                            if (id_new == 'manufacturer') {
+//                                action = "getManufacturerNameModule";
+//                            } else if (id_new == 'device') {
+//                                action = "getDeviceTypeModule";
+//                            } else if (id_new == 'model') {
+//                                action = "getModelNameModule";
+//                            }
+//                            var random = document.getElementById(id).value;
+//                            $.ajax({
+//                                url: "DeviceController",
+//                                dataType: "json",
+//                                data: {
+//                                    action1: action,
+//                                    str: random
+//                                },
+//                                success: function (data) {
+//                                    console.log(data);
+//                                    response(data.list);
+//                                },
+//                                error: function (error) {
+//                                    console.log(error.responseText);
+//                                    response(error.responseText);
+//                                }
+//                            });
+//                        },
+//                        select: function (events, ui) {
+//                            console.log(ui);
+//                            $('#' + id).val(ui.item.label); // display the selected text
+//                            return false;
+//                        }
+//                    });
 
 
                 });

@@ -298,9 +298,10 @@ public class BLEWebServicesModel {
     public JSONArray getCommandDeviceMapRecords() {
         JSONArray rowData = new JSONArray();
         String query = null;
-        query = "select device_command_id,order_no,delay,device_id,command_id,operation_id,remark"
-                + " from device_command_map c "
-                + " where c.active='Y' ORDER BY c.order_no ASC ";
+//        query = "select device_command_id,order_no,delay,device_id,command_id,operation_id,remark"
+//                + " from device_command_map c "
+//                + " where c.active='Y' ORDER BY c.order_no ASC ";
+        query = " select * from device_command_map where active='Y' order by device_command_id desc ";
         try {
             PreparedStatement pstmt = connection.prepareStatement(query);
             ResultSet rset = pstmt.executeQuery();
@@ -427,9 +428,13 @@ public class BLEWebServicesModel {
     public JSONArray getSelectionRecord() {
         JSONArray rowData = new JSONArray();
         String query = null;
-        query = " select selection_id, command_id, parameter_id, remark , selection_value_no"
-                + " from selection d "
-                + " where d.active='Y' ";
+//        query = " select selection_id, command_id, parameter_id, remark , selection_value_no"
+//                + " from selection d "
+//                + " where d.active='Y' ";
+        query = " select s.selection_id, cpm.command_id, cpm.parameter_id, cpm.remark , s.selection_value_no "
+                + " from command_param_map cpm, selection s, selection_value sv "
+                + " where cpm.active='Y' and s.active='Y' and sv.active='Y' and cpm.selection_value_id=sv.selection_value_id "
+                + " and sv.selection_id=s.selection_id ";
         try {
             PreparedStatement pstmt = connection.prepareStatement(query);
             ResultSet rset = pstmt.executeQuery();
@@ -1162,6 +1167,56 @@ public class BLEWebServicesModel {
         }
         return rowData;
     }
+
+    //datum data
+    public JSONArray getDatumData() {
+        JSONArray rowData = new JSONArray();
+        String query = null;
+        query = "select datum_id,name,command from datum where active='Y' ";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            ResultSet rset = pstmt.executeQuery();
+            while (rset.next()) {
+                JSONObject obj = new JSONObject();
+                obj.put("datum_id", rset.getString(1));
+                obj.put("datum_name", rset.getString(2));
+                obj.put("datum_command", rset.getString(3));
+                //obj.put("datum_remark", rset.getString(4));
+
+                rowData.add(obj);
+            }
+        } catch (Exception e) {
+            System.out.println("Error inside show data of getDatumData: " + e);
+        }
+        return rowData;
+    }
+    // end datum data
+    
+    //command_param_map data
+    public JSONArray getCommandParam() {
+        JSONArray rowData = new JSONArray();
+        String query = null;
+        query = "select * from command_param_map where active='Y' ";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            ResultSet rset = pstmt.executeQuery();
+            while (rset.next()) {
+                JSONObject obj = new JSONObject();
+                obj.put("command_param_map_id", rset.getString(1));
+                obj.put("command_id", rset.getString(2));
+                obj.put("parameter_id", rset.getString(3));
+                obj.put("selection_value_id", rset.getString(4));
+                obj.put("sub_division_selection_id", rset.getString(5));
+                //obj.put("datum_remark", rset.getString(4));
+
+                rowData.add(obj);
+            }
+        } catch (Exception e) {
+            System.out.println("Error inside show data of getCommandParam: " + e);
+        }
+        return rowData;
+    }
+    // command_param_map data
 
     public Connection getConnection() {
         return connection;

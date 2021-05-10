@@ -676,7 +676,7 @@ public class DevOpComMapModel {
         return manufacturerId;
     }
 
-    public int insertRecord1(DevOpComMapBean commandBean) {        
+    public int insertRecord1(DevOpComMapBean commandBean) {
         int deviceType_id = getDeviceTypeId(commandBean.getDevice_type());
         int manufdacture_id = getManufacturerId(commandBean.getManufacturer());
         int model_id = getModelId(commandBean.getDevice_name(), commandBean.getDevice_no());
@@ -981,8 +981,8 @@ public class DevOpComMapModel {
                 + " and IF('" + searchDeviceName + "' = '', m.device_name LIKE '%%',m.device_name =?) "
                 + " and IF('" + searchOperationName + "'='',opn.operation_name LIKE '%%',opn.operation_name=?)"
                 + " and IF('" + searchDeviceTypeName + "'='',dt.type LIKE '%%',dt.type=?)"
-                + " ORDER BY dcm.order_no ASC "
-                + addQuery;
+                + " ORDER BY dcm.order_no ASC ";
+        //+ addQuery;
 //        SELECT COUNT(CustomerID), Country
 //FROM Customers
 // GROUP BY dcm.order_no 
@@ -998,7 +998,7 @@ public class DevOpComMapModel {
 //                + " and IF('" + searchDeviceTypeName + "'='',dt.type LIKE '%%',dt.type=?)"
 //                + addQuery;
         try {
-
+            System.err.println("------------ device op comand map query -----------" + query3);
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query3);
             pstmt.setString(1, searchCommandName);
             pstmt.setString(2, searchDeviceName);
@@ -1079,7 +1079,7 @@ public class DevOpComMapModel {
 
     public List<String> getDeviceType(String q, String manufacturer_name) {
         List<String> list = new ArrayList<String>();
-        String query = "select dt.type "
+        String query = "select distinct dt.type "
                 + " from device d inner join manufacturer m on d.manufacture_id = m.id"
                 + " inner join model ml on d.model_id = ml.id"
                 + " inner join device_type dt on dt.id = d.device_type_id"
@@ -1090,6 +1090,7 @@ public class DevOpComMapModel {
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query);
             pstmt.setString(1, manufacturer_name);
             //System.err.println("query device type -"+pstmt);
+            System.err.println("--- get device type ------------" + pstmt);
             ResultSet rset = pstmt.executeQuery();
 
             int count = 0;
@@ -1139,10 +1140,12 @@ public class DevOpComMapModel {
 
     public List<String> getModelName(String q, String manufacturer, String devicetype) {
         List<String> list = new ArrayList<String>();
-        String query = "select distinct device_name from model "
-                + " where active='Y' ";
+        int man_id=getManufacturerId(manufacturer);
+        int dev_typ_id=getDeviceTypeId(devicetype);
+        String query = " select m.device_name from device d, model m  where d.manufacture_id="+man_id+" and d.device_type_id="+dev_typ_id+" "
+                + " and d.active='Y' and m.active='Y' and m.id=d.model_id ";
         try {
-            //System.err.println("query model name -"+query);
+            System.err.println("query model name -"+query);
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
             q = q.trim();
@@ -1172,7 +1175,7 @@ public class DevOpComMapModel {
         try {
             PreparedStatement pstmt = (PreparedStatement) connection.prepareStatement(query);
             pstmt.setString(1, device_name);
-            ResultSet rset = pstmt.executeQuery();            
+            ResultSet rset = pstmt.executeQuery();
             int count = 0;
             q = q.trim();
             while (rset.next()) {
@@ -1279,7 +1282,7 @@ public class DevOpComMapModel {
         int model_name_id = 0;
         int operation_name_id = 0;
         String query = " select command from command "
-                + " where active='Y' and short_name='"+short_name+"' ";
+                + " where active='Y' and short_name='" + short_name + "' ";
 
         try {
             ResultSet rset = connection.prepareStatement(query).executeQuery();

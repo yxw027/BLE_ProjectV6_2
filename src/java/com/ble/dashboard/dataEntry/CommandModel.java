@@ -154,8 +154,16 @@ public class CommandModel {
             connection.setAutoCommit(false);
             java.sql.PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, commandBean.getCommand());
-            pstmt.setString(2, commandBean.getStarting_del());
-            pstmt.setString(3, commandBean.getEnd_del());
+            if (!commandBean.getStarting_del().equals("")) {
+                pstmt.setString(2, commandBean.getStarting_del());
+            } else {
+                pstmt.setString(2, "null");
+            }
+            if (!commandBean.getStarting_del().equals("")) {
+                pstmt.setString(3, commandBean.getEnd_del());
+            } else {
+                pstmt.setString(3, "null");
+            }
             pstmt.setString(4, commandBean.getRemark());
             pstmt.setInt(5, command_type_id);
             pstmt.setString(6, commandBean.getFormat());
@@ -164,14 +172,17 @@ public class CommandModel {
             pstmt.setInt(9, commandBean.getBitwise());
             pstmt.setString(10, commandBean.getShort_name());
             //System.err.println("query insert -" + pstmt);
+            System.err.println("------------- insert query ----------" + pstmt);
             rowsAffected = pstmt.executeUpdate();
 
             int k = 0;
             // main loop
             if (rowsAffected > 0) {
+                String command_id = "";
+                int parameter_id = 0;
                 if (sel_no > 0) {
-                    String command_id = "";
-                    int parameter_id = 0;
+                    //String command_id = "";
+                    //int parameter_id = 0;
                     String qry = " select max(id)as id from command ";
                     psmt = connection.prepareStatement(qry);
                     rst = psmt.executeQuery();
@@ -186,10 +197,10 @@ public class CommandModel {
                     int l = 0;
                     for (int i = 0; i < sel_no; i++) {
 
-                        parameter_id = getParameterId(SelParameter.get(i));                                               
+                        parameter_id = getParameterId(SelParameter.get(i));
 
-                        for (int j = 0; j < SelValList.get(i); j++) {                                                      
-                            
+                        for (int j = 0; j < SelValList.get(i); j++) {
+
                             if (selCheckedVal.get(l) != 0) {
 
                                 psmt = null;
@@ -200,16 +211,28 @@ public class CommandModel {
                                 psmt.setString(1, command_id);
                                 psmt.setInt(2, parameter_id);
                                 psmt.setInt(3, selCheckedVal.get(l));
-                                rowsAffected = psmt.executeUpdate();                                
+                                rowsAffected = psmt.executeUpdate();
                             }
                             l++;
                         }
 
                     }
-                    // END loop for Selection Type
+                }
+                // END loop for Selection Type
 
-                    // START loop for Input Type
-                    if (inputParameter.get(0)!="") {
+                // START loop for Input Type
+                if (inp_no>0) {
+                    if (inputParameter.get(0) != "") {
+
+                        String qry = " select max(id)as id from command ";
+                        psmt = connection.prepareStatement(qry);
+                        rst = psmt.executeQuery();
+                        while (rst.next()) {
+                            command_id = rst.getString(1);
+                        }
+                        if (command_id == null) {
+                            command_id = "1";
+                        }
 
                         for (int i = 0; i < inp_no; i++) {
                             psmt = null;
@@ -224,15 +247,26 @@ public class CommandModel {
                         }
 
                     }
+                }
 
-                    // END loop for Input Type
-                    // START loop for Bitwise Type
+                // END loop for Input Type
+                // START loop for Bitwise Type
+                if (bitwise > 0) {
+                    String qry = " select max(id)as id from command ";
+                    psmt = connection.prepareStatement(qry);
+                    rst = psmt.executeQuery();
+                    while (rst.next()) {
+                        command_id = rst.getString(1);
+                    }
+                    if (command_id == null) {
+                        command_id = "1";
+                    }
                     int m = 0;
                     for (int i = 0; i < bitwise; i++) {
 
-                        parameter_id = getParameterId(BitParamList.get(i));                        
+                        parameter_id = getParameterId(BitParamList.get(i));
 
-                        for (int j = 0; j < BitvaluesList.get(i); j++) {                        
+                        for (int j = 0; j < BitvaluesList.get(i); j++) {
                             if (bitCheckedVal.get(m) != 0) {
 
                                 psmt = null;
@@ -243,15 +277,16 @@ public class CommandModel {
                                 psmt.setString(1, command_id);
                                 psmt.setInt(2, parameter_id);
                                 psmt.setInt(3, bitCheckedVal.get(m));
-                                rowsAffected = psmt.executeUpdate();                                
+                                rowsAffected = psmt.executeUpdate();
                             }
                             m++;
                         }
 
                     }
-                    // END loop for Bitwise Type
-
                 }
+                // END loop for Bitwise Type
+
+                //}
             }
             // main loop end
 
@@ -388,7 +423,7 @@ public class CommandModel {
     public List<CommandBean> showData() {
         List<CommandBean> list = new ArrayList<CommandBean>();
 
-        String query2 = "select c.id as command_id,c.remark, "
+        String query2 = "select c.id as command_id,c.remark,c.short_name, "
                 + " c.starting_del,c.end_del,c.command,ct.name as command_type,c.format as format, c.input, c.selection, c.bitwise "
                 + " from command c,command_type ct "
                 + " where c.command_type_id = ct.id "
@@ -411,6 +446,7 @@ public class CommandModel {
                 commandBean.setSelection_no(rset.getInt("selection"));
                 commandBean.setInput_no(rset.getInt("input"));
                 commandBean.setBitwise(rset.getInt("bitwise"));
+                commandBean.setShort_name(rset.getString("short_name"));
 
                 list.add(commandBean);
             }

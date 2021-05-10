@@ -4,7 +4,8 @@
  */
 package com.ble.webService.controller;
 
-import com.ble.device.model.DeviceRegConModel;
+//import com.ble.device.model.DeviceRegConModel;
+import com.ble.dashboard.regConfig.DeviceConfigModel;
 //import static com.ble.device.model.DeviceRegConModel.isModuleOperation;
 //import static com.ble.device.model.DeviceRegConModel.isOperationArr;
 
@@ -12,6 +13,8 @@ import static com.ble.dashboard.regConfig.DeviceConfigModel.isModuleOperation;
 import static com.ble.dashboard.regConfig.DeviceConfigModel.isOperationArr;
 
 import com.ble.webService.model.BLEWebServicesModel;
+import java.util.List;
+import java.util.ArrayList;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -102,6 +105,15 @@ public class BLEWebServicesController {
             obj.put("crc_type", json);
             json = bLEWebServicesModel.getCommandCrcMappingRecords();
             obj.put("command_crc_mapping", json);
+
+            json = bLEWebServicesModel.getDatumData();
+            obj.put("datum_data", json);
+
+            json = bLEWebServicesModel.getCommandParam();
+            obj.put("command_param_map", json);
+
+            System.out.println("******* json dataa ******" + obj.toString());
+
         } catch (Exception e) {
             System.out.println("Error in BLEWebServices 'requestData' url calling getWardData()..." + e);
         }
@@ -225,6 +237,38 @@ public class BLEWebServicesController {
         }
     }
 
+//    @POST
+//    @Path("/sendRequest")
+//    @Produces(MediaType.APPLICATION_JSON)//http://192.168.1.15:8084/BLE_Project/resources/getAllTableRecords
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public String sendConfigurationReq(String dataString) {
+//        String status = "not ready";
+//        deviceResponse = dataString;
+//        System.out.println("mayank req data...   " + dataString);
+//        //DeviceRegConModel drc = new DeviceRegConModel();
+//        DeviceConfigModel drc = new DeviceConfigModel();
+//        
+//        
+//        System.err.println("----- global gb -"+drc.gB);
+//        List<String> newList=new ArrayList<String>();
+//        System.err.println("arraylist -8888888888"+newList.size());
+//        newList=drc.commandAll;
+//        System.err.println("---- new list -----"+newList.size());        
+//        for (int k = 0; k < drc.commandAll.size(); k++) {
+//            System.err.println("---- service command elements ---" +newList.get(k));
+//        }
+//        
+//        status=newList.toString();
+//        
+//        
+////        String arr = drc.isModuleOperation;
+////        System.err.println("is module --" + isModuleOperation);
+////        if (arr != null) {
+////            status = arr;
+////        }
+//
+//        return status;
+//    }
     @POST
     @Path("/sendRequest")
     @Produces(MediaType.APPLICATION_JSON)//http://192.168.1.15:8084/BLE_Project/resources/getAllTableRecords
@@ -232,24 +276,17 @@ public class BLEWebServicesController {
     public String sendConfigurationReq(String dataString) {
         String status = "not ready";
         deviceResponse = dataString;
-        System.out.println("req data...   " + dataString);        
-
-        if (deviceResponsePrevious.equals(dataString) || deviceResponse.equals("data")) {
-
-            DeviceRegConModel drc = new DeviceRegConModel();
-            String arr = drc.isModuleOperation;
-            if (arr != null) {
-                status = arr;
-                deviceResponsePrevious = arr;
-            }
-        }else{
-            status="Error! Controller did not received right command!";
-            status=deviceResponsePrevious;
+        System.out.println("mayank req data...   " + dataString);
+        DeviceConfigModel drc = new DeviceConfigModel();
+        String arr = drc.isModuleOperation;
+        if (arr != null) {
+            status = arr;
         }
 //        for (int i = 0; i < arr.length; i++) {
 //            status = arr[i]; 
 //            System.out.println("in status ..... "+status);
 //    }
+        System.err.println("is module operation in service --" + status);
         return status;
     }
 

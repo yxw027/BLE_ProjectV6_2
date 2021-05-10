@@ -338,7 +338,7 @@
                                             <th class="heading">Input Number</th>
                                             <th class="heading">Bitwise</th>
                                             <th class="heading">Format</th>
-                                            <th class="heading">Remark</th>                                            
+                                            <th class="heading">Short Name</th>                                            
                                         </tr>
                                     </thead>
                                     <tbody>                                        
@@ -355,7 +355,7 @@
                                                 <td id="${loopCounter.count }7" >${model.input_no}</td>
                                                 <td id="${loopCounter.count }8" >${model.bitwise}</td>
                                                 <td id="${loopCounter.count }9" >${model.format}</td>
-                                                <td id="${loopCounter.count }10" >${model.remark}</td>                                                
+                                                <td id="${loopCounter.count }10" >${model.short_name}</td>                                                
                                             </tr>
                                         </c:forEach>
                                     </tbody>

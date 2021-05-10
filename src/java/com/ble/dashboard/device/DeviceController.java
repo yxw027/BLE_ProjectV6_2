@@ -55,17 +55,17 @@ public class DeviceController extends HttpServlet {
         model.setDb_password(ctx.getInitParameter("db_password"));
         model.setConnection();
         Map<String, String> map = new HashMap<String, String>();
-        String task0="";
+        String task0 = "";
         task0 = request.getParameter("task");
-        System.err.println("taskkk -"+task0);
-        String device_type="",idd="";
-        if(task0==null){
-            task0="";
+        System.err.println("taskkk -" + task0);
+        String device_type = "", idd = "";
+        if (task0 == null) {
+            task0 = "";
         }
         if (task0.equals("Finished")) {
             device_type = task0;
-        }else if(task0.equals("OpenSpecific")){
-            idd=request.getParameter("idd");        
+        } else if (task0.equals("OpenSpecific")) {
+            idd = request.getParameter("idd");
         }
 
         List items = null;
@@ -98,9 +98,7 @@ public class DeviceController extends HttpServlet {
                     if (item.getFieldName().equals("model_name")) {
                         modulesSetMN.add(item.getString());
                     }
-                    
-                    
-                    
+
                 } else {
                     //System.out.println("File Name = " + item.getFieldName() + ", Value = " + item.getName());//it is (getName()) for file related things
                     if (item.getName() == null || item.getName().isEmpty()) {
@@ -115,11 +113,11 @@ public class DeviceController extends HttpServlet {
             }
             itr = null;
             itr = items.iterator();
-            
+
             //}
         } catch (Exception ex) {
             System.out.println("Error encountered while uploading file" + ex);
-        }     
+        }
 //        System.err.println("map size -"+map.size());
 //        System.err.println("map string -"+map.toString());
 //        for(int a=0;a<map.size();a++){
@@ -130,7 +128,7 @@ public class DeviceController extends HttpServlet {
             if (!map.isEmpty()) {
                 System.out.println("map string  -" + map.toString());
                 if (map.get("save").equals("Save")) {
-                    model.insertData(map, itr, modulesSetMF,modulesSetDT,modulesSetMN);
+                    model.insertData(map, itr, modulesSetMF, modulesSetDT, modulesSetMN);
                 } else if (map.get("delete").equals("Delete")) {
                     //model.insertData(map, itr, modulesSet);
                 }
@@ -207,18 +205,31 @@ public class DeviceController extends HttpServlet {
                     String model_name = request.getParameter("model_name");
                     list = model.getModelNo(q, model_name);
                 }
-                if (JQstring.equals("getManufacturerNameModule")) {
-                    list = model.getManufacturerName(q);
-                }
-                if (JQstring.equals("getDeviceTypeModule")) {
-                    String type = "non-finished";
-                    list = model.getDeviceType(q, type);
-                }
-                if (JQstring.equals("getModelNameModule")) {
-                    String type = "non-finished";
-                    list = model.getModelName(q, type);
+
+                if (JQstring.equals("getParameter")) {
+                    String type = request.getParameter("type");
+                    if (type.equals("manufacturer_name")) {
+                        list = model.getManufacturerName(q);
+                    } else if (type.equals("device_type")) {
+                        String typ="non-finished";
+                        list = model.getDeviceType(q, typ);
+                    } else if (type.equals("model_name")) {
+                        String typ="non-finished";
+                        list = model.getModelName(q, typ);
+                    }
                 }
 
+//                if (JQstring.equals("getManufacturerNameModule")) {
+//                    list = model.getManufacturerName(q);
+//                }
+//                if (JQstring.equals("getDeviceTypeModule")) {
+//                    String type = "non-finished";
+//                    list = model.getDeviceType(q, type);
+//                }
+//                if (JQstring.equals("getModelNameModule")) {
+//                    String type = "non-finished";
+//                    list = model.getModelName(q, type);
+//                }
                 JSONObject gson = new JSONObject();
                 gson.put("list", list);
                 //System.out.println("gson -" + gson);

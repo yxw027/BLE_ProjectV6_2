@@ -58,8 +58,8 @@
     <context-param>
         <description>	</description>
         <param-name>db_password</param-name>
-<!--        <param-value>CXKyE2ZpT%HjbP!4c$</param-value>-->
-        <param-value>root</param-value>
+        <param-value>CXKyE2ZpT%HjbP!4c$</param-value>
+<!--        <param-value>root</param-value>-->
         
     </context-param>
     <!--<ServletContainer mapping start>-->
@@ -1062,5 +1062,33 @@
         <servlet-name>response_parameter</servlet-name>
         <url-pattern>/response_parameter</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>collapse_expand</servlet-name>
+        <jsp-file>/view/dashboard/collapse_expand_row.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>collapse_expand</servlet-name>
+        <url-pattern>/collapse_expand</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name>FinDevOpMapController</servlet-name>
+        <servlet-class>com.ble.dashboard.Map.FinDevOpMapController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FinDevOpMapController</servlet-name>
+        <url-pattern>/FinDevOpMapController</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>finished_device_operation_map</servlet-name>
+        <jsp-file>/view/dashboard/finished_device_operation_map.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>finished_device_operation_map</servlet-name>
+        <url-pattern>/finished_device_operation_map</url-pattern>
+    </servlet-mapping>
+    
     
 </web-app>

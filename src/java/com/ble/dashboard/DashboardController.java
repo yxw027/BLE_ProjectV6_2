@@ -57,12 +57,13 @@ public class DashboardController extends HttpServlet {
                 }
 
                 if (JQstring.equals("getCommandDetail")) {
-                    list = dashModel.getCommandDetail(q);
+                    list = dashModel.getCommandDetail(q,request.getParameter("r"));
                 }
                 if (JQstring.equals("getOperationName")) {
-                    String device_id = request.getParameter("device_id");
-                    String command_id = request.getParameter("command_id");
-                    list = dashModel.getOperationName(device_id, command_id);
+                    //String device_id = request.getParameter("device_id");
+                    //String command_id = request.getParameter("command_id");
+                    //list = dashModel.getOperationName(device_id, command_id);
+                    list = dashModel.getOperationName(q);
                 }
 
                 if (JQstring.equals("getModelType")) {

@@ -61,7 +61,7 @@ public class DeviceConfigController extends HttpServlet {
                 } else if (JQstring.equals("getDeviceTypeName")) {
                     list = deviceModel.getDeviceTypeName(q, request.getParameter("mf_name"));
                 } else if (JQstring.equals("getDeviceName")) {
-                    list = deviceModel.getDeviceName(q);
+                    list = deviceModel.getDeviceName(q, request.getParameter("mf_name"), request.getParameter("device_type"));
                 } else if (JQstring.equals("getDeviceNo")) {
                     list = deviceModel.getDeviceNo(q, request.getParameter("model_name"));
                 }
@@ -96,9 +96,27 @@ public class DeviceConfigController extends HttpServlet {
             String[] idsToModel = request.getParameterValues("isCheck");
             String[] idsToOperation = request.getParameterValues("isCheckOperation");
             String[] idsToCommand = request.getParameterValues("isCheckCommand");
+//            
+//            for(int l=0;l<idsToModel.length;l++){
+//                System.err.println("----------- model element ------------"+idsToModel[l]);
+//            }
+//            for(int l=0;l<idsToOperation.length;l++){
+//                System.err.println("----------- idsToOperation element ------------"+idsToOperation[l]);
+//            }
+//            for(int l=0;l<idsToCommand.length;l++){
+//                System.err.println("----------- command element ------------"+idsToCommand[l]);
+//            }
+
             device_id = Integer.parseInt(request.getParameter("d_id"));
-            reg_no = request.getParameter("reg_no1");            
-            String check = deviceModel.sendToShwetaTesting(idsToModel, idsToOperation, idsToCommand, device_id, reg_no);
+            System.err.println("devie iddddd -------------" + device_id);
+            reg_no = request.getParameter("reg_no1");
+            System.err.println("--- reg no ---------" + reg_no);
+            //String check = deviceModel.sendToShwetaTesting(idsToModel, idsToOperation, idsToCommand, device_id, reg_no);
+            // for Start Packet 
+            String check = deviceModel.sendCommandForController(idsToModel, idsToOperation, idsToCommand, device_id, reg_no);
+            // end for start packet
+            //String check = deviceModel.sendCommandForControllerTesting(idsToModel, idsToOperation, idsToCommand, device_id, reg_no);
+            //String check = deviceModel.sendCommandForController(idsToModel, idsToOperation, idsToCommand, device_id, reg_no);
         }
 
         List<DeviceConfigBean> commandTypeList = deviceModel.showData(device_id);
@@ -114,7 +132,8 @@ public class DeviceConfigController extends HttpServlet {
         request.setAttribute("IDGenerator", new UniqueIDGenerator());
         request.setAttribute("message", deviceModel.getMessage());
         request.setAttribute("msgBgColor", deviceModel.getMsgBgColor());
-        request.getRequestDispatcher("/device_configuration").forward(request, response);
+        //request.getRequestDispatcher("/device_configuration").forward(request, response);
+        request.getRequestDispatcher("/collapse_expand").forward(request, response);
 
     }
 

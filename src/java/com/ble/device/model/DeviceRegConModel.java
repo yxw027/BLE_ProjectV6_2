@@ -694,7 +694,7 @@ public class DeviceRegConModel {
                                              isModuleOperation = "$$$$,05,"+reg_no+",06,"+device_type_id+","+idsToOperation[j].split(",")[0]+","+Integer.parseInt(arrCommand[k].split(",")[2])+","+Integer.parseInt(arrCommand[k].split(",")[3])+",123,{"+arrCommand[k].split(",")[0]+"},00,####";
                             
                               //isModuleOperation = isModuleOperation;
-                            System.out.println("previous value .. " +isModuleOperation );      
+                            //System.out.println("previous value .. " +isModuleOperation );      
                             //Thread.sleep(2 * 1000);
                             a = 0;
                              }

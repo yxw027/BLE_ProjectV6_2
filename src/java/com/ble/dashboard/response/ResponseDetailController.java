@@ -99,25 +99,39 @@ public class ResponseDetailController extends HttpServlet {
             task = "";
         }
 
-        int selection_number = 3;
-        int input_number = 0;
+        int fix_number = 3;
+        int var_number = 0;
         int bitwise_number = 0;
 
         if (task.equals("Cancel")) {
             commandModel.deleteRecord(Integer.parseInt(request.getParameter("command_id")));  // Pretty sure that organisation_type_id will be available.
         } else if (task.equals("Save") || task.equals("Save AS New")) {
             int response_id = 0;
+            
+            String fix=request.getParameter("fixed_response_no");
+            String var=request.getParameter("variable_response_no");
+            String bit=request.getParameter("bitwise_response_no");
+            if(fix==null){
+                fix="";
+            }
+            if(var==null){
+                var="";
+            }
+            if(bit==null){
+                bit="";
+            }
+            
 
-//            if (request.getParameter("selection_no") != null) {
-//                selection_number = Integer.parseInt(request.getParameter("selection_no"));
-//            }
-//            if (request.getParameter("input_no") != null) {
-//                input_number = Integer.parseInt(request.getParameter("input_no"));
-//            }
-//            if (request.getParameter("bitwise") != null) {
-//                bitwise_number = Integer.parseInt(request.getParameter("bitwise"));
-//            }
-            //System.out.println("after if condition -" + selection_number + " inout -" + input_number + " bitwise -" + bitwise_number);
+            if (!fix.equals("")) {
+                fix_number = Integer.parseInt(request.getParameter("fixed_response_no"));
+            }
+            if (!var.equals("")) {
+                var_number = Integer.parseInt(request.getParameter("variable_response_no"));
+            }
+            if (!bit.equals("")) {
+                bitwise_number = Integer.parseInt(request.getParameter("bitwise_response_no"));
+            }
+
 
             ResponseDetailBean commandBean = new ResponseDetailBean();
             //commandBean.setResponse_id(response_id);            
@@ -129,7 +143,7 @@ public class ResponseDetailController extends HttpServlet {
             
             int inp_no = 0;
             List<String> inputParameter = new ArrayList<>();
-            if (request.getParameter("variable_response_no") != null) {
+            if (!var.equals("")) {
                 commandBean.setInput_no(Integer.parseInt(request.getParameter("variable_response_no")));
                 inp_no = Integer.parseInt(request.getParameter("variable_response_no"));
                 for (int l = 1; l <= inp_no; l++) {
@@ -148,7 +162,7 @@ public class ResponseDetailController extends HttpServlet {
 //            List<String> byteVal = new ArrayList<>();
             List<Integer> selCheckedVal = new ArrayList<>();
             String[] selectionCheckBox = null;
-            if (request.getParameter("fixed_response_no") != null) {
+            if (!fix.equals("")) {
                 commandBean.setSelection_no(Integer.parseInt(request.getParameter("fixed_response_no")));
 
                 //Start changes
@@ -188,8 +202,7 @@ public class ResponseDetailController extends HttpServlet {
             List<Integer> BitValuesList = new ArrayList<>();
             List<Integer> bitCheckedVal = new ArrayList<>();
             String[] bitwiseCheckBox = null;
-            if (request.getParameter("bitwise_response_no") != null) {
-
+            if (!bit.equals("")) {
                 commandBean.setBitwise(Integer.parseInt(request.getParameter("bitwise_response_no")));
                 bitwise = commandBean.getBitwise();
                 for (int k = 1; k <= bitwise; k++) {
@@ -248,8 +261,8 @@ public class ResponseDetailController extends HttpServlet {
         request.setAttribute("list", list);
         request.setAttribute("is_parameter", request.getParameter("parameter"));
         request.setAttribute("lastInsertedId", lastInsertedId);
-        request.setAttribute("selection_number", selection_number);
-        request.setAttribute("input_number", input_number);
+        request.setAttribute("fix_number", fix_number);
+        request.setAttribute("var_number", var_number);
         request.setAttribute("bitwise_number", bitwise_number);
         request.setAttribute("manufacturer", request.getParameter("manufacturer"));
         request.setAttribute("device_type", request.getParameter("device_type"));

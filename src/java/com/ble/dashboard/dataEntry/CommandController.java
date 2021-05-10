@@ -52,7 +52,7 @@ public class CommandController extends HttpServlet {
         try {
 
             String JQstring = request.getParameter("action1");
-            System.err.println("jq string -" + JQstring);
+            //System.err.println("jq string -" + JQstring);
             String q = request.getParameter("str");
             if (JQstring != null) {
                 PrintWriter out = response.getWriter();
@@ -107,14 +107,28 @@ public class CommandController extends HttpServlet {
             commandModel.deleteRecord(Integer.parseInt(request.getParameter("command_id")));  // Pretty sure that organisation_type_id will be available.
         } else if (task.equals("Save") || task.equals("Save AS New")) {
             int command_id = 0;
+            
+            String sel=request.getParameter("selection_no");
+            String inp=request.getParameter("input_no");
+            String bit=request.getParameter("bitwise");
+            if(sel==null){
+                sel="";
+            }
+            if(inp==null){
+                inp="";
+            }
+            if(bit==null){
+                bit="";
+            }
+            
 
-            if (request.getParameter("selection_no") != null) {
+            if (!sel.equals("")) {
                 selection_number = Integer.parseInt(request.getParameter("selection_no"));
             }
-            if (request.getParameter("input_no") != null) {
+            if (!inp.equals("")) {
                 input_number = Integer.parseInt(request.getParameter("input_no"));
             }
-            if (request.getParameter("bitwise") != null) {
+            if (!bit.equals("")) {
                 bitwise_number = Integer.parseInt(request.getParameter("bitwise"));
             }
             //System.out.println("after if condition -" + selection_number + " inout -" + input_number + " bitwise -" + bitwise_number);
@@ -141,7 +155,7 @@ public class CommandController extends HttpServlet {
             
             int inp_no = 0;
             List<String> inputParameter = new ArrayList<>();
-            if (request.getParameter("input_no") != null) {
+            if (!inp.equals("")) {
                 commandBean.setInput_no(Integer.parseInt(request.getParameter("input_no")));
                 inp_no = Integer.parseInt(request.getParameter("input_no"));
                 for (int l = 1; l <= inp_no; l++) {
@@ -160,7 +174,7 @@ public class CommandController extends HttpServlet {
 //            List<String> byteVal = new ArrayList<>();
             List<Integer> selCheckedVal = new ArrayList<>();
             String[] selectionCheckBox = null;
-            if (request.getParameter("selection_no") != null) {
+            if (!sel.equals("")) {
                 commandBean.setSelection_no(Integer.parseInt(request.getParameter("selection_no")));
 
                 //Start changes
@@ -200,7 +214,7 @@ public class CommandController extends HttpServlet {
             List<Integer> BitValuesList = new ArrayList<>();
             List<Integer> bitCheckedVal = new ArrayList<>();
             String[] bitwiseCheckBox = null;
-            if (request.getParameter("bitwise") != null) {
+            if (!bit.equals("")) {
 
                 commandBean.setBitwise(Integer.parseInt(request.getParameter("bitwise")));
                 bitwise = commandBean.getBitwise();

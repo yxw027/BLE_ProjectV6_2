@@ -74,7 +74,7 @@ public class ResponseDetailModel {
     }
 
     public int getCommandId(String command) {
-        String query = " select * from command where active='Y' and command='"+command+"' ";
+        String query = " select * from command where active='Y' and command='" + command + "' ";
         int id = 0;
         try {
             PreparedStatement stmt = (PreparedStatement) connection.prepareStatement(query);
@@ -84,7 +84,7 @@ public class ResponseDetailModel {
                 id = rs.getInt(1);
             }
         } catch (Exception e) {
-            System.out.println("com.ble.dashboard.response.ResponseDetailModel.getCommandId() -"+e);
+            System.out.println("com.ble.dashboard.response.ResponseDetailModel.getCommandId() -" + e);
         }
 
         return id;
@@ -161,16 +161,18 @@ public class ResponseDetailModel {
             pstmt.setInt(5, commandBean.getBitwise());
             pstmt.setString(6, commandBean.getData_extract_type());
             pstmt.setString(7, commandBean.getFormat());
-            pstmt.setString(8, commandBean.getRemark());            
+            pstmt.setString(8, commandBean.getRemark());
             //System.err.println("query insert -" + pstmt);
             rowsAffected = pstmt.executeUpdate();
 
             int k = 0;
             // main loop
             if (rowsAffected > 0) {
+                String response_id = "";
+                int parameter_id = 0;
                 if (sel_no > 0) {
-                    String response_id = "";
-                    int parameter_id = 0;
+                    //String response_id = "";
+                    //int parameter_id = 0;
                     String qry = " select max(response_id)as id from response ";
                     psmt = connection.prepareStatement(qry);
                     rst = psmt.executeQuery();
@@ -205,9 +207,21 @@ public class ResponseDetailModel {
                         }
 
                     }
-                    // END loop for Selection Type
+                }
+                // END loop for Selection Type
 
-                    // START loop for Input Type
+                // START loop for Input Type
+                if (inp_no > 0) {
+                    String qry = " select max(response_id)as id from response ";
+                    psmt = connection.prepareStatement(qry);
+                    rst = psmt.executeQuery();
+                    while (rst.next()) {
+                        response_id = rst.getString(1);
+                    }
+                    if (response_id == null) {
+                        response_id = "1";
+                    }
+                    System.err.println("esponse id ---"+response_id);
                     if (inputParameter.get(0) != "") {
 
                         for (int i = 0; i < inp_no; i++) {
@@ -223,9 +237,20 @@ public class ResponseDetailModel {
                         }
 
                     }
+                }
 
-                    // END loop for Input Type
-                    // START loop for Bitwise Type
+                // END loop for Input Type
+                // START loop for Bitwise Type
+                if (bitwise > 0) {
+                    String qry = " select max(response_id)as id from response ";
+                    psmt = connection.prepareStatement(qry);
+                    rst = psmt.executeQuery();
+                    while (rst.next()) {
+                        response_id = rst.getString(1);
+                    }
+                    if (response_id == null) {
+                        response_id = "1";
+                    }
                     int m = 0;
                     for (int i = 0; i < bitwise; i++) {
 
@@ -248,9 +273,9 @@ public class ResponseDetailModel {
                         }
 
                     }
-                    // END loop for Bitwise Type
-
                 }
+                // END loop for Bitwise Type
+
             }
             // main loop end
 
@@ -265,7 +290,7 @@ public class ResponseDetailModel {
             }
 
         } catch (Exception e) {
-            System.out.println("com.ble.dashboard.response.ResponseDetailModel.insertRecord()-"+e);
+            System.out.println("com.ble.dashboard.response.ResponseDetailModel.insertRecord()-" + e);
         }
 
         return rowsAffected;
@@ -583,11 +608,11 @@ public class ResponseDetailModel {
 //                + " ('Fixed Response','Variable Response','Bitwise Response') and active='Y' ";
 
         String query = "select parameter_name from parameter where active='Y'  ";
-        if (!type.equals("Common")) {
-            query += " and parameter_type='" + type + "' ";
-        }
-        query += " and parameter_type in ('Fixed Response','Variable Response','Bitwise Response') "
-                + " order by parameter_name desc ";
+//        if (!type.equals("Common")) {
+//            query += " and parameter_type='" + type + "' ";
+//        }
+//        query += " and parameter_type in ('Fixed Response','Variable Response','Bitwise Response') "
+//                + " order by parameter_name desc ";
 
         try {
             System.err.println("queryy --" + query);
@@ -615,10 +640,15 @@ public class ResponseDetailModel {
 
     public List<String> getSelectionValue(String q, String param) {
         List<String> list = new ArrayList<String>();
-        String query = " select s.fixed_response_value_no "
-                + " from fixed_response s,parameter p where p.parameter_id=s.parameter_id and s.active='Y' and p.active='Y' "
+//        String query = " select s.fixed_response_value_no "
+//                + " from fixed_response s,parameter p where p.parameter_id=s.parameter_id and s.active='Y' and p.active='Y' "
+//                + " and p.parameter_name='" + param + "' ";
+
+        String query = " select s.selection_value_no "
+                + " from selection s,parameter p where p.parameter_id=s.parameter_id and s.active='Y' and p.active='Y' "
                 + " and p.parameter_name='" + param + "' ";
         try {
+            System.err.println("query for getSelectionValue -" + query);
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
             q = q.trim();
@@ -643,11 +673,17 @@ public class ResponseDetailModel {
 
     public List<String> getBitwiseValue(String q, String param) {
         List<String> list = new ArrayList<String>();
-        String query = " select bdr.sub_byte_division "
-                + " from parameter p,byte_data_response bdr "
-                + " where p.active='Y' and bdr.active='Y' and p.parameter_id=bdr.parameter_id"
-                + " and p.parameter_name='bitwise response par' ";
+//        String query = " select bdr.sub_byte_division "
+//                + " from parameter p,byte_data_response bdr "
+//                + " where p.active='Y' and bdr.active='Y' and p.parameter_id=bdr.parameter_id"
+//                + " and p.parameter_name='bitwise response par' ";
+
+        String query = " select sbd.parameter_name,sbd.start_pos,sbd.no_of_bit,sbd.sub_division_no "
+                + " from parameter p,byte_data bd,sub_byte_division sbd where p.active='Y' and bd.active='Y' "
+                + " and sbd.active='Y' and bd.parameter_id=p.parameter_id and p.parameter_name='" + param + "' "
+                + " and sbd.byte_id=bd.byte_data_id ";
         try {
+            System.err.println("query for getBitwiseValue --" + query);
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
             while (rset.next()) {    // move cursor from BOR to valid record.
@@ -658,6 +694,8 @@ public class ResponseDetailModel {
             //list.add(String.valueOf(count));
             if (count == 0) {
                 list.add("Value not exists.......");
+            } else {
+                //list.add(String.valueOf(count));
             }
         } catch (Exception e) {
             System.out.println("com.ble.dashboard.response.ResponseDetailModel.getBitwiseValue()-" + e);
@@ -669,11 +707,16 @@ public class ResponseDetailModel {
 
     public List<ResponseDetailBean> getDisplayByteVal(String q, String sel_val, String param) {
         List<ResponseDetailBean> list = new ArrayList<ResponseDetailBean>();
-        String query = " select frv.display_value,frv.select_value,fr.fixed_response_value_no "
-                + "from parameter p, fixed_response fr, fixed_response_value frv "
-                + "where p.parameter_name='" + param + "' and p.active='Y' and fr.parameter_id=p.parameter_id and "
-                + "fr.fixed_response_id=frv.fixed_response_id and fr.active='Y' and frv.active='Y' "
-                + " and fr.fixed_response_value_no='" + sel_val + "' ";
+//        String query = " select frv.display_value,frv.select_value,fr.fixed_response_value_no "
+//                + "from parameter p, fixed_response fr, fixed_response_value frv "
+//                + "where p.parameter_name='" + param + "' and p.active='Y' and fr.parameter_id=p.parameter_id and "
+//                + "fr.fixed_response_id=frv.fixed_response_id and fr.active='Y' and frv.active='Y' "
+//                + " and fr.fixed_response_value_no='" + sel_val + "' ";
+
+        String query = " select sv.display_value,sv.byte_value,sv.selection_value_id "
+                + " from selection s,parameter p, selection_value sv where p.parameter_id=s.parameter_id and s.active='Y' and p.active='Y' "
+                + " and p.parameter_name='" + param + "' and sv.selection_id=s.selection_id "
+                + " and s.selection_value_no='" + sel_val + "' ";
         try {
             System.err.println("query =" + query);
             ResultSet rset = connection.prepareStatement(query).executeQuery();
@@ -698,11 +741,17 @@ public class ResponseDetailModel {
 
     public List<ResponseDetailBean> getSubByteDivVal(String q, String sub_byte_div_val, String param) {
         List<ResponseDetailBean> list = new ArrayList<ResponseDetailBean>();
-        String query = " select 'dummy' as parameter_name,sbd.start_pos,sbd.no_of_bit,sbd.sub_division_no,sbd.response_sub_byte_division_id "
-                + " from parameter p,byte_data_response bd,response_sub_byte_division sbd where p.active='Y' and bd.active='Y' "
+//        String query = " select 'dummy' as parameter_name,sbd.start_pos,sbd.no_of_bit,sbd.sub_division_no,sbd.response_sub_byte_division_id "
+//                + " from parameter p,byte_data_response bd,response_sub_byte_division sbd where p.active='Y' and bd.active='Y' "
+//                + " and sbd.active='Y' and bd.parameter_id=p.parameter_id and p.parameter_name='" + param + "' "
+//                + " and sbd.res_byte_id=bd.byte_data_response_id ";
+
+        String query = " select sbd.parameter_name,sbd.start_pos,sbd.no_of_bit,sbd.sub_division_no,sbd.sub_byte_division_id "
+                + " from parameter p,byte_data bd,sub_byte_division sbd where p.active='Y' and bd.active='Y' "
                 + " and sbd.active='Y' and bd.parameter_id=p.parameter_id and p.parameter_name='" + param + "' "
-                + " and sbd.res_byte_id=bd.byte_data_response_id ";
+                + " and sbd.byte_id=bd.byte_data_id ";
         try {
+            System.err.println("query for getSubByteDivVal --" + query);
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
             while (rset.next()) {    // move cursor from BOR to valid record.
@@ -727,9 +776,13 @@ public class ResponseDetailModel {
 
     public List<ResponseDetailBean> getBitwiseDisByteVal(String q, String id) {
         List<ResponseDetailBean> list = new ArrayList<ResponseDetailBean>();
-        String query = " select display_value,bit_value,response_sub_division_selection_id "
-                + " from response_sub_division_selection where active='Y' and response_sub_byte_division_id='" + id + "' ";
+//        String query = " select display_value,bit_value,response_sub_division_selection_id "
+//                + " from response_sub_division_selection where active='Y' and response_sub_byte_division_id='" + id + "' ";
+
+        String query = " select display_value,bit_value,sub_division_selection_id "
+                + " from sub_division_selection where active='Y' and sub_byte_division_id='" + id + "' ";
         try {
+            System.err.println("query for getBitwiseDisByteVal --" + query);
             ResultSet rset = connection.prepareStatement(query).executeQuery();
             int count = 0;
             while (rset.next()) {    // move cursor from BOR to valid record.

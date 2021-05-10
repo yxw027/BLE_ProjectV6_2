@@ -55,6 +55,8 @@
 
         <script src="JS/deviceConfig.js"></script>
 
+
+
         <script type="text/javascript">
             function zoom() {
                 document.body.style.zoom = "90%"
@@ -132,6 +134,38 @@
             }
 
 
+            table { 
+                width: 100%; 
+                border-collapse: collapse; 
+                margin:10px auto;
+            }
+
+            th { 
+                background: #60b4dfad; 
+                color: white; 
+                font-weight: bold; 
+            }
+
+            td, th { 
+                padding: 5px; 
+                border: 1px solid #ccc; 
+                text-align: left; 
+                font-size: 18px;
+            }
+
+            .labels tr td {
+                background-color: #2cc16a;
+                font-weight: bold;
+                color: #fff;
+            }
+
+            .label tr td label {
+                display: block;
+            }
+            
+            .hide1 {
+                display: none;
+            }
 
         </style>
 
@@ -269,6 +303,20 @@
 
             }
 
+
+            $(document).ready(function () {
+                $('[data-toggle="toggle"]').change(function () {//alert("this iddd -"+this.id);
+                    //$(this).parents().next('.hide1').toggle();
+                    var id=this.id;
+                    $('.hide_'+id).toggle();
+                });
+
+                $('[data-toggle="toggle"]').change(function () {
+                    $(this).parents().next('.hide2').toggle();
+                });
+
+            });
+
         </script>
 
 
@@ -347,76 +395,80 @@
             </div>
 
 
-            <div class="row" style="margin-top: 2.55%;margin-left: 10%;margin-right: 10%;font-size:14px ;padding:0px 15px 0px 15px" id="connection_div">
-<!--                <form name="form1" method="POST" action="deviceRegistrationCont.do" style="background-color: white;padding:3%">-->
+            <div class="row" style="margin-top: 2.55%;margin-left: 10%;margin-right: 10%;font-size:14px ;padding:0px 15px 0px 15px;display:" id="connection_div">
                 <form name="form1" method="POST" action="DeviceConfigController" style="background-color: white;padding:3%">
-                    <table id="table1" width="70%"  border="1"  align="center" class="content" style="margin-left:15%;">
-                        <tr>
-                            <th class="heading" style="text-align: center;background: #ff00008a;">Model Name</th>
-                        </tr>
-                        <!---below is the code to show all values on jsp page fetched from trafficTypeList of TrafficController     --->
-                        <c:forEach var="divisionTypeBean" items="${requestScope['divisionTypeList']}"  varStatus="loopCounter">
-                            <tr  class="${loopCounter.index % 2 == 0 ? 'even': 'odd'}">                                  
-                                <td style="text-align: center;"><input type="checkbox" id="isCheck" name="isCheck" value ="${divisionTypeBean.device_registration_id},${divisionTypeBean.device_type_id}" onclick="checkmethod('${divisionTypeBean.device_name}', '${loopCounter.index}')"/>${divisionTypeBean.device_name}</td>
+                    <table>                        
+                        <thead>
                             <tr>
-                                <td  id="td${loopCounter.index}" align="center" style="display:none">
-                                    <DIV class="content_div">
-                                        <table id="table1" width="600"  border="1"  align="center" class="content">
-                                            <tr>                                                   
-                                                <th style="background: #c5ee86;" class="heading">Operation Name</th>
-                                            </tr>                                            
-                                            <c:forEach var="typebean" items="${divisionTypeBean.deviceregBean}"  varStatus="loopCounter1">
-                                                <tr>
-<!--                                                                    <td  style="display:none"><input type="checkbox" name="name1" />${typebean.operation_id}</td>-->
-                                                    <td><input style="margin-left:2%;" type="checkbox" id="isCheckOperation" name="isCheckOperation" value ="${typebean.operation_id},${divisionTypeBean.device_registration_id}"  onclick="checkmethod1('${divisionTypeBean.device_name}', '${loopCounter1.index}')"/>${typebean.operation_name}</td>
-
-                                                    <!--          test for command    -->
-
-                                                <tr>
-                                                    <td  id="tdC${loopCounter1.index}" align="center" style="display:none">
-                                                        <DIV class="content_div">
-                                                            <table id="table1" width="600"  border="1"  align="center" class="content">
-                                                                <tr>
-                                                                    <th style="background: #a7a7ee;" class="heading">Command</th>
-                                                                </tr>
-                                                                <c:forEach var="typebean1" items="${typebean.commandListBean}"  varStatus="loopCounter">
-                                                                    <tr>
-                                                                        <td><input style="margin-left:2%;" type="checkbox" id="isCheckCommand" name="isCheckCommand" value ="${typebean1.command},${typebean.operation_id},${typebean1.order_no},${typebean1.delay}" checked="checked"/>${typebean1.command}</td>
-                                                                    </tr>
-                                                                </c:forEach>
-                                                            </table>   </DIV>
-                                                    </td>
-                                                </tr>
-
-                                                <!--         end  test for command    -->
-
-
-                                                </tr>
-                                            </c:forEach>
-                                        </table>   </DIV>
-                                </td>
+                                <th style="text-align:center;background-color: #60b4df;">Model Name</th>                                
                             </tr>
-                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="divisionTypeBean" items="${requestScope['divisionTypeList']}"  varStatus="loopCounter">
+                            <tbody class="labels">
+
+                                <tr>
+                                    <td colspan="5">
+                                        <!--                                        <label for="accounting">Accounting</label>-->
+                                        <label id="isCheck" name="isCheck" value ="${divisionTypeBean.device_registration_id},${divisionTypeBean.device_type_id}">${divisionTypeBean.device_name}</label>
+                                        <input type="checkbox" name="isCheck" id="model_${loopCounter.index}" value ="${divisionTypeBean.device_registration_id},${divisionTypeBean.device_type_id}" data-toggle="toggle">
+                                    </td>
+                                </tr>
+
+                            <div>
+                            <tbody>
+                            <thead class="hide_model_${loopCounter.index}" style="display:none;">
+                                <tr>
+                                    <th style="text-align:center;">Operation Name</th>                                
+                                </tr>
+                            </thead>
+                            <c:forEach var="typebean" items="${divisionTypeBean.deviceregBean}"  varStatus="loopCounter1">
+                                <tr class="hide_model_${loopCounter.index}" style="background-color:#d2d21e8f;display:none;">
+                                    <td>
+                                        <label id="isCheckOperation" name="isCheckOperation" value ="${typebean.operation_id},${divisionTypeBean.device_registration_id}"  onclick="checkmethod1('${divisionTypeBean.device_name}', '${loopCounter1.index}')">${typebean.operation_name}</label>
+                                        <input type="checkbox" name="isCheckOperation" value ="${typebean.operation_id},${divisionTypeBean.device_registration_id}" id="operation_${loopCounter1.index}" data-toggle="toggle">
+                                    </td>
+                                </tr> 
+
+
+                                <tbody>
+                                <thead class="hide_operation_${loopCounter1.index}" style="display:none;">
+                                    <tr>
+                                        <th style="text-align:center;background-color: #68d7f0c7;">Command Name</th>                                
+                                    </tr>
+                                </thead>
+                                <c:forEach var="typebean1" items="${typebean.commandListBean}"  varStatus="loopCounter2">
+                                    <tr class="hide_operation_${loopCounter1.index}" style="background-color:#fff;display:none;">
+                                        <td>
+                                            <label id="isCheckCommand" name="isCheckCommand" value ="${typebean1.command},${typebean.operation_id},${typebean1.order_no},${typebean1.delay}">${typebean1.command}</label>
+                                            <input type="checkbox" id="isCheckCommand" name="isCheckCommand" value ="${typebean1.command},${typebean.operation_id},${typebean1.order_no},${typebean1.delay}" data-toggle="toggle">
+                                        </td>
+                                    </tr> 
+                                </c:forEach>
+                                </tbody>
+
+
+
+                            </c:forEach>                            
+
+
+                            </tbody>
+                            </div>
+
                         </c:forEach>
-
-                        <tr>
-                            <td align='center' colspan="2">
-                                <input class="btn btn-success" type="submit" name="task" id="send" value="send" onclick="setStatus(id)">
-                                <input type="hidden" value="${device_id}" name="d_id">
-                                <input type="hidden" value="${reg_no1}" name="reg_no1">
-                            </td>
-                        </tr>
-
+                        </tbody>
+                        </tbody>
                     </table>
-                    <!--                            </DIV>-->
+                    
+                    <div class="row" style="margin-bottom:0px">                        
+                        <input type="hidden" value="${device_id}" name="d_id" style="margin:35px 10px 35px 0px;float:right" class="btn btn-info"/>
+                        <input type="hidden" value="${reg_no1}" name="reg_no1" style="margin:35px 10px 35px 0px;float:right" class="btn btn-success"/>
+                        <input type="submit" name="task" id="send" value="Send" onclick="setStatus(id)" style="margin-right:15px;float:right" class="btn btn-success" />
+                    </div>
+                    
+                    
                 </form>
             </div>
-
-
-
-
-
-
             <footer>
                 <p style="color: black">
                     All right reserved. Template by: <a style="color: white"
@@ -428,37 +480,6 @@
             </footer>
 
         </div>
-
-
-        <!-- Bootstrap Js -->
-        <!-- <script src="assets/js/bootstrap.min.js"></script> -->
-        <!-- Metis Menu Js -->
-        <script src="assets/js/jquery.metisMenu.js"></script>
-        <!-- DATA TABLE SCRIPTS -->
-        <script src="assets/js/dataTables/jquery.dataTables.js"></script>
-        <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
-
-        <script src="assets/js/easypiechart.js"></script>
-        <script src="assets/js/easypiechart-data.js"></script>
-
-        <script>
-                                                $(document).ready(function () {
-                                                    /* $('#dataTables-example').dataTable();
-                                                     "pageLength": 25 */
-                                                    $('#dataTables_Model_Type').dataTable({
-                                                        //"autoWidth": false,
-                                                        //"lengthChange": false,
-                                                        "pageLength": 5,
-
-                                                    });
-                                                    $('#dataTables_mob_view').dataTable({
-                                                        //"autoWidth": false,
-                                                        //"lengthChange": false,
-                                                        "pageLength": 1
-                                                    });
-                                                });
-        </script>
-        <!-- Custom Js -->
         <script src="assets/js/custom-scripts.js"></script>
     </body>
 </html>

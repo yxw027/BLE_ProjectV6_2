@@ -265,65 +265,29 @@ public class DashboardModel {
         return list;
     }
 
-    public List<DashboardBean> getCommandDetail(String device_id) {
+    public List<DashboardBean> getOperationName(String device_id) {
         List<DashboardBean> list = new ArrayList<DashboardBean>();
         try {
-            String qry = " select distinct dcm.command_id,dcm.device_id, "
-                    + " ct.name as command_type_name, COALESCE(ct.shorthand, 'null')as shorthand, "
-                    + " c.command,c.starting_del,c.end_del,c.format,c.selection,c.input,c.bitwise "
-                    + " from device d, device_type dt, device_map dm, manufacturer mr, model m, modal_type mt, "
-                    + " command_type ct, command c,"
-                    + " device_command_map dcm, operation_name op "
-                    + " where d.active='Y' and dt.active='Y' and dm.active='Y' and mr.active='Y' and m.active='Y' and mt.active='Y' "
-                    + " and d.manufacture_id=mr.id and d.device_type_id=dt.id and d.model_id=m.id and m.model_type_id=mt.id "
-                    + " and dcm.device_id='" + device_id + "' "
-                    + " and dcm.device_id=d.id and dcm.command_id=c.id and c.command_type_id=ct.id "
-                    + " and dcm.operation_id=op.id "
-                    + " and c.active='Y' and ct.active='Y' and dcm.active='Y' and op.active='Y' ";
+            String qry = " select opn.id,dcm.device_id,opn.operation_name,opn.remark,opn.is_super_child,opn.generation,"
+                    + " IFNULL(opn.parent_id,'')as parent_id "
+                    + " from device_command_map dcm,device d,operation_name opn ,manufacturer mf,model m,device_type dt "
+                    + " where dcm.device_id=d.id  and dcm.operation_id=opn.id  and mf.id=d.manufacture_id and d.model_id=m.id "
+                    + " and d.device_type_id=dt.id and d.id='" + device_id + "' "
+                    + " and dcm.active='Y' and d.active='Y' and opn.active='Y' and mf.active='Y' and m.active='Y' and dt.active='Y' "
+                    + " group by (opn.operation_name) order by (opn.id) asc ";
 
             System.out.println("command query --" + qry);
-
             PreparedStatement pst = connection.prepareStatement(qry);
             ResultSet rset = pst.executeQuery();
             while (rset.next()) {
                 DashboardBean deviceBean = new DashboardBean();
-                deviceBean.setCommand_type_name(rset.getString("command_type_name"));
-                deviceBean.setShorthand(rset.getString("shorthand"));
-                deviceBean.setCommand(rset.getString("command"));
-                deviceBean.setStarting_del(rset.getString("starting_del"));
-                deviceBean.setEnd_del(rset.getString("end_del"));
-                deviceBean.setFormat(rset.getString("format"));
-                deviceBean.setSelection(rset.getString("selection"));
-                deviceBean.setInput(rset.getString("input"));
-                deviceBean.setBitwise(rset.getString("bitwise"));
-                deviceBean.setCommand_id(rset.getInt("command_id"));
+                deviceBean.setOperation_id(rset.getInt("id"));
                 deviceBean.setDevice_id(rset.getString("device_id"));
-
-                list.add(deviceBean);
-
-                //System.out.println("cccount --"+list.size());
-            }
-        } catch (Exception e) {
-            System.out.println("getSubModule ERROR inside DashboardModel - " + e);
-        }
-        //System.out.println("final size --"+list.size());
-        return list;
-    }
-
-    public List<DashboardBean> getOperationName(String device_id, String command_id) {
-        List<DashboardBean> list = new ArrayList<DashboardBean>();
-        //String[] ids = device_id.split("\\s*,\\s*");        
-        try {
-            String qry = " select op.operation_name "
-                    + " from operation_name op, device_command_map dcm where dcm.device_id='" + device_id + "' "
-                    + " and dcm.command_id='" + command_id + "' and dcm.active='Y' and dcm.operation_id=op.id and op.active='Y' ";
-
-            //System.out.println("query operation -"+qry);
-            PreparedStatement pst = connection.prepareStatement(qry);
-            ResultSet rset = pst.executeQuery();
-            while (rset.next()) {
-                DashboardBean deviceBean = new DashboardBean();
-                deviceBean.setOperation_name(rset.getString(1));
+                deviceBean.setOperation_name(rset.getString("operation_name"));
+                deviceBean.setRemark(rset.getString("remark"));
+                deviceBean.setField1(rset.getString("is_super_child"));
+                deviceBean.setField2(rset.getString("generation"));
+                deviceBean.setField3(rset.getString("parent_id"));
                 list.add(deviceBean);
 
                 //System.out.println("cccount --"+list.size());
@@ -331,9 +295,83 @@ public class DashboardModel {
         } catch (Exception e) {
             System.out.println("getOperationName ERROR inside DashboardModel - " + e);
         }
+        //System.out.println("final size --"+list.size());
         return list;
     }
 
+    public List<DashboardBean> getCommandDetail(String operation_id, String device_id) {
+        List<DashboardBean> list = new ArrayList<DashboardBean>();
+        try {
+//            String qry = " select distinct dcm.command_id,dcm.device_id, "
+//                    + " ct.name as command_type_name, COALESCE(ct.shorthand, 'null')as shorthand, "
+//                    + " c.command,c.starting_del,c.end_del,c.format,c.selection,c.input,c.bitwise "
+//                    + " from device d, device_type dt, device_map dm, manufacturer mr, model m, modal_type mt, "
+//                    + " command_type ct, command c,"
+//                    + " device_command_map dcm, operation_name op "
+//                    + " where d.active='Y' and dt.active='Y' and dm.active='Y' and mr.active='Y' and m.active='Y' and mt.active='Y' "
+//                    + " and d.manufacture_id=mr.id and d.device_type_id=dt.id and d.model_id=m.id and m.model_type_id=mt.id "
+//                    + " and dcm.device_id='" + device_id + "' "
+//                    + " and dcm.device_id=d.id and dcm.command_id=c.id and c.command_type_id=ct.id "
+//                    + " and dcm.operation_id=op.id "
+//                    + " and c.active='Y' and ct.active='Y' and dcm.active='Y' and op.active='Y' ";
+
+            String qry = " select c.id,c.command,c.starting_del,c.end_del,c.short_name,c.selection,c.input,c.bitwise,c.format "
+                    + " from device_command_map dcm,device d,operation_name opn,command c ,manufacturer mf,model m,device_type dt "
+                    + " where dcm.device_id=d.id  and dcm.operation_id=opn.id and c.id=dcm.command_id  and mf.id=d.manufacture_id "
+                    + " and d.model_id=m.id and d.device_type_id=dt.id and d.id='"+device_id+"' and opn.id='"+operation_id+"' "
+                    + " and dcm.active='Y' and d.active='Y' and opn.active='Y' and c.active='Y' "
+                    + "and mf.active='Y' and m.active='Y' and dt.active='Y' ";
+
+            System.out.println("command query --" + qry);
+
+            PreparedStatement pst = connection.prepareStatement(qry);
+            ResultSet rset = pst.executeQuery();
+            while (rset.next()) {
+                DashboardBean deviceBean = new DashboardBean();
+                deviceBean.setCommand_id(rset.getInt(1));
+                deviceBean.setCommand(rset.getString(2));
+                deviceBean.setStarting_del(rset.getString("starting_del"));
+                deviceBean.setEnd_del(rset.getString("end_del"));
+                deviceBean.setShorthand(rset.getString(5));                
+                deviceBean.setSelection(rset.getString("selection"));
+                deviceBean.setInput(rset.getString("input"));
+                deviceBean.setBitwise(rset.getString("bitwise"));
+                deviceBean.setFormat(rset.getString("format"));
+
+                list.add(deviceBean);
+
+                //System.out.println("cccount --"+list.size());
+            }
+        } catch (Exception e) {
+            System.out.println("getCommandDetail ERROR inside DashboardModel - " + e);
+        }
+        //System.out.println("final size --"+list.size());
+        return list;
+    }
+
+//    public List<DashboardBean> getOperationName(String device_id, String command_id) {
+//        List<DashboardBean> list = new ArrayList<DashboardBean>();
+//        //String[] ids = device_id.split("\\s*,\\s*");        
+//        try {
+//            String qry = " select op.operation_name "
+//                    + " from operation_name op, device_command_map dcm where dcm.device_id='" + device_id + "' "
+//                    + " and dcm.command_id='" + command_id + "' and dcm.active='Y' and dcm.operation_id=op.id and op.active='Y' ";
+//
+//            //System.out.println("query operation -"+qry);
+//            PreparedStatement pst = connection.prepareStatement(qry);
+//            ResultSet rset = pst.executeQuery();
+//            while (rset.next()) {
+//                DashboardBean deviceBean = new DashboardBean();
+//                deviceBean.setOperation_name(rset.getString(1));
+//                list.add(deviceBean);
+//
+//                //System.out.println("cccount --"+list.size());
+//            }
+//        } catch (Exception e) {
+//            System.out.println("getOperationName ERROR inside DashboardModel - " + e);
+//        }
+//        return list;
+//    }
     // Dashboard Start
     public List<DashboardBean> getModelType(String q) {
         List<DashboardBean> list = new ArrayList<DashboardBean>();
@@ -391,7 +429,7 @@ public class DashboardModel {
     }
 
     public List<DashboardBean> getFinishedProduct(String q) {
-        List<DashboardBean> list = new ArrayList<DashboardBean>();        
+        List<DashboardBean> list = new ArrayList<DashboardBean>();
         try {
 //            String qry = " select distinct dm.finished_device_id, m.device_name,m.device_no,m.warranty_period, "
 //                    + " m.device_address,mt.type,m.no_of_module from device_map dm, device d, model m, modal_type mt "
@@ -401,19 +439,19 @@ public class DashboardModel {
                     + " from device_type dt, device d, model m,image i "
                     + " where dt.active='Y' and d.active='Y' and m.active='Y' and dt.type ='Finished' and "
                     + " dt.id=d.device_type_id and d.model_id=m.id and d.image_id=i.image_id ";
-            
+
             PreparedStatement pst = connection.prepareStatement(query);
             ResultSet rset = pst.executeQuery();
             while (rset.next()) {
                 DashboardBean dashBean = new DashboardBean();
-                dashBean.setDevice_name(rset.getString(1));                
-                dashBean.setDevice_id(rset.getString(2));                
-                dashBean.setImage_path(rset.getString(3));                
+                dashBean.setDevice_name(rset.getString(1));
+                dashBean.setDevice_id(rset.getString(2));
+                dashBean.setImage_path(rset.getString(3));
                 list.add(dashBean);
             }
         } catch (Exception e) {
             System.out.println("getFinishedProduct ERROR inside DashboardModel - " + e);
-        }        
+        }
         return list;
     }
 
@@ -493,8 +531,7 @@ public class DashboardModel {
         return list;
     }
     // end Sub Modules image data
-    
-    
+
     public List<DashboardBean> getOperationList(String q) {
         List<DashboardBean> list = new ArrayList<DashboardBean>();
         //String[] ids = device_id.split("\\s*,\\s*");        
@@ -512,7 +549,7 @@ public class DashboardModel {
         }
         return list;
     }
-    
+
     public List<DashboardBean> getCommandList(String q) {
         List<DashboardBean> list = new ArrayList<DashboardBean>();
         //String[] ids = device_id.split("\\s*,\\s*");        
@@ -530,19 +567,18 @@ public class DashboardModel {
         }
         return list;
     }
-    
-     public List<DashboardBean> getDevOpCommandList(String q) {
+
+    public List<DashboardBean> getDevOpCommandList(String q) {
         List<DashboardBean> list = new ArrayList<DashboardBean>();
         //String[] ids = device_id.split("\\s*,\\s*");        
         try {
             String qry = " select distinct dcm.device_command_id, "
-                + " dcm.device_id,dcm.remark,dcm.order_no,dcm.delay,opn.operation_name,c.command,mf.name,m.device_name,m.device_no,dt.type,dcm.short_name "
-                + " from device_command_map dcm,device d,operation_name opn,command c ,manufacturer mf,model m,device_type dt "
-                + " where dcm.device_id=d.id  and dcm.operation_id=opn.id and c.id=dcm.command_id  and mf.id=d.manufacture_id and d.model_id=m.id and d.device_type_id=dt.id "
-                + "  and dcm.active='Y' and d.active='Y' and opn.active='Y' and c.active='Y' and mf.active='Y' and m.active='Y' and dt.active='Y'  "
-                + " ORDER BY dcm.order_no ASC ";
-            
-            
+                    + " dcm.device_id,dcm.remark,dcm.order_no,dcm.delay,opn.operation_name,c.command,mf.name,m.device_name,m.device_no,dt.type,dcm.short_name "
+                    + " from device_command_map dcm,device d,operation_name opn,command c ,manufacturer mf,model m,device_type dt "
+                    + " where dcm.device_id=d.id  and dcm.operation_id=opn.id and c.id=dcm.command_id  and mf.id=d.manufacture_id and d.model_id=m.id and d.device_type_id=dt.id "
+                    + "  and dcm.active='Y' and d.active='Y' and opn.active='Y' and c.active='Y' and mf.active='Y' and m.active='Y' and dt.active='Y'  "
+                    + " ORDER BY dcm.order_no ASC ";
+
             PreparedStatement pst = connection.prepareStatement(qry);
             ResultSet rset = pst.executeQuery();
             while (rset.next()) {
@@ -555,8 +591,8 @@ public class DashboardModel {
         }
         return list;
     }
-     
-      public List<DashboardBean> getParameterList(String q) {
+
+    public List<DashboardBean> getParameterList(String q) {
         List<DashboardBean> list = new ArrayList<DashboardBean>();
         //String[] ids = device_id.split("\\s*,\\s*");        
         try {
@@ -573,8 +609,6 @@ public class DashboardModel {
         }
         return list;
     }
-    
-    
 
     // Dashboard Enf
     public void closeConnection() {

@@ -1,7 +1,7 @@
 <%-- 
-    Document   : parameter
-    Created on : Mar 3, 2021, 9:58:45 AM
-    Author     : saini
+    Document   : finished_device_operation_map
+    Created on : 15 Apr, 2021, 11:16:05 AM
+    Author     : Administrator
 --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -16,7 +16,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta content="" name="description" />
         <meta content="webthemez" name="author" />
-        <title>Device Configuration</title>
+        <title>Device Operation Map</title>
 
 
 
@@ -53,7 +53,10 @@
         <link href="css/common.css" rel="stylesheet" />
         <!--        <script src="JS/jquery.smartuploader.js"></script>-->
 
-        <script src="JS/deviceConfig.js"></script>
+        <script src="JS/deviceOperationMap.js"></script>
+<!--        <script src="JS/deviceConfig.js"></script>-->
+
+
 
         <script type="text/javascript">
             function zoom() {
@@ -132,6 +135,38 @@
             }
 
 
+            table { 
+                width: 100%; 
+                border-collapse: collapse; 
+                margin:10px auto;
+            }
+
+            th { 
+                background: #60b4dfad; 
+                color: white; 
+                font-weight: bold; 
+            }
+
+            td, th { 
+                padding: 5px; 
+                border: 1px solid #ccc; 
+                text-align: left; 
+                font-size: 18px;
+            }
+
+            .labels tr td {
+                background-color: #2cc16a;
+                font-weight: bold;
+                color: #fff;
+            }
+
+            .label tr td label {
+                display: block;
+            }
+            
+            .hide1 {
+                display: none;
+            }
 
         </style>
 
@@ -142,14 +177,6 @@
                     $('.normal_row').hide();
                     $('.high_row').hide();
                 }
-            }
-
-            function getImgeIcon(image_path) {
-                $("#my_image")
-                        .attr(
-                                "src",
-                                "http://120.138.10.146:8080/ContactLess_Management/VisitTempDetailsController?getImage="
-                                + image_path + "");
             }
 
             $(document).ready(
@@ -169,42 +196,7 @@
                                 });
                     });
 
-
-            $(function () {
-                $("#manufacturer_name").autocomplete({
-                    source: function (request, response) {
-                        //alert(3321);
-                        var random = document.getElementById("manufacturer_name").value;
-                        $.ajax({
-                            url: "DeviceController",
-                            dataType: "json",
-                            data: {
-                                action1: "getManufacturerName",
-                                str: random
-                            },
-                            success: function (data) {
-                                //alert("data list -" + data.list);
-                                console.log(data);
-                                response(data.list);
-                            },
-                            error: function (error) {
-                                console.log(error.responseText);
-                                response(error.responseText);
-                            }
-                        });
-                    },
-                    select: function (events, ui) {
-                        console.log(ui);
-                        $('#manufacturer_name').val(ui.item.label); // display the selected text
-                        return false;
-                    }
-                });
-            });
-
             function fillColumn(dev_id, count) {
-//                alert("dev idd --"+count);             
-//                alert("manf name --"+$("#" + count + '2').html());             
-                //var device_name = $("#" + id + '3').html();
                 $('#manufacturer_name').val($("#" + count + '2').html());
                 $('#device_type').val($("#" + count + '3').html());
                 $('#model_name').val($("#" + count + '4').html());
@@ -269,6 +261,20 @@
 
             }
 
+
+            $(document).ready(function () {
+                $('[data-toggle="toggle"]').change(function () {//alert("this iddd -"+this.id);
+                    //$(this).parents().next('.hide1').toggle();
+                    var id=this.id;
+                    $('.hide_'+id).toggle();
+                });
+
+                $('[data-toggle="toggle"]').change(function () {
+                    $(this).parents().next('.hide2').toggle();
+                });
+
+            });
+
         </script>
 
 
@@ -282,7 +288,7 @@
                 <div style="margin-top: -10px;">
                     <div class="col-sm-12">
                         <h2 style="color: white;font-size: 30px;margin-bottom: 13px;">
-                            <b>Device Configuration</b>
+                            <b>Finished Device Operation Map</b>
                         </h2>
                     </div>
                 </div>
@@ -290,7 +296,7 @@
 
 
             <div class="row" style="margin-top: 2.55%;margin-left: 10%;margin-right: 10%;font-size:14px ;padding:0px 15px 0px 15px" id="">
-                <form method="post" action="DeviceConfigController" name="form2" style="background-color: white;">
+                <form method="post" action="FinDevOpMapController" name="form2" style="background-color: white;">
 
                     <c:if test="${not empty message}">
                         <div style="font-size: 14px;width:30%;margin-left:2%;margin-top:2%;background-color: ${msgBgColor}"><b>Result: ${message}</b></div>
@@ -335,11 +341,8 @@
                     </div>
 
 
-                    <div class="row" style="margin-bottom:35px">
-                        <!--                        <input type="submit"  name="task" id="delete" value="Delete" onclick="showNewDevice();" style="margin:35px 35px 35px 0px;float:right" class="btn btn-danger" disabled/>
-                                                <input type="button"  name="task" id="edit" value="Edit" onclick="makeEditable(id)" style="margin:35px 10px 35px 0px;float:right" class="btn btn-info" disabled/>
-                                                <input type="submit"  name="task" id="save" value="Save" onclick="setStatus(id)" style="margin:35px 10px 35px 0px;float:right" class="btn btn-success" disabled/>-->
-                        <input type="submit" name="task" id="connection" value="Connection" style="margin:35px 65px 35px 0px;float:right" class="btn btn-success" />
+                    <div class="row" style="margin-bottom:35px">                      
+                        <input type="submit" name="task" id="submit" value="Submit" style="margin:35px 65px 35px 0px;float:right" class="btn btn-success" />
                     </div>
 
                 </form>                
@@ -347,76 +350,70 @@
             </div>
 
 
-            <div class="row" style="margin-top: 2.55%;margin-left: 10%;margin-right: 10%;font-size:14px ;padding:0px 15px 0px 15px" id="connection_div">
-<!--                <form name="form1" method="POST" action="deviceRegistrationCont.do" style="background-color: white;padding:3%">-->
-                <form name="form1" method="POST" action="DeviceConfigController" style="background-color: white;padding:3%">
-                    <table id="table1" width="70%"  border="1"  align="center" class="content" style="margin-left:15%;">
-                        <tr>
-                            <th class="heading" style="text-align: center;background: #ff00008a;">Model Name</th>
-                        </tr>
-                        <!---below is the code to show all values on jsp page fetched from trafficTypeList of TrafficController     --->
-                        <c:forEach var="divisionTypeBean" items="${requestScope['divisionTypeList']}"  varStatus="loopCounter">
-                            <tr  class="${loopCounter.index % 2 == 0 ? 'even': 'odd'}">                                  
-                                <td style="text-align: center;"><input type="checkbox" id="isCheck" name="isCheck" value ="${divisionTypeBean.device_registration_id},${divisionTypeBean.device_type_id}" onclick="checkmethod('${divisionTypeBean.device_name}', '${loopCounter.index}')"/>${divisionTypeBean.device_name}</td>
+            <div class="row" style="margin-top: 2.55%;margin-left: 10%;margin-right: 10%;font-size:14px ;padding:0px 15px 0px 15px;display:" id="connection_div">
+                <form name="form1" method="POST" action="FinDevOpMapController" style="background-color: white;padding:3%">
+                    <table>                        
+                        <thead>
                             <tr>
-                                <td  id="td${loopCounter.index}" align="center" style="display:none">
-                                    <DIV class="content_div">
-                                        <table id="table1" width="600"  border="1"  align="center" class="content">
-                                            <tr>                                                   
-                                                <th style="background: #c5ee86;" class="heading">Operation Name</th>
-                                            </tr>                                            
-                                            <c:forEach var="typebean" items="${divisionTypeBean.deviceregBean}"  varStatus="loopCounter1">
-                                                <tr>
-<!--                                                                    <td  style="display:none"><input type="checkbox" name="name1" />${typebean.operation_id}</td>-->
-                                                    <td><input style="margin-left:2%;" type="checkbox" id="isCheckOperation" name="isCheckOperation" value ="${typebean.operation_id},${divisionTypeBean.device_registration_id}"  onclick="checkmethod1('${divisionTypeBean.device_name}', '${loopCounter1.index}')"/>${typebean.operation_name}</td>
-
-                                                    <!--          test for command    -->
-
-                                                <tr>
-                                                    <td  id="tdC${loopCounter1.index}" align="center" style="display:none">
-                                                        <DIV class="content_div">
-                                                            <table id="table1" width="600"  border="1"  align="center" class="content">
-                                                                <tr>
-                                                                    <th style="background: #a7a7ee;" class="heading">Command</th>
-                                                                </tr>
-                                                                <c:forEach var="typebean1" items="${typebean.commandListBean}"  varStatus="loopCounter">
-                                                                    <tr>
-                                                                        <td><input style="margin-left:2%;" type="checkbox" id="isCheckCommand" name="isCheckCommand" value ="${typebean1.command},${typebean.operation_id},${typebean1.order_no},${typebean1.delay}" checked="checked"/>${typebean1.command}</td>
-                                                                    </tr>
-                                                                </c:forEach>
-                                                            </table>   </DIV>
-                                                    </td>
-                                                </tr>
-
-                                                <!--         end  test for command    -->
-
-
-                                                </tr>
-                                            </c:forEach>
-                                        </table>   </DIV>
-                                </td>
+                                <th style="text-align:center;background-color: #60b4df;">Model Name</th>                                
+                                <input type="hidden" id="model_count" name="model_count" value="${model_count}"/>
+                                <input type="hidden" id="device_id" name="device_id" value="${device_id}"/>
+                                <input type="hidden" id="model_name" name="model_name" value="${deviceName}"/>
                             </tr>
-                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:forEach var="divisionTypeBean" items="${requestScope['divisionTypeList']}"  varStatus="loopCounter">
+                            <tbody class="labels">
+
+                                <tr>
+                                    <td colspan="5">
+                                        <!--                                        <label for="accounting">Accounting</label>-->
+                                        <label id="isCheck" name="isCheck" value ="${divisionTypeBean.device_registration_id},${divisionTypeBean.device_type_id}">${divisionTypeBean.device_name}</label>
+                                        <input type="checkbox" name="model_${loopCounter.index}" id="model_${loopCounter.index}" value ="${divisionTypeBean.device_id}" data-toggle="toggle">
+                                    </td>
+                                </tr>
+
+                            <div>
+                            <tbody>
+                            <thead class="hide_model_${loopCounter.index}" style="display:none;">
+                                <tr>
+                                    <th style="text-align:center;">Operation Name</th>  
+                            <input type="hidden" id="operation_count_${loopCounter.index}" name="operation_count_${loopCounter.index}" value="${divisionTypeBean.operation_count}"/>
+                                </tr>
+                            </thead>
+                            <c:forEach var="typebean" items="${divisionTypeBean.deviceregBean}"  varStatus="loopCounter1">
+                                <tr class="hide_model_${loopCounter.index}" style="background-color:#d2d21e8f;display:none;">
+                                    <td>
+                                        <label id="isCheckOperation" name="isCheckOperation" value ="${typebean.operation_id},${divisionTypeBean.device_registration_id}"  onclick="checkmethod1('${divisionTypeBean.device_name}', '${loopCounter1.index}')">${typebean.operation_name}</label>
+                                        <input type="checkbox" name="operation_${loopCounter.index}${loopCounter1.index}" value ="${typebean.operation_id}" id="operation_${loopCounter.index}${loopCounter1.index}" data-toggle="toggle">
+                                    </td>
+                                </tr> 
+
+
+                                
+
+
+
+                            </c:forEach>                            
+
+
+                            </tbody>
+                            </div>
+
                         </c:forEach>
-
-                        <tr>
-                            <td align='center' colspan="2">
-                                <input class="btn btn-success" type="submit" name="task" id="send" value="send" onclick="setStatus(id)">
-                                <input type="hidden" value="${device_id}" name="d_id">
-                                <input type="hidden" value="${reg_no1}" name="reg_no1">
-                            </td>
-                        </tr>
-
+                        </tbody>
+                        </tbody>
                     </table>
-                    <!--                            </DIV>-->
+                    
+                    <div class="row" style="margin-bottom:0px">                        
+                        <input type="hidden" value="${device_id}" name="d_id" style="margin:35px 10px 35px 0px;float:right" class="btn btn-info"/>
+                        <input type="hidden" value="${reg_no1}" name="reg_no1" style="margin:35px 10px 35px 0px;float:right" class="btn btn-success"/>
+                        <input type="submit" name="task" id="save" value="Save" onclick="setStatus(id)" style="margin-right:15px;float:right" class="btn btn-success" />
+                    </div>
+                    
+                    
                 </form>
             </div>
-
-
-
-
-
-
             <footer>
                 <p style="color: black">
                     All right reserved. Template by: <a style="color: white"
@@ -428,39 +425,7 @@
             </footer>
 
         </div>
-
-
-        <!-- Bootstrap Js -->
-        <!-- <script src="assets/js/bootstrap.min.js"></script> -->
-        <!-- Metis Menu Js -->
-        <script src="assets/js/jquery.metisMenu.js"></script>
-        <!-- DATA TABLE SCRIPTS -->
-        <script src="assets/js/dataTables/jquery.dataTables.js"></script>
-        <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
-
-        <script src="assets/js/easypiechart.js"></script>
-        <script src="assets/js/easypiechart-data.js"></script>
-
-        <script>
-                                                $(document).ready(function () {
-                                                    /* $('#dataTables-example').dataTable();
-                                                     "pageLength": 25 */
-                                                    $('#dataTables_Model_Type').dataTable({
-                                                        //"autoWidth": false,
-                                                        //"lengthChange": false,
-                                                        "pageLength": 5,
-
-                                                    });
-                                                    $('#dataTables_mob_view').dataTable({
-                                                        //"autoWidth": false,
-                                                        //"lengthChange": false,
-                                                        "pageLength": 1
-                                                    });
-                                                });
-        </script>
-        <!-- Custom Js -->
         <script src="assets/js/custom-scripts.js"></script>
     </body>
 </html>
-
 

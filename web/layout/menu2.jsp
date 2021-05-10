@@ -36,7 +36,7 @@ crossorigin="anonymous"></script>
                         <div class="dropdown">
                             <ul>
                                 <li class="dropdown-link"><a href="AddModulesController">Add
-                                        Modules</a></li>                                							-->
+                                        Modules</a></li>
                             </ul>
                         </div>
                     </li>
@@ -47,7 +47,7 @@ crossorigin="anonymous"></script>
                         <div class="dropdown">
                             <ul>
                                 <li class="dropdown-link"><a href="DeviceController">Add
-                                        Devices</a></li>                                							-->
+                                        Devices</a></li>
                             </ul>
                         </div>
                     </li>
@@ -76,6 +76,8 @@ crossorigin="anonymous"></script>
                                         Map</a></li>
                                 <li class="dropdown-link"><a href="ParameterNameController">Parameter
                                     </a></li>
+                                <li class="dropdown-link"><a href="FinDevOpMapController">Finished Device Operation Map
+                                    </a></li>
                             </ul>
                         </div>
                     </li>
@@ -92,7 +94,18 @@ crossorigin="anonymous"></script>
                                         Parameter</a></li>                                
                             </ul>
                         </div>
-                    </li>                   
+                    </li>  
+
+                    <li class="nav-link" style="-i: 1.1s"><a href="#">Dashboard<i
+                                class="fas fa-caret-down"></i></a>
+                        <div class="dropdown">
+                            <ul>
+                                <li class="dropdown-link"><a href="DashboardController">All
+                                        Detail</a></li>                                
+                            </ul>                            
+                        </div>
+                    </li>
+
                 </ul>
             </div>
 

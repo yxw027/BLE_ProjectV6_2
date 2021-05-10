@@ -250,9 +250,8 @@
         if ($('#commandDiv').css('display') != 'none') {
             $('#commandDiv').hide();
         }
-
         var dataTable = $('#dataTables-example').DataTable();
-        dataTable.clear().draw();
+        dataTable.clear().page.len(5).draw();
         //alert("before ajax");
         $.ajax({
             url: 'DashboardController',
@@ -277,7 +276,7 @@
                             result.data[l].warranty_period,
                             result.data[l].device_address,
                             result.data[l].no_of_module,
-                            result.data[l].device_id                            
+                            result.data[l].device_id
                         ]
                                 );
 //                        $('.even').toggleClass('even class' + l + '').attr('onclick', 'viewCommandDetails(' + result.data[l].device_id + ');').attr('id', 'cd' + result.data[l].device_id);
@@ -310,30 +309,89 @@
                         'click',
                         'tr',
                         function () {
-                            var d = $("#dataTables-example").DataTable().row( this ).data();
-                            viewCommandDetails(d);
+                            var d = $("#dataTables-example").DataTable().row(this).data();
+                            //viewCommandDetails(d);
+                            viewOperationName(d);
                             if ($(this).hasClass('selected_row2')) {
                                 $(this).removeClass('selected_row2');
-                                
-                                //var tr = $(this).closest('tr');
-                                //var row = $(this).row(tr);
-                                //viewCommandDetails($(this).data());
-                                
                             } else {
                                 $("#dataTables-example").DataTable().$(
                                         'tr.selected_row2').removeClass(
                                         'selected_row2');
                                 $(this).addClass('selected_row2');
-                                
+
 //                                var row = table.row(tr);
 //                                viewCommandDetails();
                             }
                         });
+
+                $('#dataTables-example3 tbody').on(
+                        'click',
+                        'tr',
+                        function () {
+                            var d = $("#dataTables-example3").DataTable().row(this).data();
+                            viewCommandDetails(d);
+                            if ($(this).hasClass('selected_row2')) {
+                                $(this).removeClass('selected_row2');
+
+                                //var tr = $(this).closest('tr');
+                                //var row = $(this).row(tr);
+                                //viewCommandDetails($(this).data());
+
+                            } else {
+                                $("#dataTables-example3").DataTable().$(
+                                        'tr.selected_row2').removeClass(
+                                        'selected_row2');
+                                $(this).addClass('selected_row2');
+
+//                                var row = table.row(tr);
+//                                viewCommandDetails();
+                            }
+                        });
+
             });
+
+    function viewOperationName(id) {//alert("idd 9 --"+id[9]+"  -- id 8 --"+id[8]+" --- id 10 --"+id[10]);
+        var dataTable = $('#dataTables-example3').DataTable();
+        dataTable.clear().draw();
+        //alert("before ajax");
+        $.ajax({
+            url: 'DashboardController',
+            contentType: "application/json",
+            dataType: 'json',
+            data: {
+                action1: "getOperationName",
+                q: id[9]
+            },
+            success: function (result) {//alert(121);
+                console.log(result);
+                if ($('#dataTables-example3').length > 0) {
+                    var k = 0;
+                    for (var l = 0; l < result.data.length; l++) {
+                        //alert("field 2 -"+result.data[l].field2+"  field 11 -"+result.data[l].remark);
+                        $('#dataTables-example3').dataTable().fnAddData([
+                            ++k,
+                            result.data[l].operation_id,
+                            result.data[l].operation_name,
+                            result.data[l].field1,
+                            result.data[l].field2,
+                            result.data[l].remark,
+                            result.data[l].device_id,
+                        ]
+                                );
+//                        $('.even').toggleClass('even class' + l + '').attr('id', result.data[l].device_id + ',' + result.data[l].command_id);
+//                        $('.odd').toggleClass('odd class' + l + '').attr('id', result.data[l].device_id + ',' + result.data[l].command_id);
+                    }
+                }
+            }
+        });
+        if ($('#operationDiv').css('display') == 'none') {
+            $('#operationDiv').show();
+        }
+    }
+
+
     function viewCommandDetails(id) {
-        //alert("dev id -"+id[9]);        
-        //$("#cd" + id).css('background-color', 'red');
-        // dashLiveVehicles	
         var dataTable = $('#dataTables-example2').DataTable();
         dataTable.clear().draw();
         //alert("before ajax");
@@ -343,7 +401,8 @@
             dataType: 'json',
             data: {
                 action1: "getCommandDetail",
-                q: id[9]
+                q: id[1],
+                r: id[6]
             },
             success: function (result) {//alert(121);
                 console.log(result);
@@ -354,14 +413,12 @@
                         $('#dataTables-example2').dataTable().fnAddData([
                             ++k,
                             result.data[l].command,
-                            result.data[l].command_type_name,
                             result.data[l].shorthand,
                             result.data[l].starting_del,
                             result.data[l].end_del,
                             result.data[l].format,
                             result.data[l].input,
                             result.data[l].bitwise,
-                            result.data[l].device_id,
                             result.data[l].command_id
                         ]
                                 );
@@ -394,7 +451,7 @@
         background: url('images/details_close.png') no-repeat center center;
     }
 
-    #dataTables-example_length{
+/*    #dataTables-example_length{
         display:none;
     }
 
@@ -408,7 +465,7 @@
 
     #dataTables-example2_filter{
         display:none;
-    }
+    }*/
 
     .evenn{
         background-color: #ddd;
@@ -552,7 +609,7 @@
                                 <div class="content_div" id="subModuleDiv" style="display:none">
                                     <!-- Advanced Tables -->
                                     <div class="panel panel-default">
-                                        <div class="panel-heading">Sub Modules</div>
+                                        <div class="panel-heading" style="">Sub Modules</div>
                                         <div class="panel-body" style="padding: 0px;">
                                             <div class="table-responsive">
                                                 <table class="table table-striped table-bordered table-hover"
@@ -582,6 +639,36 @@
                                 </div>
 
 
+                                <div class="content_div" id="operationDiv" style="display:none">
+                                    <!-- Advanced Tables -->
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Operation Name</div>
+                                        <div class="panel-body" style="padding: 0px;">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-bordered table-hover"
+                                                       id="dataTables-example3" style="margin-bottom: 5px;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="heading">S.No.</th>
+                                                            <th class="heading">Operation Id</th>
+                                                            <th class="heading">Operation Name</th>
+                                                            <th class="heading">Is Super Child</th>
+                                                            <th class="heading">Generation</th>
+                                                            <th class="heading">Remark</th>                                                            
+                                                            <th class="heading">Device Id</th>                                                            
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!--End Advanced Tables -->
+                                </div>
+
+
                                 <div class="content_div" id="commandDiv" style="display:none">
                                     <!-- Advanced Tables -->
                                     <div class="panel panel-default">
@@ -594,14 +681,12 @@
                                                         <tr>
                                                             <th class="heading">S.No.</th>
                                                             <th class="heading">Command</th>
-                                                            <th class="heading">Command Type Name</th>
-                                                            <th class="heading">Short Hand</th>
+                                                            <th class="heading">Short Name</th>
                                                             <th class="heading">Start Del</th>
                                                             <th class="heading">Ending Del</th>
                                                             <th class="heading">Format</th>
                                                             <th class="heading">Input</th>
                                                             <th class="heading">Bitwise</th>  
-                                                            <th class="heading">Device_id</th>  
                                                             <th class="heading">Command_id</th>  
                                                         </tr>
                                                     </thead>
@@ -652,17 +737,42 @@
                             }
                         ]
                     });
+                    
+//                    $('#dataTables-example3').DataTable({
+////                        "paging": true,
+//                        "pageLength": 5,
+//                        "columnDefs": [
+//                            {
+//                                "targets": [2],
+//                                "visible": false,
+//                                "searchable": false
+//                            }
+//                        ]
+//                    });
+//                    
+//                    $('#dataTables-example2').DataTable({
+////                        "paging": true,
+//                        "pageLength": 5,
+//                        "columnDefs": [
+//                            {
+//                                "targets": [2],
+//                                "visible": false,
+//                                "searchable": false
+//                            }
+//                        ]
+//                    });
+                    
                 });
                 /* Formatting function for row details - modify as you need */
                 function format(d, id) {
                     //alert("data iddd -" + d + " iddddddd --" + id);
                     //alert("dv id --"+d[9]+" command id -"+d[10]);   
-                    var device_id=d[9];
-                    var command_id=d[10];
+                    var device_id = d[9];
+                    var command_id = d[10];
                     var all = new Array();
                     var opName = new Array();
 
-                    var json = JSON.parse(getOpName(device_id,command_id));
+                    var json = JSON.parse(getOpName(device_id, command_id));
                     //alert("jsssoon --"+json);
                     //alert("jsssoon data --"+json.data.length);
 
@@ -685,9 +795,9 @@
                     return all;
                 }
 
-                function getOpName(device_id,command_id) {
+                function getOpName(device_id, command_id) {
                     //alert(1121);
-                    var id="opName"
+                    var id = "opName"
                     var jqXHR = $.ajax({
                         url: 'DashboardController',
                         contentType: "application/json",
@@ -699,28 +809,45 @@
                             device_id: device_id,
                             command_id: command_id
                         },
-                        success: function (result) {                            
+                        success: function (result) {
                         }
                     });
                     return jqXHR.responseText;
                 }
 
                 $(document).ready(function () {
-                    var table = $('#dataTables-example2').DataTable({
-                        "pageLength": 5,                        
-                        "columnDefs": [
-                            {
-                                className: "details-control", targets: "_all"
-                            },
-                            {
-                                "targets": [9,10],
-                                "visible": false,
-                                "searchable": false
-                            }
-                            
-                        ]
 
-                    });
+//                    $('#dataTables-example3').DataTable({
+//                        "pageLength": 5,
+//                        "columnDefs": [
+//                            {
+//                                className: "details-control", targets: "_all"
+//                            },
+//                            {
+//                                //"targets": [9, 10],
+//                                "visible": false,
+//                                "searchable": false
+//                            }
+//
+//                        ]
+//
+//                    });
+
+//                    var table = $('#dataTables-example2').DataTable({
+//                        "pageLength": 5,
+//                        "columnDefs": [
+//                            {
+//                                className: "details-control", targets: "_all"
+//                            },
+//                            {
+//                                "targets": [2, 3],
+//                                "visible": false,
+//                                "searchable": false
+//                            }
+//
+//                        ]
+//
+//                    });
                     // Add event listener for opening and closing details
                     $('#dataTables-example2 tbody').on('click', 'td.details-control', function () {
                         var tr = $(this).closest('tr');

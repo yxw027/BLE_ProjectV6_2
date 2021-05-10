@@ -229,59 +229,61 @@ public class DeviceModel {
                 c = Integer.parseInt(map.get("no_of_module")) + 1;
                 for (int a = 0; a < c; a++) {
 
-                    System.err.println("mf name index -" + modulesSetMF.get(a));
-                    psmt = null;
-                    rst = null;
+                    
+                        System.err.println("mf name index -" + modulesSetMF.get(a));
+                        psmt = null;
+                        rst = null;
 
-                    //query4 = " select * from manufacturer where name='" + map.get("manufacturer_name") + "' ";
-                    query4 = " select * from manufacturer where name='" + modulesSetMF.get(a) + "' ";
+                        //query4 = " select * from manufacturer where name='" + map.get("manufacturer_name") + "' ";
+                        query4 = " select * from manufacturer where name='" + modulesSetMF.get(a) + "' ";
 
-                    System.out.println("manufacture..." + query4);
+                        System.out.println("manufacture..." + query4);
 
-                    psmt = connection.prepareStatement(query4);
-                    rst = psmt.executeQuery();
-                    while (rst.next()) {
-                        manufacture_id = rst.getString(1);
-                    }
+                        psmt = connection.prepareStatement(query4);
+                        rst = psmt.executeQuery();
+                        while (rst.next()) {
+                            manufacture_id = rst.getString(1);
+                        }
 
-                    psmt = null;
-                    rst = null;
-                    //query5 = " select * from device_type where type='" + map.get("device_type") + "' ";
-                    query5 = " select * from device_type where type='" + modulesSetDT.get(a) + "' ";
-                    psmt = connection.prepareStatement(query5);
-                    rst = psmt.executeQuery();
-                    while (rst.next()) {
-                        device_type_id = rst.getString(1);
-                    }
+                        psmt = null;
+                        rst = null;
+                        //query5 = " select * from device_type where type='" + map.get("device_type") + "' ";
+                        query5 = " select * from device_type where type='" + modulesSetDT.get(a) + "' ";
+                        psmt = connection.prepareStatement(query5);
+                        rst = psmt.executeQuery();
+                        while (rst.next()) {
+                            device_type_id = rst.getString(1);
+                        }
 
-                    psmt = null;
-                    rst = null;
-                    //query6 = " select * from model where device_name='" + map.get("model_name") + "' ";
-                    query6 = " select * from model where device_name='" + modulesSetMN.get(a) + "' ";
-                    psmt = connection.prepareStatement(query6);
-                    rst = psmt.executeQuery();
-                    while (rst.next()) {
-                        model_id = rst.getString(1);
-                    }
-
-                    psmt = null;
-                    rst = null;
-                    query3 = "insert into device(manufacture_id,device_type_id,model_id,image_id,remark) "
-                            + " values(?,?,?,?,?) ";
-                    psmt = connection.prepareStatement(query3);
-
-                    psmt.setString(1, manufacture_id);
-                    psmt.setString(2, device_type_id);
-                    psmt.setString(3, model_id);
-                    psmt.setString(4, image_id);
-                    psmt.setString(5, map.get("remark"));
-                    count = psmt.executeUpdate();
-
-                    if (count > 0) {
-                        count = 0;
-
+                        psmt = null;
+                        rst = null;
+                        //query6 = " select * from model where device_name='" + map.get("model_name") + "' ";
+                        query6 = " select * from model where device_name='" + modulesSetMN.get(a) + "' ";
+                        psmt = connection.prepareStatement(query6);
+                        rst = psmt.executeQuery();
+                        while (rst.next()) {
+                            model_id = rst.getString(1);
+                        }
+                        
                         if (a == 0) {
+                        psmt = null;
+                        rst = null;
+                        query3 = "insert into device(manufacture_id,device_type_id,model_id,image_id,remark) "
+                                + " values(?,?,?,?,?) ";
+                        psmt = connection.prepareStatement(query3);
 
+                        psmt.setString(1, manufacture_id);
+                        psmt.setString(2, device_type_id);
+                        psmt.setString(3, model_id);
+                        psmt.setString(4, image_id);
+                        psmt.setString(5, map.get("remark"));
+                        count = psmt.executeUpdate();
+
+                        //}
+                        //if (count > 0) {
+                        //count = 0;
+                        //if (a == 0) {
+                        if (count > 0) {
                             psmt = null;
                             rst = null;
                             query4 = " select * from device where active='Y' and manufacture_id='" + manufacture_id + "' "
@@ -292,36 +294,40 @@ public class DeviceModel {
                             while (rst.next()) {
                                 finished_device_id = rst.getInt(1);
                             }
-
                         } else {
-                            int module_device_id = 0;
-                            psmt = null;
-                            rst = null;
-                            query4 = " select * from device where active='Y' and manufacture_id='" + manufacture_id + "' "
-                                    + " and device_type_id='" + device_type_id + "' and model_id='" + model_id + "'"
-                                    + " order by id desc limit 1 ";
-                            psmt = connection.prepareStatement(query4);
-                            rst = psmt.executeQuery();
-                            while (rst.next()) {
-                                module_device_id = rst.getInt(1);
-                            }
-
-                            psmt = null;
-                            rst = null;
-                            query5 = " insert into device_map(finished_device_id,module_device_id) "
-                                    + " values(?,?) ";
-                            psmt = connection.prepareStatement(query5);
-                            psmt.setInt(1, finished_device_id);
-                            psmt.setInt(2, module_device_id);
-                            count = psmt.executeUpdate();
+                            connection.rollback();
+                            message = "Record Not updated Some Error!";
+                            msgBgColor = COLOR_ERROR;
                         }
 
                     } else {
-                        connection.rollback();
-                        message = "Record Not updated Some Error!";
-                        msgBgColor = COLOR_ERROR;
+                        int module_device_id = 0;
+                        psmt = null;
+                        rst = null;
+                        query4 = " select * from device where active='Y' and manufacture_id='" + manufacture_id + "' "
+                                + " and device_type_id='" + device_type_id + "' and model_id='" + model_id + "'"
+                                + " order by id desc limit 1 ";
+                        psmt = connection.prepareStatement(query4);
+                        rst = psmt.executeQuery();
+                        while (rst.next()) {
+                            module_device_id = rst.getInt(1);
+                        }
+
+                        psmt = null;
+                        rst = null;
+                        query5 = " insert into device_map(finished_device_id,module_device_id) "
+                                + " values(?,?) ";
+                        psmt = connection.prepareStatement(query5);
+                        psmt.setInt(1, finished_device_id);
+                        psmt.setInt(2, module_device_id);
+                        count = psmt.executeUpdate();
                     }
 
+//                    } else {
+//                        connection.rollback();
+//                        message = "Record Not updated Some Error!";
+//                        msgBgColor = COLOR_ERROR;
+//                    }
                 }
 
                 if (count > 0) {
@@ -405,7 +411,7 @@ public class DeviceModel {
                 query += " and d.id='" + idd + "' ";
             }
 
-            //  System.out.println("query--"+query);
+            System.out.println("query--" + query);
             ResultSet rst = connection.prepareStatement(query).executeQuery();
             while (rst.next()) {
 
